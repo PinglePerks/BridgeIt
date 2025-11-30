@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Core", "BridgeIt.Core\BridgeIt.Core.csproj", "{E62431B6-04E4-451B-AE89-648A0D5EC4C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Systems", "BridgeIt.Systems\BridgeIt.Systems.csproj", "{DCFDEC63-32AA-4AF7-A9E9-FC2B48A9CF89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.CLI", "BridgeIt.CLI\BridgeIt.CLI.csproj", "{B5FD671A-AC66-40C4-824F-EE283B0E97EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Tests", "BridgeIt.Tests\BridgeIt.Tests.csproj", "{88991975-F100-465F-B4D9-2E56814CB0D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.TestHarness", "BridgeIt.TestHarness\BridgeIt.TestHarness.csproj", "{A3DB91FB-300B-4329-9A8D-73A6052970A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Dealer", "BridgeIt.Dealer\BridgeIt.Dealer.csproj", "{41044E82-02DF-4073-AD8B-AC83CABEF309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Analysis", "BridgeIt.Analysis\BridgeIt.Analysis.csproj", "{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E62431B6-04E4-451B-AE89-648A0D5EC4C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E62431B6-04E4-451B-AE89-648A0D5EC4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E62431B6-04E4-451B-AE89-648A0D5EC4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E62431B6-04E4-451B-AE89-648A0D5EC4C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCFDEC63-32AA-4AF7-A9E9-FC2B48A9CF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCFDEC63-32AA-4AF7-A9E9-FC2B48A9CF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCFDEC63-32AA-4AF7-A9E9-FC2B48A9CF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCFDEC63-32AA-4AF7-A9E9-FC2B48A9CF89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5FD671A-AC66-40C4-824F-EE283B0E97EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5FD671A-AC66-40C4-824F-EE283B0E97EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5FD671A-AC66-40C4-824F-EE283B0E97EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5FD671A-AC66-40C4-824F-EE283B0E97EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88991975-F100-465F-B4D9-2E56814CB0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88991975-F100-465F-B4D9-2E56814CB0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88991975-F100-465F-B4D9-2E56814CB0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88991975-F100-465F-B4D9-2E56814CB0D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3DB91FB-300B-4329-9A8D-73A6052970A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3DB91FB-300B-4329-9A8D-73A6052970A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3DB91FB-300B-4329-9A8D-73A6052970A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3DB91FB-300B-4329-9A8D-73A6052970A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41044E82-02DF-4073-AD8B-AC83CABEF309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41044E82-02DF-4073-AD8B-AC83CABEF309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41044E82-02DF-4073-AD8B-AC83CABEF309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41044E82-02DF-4073-AD8B-AC83CABEF309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
