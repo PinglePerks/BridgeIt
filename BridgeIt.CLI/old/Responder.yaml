@@ -1,0 +1,19 @@
+#system_name: "Natural response"
+#priority: 1
+#description: "Standard responses"
+#
+#trigger:
+#  conditions:
+#    current_state: "natural_response"
+#
+#nodes:
+#  - dynamic_bid:
+#      bid_type: "natural"
+#    type: "Natural"
+#    meaning: "Simple Raise: 6-9 HCP, 3+ Support"
+#    constraints:
+#      hcp: "6-9"
+#      history_pattern: ["1H", "Pass"] # Only valid if partner opened 1H
+#      shape: { hearts: ">=3" }
+#    next_state: "played_contract"
+#

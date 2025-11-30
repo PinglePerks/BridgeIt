@@ -1,0 +1,83 @@
+system_name: "Responses to 1 Major"
+priority: 20
+description: "Standard responses to 1H or 1S opening"
+
+trigger:
+  conditions:
+    # Check history directly or use a state if you set one.
+    # Assuming 'natural_response' state from your BasicAcol.yaml
+    current_state: "natural_response"
+    any_of:
+      - history_pattern: ["1H", "Pass"]
+      - history_pattern: ["1S", "Pass"]
+
+nodes:
+  # --- RAISES (Support) ---
+  
+  # Simple Raise (6-9 HCP)
+  - bid: "2H"
+    type: "Natural"
+    meaning: "Simple Raise: 6-9 HCP, 3+ Support"
+    constraints:
+      hcp: "6-9"
+      history_pattern: ["1H", "Pass"] # Only valid if partner opened 1H
+      shape: { hearts: ">=3" }
+    next_state: "played_contract"
+
+  - bid: "2S"
+    type: "Natural"
+    meaning: "Simple Raise: 6-9 HCP, 3+ Support"
+    constraints:
+      hcp: "6-9"
+      history_pattern: ["1S", "Pass"]
+      shape: { spades: ">=3" }
+    next_state: "played_contract"
+
+  # Limit Raise (10-12 HCP) - Highly recommended for Modern Acol
+  - bid: "3H"
+    type: "Natural"
+    meaning: "Limit Raise: 10-12 HCP, 4+ Support"
+    constraints:
+      hcp: "10-12"
+      history_pattern: ["1H", "Pass"]
+      shape: { hearts: ">=4" }
+    next_state: "played_contract"
+
+  # --- NEW SUITS (Change of Suit) ---
+  
+  # 1S response to 1H
+  - bid: "1S"
+    type: "Natural"
+    meaning: "6+ HCP, 4+ Spades (Forcing 1 round)"
+    constraints:
+      hcp: ">=6"
+      history_pattern: ["1H", "Pass"]
+      shape: { spades: ">=4" }
+    next_state: "opener_rebid_new_suit"
+
+  # 2-Level Responses (require 10+ HCP in Acol usually)
+  - bid: "2C"
+    type: "Natural"
+    meaning: "10+ HCP, 4+ Clubs (Forcing 1 round)"
+    constraints:
+      hcp: ">=10"
+      shape: { clubs: ">=4" }
+    next_state: "opener_rebid_new_suit"
+
+  - bid: "2D"
+    type: "Natural"
+    meaning: "10+ HCP, 4+ Diamonds (Forcing 1 round)"
+    constraints:
+      hcp: ">=10"
+      shape: { diamonds: ">=4" }
+    next_state: "opener_rebid_new_suit"
+
+  # --- NO TRUMP (Dustbin) ---
+
+  - bid: "1NT"
+    type: "Natural"
+    meaning: "6-9 HCP, denied support, denied 1S"
+    constraints:
+      hcp: "6-9"
+      # Usually implies balanced or no good suit to bid
+    next_state: "opener_rebid_1nt_response"

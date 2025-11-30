@@ -1,0 +1,42 @@
+system_name: "Responses to 2NT"
+priority: 60
+description: "Replies to 2NT"
+
+trigger:
+  conditions:
+    current_state: "turn_off"
+
+nodes:
+  - bid: "3D"
+    type: "Convention"
+    meaning: "Transfer to hearts"
+    constraints:
+      shape:
+        hearts: ">=5"
+    next_state: "transfer_to_hearts"
+
+  - bid: "3H"
+    type: "Convention"
+    meaning: "Transfer to spades"
+    constraints:
+      shape:
+        spades: ">=5"
+    next_state: "transfer_to_spades"
+
+  - bid: "3C"
+    type: "Convention"
+    meaning: "Stayman: Asking for 4-card major"
+    constraints:
+      hcp: ">= 4" # Invitational+ values
+      any_of:
+        - shape: { hearts: ">= 4" }
+        - shape: { spades: ">= 4" }
+    next_state: "opener_reponse_to_stayman"
+
+  - bid: "3NT"
+    type: "Convention"
+    meaning: "Stayman: Asking for 4-card major"
+    constraints:
+      hcp: ">= 4" # Invitational+ values
+    next_state: "opener_reponse_to_stayman"
+  

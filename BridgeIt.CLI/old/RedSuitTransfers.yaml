@@ -1,0 +1,28 @@
+system_name: "Red suit transfers"
+priority: 50
+description: "Red suit transfers"
+
+trigger:
+  conditions:
+    any_of:
+    - current_state: "transfer_to_spades"
+    - current_state: "transfer_to_hearts"
+
+nodes:
+  - bid: "2S"
+    type: "Convention"
+    meaning: "Transfer to spades"
+    constraints:
+      current_state: "transfer_to_spades"
+    next_state: "transferred_to_spades"
+    
+  - bid: "2H"
+    type: "Convention"
+    meaning: "Transfer to Hearts"
+    constraints:
+      current_state: "transfer_to_hearts"
+    next_state: "transferred_to_hearts"
+    
+  
+    
+  
