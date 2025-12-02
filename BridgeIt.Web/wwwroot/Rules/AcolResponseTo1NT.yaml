@@ -1,0 +1,60 @@
+system_name: "Responses to Weak 1NT"
+priority: 100
+description: "Stayman and Transfers after 1NT opening"
+
+trigger:
+  # This triggers if the system is in '1nt_opening_response' state 
+  # (which you set in your BasicAcol.yaml)
+  conditions:
+    current_state: "1nt_opening_response"
+
+nodes:
+  - bid: "2D"
+    type: "Convention"
+    meaning: "Transfer to hearts"
+    constraints:
+      shape:
+        hearts: ">=5"
+    next_state: "transfer"
+    
+  - bid: "2H"
+    type: "Convention"
+    meaning: "Transfer to spades"
+    constraints:
+      shape:
+        spades: ">=5"
+    next_state: "transfer"
+
+  - bid: "2C"
+    type: "Convention"
+    meaning: "Stayman: Asking for 4-card major"
+    constraints:
+      hcp: ">= 10" # Invitational+ values
+      any_of:
+        - shape: { hearts: ">= 4" }
+        - shape: { spades: ">= 4" }
+    next_state: "opener_reponse_to_stayman"
+
+  - bid: "2S"
+    type: "Natural"
+    meaning: "11 HCP points"
+    constraints:
+      hcp: "11"
+      any_of:
+        - shape: { hearts: "< 4" }
+        - shape: { spades: "< 4" }
+    next_state: "natural_response"
+
+  - bid: "2NT"
+    type: "Natural"
+    meaning: "12 HCP points"
+    constraints:
+      hcp: "12" 
+      any_of:
+        - shape: { hearts: "< 4" }
+        - shape: { spades: "< 4" }
+    next_state: "natural_response"
+  
+  
+    
+  

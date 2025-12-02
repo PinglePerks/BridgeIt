@@ -5,7 +5,8 @@ using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Extensions;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Gameplay.Services;
-using Microsoft.Extensions.DependencyInjection; // Assuming your Deck/Hand moved here per previous advice
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging; // Assuming your Deck/Hand moved here per previous advice
 
 
 // --- 1. Setup ---
@@ -30,7 +31,8 @@ var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 // manually or register them as a list.
 
 // Hack for CLI simplicity: Re-register the engine with the specific rules found
-var engine = new BiddingEngine(loadedRules); 
+var logger = provider.GetRequiredService<ILogger<BiddingEngine>>();
+var engine = new BiddingEngine(loadedRules,logger); 
 // In a real app, you might have a BiddingRuleRegistry service.
 
 // --- 3. Play ---
@@ -39,6 +41,7 @@ var table = new BiddingTable(
     engine, 
     provider.GetRequiredService<IAuctionRules>(),
     provider.GetRequiredService<ISeatRotationService>(),
-    provider.GetRequiredService<IBiddingObserver>()
+    provider.GetRequiredService<IBiddingObserver>(),
+    provider.GetRequiredService<ILogger<BiddingTable>>()
 );
 

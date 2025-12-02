@@ -34,6 +34,7 @@ public class HistoryPatternConstraint : IBidConstraint
         {
             // Calculate how many extra passes there are at the start of history
             var difference = history.Count - _pattern.Count;
+            if (difference < -1) return false;
     
             // The first 'difference' items in history should all be Pass
             if (!history.Take(difference).All(h => h.ChosenBid.Type == BidType.Pass))

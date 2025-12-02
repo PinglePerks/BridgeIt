@@ -1,0 +1,17 @@
+@using BridgeIt.Core.Domain.Primatives
+
+<div class="card" style="border: 1px solid black; padding: 5px; margin: 2px; width: 40px; text-align: center; background-color: white;">
+    <span style="color: @GetColor(Card.Suit)">
+        @Card.Rank.ShortName()@Card.Suit.ToSymbol()
+    </span>
+</div>
+
+@code {
+    [Parameter]
+    public Card Card { get; set; }
+
+    private string GetColor(Suit suit)
+    {
+        return (suit == Suit.Hearts || suit == Suit.Diamonds) ? "red" : "black";
+    }
+}

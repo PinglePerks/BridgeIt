@@ -34,7 +34,7 @@ public class YamlRuleLoader
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .Build();
 
-        var yamlFiles = Directory.GetFiles(directoryPath, "*.yaml");
+        var yamlFiles = Directory.GetFiles(directoryPath, "*.yaml", SearchOption.AllDirectories);
         Console.WriteLine($"Found {yamlFiles.Length} YAML rule files. Loading...");
 
         foreach (var filePath in yamlFiles)

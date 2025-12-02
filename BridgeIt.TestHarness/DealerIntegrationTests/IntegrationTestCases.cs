@@ -140,4 +140,17 @@ public class IntegrationTestCases
             }
         ).SetName("MajorFit_GameHand_1H_4H");
     }
+    public static IEnumerable<TestCaseData> SlamHands()
+    {
+
+        yield return new TestCaseData(
+            HandSpecifications.BalancedOpener(20,22),
+            HandSpecifications.BalancedOpener(13,17),
+            new List<string>
+            {
+                "2NT",
+                "6NT"
+            }
+        ).SetName("Slam_Hand");
+    }
 }

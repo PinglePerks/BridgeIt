@@ -1,0 +1,21 @@
+system_name: "Acol - Basic Openings"
+priority: 1 # Low priority. Conventions (like Preempts) will override this.
+description: "Traditional Acol with Weak 1NT and 4-card Majors"
+
+# Trigger for an opening bid (0 passes, or passes only)
+trigger:
+  conditions:
+    history_pattern: ["*"] # Regex: Matches empty, "Pass", "Pass, Pass", etc.
+
+nodes:
+  - bid: "2NT"
+    type: "Natural"
+    meaning: "12-14 HCP, Balanced" # The hallmark of Acol (Weak No Trump)
+    constraints:
+      hcp: "11-12"
+      partner_knowledge:
+        shape: "balanced"
+    next_state: "natural"
+    
+
+

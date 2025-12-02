@@ -1,0 +1,39 @@
+system_name: "Acol - Basic Openings - 2 level"
+priority: 30 # Low priority. Conventions (like Preempts) will override this.
+description: "2 Level - Traditional Acol with Weak 1NT and 4-card Majors"
+
+# Trigger for an opening bid (0 passes, or passes only)
+trigger:
+  conditions:
+    history_pattern: ["Pass*"] # Regex: Matches empty, "Pass", "Pass, Pass", etc.
+    current_state: "opening"
+
+nodes:
+  - bid: "2NT"
+    type: "Natural"
+    meaning: "20-22 HCP, Balanced"
+    constraints:
+      hcp: "20-22"
+      shape: "balanced"
+    next_state: "responses_to_2nt_opening"
+    
+  - bid: "2C"
+    type: "Artificial"
+    meaning: "Very strong hand" 
+    constraints:
+      any_of:
+        - hcp: ">=23"
+          shape: "balanced"
+        - losers: "<=3"
+    next_state: "1nt_opening_response"
+
+#  - dynamic_bid: 
+#      bid_type: "length_bid"
+#    type: "Natural"
+#    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+#    constraints:
+#      hcp: "6-10"
+#      shape:
+#        any: ">= 6"
+#    next_state: "natural_response"
+

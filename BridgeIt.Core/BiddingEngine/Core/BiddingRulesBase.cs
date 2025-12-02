@@ -47,12 +47,12 @@ public class ResponseTo2ntOpening : BiddingRuleBase
     {
         if (ctx.HandEvaluation.Shape[Suit.Hearts] >= 5)
         {
-            return new BiddingDecision(Bid.SuitBid(3, Suit.Diamonds), "Transfer to hearts", "red_suit_transfer",
+            return new BiddingDecision(Bid.SuitBid(3, Suit.Diamonds), "Transfer to hearts", "transfer",
                 new SuitLengthConstraint("hearts", ">=5"));
         }
         if (ctx.HandEvaluation.Shape[Suit.Spades] >= 5)
         {
-            return new BiddingDecision(Bid.SuitBid(3, Suit.Hearts), "Transfer to spades", "red_suit_transfer",
+            return new BiddingDecision(Bid.SuitBid(3, Suit.Hearts), "Transfer to spades", "transfer",
                 new SuitLengthConstraint("spades", ">=5"));
         } 
         return null;
@@ -147,37 +147,37 @@ public class MajorFitWithPartner : BiddingRuleBase
         return new BiddingDecision(Bid.Pass(), "too high level to bid", "passed", new HcpConstraint("<=12"));
     }
 }
-
-public class RedSuitTransfer : BiddingRuleBase
-{
-    public override int Priority => 100;
-    public override bool IsApplicable(BiddingContext ctx) 
-        => ctx.AuctionEvaluation.PartnershipState == "red_suit_transfer";
-
-    public override BiddingDecision? Apply(BiddingContext ctx)
-    {
-        var partnerBid = ctx.AuctionEvaluation.PartnerLastBid;
-        var level = partnerBid!.Level!;
-        var suit = partnerBid.Suit!;
-
-        var transfer = (int)suit + 1;
-        if (transfer == 4)
-        {
-            transfer = 0 ;
-            level++;
-        }
-        
-        return new BiddingDecision(Bid.SuitBid(level, (Suit)transfer), "compulsory correction", "transferred",null);
-    }
-    
-}
+//
+// public class RedSuitTransfer : BiddingRuleBase
+// {
+//     public override int Priority => 100;
+//     public override bool IsApplicable(BiddingContext ctx) 
+//         => ctx.AuctionEvaluation.PartnershipState == "red_suit_transfer";
+//
+//     public override BiddingDecision? Apply(BiddingContext ctx)
+//     {
+//         var partnerBid = ctx.AuctionEvaluation.PartnerLastBid;
+//         var level = partnerBid!.Level!;
+//         var suit = partnerBid.Suit!;
+//
+//         var transfer = (int)suit + 1;
+//         if (transfer == 4)
+//         {
+//             transfer = 0 ;
+//             level++;
+//         }
+//         
+//         return new BiddingDecision(Bid.SuitBid(level, (Suit)transfer), "compulsory correction", "transferred",null);
+//     }
+//     
+// }
 
 public class DefaultBidding : BiddingRuleBase
 {
     public override int Priority => 1;
 
     public override bool IsApplicable(BiddingContext ctx)
-        => ctx.AuctionEvaluation.SeatType == SeatRole.Responder;
+        => ctx.AuctionEvaluation.SeatRole == SeatRole.Responder;
 
     public override BiddingDecision? Apply(BiddingContext ctx)
     {

@@ -1,0 +1,30 @@
+
+system_name: "Acol - First Response to Major Opening"
+priority: 60 # Low priority. Conventions (like Preempts) will override this.
+description: "No direct fit in major"
+
+# Trigger for an opening bid (0 passes, or passes only)
+trigger:
+  conditions:
+    current_state: "natural"
+    seat_role: "responder"
+    partner_knowledge:
+      fit_in_suit: "no_major"
+      
+    
+nodes:
+  - dynamic_bid:
+      bid_type: "one_level_responder"
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      hcp: "5-9"
+    next_state: "natural"
+    
+  - dynamic_bid:
+      bid_type: "responder"
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      hcp: ">=10"
+    next_state: "natural"

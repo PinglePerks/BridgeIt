@@ -1,0 +1,37 @@
+system_name: "Acol - Game Going Hands"
+priority: 90
+description: "Strong enough hands to bid at game level"
+
+# Trigger for an opening bid (0 passes, or passes only)
+trigger:
+  conditions:
+    history_pattern: ["*"]
+    
+nodes:
+  - bid: "4S"
+    type: "Natural"
+    meaning: "25+hcp combined with partner and fit in spades" 
+    constraints:
+      any_of:
+      - partner_knowledge:
+          fit_in_suit: "spades"
+          combined_hcp: ">= 25"
+    next_state: "game_response"
+
+  - bid: "4H"
+    type: "Natural"
+    meaning: "25+hcp combined with partner and fit in spades" 
+    constraints:
+      partner_knowledge:
+        fit_in_suit: "hearts"
+        combined_hcp: ">= 25"
+    next_state: "game_response"
+
+  - bid: "3NT"
+    type: "Natural"
+    meaning: "25+hcp combined with partner," 
+    constraints:
+      partner_knowledge:
+        combined_hcp: ">= 25"
+        denied_major_fit: true
+    next_state: "game_response"

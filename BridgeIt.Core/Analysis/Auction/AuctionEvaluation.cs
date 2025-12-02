@@ -8,7 +8,7 @@ namespace BridgeIt.Core.Analysis.Auction;
 
 public class AuctionEvaluation
 {
-    public SeatRole? SeatType { get; init; }
+    public SeatRole SeatRole { get; init; }
     // public bool IsCompetition { get; init; }
     // public bool IsForcing { get; init; }
     // public Suit? AgreedSuit { get; init; }
@@ -29,7 +29,7 @@ public static class AuctionEvaluator
             CurrentContract = auctionHistory.Bids
                 .LastOrDefault(x => x.ChosenBid.Type == BidType.NoTrumps || x.ChosenBid.Type == BidType.Suit)?
                 .ChosenBid,
-            SeatType = GetSeatRole(auctionHistory, seat),
+            SeatRole = GetSeatRole(auctionHistory, seat),
             PartnershipState = GetPartnershipState(auctionHistory),
             PartnerLastBid = PartnerLastBid(auctionHistory),
         };
@@ -57,11 +57,20 @@ public static class AuctionEvaluator
     {
         var knowledge = new PartnershipKnowledge();
 
+        var partnersKnowledgeOfMe = new PartnershipKnowledge();
+
+        var myBids = history.GetAllPartnerBids((Seat)mySeat + 2 % 4);
+        foreach (var bid in myBids)
+            if (bid.AppliedConstraint != null)
+                partnersKnowledgeOfMe = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, partnersKnowledgeOfMe);
+        
+        
+
         var partnerBids = history.GetAllPartnerBids(mySeat);
         
         foreach (var bid in partnerBids)
             if (bid.AppliedConstraint != null)
-                knowledge = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, knowledge);
+                knowledge = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, knowledge, partnersKnowledgeOfMe);
 
         var handShape = ShapeEvaluator.GetShape(myHand);
         
@@ -71,7 +80,7 @@ public static class AuctionEvaluator
         return knowledge;
     }
 
-    public static PartnershipKnowledge ExtractKnowledgeFromConstraint(IBidConstraint constraint, PartnershipKnowledge knowledge)
+    public static PartnershipKnowledge ExtractKnowledgeFromConstraint(IBidConstraint constraint, PartnershipKnowledge knowledge, PartnershipKnowledge? partnershipKnowledgeOfMe = null)
     {
         switch (constraint)
         {
@@ -79,7 +88,7 @@ public static class AuctionEvaluator
 
                 foreach (var child in composite.Constraints)
                 {
-                    knowledge = ExtractKnowledgeFromConstraint(child, knowledge);
+                    knowledge = ExtractKnowledgeFromConstraint(child, knowledge, partnershipKnowledgeOfMe);
                 }
                 return knowledge;
             
@@ -103,7 +112,25 @@ public static class AuctionEvaluator
                     knowledge.PartnerMaxShape[suitLengthConstraint.Suit]);
                 
                 
+                
+                
+                
                 return knowledge;
+            
+            case PartnerKnowledgeConstraint partnerKnowledgeConstraint:
+                if (partnershipKnowledgeOfMe == null)
+                    return knowledge;
+
+                partnerKnowledgeConstraint.Requirements.TryGetValue("fit_in_suit", out var suit);
+                if (suit == null) return knowledge;
+                var s = suit.ToSuit();
+                
+                var min = 8 - partnershipKnowledgeOfMe.PartnerMinShape[s];
+                knowledge.PartnerMinShape[s] = Math.Max(min, knowledge.PartnerMinShape[s]);
+
+                return knowledge;
+                
+                
             default:
                 return knowledge;
             
@@ -119,8 +146,8 @@ public static class AuctionEvaluator
     private static string GetPartnershipState(AuctionHistory auctionHistory)
     {
         if (auctionHistory.Bids.All(a => a.ChosenBid.Type == BidType.Pass)) return "opening";
-        if (auctionHistory.Bids.Last().ChosenBid.Type != BidType.Pass) return "overcalling";
-        return auctionHistory.Bids[^2].NextPartnershipState;
+        if (auctionHistory.Bids.Count < 2) return "opening";
+            return auctionHistory.Bids[^2].NextPartnershipState;
     }
 }
 

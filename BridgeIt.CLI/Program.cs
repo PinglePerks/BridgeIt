@@ -1,5 +1,4 @@
-﻿using BridgeIt.CLI;
-using BridgeIt.Core.Analysis.Hand;
+﻿using BridgeIt.Core.Analysis.Hand;
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Configuration.Yaml;
@@ -8,7 +7,9 @@ using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Gameplay.Services;
-using BridgeIt.Dealer.Deal; // Assuming your Deck/Hand moved here per previous advice
+using BridgeIt.Dealer.Deal;
+using Microsoft.Extensions.Logging; 
+using Microsoft.Extensions.Logging.Console;// Assuming your Deck/Hand moved here per previous advice
 
 // --- 1. Setup ---
 var services = new ServiceCollection();
@@ -16,6 +17,11 @@ var services = new ServiceCollection();
 // One-line setup for the entire engine
 services.AddBridgeItCore(); 
 
+services.AddLogging(builder => 
+{
+    builder.AddConsole();
+    builder.SetMinimumLevel(LogLevel.Information); // Set to Debug to see your detailed logs
+});
 var provider = services.BuildServiceProvider();
 
 // --- 2. Load Rules ---
@@ -25,7 +31,6 @@ var loader = provider.GetRequiredService<YamlRuleLoader>();
 var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 var rules = loadedRules.ToList();
 //rules.Add(new RespondingToNaturalOpening());
-rules.Add(new RedSuitTransfer());
 rules.Add(new ResponseTo2ntOpening());
 
 // Register the loaded rules into the Engine dynamically
@@ -36,7 +41,8 @@ rules.Add(new ResponseTo2ntOpening());
 // manually or register them as a list.
 
 // Hack for CLI simplicity: Re-register the engine with the specific rules found
-var engine = new BiddingEngine(rules); 
+var logger = provider.GetRequiredService<ILogger<BiddingEngine>>();
+var engine = new BiddingEngine(rules, logger); 
 // In a real app, you might have a BiddingRuleRegistry service.
 
 // --- 3. Play ---
@@ -45,7 +51,8 @@ var table = new BiddingTable(
     engine, 
     provider.GetRequiredService<IAuctionRules>(),
     provider.GetRequiredService<ISeatRotationService>(),
-    provider.GetRequiredService<IBiddingObserver>()
+    provider.GetRequiredService<IBiddingObserver>(),
+    provider.GetRequiredService<ILogger<BiddingTable>>()
 );
 
 var dealer = new Dealer();

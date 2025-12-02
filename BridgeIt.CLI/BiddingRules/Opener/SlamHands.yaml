@@ -1,0 +1,30 @@
+system_name: "Acol - Game Going Hands"
+priority: 90
+description: "Strong enough hands to bid at game level"
+
+# Trigger for an opening bid (0 passes, or passes only)
+trigger:
+  conditions:
+    history_pattern: ["*"]
+    
+nodes:
+  - bid: "7NT"
+    type: "Natural"
+    meaning: "37+hp" 
+    constraints:
+      any_of:
+      - partner_knowledge:
+          combined_hcp: ">= 37"
+    next_state: "game_response"
+
+  - bid: "6NT"
+    type: "Natural"
+    meaning: "33+hp"
+    constraints:
+      any_of:
+        - partner_knowledge:
+            combined_hcp: ">= 33"
+    next_state: "game_response"
+
+    
+

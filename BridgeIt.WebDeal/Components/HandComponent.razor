@@ -1,0 +1,156 @@
+@using BridgeIt.Core.Domain.Primatives
+<div class="hand">
+    <h5 class="seat-label">@Seat</h5>
+
+    <div class="hand-container @((IsVertical) ? "vertical-seat" : "horizontal-seat")">
+
+        @* ✅ Visible player hand (grouped by suit) *@
+        @if (Seat == PlayerSeat)
+        {
+            @foreach (var suit in SuitOrder)
+            {
+                var cards = Hand.Cards.Where(c => c.Suit == suit)
+                                      .OrderByDescending(c => c.Rank)
+                                      .ToList();
+
+                if (cards.Any())
+                {
+                    <div class="suit-group">
+                        @foreach (var card in cards)
+                        {
+                            <NicerCards Card="card" />
+                        }
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            @* ✅ Hidden opponent hand (13 card backs, no suit grouping) *@
+            @if (IsVertical)
+            {
+                <div class="hidden-hand">
+                    @for (var i = 0; i < 13; i++)
+                    {
+                        <CardBackComponent/>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="suit-group">
+                    @for (var i = 0; i < 13; i++)
+                    {
+                        <CardBackComponent/>
+                    }
+                </div>
+            }
+
+        }
+
+    </div>
+</div>
+
+<style>
+
+/* Hand orientation by seat */
+.hand-container.horizontal-seat {
+    display: flex;
+    justify-content: right;
+}
+
+.hand-container.vertical-seat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Player suit grouping */
+.suit-group {
+    display: flex;
+    margin-right: 18px;
+}
+
+.vertical-seat .suit-group {
+    margin-right: 0;
+    margin-bottom: 18px;
+}
+
+.suit-group .playing-card{
+    margin-left: -52px;
+    transition: transform 0.12s ease;
+    position: relative;
+}
+
+.vertical-seat .playing-card {
+    margin-left: 0;
+    margin-top: -80px;
+}
+.vertical-seat .playing-card.back:first-child {
+    margin-left: 0;
+    margin-top: -30px;
+}
+
+/* Hover polish */
+.playing-card:hover {
+    transform: scale(1.06) translateY(-6px);
+    z-index: 12;
+}
+
+.vertical-seat .playing-card:hover {
+    transform: scale(1.06) translateX(12px);
+}
+
+/* Opponent hidden hand (all 13 backs, evenly spaced) */
+.hidden-hand {
+    display: flex;
+    gap: 6px;
+}
+
+/* Rotate cards for vertical seats (East/West) */
+.vertical-seat .playing-card,
+.vertical-seat .playing-card.back{ /* Assuming class name */
+    transform: rotate(90deg);
+    margin-top: -90px; /* Adjust overlap because width becomes height */
+    margin-left: 0;
+}
+
+/* Fix hover for rotated cards */
+.vertical-seat .playing-card:hover {
+    transform: rotate(90deg) scale(1.06) translateX(12px);
+    /* TranslateX moves it "up/down" relative to the page because axis is rotated */
+    z-index: 15;
+}
+
+.vertical-seat .hidden-hand {
+    flex-direction: column;
+    gap: 0; /* Remove the gap! */
+    margin-top: 20px; /* Space from the label */
+}
+
+.vertical-seat .hidden-hand > div {
+    margin-top: -86px; /* Collapse them upwards */
+    margin-left: 0;
+}
+
+.seat-label {
+    font-family: "Georgia", serif;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+</style>
+
+@code {
+    [Parameter] public Seat Seat { get; set; }
+    [Parameter] public Hand Hand { get; set; }
+    [Parameter] public Seat PlayerSeat { get; set; } = Seat.South;
+    [Parameter] public bool IsVertical { get; set; }
+
+    private readonly Suit[] SuitOrder = new[] {
+        Suit.Spades,
+        Suit.Hearts,
+        Suit.Diamonds,
+        Suit.Clubs
+    };
+}

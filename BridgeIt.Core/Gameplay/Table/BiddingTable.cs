@@ -5,6 +5,7 @@ using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Gameplay.Services;
+using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.Gameplay.Table;
 
@@ -12,10 +13,10 @@ public sealed class BiddingTable(
     BiddingEngine.Core.BiddingEngine engine,
     IAuctionRules rules,
     ISeatRotationService rotation,
-    IBiddingObserver observer
+    IBiddingObserver observer,
+    ILogger<BiddingTable> logger
     )
 {
-    
     public IReadOnlyList<BiddingDecision> RunAuction(
         IReadOnlyDictionary<Seat, Hand> hands,
         Seat dealer)
@@ -34,13 +35,15 @@ public sealed class BiddingTable(
                 partnershipKnowledge: AuctionEvaluator.AnalyzeKnowledge(auctionHistory, current, hands[current]),
                 auctionEvaluation: AuctionEvaluator.Evaluate(auctionHistory, current)
                 );
-
+            
+            
+            logger.LogInformation($"Evaluating {current} hand");
+            
             var decision = engine.ChooseBid(ctx);
-            Console.WriteLine(decision.ChosenBid);
-
+            
             auctionHistory.Add(decision);
 
-            //observer.OnBid(current, bid);
+            observer.OnBid(current, decision.ChosenBid);
 
             if (rules.ShouldStop(auctionHistory.Bids))
                 break;

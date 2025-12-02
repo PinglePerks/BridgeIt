@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Domain.Bidding;
 
 namespace BridgeIt.Core.Domain.Primatives;
@@ -180,5 +181,14 @@ public static class SuitExtensions
             _ => throw new ArgumentException($"Invalid rank: '{rankStr}'")
         };
     }
+
+    public static SeatRole ParseSeatRole(this string seatStr)
+        => seatStr.ToLower() switch
+        {
+            "opener" => SeatRole.Opener,
+            "responder" => SeatRole.Responder,
+            "overcaller" => SeatRole.Overcaller,
+            _ => throw new ArgumentException($"Invalid seat role: '{seatStr}'")
+        };
 
 }

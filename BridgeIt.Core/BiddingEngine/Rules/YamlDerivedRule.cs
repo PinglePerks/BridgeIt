@@ -75,8 +75,9 @@ public class YamlDerivedRule : BiddingRuleBase
     private IBidDerivation ParseDerivation(Dictionary<string, object> items)
     {
         var factory = _derivationFactories.FirstOrDefault(f => f.CanCreate(items["bid_type"].ToString()!));
+        if (factory == null) throw new ArgumentException($"Unknown bid type: {items["bid_type"]}");
 
-        return factory!.Create(items);
+        return factory.Create(items);
     }
     
     private IBidConstraint ParseConstraints(Dictionary<string, object> rawConstraints)

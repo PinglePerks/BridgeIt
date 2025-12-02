@@ -1,0 +1,315 @@
+@using BridgeIt.WebDeal.Models
+@using BridgeIt.Core.Domain.Primatives
+
+@if (IsVisible)
+{
+    <div class="modal-backdrop animate-backdrop">
+        <div class="modal-content animate-modal">
+
+            <h3 class="modal-title">Deal Parameters</h3>
+
+            <!-- CONSTRAINT TYPE -->
+            <div class="form-group">
+                <label class="section-label">Hand constraint</label>
+                <select class="modern-select" @bind="Request.HcpCheck">
+                    <option value="hcp">High Card Points (HCP)</option>
+                    <option value="losers">Loser Trick Count (LTC)</option>
+                </select>
+            </div>
+
+            <!-- HCP RANGE -->
+            @if (Request.HcpCheck == "hcp")
+            {
+                <div class="constraint-card animate-section">
+                    <label class="field-label">HCP Range</label>
+                    <div class="range-inputs">
+                        <input class="modern-number" type="number" @bind="Request.MinHcp" min="0" max="37" placeholder="Min" />
+                        <span>—</span>
+                        <input class="modern-number" type="number" @bind="Request.MaxHcp" min="0" max="37" placeholder="Max" />
+                    </div>
+                </div>
+            }
+
+            <!-- LTC RANGE -->
+            @if (Request.HcpCheck == "losers")
+            {
+                <div class="constraint-card animate-section">
+                    <label class="field-label">LTC Range</label>
+                    <div class="range-inputs">
+                        <input class="modern-number" type="number" @bind="Request.MinLosers" min="0" max="13" placeholder="Min" />
+                        <span>—</span>
+                        <input class="modern-number" type="number" @bind="Request.MaxLosers" min="0" max="13" placeholder="Max" />
+                    </div>
+                </div>
+            }
+
+            <!-- BALANCED / UNBALANCED -->
+            <div class="form-group">
+                <label class="section-label">Shape requirement</label>
+                <select class="modern-select" @bind="Request.BalancedCheck">
+                    <option value="balanced">Balanced</option>
+                    <option value="unbalanced">Unbalanced</option>
+                </select>
+            </div>
+
+            <!-- SUIT LENGTH FILTERS -->
+            @if (Request.BalancedCheck == "unbalanced")
+            {
+                <div class="shape-card animate-section">
+                    <label class="field-label">Minimum suit lengths</label>
+                    <div class="shape-grid">
+                        @foreach (var suit in Enum.GetValues<Suit>())
+                        {
+                            <div class="suit-input">
+                                <span class="@GetSuitColorClass(suit)">@suit.ToSymbol()</span>
+                                <input class="modern-shape-input" 
+                                       type="number"
+                                       value="@GetShapeValue(suit)"
+                                       @onchange="@(e => SetShapeValue(suit, e.Value))"
+                                       min="0" max="13"
+                                       placeholder="-" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="actions">
+                <button class="btn-cancel" @onclick="Close">Cancel</button>
+                <button class="btn-deal" @onclick="Submit">Deal Hand</button>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+
+/* ===== ANIMATIONS ===== */
+
+@@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.90); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-backdrop {
+    animation: fadeIn 0.25s ease-out forwards;
+}
+
+.animate-modal {
+    animation: popIn 0.2s ease-out forwards;
+}
+
+.animate-section {
+    animation: slideUpFade 0.18s ease-out forwards;
+}
+
+/* ===== LAYOUT + STYLING ===== */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 28px;
+    border-radius: 20px;
+    width: 440px;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+    font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.modal-title {
+    margin: 0 0 22px 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1b7a3a;
+}
+
+/* Section headers */
+.section-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #777;
+    margin-bottom: 8px;
+}
+
+/* Field labels */
+.field-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+}
+
+/* Card sections */
+.constraint-card,
+.shape-card {
+    background: #fcfcfc;
+    border: 1px solid #f2f2f2;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 18px;
+}
+
+/* Modern select */
+.modern-select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fafafa;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' stroke='%23777' stroke-width='2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 8 10 13 14 8'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 14px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.modern-select:hover {
+    border-color: #aaa;
+    background-color: #fff;
+}
+
+.modern-select:focus {
+    border-color: #1b7a3a;
+    box-shadow: 0 0 0 3px rgba(27,122,58,0.12);
+    background-color: #fff;
+    outline: none;
+}
+
+/* Modern number */
+.modern-number, .modern-shape-input {
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 500;
+    width: 80px;
+    transition: 0.2s;
+}
+
+/* Improved shape input */
+.modern-shape-input {
+    width: 100%;
+    padding: 8px;
+}
+
+/* Remove numeric spinner arrows */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Suit grid */
+.shape-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.suit-input {
+    text-align: center;
+}
+.suit-input span {
+    font-size: 1.35rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.btn-deal {
+    background: #1b7a3a;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-deal:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+.btn-cancel {
+    background: #f5f5f5;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+.btn-cancel:hover {
+    opacity: 0.85;
+}
+
+/* Color accents */
+.red { color: #e63946; }
+.black { color: #111; }
+
+</style>
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<CustomDealRequest> OnSubmit { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private CustomDealRequest Request { get; set; } = new();
+
+    private void Close() => OnCancel.InvokeAsync();
+    private void Submit() => OnSubmit.InvokeAsync(Request);
+
+    private string GetSuitColorClass(Suit suit) =>
+        (suit == Suit.Hearts || suit == Suit.Diamonds) ? "red" : "black";
+
+    private int? GetShapeValue(Suit suit) =>
+        Request.Shape.TryGetValue(suit, out var val) ? val : null;
+
+    private void SetShapeValue(Suit suit, object? value)
+    {
+        if (value is string s && int.TryParse(s, out int i))
+            Request.Shape[suit] = i;
+        else
+            Request.Shape.Remove(suit);
+    }
+}

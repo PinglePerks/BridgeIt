@@ -49,5 +49,36 @@ public class Dealer : IDealer
         throw new Exception("Could not generate a hand meeting constraints after 100,000 attempts.");
     }
     
+    public Dictionary<Seat, Hand> GenerateConstrainedDeal(
+        Func<Hand, bool> northConstraint,
+        Func<Hand, bool>? eastConstraint,
+        Func<Hand, bool>? southConstraint)
+    {
+        // Simple "Monte Carlo" generation: Shuffle and check constraints.
+        // For complex constraints, you might need a constructive builder.
+        
+        int attempts = 0;
+        while(attempts < 100000)
+        {
+            var deal = GenerateRandomDeal();
+            
+            if (northConstraint(deal[Seat.North]))
+            {
+                // If we also care about South (e.g. finding a fit)
+                if (southConstraint == null || southConstraint(deal[Seat.South]))
+                {
+                    if (eastConstraint == null || eastConstraint(deal[Seat.East]))
+                    {
+                        return deal;
+                    }
+                }
+            }
+            attempts++;
+        }
+        
+        throw new Exception("Could not generate a hand meeting constraints after 100,000 attempts.");
+    }
+    
+    
 }
 

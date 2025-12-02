@@ -32,6 +32,7 @@ public class AcolSystemTests
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.WeakPassScenarios))]
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.MinRespondHand))]
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.AgreeAMajorFit))]
+    [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.SlamHands))]
     public void RunScenario(Func<Hand, bool> northHandStr, Func<Hand, bool> southHandStr, List<string> expectedBidSequence)
     {
         // Arrange

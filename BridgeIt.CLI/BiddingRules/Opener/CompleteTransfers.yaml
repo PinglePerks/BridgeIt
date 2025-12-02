@@ -1,0 +1,21 @@
+system_name: "Responses to Weak 1NT"
+priority: 100
+description: "Stayman and Transfers after 1NT opening"
+
+trigger:
+  # This triggers if the system is in '1nt_opening_response' state 
+  # (which you set in your BasicAcol.yaml)
+  conditions:
+    current_state: "transfer"
+
+nodes:
+  - dynamic_bid:
+      bid_type: "transfer"
+    type: "Convention"
+    meaning: "Compulsory correction - transfer"
+    next_state: "transfer_completed"
+    
+
+  
+    
+  

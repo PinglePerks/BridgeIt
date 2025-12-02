@@ -1,0 +1,77 @@
+@using BridgeIt.Core.Domain.Primatives
+<div class="playing-card @Card.Suit">
+    <div class="corner top-left">
+        <span class="rank" style="color:@GetColor(Card.Suit)">@Card.Rank.ShortName()</span>
+        <span class="suit" style="color:@GetColor(Card.Suit)">@Card.Suit.ToSymbol()</span>
+    </div>
+
+    <div class="center-pip" style="color:@GetColor(Card.Suit)">
+        @Card.Suit.ToSymbol()
+    </div>
+
+    <div class="corner bottom-right">
+        <span class="rank" style="color:@GetColor(Card.Suit)">@Card.Rank.ShortName()</span>
+        <span class="suit" style="color:@GetColor(Card.Suit)">@Card.Suit.ToSymbol()</span>
+    </div>
+</div>
+
+<style>
+
+.playing-card {
+    width: 70px;
+    height: 100px;
+    background: white;
+    border: 1px solid #333;
+    border-radius: 8px;
+    margin: 3px;
+    position: relative;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.center-pip {
+    font-size: 32px;
+    opacity: 0.9;
+}
+
+.corner {
+    position: absolute;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.top-left {
+    top: 6px;
+    left: 6px;
+    text-align: left;
+}
+
+.bottom-right {
+    bottom: 6px;
+    right: 6px;
+    text-align: right;
+    transform: rotate(180deg);
+}
+
+.rank {
+    display: block;
+}
+
+.suit {
+    display: block;
+}
+
+</style>
+
+@code {
+    [Parameter]
+    public Card Card { get; set; }
+
+    private string GetColor(Suit suit)
+        => (suit == Suit.Hearts || suit == Suit.Diamonds) ? "red" : "black";
+}
