@@ -1,0 +1,185 @@
+﻿@page "/"
+@using BridgeIt.Core.Domain.Primatives
+@using BridgeIt.WebDeal.Components
+@using BridgeIt.WebDeal.Models
+@using BridgeIt.WebDeal.Services
+@inject DealService DealService
+
+<PageTitle>Bridge Table</PageTitle>
+
+<div class="page-wrapper">
+
+    <h1 class="title">Bridge Table</h1>
+
+    <button class="deal-button" @onclick="DealNewHand">
+        Deal Random Hand
+    </button>
+    
+    <button class="deal-button" @onclick="OpenCustomDealModal">
+        Deal Constraint Hand
+    </button>
+    
+    <CustomDealModal 
+        IsVisible="@showModal" 
+        OnSubmit="HandleCustomDeal"
+        OnCancel="CloseCustomDealModal" />
+
+    @if (currentDeal != null)
+    {
+        <div class="table-container">
+
+            <!-- NORTH -->
+            <div class="hand north">
+                <HandComponent Seat="@Seat.North" Hand="currentDeal[Seat.North]" />
+            </div>
+
+            <div class="middle-row">
+
+                <!-- WEST -->
+                <div class="hand west">
+                    <HandComponent Seat="@Seat.West" Hand="currentDeal[Seat.West]" IsVertical=true />
+                </div>
+
+                <!-- TABLE CENTER -->
+                <div class="table-center">
+                    <h2>♣ Bidding</h2>
+                    <p class="placeholder">Bidding info will appear here…</p>
+                </div>
+
+                <!-- EAST -->
+                <div class="hand east">
+                    <HandComponent Seat="@Seat.East" Hand="currentDeal[Seat.East]" IsVertical=true />
+                </div>
+
+            </div>
+
+            <!-- SOUTH -->
+            <div class="hand south">
+                <HandComponent Seat="@Seat.South" Hand="currentDeal[Seat.South]" />
+            </div>
+
+        </div>
+    }
+</div>
+
+<style>
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Georgia", serif;
+    padding: 20px;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.deal-button {
+    background: #1b7a3a;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 26px;
+    cursor: pointer;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.3);
+    transition: 0.15s ease;
+}
+
+.deal-button:hover {
+    transform: scale(1.05);
+    box-shadow: 3px 4px 12px rgba(0,0,0,0.35);
+}
+
+.table-container {
+    background: #2a6f4c;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 4px 6px 20px rgba(0,0,0,0.35);
+    min-width: 380px;
+}
+
+.middle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.table-center {
+    background: #1f5b3f;
+    padding: 22px;
+    min-width: 160px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    box-shadow: inset 1px 2px 6px rgba(0,0,0,0.25);
+}
+
+.table-center h2 {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+}
+
+.placeholder {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.hand {
+    background: #ffffff;
+    padding: 6px 10px;
+    border-radius: 12px;
+    box-shadow: 2px 3px 10px rgba(0,0,0,0.25);
+}
+
+.north { margin-bottom: 12px; }
+.south { margin-top: 12px; }
+
+.west, .east {
+    max-width: 120px;
+    overflow: hidden;
+}
+
+</style>
+
+
+@code {
+    private Dictionary<Seat, Hand>? currentDeal;
+
+    protected override void OnInitialized()
+    {
+        DealNewHand();
+    }
+    
+    private bool showModal = false;
+
+    // Method to open the modal
+    private void OpenCustomDealModal()
+    {
+        showModal = true;
+    }
+
+    // Method to close the modal (passed to OnCancel)
+    private void CloseCustomDealModal()
+    {
+        showModal = false;
+    }
+
+    private void HandleCustomDeal(CustomDealRequest request)
+    {
+        currentDeal = DealService.DealCustom(request);
+        showModal = false;
+    }
+
+    private void DealNewHand()
+    {
+        currentDeal = DealService.DealRandomHand();
+    }
+}
