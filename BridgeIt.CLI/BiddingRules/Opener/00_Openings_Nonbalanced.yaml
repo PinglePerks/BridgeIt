@@ -1,5 +1,5 @@
 system_name: "Acol - Basic Openings"
-priority: 11 # Low priority. Conventions (like Preempts) will override this.
+priority: 10 # Low priority. Conventions (like Preempts) will override this.
 description: "Traditional Acol with Weak 1NT and 4-card Majors"
 
 # Trigger for an opening bid (0 passes, or passes only)
@@ -7,17 +7,8 @@ trigger:
   conditions:
     history_pattern: ["Pass*"] # Regex: Matches empty, "Pass", "Pass, Pass", etc.
     current_state: "opening"
-    shape: "balanced"
 
 nodes:
-  - bid: "1NT"
-    type: "Natural"
-    meaning: "12-14 HCP, Balanced" # The hallmark of Acol (Weak No Trump)
-    constraints:
-      hcp: "12-14"
-      shape: "balanced" # You can define 'balanced' macros in code (e.g., no singletons)
-    next_state: "1nt_opening_response"
-
   - bid: "1H"
     type: "Natural"
     meaning: "12-19 HCP, 4+ Hearts" # Acol typically opens 4-card majors
@@ -25,7 +16,7 @@ nodes:
       hcp: "12-19"
       any_of:
       - shape:
-          hearts: ">= 4"
+          hearts: ">= 5"
     next_state: "natural"
     
   - bid: "1S"
@@ -34,7 +25,7 @@ nodes:
     constraints:
       hcp: "12-19"
       shape:
-        spades: ">= 4"
+        spades: ">= 5"
     next_state: "natural"
     
   - bid: "1C"
@@ -43,7 +34,7 @@ nodes:
     constraints:
       hcp: "12-19"
       shape:
-        clubs: ">= 4"
+        clubs: ">= 5"
     next_state: "natural"
 
   - bid: "1D"
@@ -52,7 +43,7 @@ nodes:
     constraints:
       hcp: "12-19"
       shape:
-        diamonds: ">= 4"
+        diamonds: ">= 5"
     next_state: "natural"
   
   - bid: "Pass"

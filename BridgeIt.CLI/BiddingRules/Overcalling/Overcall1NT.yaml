@@ -16,7 +16,7 @@ nodes:
   
   - dynamic_bid:
       bid_type: "length_bid"
-    type: "Overcall"
+    type: "overcall"
     meaning: "length in named suit"
     constraints:
       shape:

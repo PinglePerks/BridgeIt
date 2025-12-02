@@ -14,7 +14,7 @@ public class LengthBidDerivationFactory : IBidDerivationFactory
     
     public IBidDerivation Create(Dictionary<string,object> dict)
     {
-        return new LengthBidDerivation();
+        return new LengthBidDerivation(dict["type"].ToString());
     }
 }
 

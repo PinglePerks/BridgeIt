@@ -5,17 +5,17 @@ namespace BridgeIt.Core.BiddingEngine.Constraints;
 
 public class SuitLengthConstraint : IBidConstraint
 {
-    public Suit Suit; // "hearts", "spades", etc
+    public Suit? Suit; // "hearts", "spades", etc
     public readonly int MinLen = 0;
     public readonly int MaxLen = 14;
-    private readonly Suit? _suit = null;
+    //private readonly Suit? _suit = null;
 
     public SuitLengthConstraint(string suit, string lengthExpression)
     {
         if (suit == "any")
-            _suit = null;
+            Suit = null;
         else
-            _suit = suit.ToSuit();
+            Suit = suit.ToSuit();
         if (lengthExpression.StartsWith(">="))
         {
             MinLen = int.Parse(lengthExpression.Replace(">=", "").Trim());
@@ -30,7 +30,7 @@ public class SuitLengthConstraint : IBidConstraint
     public bool IsMet(BiddingContext ctx)
     {
         // 3. Handle the NULL case (Any suit matches criteria)
-        if (_suit == null)
+        if (Suit == null)
         {
             // We just check if *any* suit returned is not null
             var suit = GetLongestMatchingSuit(ctx);
@@ -43,9 +43,9 @@ public class SuitLengthConstraint : IBidConstraint
         }
 
         // 4. Use Suit.Value to satisfy the Dictionary's non-nullable key requirement
-        ctx.HandEvaluation.Shape.TryGetValue(_suit.Value, out int count);
+        ctx.HandEvaluation.Shape.TryGetValue(Suit.Value, out int count);
         
-        Suit = _suit.Value;
+        Suit = Suit.Value;
         
         return count >= MinLen && count <= MaxLen;
     }

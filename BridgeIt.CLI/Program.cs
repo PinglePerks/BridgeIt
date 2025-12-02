@@ -1,6 +1,7 @@
 ﻿using BridgeIt.Core.Analysis.Hand;
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Extensions; // Import your new extension
 using BridgeIt.Core.Gameplay.Table;
@@ -20,9 +21,10 @@ services.AddBridgeItCore();
 services.AddLogging(builder => 
 {
     builder.AddConsole();
-    builder.SetMinimumLevel(LogLevel.Information); // Set to Debug to see your detailed logs
+    builder.SetMinimumLevel(LogLevel.Error); // Set to Debug to see your detailed logs
 });
 var provider = services.BuildServiceProvider();
+
 
 // --- 2. Load Rules ---
 // We define the path here, but the Logic is in the Core
@@ -32,6 +34,7 @@ var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 var rules = loadedRules.ToList();
 //rules.Add(new RespondingToNaturalOpening());
 rules.Add(new ResponseTo2ntOpening());
+rules.Add(new GeneralGameObjectiveRule());
 
 // Register the loaded rules into the Engine dynamically
 // (Note: BiddingEngine needs to accept rules dynamically, or we register them back to DI)
@@ -57,10 +60,11 @@ var table = new BiddingTable(
 
 var dealer = new Dealer();
 
-var dict = dealer.GenerateConstrainedDeal( 
-    north => HighCardPoints.Count(north) >= 20 && HighCardPoints.Count(north) <= 22 && ShapeEvaluator.IsBalanced(north),
-    south => ShapeEvaluator.GetShape(south)[Suit.Spades] > 4 );
+// var dict = dealer.GenerateConstrainedDeal( 
+//     north => HighCardPoints.Count(north) >= 20 && HighCardPoints.Count(north) <= 22 && ShapeEvaluator.IsBalanced(north),
+//     south => ShapeEvaluator.GetShape(south)[Suit.Spades] > 4 );
 
+var dict = dealer.GenerateRandomDeal();
 
 Console.WriteLine("\n--- Hands Dealt ---");
 foreach(var seat in dict.Keys) Console.WriteLine($"{seat}: {dict[seat]}");

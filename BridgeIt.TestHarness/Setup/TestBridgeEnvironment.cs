@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Extensions;
@@ -61,6 +62,8 @@ public class TestBridgeEnvironment
         //rules.Add(new RespondingToNaturalOpening());
         rules.Add(new ResponseTo2ntOpening());
         rules.Add(new MajorFitWithPartner());
+        rules.Add(new GeneralGameObjectiveRule());
+        rules.Add(new OpenerUnbalancedRebidRule());
         
         // Re-register or Instantiate Engine with these specific rules
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();

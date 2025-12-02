@@ -20,7 +20,6 @@ public sealed class BiddingEngine
     {
         foreach (var rule in _rules)
         {
-
             if (!rule.IsApplicable(ctx))
             {
                 _logger.LogInformation($"Rule {rule.GetType().Name} is not applicable");

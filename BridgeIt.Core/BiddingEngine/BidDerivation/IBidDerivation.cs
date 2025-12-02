@@ -31,14 +31,18 @@ public abstract class BidDerivationBase : IBidDerivation
     }
 }
 
-public class LengthBidDerivation : BidDerivationBase
+public class LengthBidDerivation(string type) : BidDerivationBase
 {
+    private string _type { get; init; } = type;
     public override Bid DeriveBid(BiddingContext ctx)
     {
         var suit 
             = ctx.HandEvaluation.Shape.OrderByDescending(s => s.Value).First().Key;
         
         var length = ctx.HandEvaluation.Shape[suit];
+
+        if (ctx.HandEvaluation.Hcp > 9 && _type == "overcall")
+            return Bid.SuitBid(GetNextSuitBidLevel(suit, ctx.AuctionEvaluation.CurrentContract), suit);
 
         var bidLevel = length - 4;
 

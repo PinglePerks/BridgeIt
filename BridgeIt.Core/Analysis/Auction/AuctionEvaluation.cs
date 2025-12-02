@@ -104,12 +104,13 @@ public static class AuctionEvaluator
                 return knowledge;
             
             case SuitLengthConstraint suitLengthConstraint:
+                if (suitLengthConstraint.Suit == null) return knowledge;
 
-                knowledge.PartnerMinShape[suitLengthConstraint.Suit] = Math.Max(suitLengthConstraint.MinLen,
-                    knowledge.PartnerMinShape[suitLengthConstraint.Suit]);
+                knowledge.PartnerMinShape[suitLengthConstraint.Suit!.Value] = Math.Max(suitLengthConstraint.MinLen,
+                    knowledge.PartnerMinShape[suitLengthConstraint.Suit!.Value]);
 
-                knowledge.PartnerMaxShape[suitLengthConstraint.Suit] = Math.Min(suitLengthConstraint.MaxLen,
-                    knowledge.PartnerMaxShape[suitLengthConstraint.Suit]);
+                knowledge.PartnerMaxShape[suitLengthConstraint.Suit!.Value] = Math.Min(suitLengthConstraint.MaxLen,
+                    knowledge.PartnerMaxShape[suitLengthConstraint.Suit!.Value]);
                 
                 
                 

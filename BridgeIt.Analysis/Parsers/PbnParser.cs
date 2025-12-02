@@ -80,6 +80,9 @@ public class PbnParser
                             break;
                     }
                 }
+            } else if (trimmed.StartsWith("{"))
+            {
+                inAuction = true;
             }
         }
 

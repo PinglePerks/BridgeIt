@@ -27,13 +27,14 @@ nodes:
         - losers: "<=3"
     next_state: "1nt_opening_response"
 
-#  - dynamic_bid: 
-#      bid_type: "length_bid"
-#    type: "Natural"
-#    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
-#    constraints:
-#      hcp: "6-10"
-#      shape:
-#        any: ">= 6"
-#    next_state: "natural_response"
+  - dynamic_bid: 
+      bid_type: "length_bid"
+      type: "weak"
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      hcp: "6-10"
+      shape:
+        any: ">= 6"
+    next_state: "natural_response"
 
