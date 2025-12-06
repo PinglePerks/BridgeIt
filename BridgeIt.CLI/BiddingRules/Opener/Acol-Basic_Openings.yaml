@@ -1,0 +1,62 @@
+system_name: "Acol - Basic Openings"
+priority: 10
+description: "Traditional Acol with Weak 1NT and 4-card Majors"
+
+trigger:
+  conditions:
+    history_pattern: ["Pass*"]
+
+nodes:
+  - bid: "1NT"
+    type: "Natural"
+    meaning: "12-14 HCP, Balanced"
+    constraints:
+      hcp: "12-14"
+      shape: "balanced"
+    next_state: "1nt_response" # Standardized state
+    
+  - bid: "1S"
+    type: "Natural"
+    meaning: "12-19 HCP, 4+ Spades"
+    constraints:
+      hcp: "12-19"
+      shape:
+        spades: ">= 4"
+        longest: "spades"
+    next_state: "natural_response"
+    
+  - bid: "1H"
+    type: "Natural"
+    meaning: "12-19 HCP, 4+ Hearts"
+    constraints:
+      hcp: "12-19"
+      shape:
+        hearts: ">= 4"
+        longest: "hearts"
+    next_state: "natural_response"
+
+  - bid: "1D"
+    type: "Natural"
+    meaning: "12-19 HCP, 4+ Diamonds"
+    constraints:
+      hcp: "12-19"
+      shape:
+        diamonds: ">= 4"
+        longest: "diamonds"
+    next_state: "natural_response"
+    
+  - bid: "1C"
+    type: "Natural"
+    meaning: "12-19 HCP, 4+ Clubs"
+    constraints:
+      hcp: "12-19"
+      shape:
+        clubs: ">= 4"
+    next_state: "natural_response"
+  
+  - bid: "Pass"
+    type: "Natural"
+    meaning: "Pass (Weak)"
+    constraints:
+      hcp: "<=11" # Adjusted to avoid overlap with 12 HCP openings
+    next_state: "opening"

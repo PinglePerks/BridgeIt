@@ -3,6 +3,7 @@
 @using BridgeIt.WebDeal.Components
 @using BridgeIt.WebDeal.Models
 @using BridgeIt.WebDeal.Services
+@using Microsoft.AspNetCore.SignalR.Client
 @inject DealService DealService
 
 <PageTitle>Bridge Table</PageTitle>
@@ -11,55 +12,49 @@
 
     <h1 class="title">Bridge Table</h1>
 
-    <button class="deal-button" @onclick="DealNewHand">
-        Deal Random Hand
+    @if (MySeat == null)
+    {
+        @foreach (var seat in new[] { Seat.North,Seat.East, Seat.South, Seat.West })
+        {
+            <button @onclick="() => SitDown(seat)">
+                @seat
+            </button>
+        }
+    }
+
+   
+    <button class="deal-button" @onclick="Deal">
+        Deal
     </button>
     
     <button class="deal-button" @onclick="OpenCustomDealModal">
         Deal Constraint Hand
     </button>
     
-    <CustomDealModal 
-        IsVisible="@showModal" 
+    <div style="margin-top: 20px;">
+        <input type="text" @bind="bidInput" placeholder="Enter your bid (e.g., 1NT)" />
+        <button @onclick="SubmitBid">Submit Bid</button>
+    </div>
+
+    <CustomDealModal
+        IsVisible="@showModal"
         OnSubmit="HandleCustomDeal"
         OnCancel="CloseCustomDealModal" />
+    
+    <div class="table-container">
 
-    @if (currentDeal != null)
-    {
-        <div class="table-container">
-
-            <!-- NORTH -->
-            <div class="hand north">
-                <HandComponent Seat="@Seat.North" Hand="currentDeal[Seat.North]" />
-            </div>
-
-            <div class="middle-row">
-
-                <!-- WEST -->
-                <div class="hand west">
-                    <HandComponent Seat="@Seat.West" Hand="currentDeal[Seat.West]" IsVertical=true />
+            asdas
+            @if (MyHand != null)
+            {
+                @MyHand.Cards.Count
+                <!-- SOUTH -->
+                <div class="hand south">
+                    <HandComponent Seat="@Seat.South" Hand="MyHand" IsPlayer="true" />
                 </div>
-
-                <!-- TABLE CENTER -->
-                <div class="table-center">
-                    <h2>♣ Bidding</h2>
-                    <p class="placeholder">Bidding info will appear here…</p>
-                </div>
-
-                <!-- EAST -->
-                <div class="hand east">
-                    <HandComponent Seat="@Seat.East" Hand="currentDeal[Seat.East]" IsVertical=true />
-                </div>
-
-            </div>
-
-            <!-- SOUTH -->
-            <div class="hand south">
-                <HandComponent Seat="@Seat.South" Hand="currentDeal[Seat.South]" />
-            </div>
+            }
 
         </div>
-    }
+    
 </div>
 
 <style>
@@ -151,12 +146,43 @@
 
 
 @code {
-    private Dictionary<Seat, Hand>? currentDeal;
+    private HubConnection hubConnection { get; set; }
+    private Hand? MyHand { get; set; }
+    private string bidInput = string.Empty;
 
-    protected override void OnInitialized()
+    private Seat? MySeat = null;
+
+    protected override async Task OnInitializedAsync()
     {
-        DealNewHand();
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://localhost:7005/gamehub") // Point to the API URL
+            .Build();
+        
+        hubConnection.On<HandDto>("ReceiveHand", async (dto) =>
+        {
+            // 1. Move to the UI thread explicitly
+            await InvokeAsync(() =>
+            {
+                // 2. Update your variable
+                var domainCards = new List<Card>();
+        
+                foreach (var c in dto.Cards)
+                {
+                    Console.WriteLine($"{c.Suit} + {(int)c.Suit}");
+                    var domainCard = new Card(c.Suit, c.Rank);
+                    domainCards.Add(domainCard);
+                }
+
+                MyHand = new Hand(domainCards);
+
+                // 3. Force the refresh
+                StateHasChanged();
+            });
+        });
+
+        await hubConnection.StartAsync();
     }
+    
     
     private bool showModal = false;
 
@@ -172,14 +198,56 @@
         showModal = false;
     }
 
-    private void HandleCustomDeal(CustomDealRequest request)
+    // private void HandleCustomDeal(CustomDealRequest request)
+    // {
+    //     currentDeal = DealService.DealCustom(request);
+    //     showModal = false;
+    // }
+    //
+    // private void DealNewHand()
+    // {
+    //     currentDeal = DealService.DealRandomHand();
+    // }
+
+    private async void Deal()
     {
-        currentDeal = DealService.DealCustom(request);
+        await hubConnection.SendAsync("DealTheCards");
+    }
+    
+    private async void SitDown(Seat seat)
+    {
+        MySeat = seat;
+        await hubConnection.SendAsync("IdentifyPlayer", seat);
+    }
+    
+
+    private async void HandleCustomDeal(CustomDealRequest request)
+    {
+        await hubConnection.SendAsync("ConstrainedCardDeal", request);
         showModal = false;
     }
 
-    private void DealNewHand()
+    private async void MakeBid(string bid)
     {
-        currentDeal = DealService.DealRandomHand();
+        await hubConnection.SendAsync("MakeBid", bid);
     }
+    
+    public class HandDto
+    {
+        public List<CardDto> Cards { get; set; } = new();
+    }
+    
+    private void SubmitBid()
+    {
+        if (!string.IsNullOrWhiteSpace(bidInput))
+        {
+            MakeBid(bidInput);
+            bidInput = string.Empty;  // Clear the input after submitting
+        }
+    }
+
+    public record CardDto(Suit Suit, Rank Rank);
+
 }
+
+

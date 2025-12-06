@@ -20,6 +20,32 @@ public class YamlRuleLoader
         _constraintFactories = constraintFactories;
     }
 
+    public IBiddingRule LoadRuleFromYaml(string filePath)
+    {
+
+        
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine($"Error: Directory '{filePath}' not found.");
+        }
+
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+
+                var yamlContent = File.ReadAllText(filePath);
+                var yamlData = deserializer.Deserialize<YamlSystem>(yamlContent);
+
+                // Use the injected factories to create the rule
+                var rule = new YamlDerivedRule(yamlData, _constraintFactories, _derivationFactories);
+
+                return rule;
+        
+        
+
+    }
+
     public IEnumerable<IBiddingRule> LoadRulesFromDirectory(string directoryPath)
     {
         var rules = new List<IBiddingRule>();

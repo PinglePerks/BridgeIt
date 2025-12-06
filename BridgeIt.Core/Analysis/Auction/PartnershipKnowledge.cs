@@ -28,6 +28,8 @@ public class PartnershipKnowledge
         { Suit.Diamonds, 13 },
         { Suit.Clubs, 13 }
     };
+
+    public PartnershipKnowledge? PartnerKnowledgeOfMe { get; set; }
     
 
     // --- Specific Attributes ---

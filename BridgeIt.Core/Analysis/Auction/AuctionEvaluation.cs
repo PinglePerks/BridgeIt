@@ -1,8 +1,9 @@
 using System.Threading.Tasks.Dataflow;
-using BridgeIt.Core.Analysis.Hand;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.Domain.Utilities;
 
 namespace BridgeIt.Core.Analysis.Auction;
 
@@ -53,24 +54,35 @@ public static class AuctionEvaluator
         };
         
     }
-    public static PartnershipKnowledge AnalyzeKnowledge(AuctionHistory history, Seat mySeat, Domain.Primatives.Hand myHand)
+    public static PartnershipKnowledge AnalyzeKnowledge(AuctionHistory history, Seat mySeat, Hand myHand)
     {
         var knowledge = new PartnershipKnowledge();
-
+        
         var partnersKnowledgeOfMe = new PartnershipKnowledge();
+        
+
+
 
         var myBids = history.GetAllPartnerBids((Seat)mySeat + 2 % 4);
+        
         foreach (var bid in myBids)
             if (bid.AppliedConstraint != null)
                 partnersKnowledgeOfMe = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, partnersKnowledgeOfMe);
         
+        knowledge.PartnerKnowledgeOfMe = partnersKnowledgeOfMe;
         
-
+        AnalyzeKnowledgeOfMe(history, mySeat, myHand, knowledge);
+        
+        return knowledge;
+    }
+    
+    public static PartnershipKnowledge AnalyzeKnowledgeOfMe(AuctionHistory history, Seat mySeat, Hand myHand, PartnershipKnowledge knowledge)
+    {
         var partnerBids = history.GetAllPartnerBids(mySeat);
         
         foreach (var bid in partnerBids)
             if (bid.AppliedConstraint != null)
-                knowledge = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, knowledge, partnersKnowledgeOfMe);
+                knowledge = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, knowledge);
 
         var handShape = ShapeEvaluator.GetShape(myHand);
         
@@ -79,8 +91,8 @@ public static class AuctionEvaluator
         
         return knowledge;
     }
-
-    public static PartnershipKnowledge ExtractKnowledgeFromConstraint(IBidConstraint constraint, PartnershipKnowledge knowledge, PartnershipKnowledge? partnershipKnowledgeOfMe = null)
+    
+    public static PartnershipKnowledge ExtractKnowledgeFromConstraint(IBidConstraint constraint, PartnershipKnowledge knowledge)
     {
         switch (constraint)
         {
@@ -88,7 +100,7 @@ public static class AuctionEvaluator
 
                 foreach (var child in composite.Constraints)
                 {
-                    knowledge = ExtractKnowledgeFromConstraint(child, knowledge, partnershipKnowledgeOfMe);
+                    knowledge = ExtractKnowledgeFromConstraint(child, knowledge);
                 }
                 return knowledge;
             
@@ -100,6 +112,11 @@ public static class AuctionEvaluator
             
             case BalancedConstraint balancedConstraint:
                 knowledge.PartnerIsBalanced = true;
+                foreach (Suit s in Enum.GetValues(typeof(Suit)))
+                {
+                    knowledge.PartnerMinShape[s] = 2;
+                    knowledge.PartnerMaxShape[s] = 5;
+                }
                 
                 return knowledge;
             
@@ -113,21 +130,29 @@ public static class AuctionEvaluator
                     knowledge.PartnerMaxShape[suitLengthConstraint.Suit!.Value]);
                 
                 
-                
-                
-                
                 return knowledge;
             
             case PartnerKnowledgeConstraint partnerKnowledgeConstraint:
-                if (partnershipKnowledgeOfMe == null)
+                if (knowledge.PartnerKnowledgeOfMe == null)
                     return knowledge;
+                var partnershipKnowledgeOfMe = knowledge.PartnerKnowledgeOfMe;
 
                 partnerKnowledgeConstraint.Requirements.TryGetValue("fit_in_suit", out var suit);
-                if (suit == null) return knowledge;
-                var s = suit.ToSuit();
+                if (suit != null && suit != "any")
+                {
+                    var s = suit.ToSuit();
+                    var min = 8 - partnershipKnowledgeOfMe.PartnerMinShape[s];
+                    knowledge.PartnerMinShape[s] = Math.Max(min, knowledge.PartnerMinShape[s]);
+                }
                 
-                var min = 8 - partnershipKnowledgeOfMe.PartnerMinShape[s];
-                knowledge.PartnerMinShape[s] = Math.Max(min, knowledge.PartnerMinShape[s]);
+                partnerKnowledgeConstraint.Requirements.TryGetValue("combined_hcp", out var hcp);
+                if (hcp != null)
+                {
+                    knowledge.PartnerHcpMin = StringParser.ParseMinimum(hcp) - partnershipKnowledgeOfMe.PartnerHcpMin;
+                }
+                
+                
+                
 
                 return knowledge;
                 

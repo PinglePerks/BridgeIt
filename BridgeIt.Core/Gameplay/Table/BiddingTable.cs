@@ -1,5 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hand;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.Gameplay.Table;
 
-public sealed class BiddingTable(
+public class BiddingTable(
     BiddingEngine.Core.BiddingEngine engine,
     IAuctionRules rules,
     ISeatRotationService rotation,
@@ -37,13 +37,13 @@ public sealed class BiddingTable(
                 );
             
             
-            logger.LogInformation($"Evaluating {current} hand");
+            logger.LogDebug($"Evaluating {current} hand");
             
             var decision = engine.ChooseBid(ctx);
             
             auctionHistory.Add(decision);
 
-            observer.OnBid(current, decision.ChosenBid);
+            observer.OnBid(current, decision);
 
             if (rules.ShouldStop(auctionHistory.Bids))
                 break;

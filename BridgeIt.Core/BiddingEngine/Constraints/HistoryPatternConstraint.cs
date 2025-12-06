@@ -4,36 +4,29 @@ using BridgeIt.Core.Domain.Bidding;
 
 namespace BridgeIt.Core.BiddingEngine.Constraints;
 
-public class HistoryPatternConstraint : IBidConstraint
+public class HistoryPatternConstraint(List<string> pattern) : IBidConstraint
 {
-    private readonly List<string> _pattern;
-
-    public HistoryPatternConstraint(List<string> pattern)
-    {
-        _pattern = pattern;
-    }
-
     public bool IsMet(BiddingContext ctx)
     {
         var history = ctx.AuctionHistory.Bids;
 
-        if (_pattern[0] == "*")
+        if (pattern[0] == "*")
         {
             return true;
         }
         
         // Handle "Pass*"
-        if (_pattern.Count == 1 && _pattern[0] == "Pass*")
+        if (pattern.Count == 1 && pattern[0] == "Pass*")
         {
             // True if empty (Dealer) OR all bids are Pass
             return history.Count == 0 || history.All(b => b.ChosenBid.Type == BidType.Pass);
         }
         
         // Pattern match
-        if (_pattern[0] == "Pass*")
+        if (pattern[0] == "Pass*")
         {
             // Calculate how many extra passes there are at the start of history
-            var difference = history.Count - _pattern.Count;
+            var difference = history.Count - pattern.Count;
             if (difference < -1) return false;
     
             // The first 'difference' items in history should all be Pass
@@ -41,11 +34,11 @@ public class HistoryPatternConstraint : IBidConstraint
                 return false;
     
             // Now check that the remaining history matches the pattern (skipping "Pass*")
-            for (var i = 1; i < _pattern.Count; i++)
+            for (var i = 1; i < pattern.Count; i++)
             {
                 var historyIndex = difference + i;
                 
-                if (_pattern[i] != history[historyIndex].ChosenBid.ToString() && _pattern[i] != "*")
+                if (pattern[i] != history[historyIndex].ChosenBid.ToString() && pattern[i] != "*")
                     return false;
             }
     

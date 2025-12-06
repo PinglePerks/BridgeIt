@@ -1,0 +1,62 @@
+system_name: "Responses to Weak 1NT"
+priority: 100 # High priority for conventions
+description: "Stayman and Transfers after 1NT opening"
+
+trigger:
+  conditions:
+    current_state: "1nt_response"
+    seat_role: "responder"
+
+nodes:
+  # --- TRANSFERS ---
+  - bid: "2D"
+    type: "Convention"
+    meaning: "Transfer to Hearts (5+ Hearts)"
+    constraints:
+      shape:
+        hearts: ">=5"
+    next_state: "transfer_response" # Opener must complete this
+
+  - bid: "2H"
+    type: "Convention"
+    meaning: "Transfer to Spades (5+ Spades)"
+    constraints:
+      shape:
+        spades: ">=5"
+    next_state: "transfer_response"
+
+  # --- STAYMAN ---
+  - bid: "2C"
+    type: "Convention"
+    meaning: "Stayman: Asking for 4-card major"
+    constraints:
+      hcp: ">= 11" # Invitational+
+      any_of:
+        - shape: { hearts: ">= 4" }
+        - shape: { spades: ">= 4" }
+    next_state: "stayman_response"
+
+  - bid: "2S"
+    type: "Natural"
+    meaning: "11 points exactly"
+    constraints:
+      hcp: "11"
+    next_state: "natural_response" # Usually ends auction
+
+  # --- INVITATIONAL NT ---
+  - bid: "2NT"
+    type: "Natural"
+    meaning: "Invitational to 3NT (11-12 HCP)"
+    constraints:
+      hcp: "12-13"
+      shape: "balanced"
+    next_state: "natural_response"
+
+  # --- GAME FORCE NT ---
+  - bid: "3NT"
+    type: "Natural"
+    meaning: "Sign off in Game (13+ HCP)"
+    constraints:
+      hcp: ">= 13"
+      shape: "balanced"
+    next_state: "natural_response"

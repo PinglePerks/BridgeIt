@@ -1,0 +1,15 @@
+system_name: "Opener Completes Transfer"
+priority: 100
+description: "Automatic completion of red suit transfers"
+
+trigger:
+  conditions:
+    current_state: "transfer_response"
+    seat_role: "opener"
+
+nodes:
+  - dynamic_bid:
+      bid_type: "transfer" # Requires TransferBidDerivation factory
+    type: "Convention"
+    meaning: "Completing transfer (Forced)"
+    next_state: "natural_response"

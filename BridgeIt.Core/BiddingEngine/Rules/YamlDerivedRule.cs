@@ -11,6 +11,7 @@ namespace BridgeIt.Core.BiddingEngine.Rules;
 
 public class YamlDerivedRule : BiddingRuleBase
 {
+    public override string Name { get; }
     private readonly YamlSystem _definition;
     private readonly List<(IBidDerivation Bid, IBidConstraint Logic, string NextState, string Reason)> _options;
     private readonly IEnumerable<IConstraintFactory> _constraintFactories;
@@ -23,6 +24,7 @@ public class YamlDerivedRule : BiddingRuleBase
     // Unified Constructor: Takes the Definition (Data) and the Factories (Services)
     public YamlDerivedRule(YamlSystem definition, IEnumerable<IConstraintFactory> constraintFactories, IEnumerable<IBidDerivationFactory> derivationFactories)
     {
+        Name = definition.SystemName;
         _definition = definition;
         _constraintFactories = constraintFactories;
         _options = new List<(IBidDerivation, IBidConstraint, string, string)>();
@@ -65,7 +67,7 @@ public class YamlDerivedRule : BiddingRuleBase
                 var bid = option.Bid.DeriveBid(ctx);
 
                 if(IsValidBid(bid, ctx.AuctionEvaluation.CurrentContract))
-                    return new BiddingDecision(bid, option.Reason, option.NextState, option.Logic);
+                    return new BiddingDecision(bid, $"Rule:{Name} || Reason:{option.Reason}", option.NextState, option.Logic);
             }
         }
         return null;
@@ -126,8 +128,9 @@ public class YamlDerivedRule : BiddingRuleBase
         return composite;
     }
     
-    private bool IsValidBid(Bid candidate, Bid? currentContract)
+    private bool IsValidBid(Bid? candidate, Bid? currentContract)
     {
+        if (candidate == null) return false;
         // Pass is always valid (unless specific competitive rules prevent it, but standard bridge allows pass)
         if (candidate.Type == BidType.Pass) return true;
 

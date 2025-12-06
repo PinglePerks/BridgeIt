@@ -3,7 +3,7 @@ using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.Analysis.Auction;
 
-public sealed class AuctionHistory
+public class AuctionHistory
 {
     private readonly List<BiddingDecision> _bids;   // internal mutable list
 
@@ -75,7 +75,7 @@ public sealed class AuctionHistory
                 partnerBids.Add(_bids[i]);
             }
         }
-
+        
         return partnerBids;
     }
 

@@ -8,48 +8,6 @@ public interface IBidDerivationFactory
     IBidDerivation Create(Dictionary<string,object> dict);
 }
 
-public class LengthBidDerivationFactory : IBidDerivationFactory
-{
-    public bool CanCreate(string key) => key == "length_bid";
-    
-    public IBidDerivation Create(Dictionary<string,object> dict)
-    {
-        return new LengthBidDerivation(dict["type"].ToString());
-    }
-}
-
-public class SimpleRaiseDerivationFactor : IBidDerivationFactory
-{
-    public bool CanCreate(string key) => key == "simple_raise";
-    
-    public IBidDerivation Create(Dictionary<string,object> dict)
-    {
-        if(!dict.ContainsKey("level")) throw new ArgumentException("Simple raise derivation must have a level");
-        if(!int.TryParse((string)dict["level"], out _)) throw new ArgumentException("Simple raise derivation level must be an integer");
-        return new SimpleRaise(int.Parse((string)dict["level"]));
-    }
-}
-
-public class TransferDerivationFactory : IBidDerivationFactory
-{
-    public bool CanCreate(string key) => key == "transfer";
-    
-    public IBidDerivation Create(Dictionary<string,object> dict)
-    {
-        return new TransferBidDerivation();
-    }
-}
-
-public class OneLevelResponderBidDerivationFactory : IBidDerivationFactory
-{
-    public bool CanCreate(string key) => key == "one_level_responder";
-
-    public IBidDerivation Create(Dictionary<string, object> dict)
-    {
-        return new OneLevelResponderBidDerivation();
-    }
-}
-
 public class ResponderBidDerivationFactory : IBidDerivationFactory
 {
     public bool CanCreate(string key) => key == "responder";

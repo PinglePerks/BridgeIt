@@ -1,0 +1,36 @@
+system_name: "Opener Rebids to Stayman"
+priority: 100
+description: "Replies to 2C Stayman"
+
+trigger:
+  conditions:
+    current_state: "stayman_response"
+    seat_role: "opener"
+
+nodes:
+  - bid: "2H"
+    type: "Natural"
+    meaning: "Showing 4 Hearts (may also have Spades)"
+    constraints:
+      shape:
+        hearts: ">= 4"
+    next_state: "natural_response"
+
+  - bid: "2S"
+    type: "Natural"
+    meaning: "Showing 4 Spades (Denies 4 Hearts)"
+    constraints:
+      shape:
+        hearts: "<= 3"
+        spades: ">= 4"
+    next_state: "natural_response"
+
+  # Default: No Majors
+  - bid: "2D"
+    type: "Artificial"
+    meaning: "No 4-card major"
+    constraints:
+      shape:
+        hearts: "<= 3"
+        spades: "<= 3"
+    next_state: "natural_response"

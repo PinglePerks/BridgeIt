@@ -6,6 +6,7 @@ namespace BridgeIt.Core.BiddingEngine.Rules;
 
 public class GeneralGameObjectiveRule : BiddingRuleBase
 {
+    public override string Name { get; } = "Codebased: General Game Objective";
     public override int Priority { get; } = 1;
     public override bool IsApplicable(BiddingContext ctx)
     {
@@ -29,7 +30,7 @@ public class GeneralGameObjectiveRule : BiddingRuleBase
         Bid? targetContract = DetermineTargetContract(totalHcp, bestFit, isBalanced);
 
         if (targetContract == null) 
-            return new BiddingDecision(Bid.Pass(), "No game interest found", "part_score");
+            return new BiddingDecision(Bid.Pass(), $"{Name} || Reason: No game interest found", "part_score");
 
         // 3. Compare Target vs Current
         

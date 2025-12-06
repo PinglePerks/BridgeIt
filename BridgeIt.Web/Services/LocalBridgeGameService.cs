@@ -1,5 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hand;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Bidding;

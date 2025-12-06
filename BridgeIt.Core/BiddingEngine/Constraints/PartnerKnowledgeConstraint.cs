@@ -21,26 +21,42 @@ public class PartnerKnowledgeConstraint : IBidConstraint
             switch (req.Key)
             {
                 case "combined_hcp":
+                    
                     if (!CheckHcpRequirement(req.Value, k.CombinedHcpMin(ctx.HandEvaluation.Hcp))) return false;
                     break;
                 case "shape":
+                    
                     if (req.Value == "balanced")
                     {
                         if (ctx.PartnershipKnowledge.PartnerIsBalanced) return true;
+                        
                         return false;
                     }
 
                     break;
                 
                 case "fit_in_suit":
+                    
                     if (req.Value == "no_major")
                     {
                         if(!k.HasFit(Suit.Hearts,ctx.HandEvaluation.Shape[Suit.Hearts]) && !k.HasFit(Suit.Spades, ctx.HandEvaluation.Shape[Suit.Spades])) return true;
                         return false;
                     }
+
+                    if (req.Value == "any")
+                    {
+                        
+                        if(k.HasFit(Suit.Diamonds,ctx.HandEvaluation.Shape[Suit.Diamonds]) || k.HasFit(Suit.Clubs, ctx.HandEvaluation.Shape[Suit.Clubs])) return true;
+                        
+                        if(k.HasFit(Suit.Hearts,ctx.HandEvaluation.Shape[Suit.Hearts]) || k.HasFit(Suit.Spades, ctx.HandEvaluation.Shape[Suit.Spades])) return true;
+                        
+                        return false;
+                    }
                     
                     var suit = req.Value.ToSuit();
+                    
                     if(!k.HasFit(suit, ctx.HandEvaluation.Shape[suit])) return false;
+                    
                     break;
                 
                 case "denied_major_fit":

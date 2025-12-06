@@ -1,0 +1,46 @@
+system_name: "Opener Balanced Rebid"
+priority: 25 # Matches your C# priority
+description: "Opener rebids NT with balanced hand (15-19)"
+
+trigger:
+  conditions:
+    seat_role: "opener"
+
+nodes:
+  # --- SCENARIO 1: Responding at 1-Level (e.g., 1H - 1S - ?) ---
+  
+  # Rebid 1NT (15-17 HCP)
+  - bid: "1NT"
+    type: "Natural"
+    meaning: "Balanced, 15-17 HCP"
+    constraints:
+      hcp: "15-17"
+      shape: "balanced"
+      # Implicit context: Current contract must be at level 1 for 1NT to be valid
+    next_state: "opener_rebid_1nt"
+
+  # Jump Rebid 2NT (18-19 HCP)
+  - bid: "2NT"
+    type: "Natural"
+    meaning: "Balanced, 18-19 HCP (Jump Rebid)"
+    constraints:
+      hcp: "18-19"
+      shape: "balanced"
+      # Ensure we are jumping from level 1 response
+      current_contract: "1level"
+    next_state: "opener_rebid_2nt"
+
+  # --- SCENARIO 2: Responding at 2-Level (e.g., 1H - 2C - ?) ---
+
+  # Rebid 2NT (15-19 HCP - Wide Range because partner forced to level 2)
+  # Note: If partner's 2C is game forcing (2/1), this shows balanced.
+  # In Acol (limit responses), 2NT here usually shows 15-16 or 15-17 depending on partnership style.
+  # Your code covered 15-19, so mirroring that:
+  - bid: "2NT"
+    type: "Natural"
+    meaning: "Balanced, 15-19 HCP"
+    constraints:
+      hcp: "15-19"
+      shape: "balanced"
+      current_contract: "2level"
+    next_state: "opener_rebid_2nt"

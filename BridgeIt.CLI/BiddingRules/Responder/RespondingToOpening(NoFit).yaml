@@ -1,0 +1,73 @@
+system_name: "Responder New Suit (No Fit)"
+priority: 2
+description: "Bidding a new suit when no fit found yet"
+
+trigger:
+  conditions:
+    current_state: "natural_response"
+    seat_role: "responder"
+
+nodes:
+  - bid: "1H"
+    type: "Natural"
+    meaning: "4+ Hearts, 6+ HCP"
+    constraints:
+      current_contract: { level: 1 } 
+      hcp: ">= 6"
+      shape: { hearts: ">= 4" }
+    next_state: "natural_response"
+
+  - bid: "1S"
+    type: "Natural"
+    meaning: "4+ Spades, 6+ HCP"
+    constraints:
+      current_contract: { level: 1 }
+      hcp: ">= 6"
+      shape: { spades: ">= 4" }
+    next_state: "natural_response"
+
+  - bid: "1D"
+    type: "Natural"
+    meaning: "4+ Diamonds, 6+ HCP"
+    constraints:
+      current_contract: { level: 1 }
+      hcp: ">= 6"
+      shape: { diamonds: ">= 4" }
+    next_state: "natural_response"
+
+  # --- 2-OVER-1 RESPONSES (10+ HCP) ---
+  # e.g., 1S - 2H (Requires 10+ points, 5+ hearts usually)
+  - bid: "2H"
+    type: "Natural"
+    meaning: "5+ Hearts, 10+ HCP (Change of suit)"
+    constraints:
+      hcp: ">= 10"
+      shape: { hearts: ">= 5" }
+      # Ensure valid: e.g. don't bid 2H over 2S
+    next_state: "natural_response"
+
+  - bid: "2D"
+    type: "Natural"
+    meaning: "4+ Diamonds, 10+ HCP"
+    constraints:
+      hcp: ">= 10"
+      shape: { diamonds: ">= 4" }
+    next_state: "natural_response"
+
+  - bid: "2C"
+    type: "Natural"
+    meaning: "4+ Clubs, 10+ HCP"
+    constraints:
+      hcp: ">= 10"
+      shape: { clubs: ">= 4" }
+    next_state: "natural_response"
+
+  # --- 1NT RESPONSE (Dustbin) ---
+  # 6-9 HCP, no support, no spade suit to bid at 1-level
+  - bid: "1NT"
+    type: "Natural"
+    meaning: "6-9 HCP, Balanced/Semi-Balanced, Denies support"
+    constraints:
+      hcp: "6-9"
+      current_contract: { level: 1 }
+    next_state: "natural_response"

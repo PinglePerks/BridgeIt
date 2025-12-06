@@ -9,6 +9,8 @@ using BridgeIt.Core.Gameplay.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 
 namespace BridgeIt.TestHarness.Setup;
@@ -45,22 +47,19 @@ public class TestBridgeEnvironment
         services.AddLogging(builder => 
         {
             builder.AddConsole();
-            builder.SetMinimumLevel(LogLevel.Information); // Set to Debug to see your detailed logs
+            builder.AddDebug();
+            builder.SetMinimumLevel(LogLevel.Debug); // Set to Debug to see your detailed logs
         });
 
         Provider = services.BuildServiceProvider();
-        
-
     }
-
-    
     
     public TestBridgeEnvironment WithAllRules(string directoryPath)
     {
         var loader = Provider.GetRequiredService<YamlRuleLoader>();
         var rules = loader.LoadRulesFromDirectory(directoryPath).ToList();
         //rules.Add(new RespondingToNaturalOpening());
-        rules.Add(new ResponseTo2ntOpening());
+        //rules.Add(new ResponseTo2ntOpening());
         rules.Add(new MajorFitWithPartner());
         rules.Add(new GeneralGameObjectiveRule());
         rules.Add(new OpenerUnbalancedRebidRule());
@@ -77,6 +76,9 @@ public class TestBridgeEnvironment
         var loader = Provider.GetRequiredService<YamlRuleLoader>();
         var rules = new List<IBiddingRule>();
         
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
         // Manually load specific files
         // (You might need to expose a LoadRuleFromFile method in loader, or just use this logic)
         foreach (var path in filePaths)
@@ -85,15 +87,16 @@ public class TestBridgeEnvironment
             // For now, leveraging the loader to load a directory containing these, 
             // or assuming you add a method LoadSingleFile to YamlRuleLoader.
             // Let's implement a simple file loader here for flexibility:
-            
-            var text = File.ReadAllText(path);
-            // We need access to the deserializer/factories. 
-            // ideally YamlRuleLoader exposes LoadRule(string yaml).
-            // If not, we can just use directory loading for now.
+
+            var rule = loader.LoadRuleFromYaml(path);
+            rules.Add(rule);
+
+
         }
-        
-        // Fallback: Load directory but filter? 
-        // Ideally update YamlRuleLoader to support single files.
+        // Re-register or Instantiate Engine with these specific rules
+        var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
+        Engine = new BiddingEngine(rules,logger);
+        RebuildTable();
         return this;
     }
 

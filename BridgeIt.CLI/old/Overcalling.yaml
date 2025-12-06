@@ -1,0 +1,28 @@
+system_name: "Overcalling"
+priority: 60
+description: "Overcalling"
+
+trigger:
+  conditions:
+    seat_role: "overcaller"
+    
+nodes:
+  - bid: "1NT"
+    type: "Natural"
+    meaning: "Showing 16+ points"
+    constraints:
+      hcp: ">=16"
+    next_state: "overcall"
+  
+  - dynamic_bid:
+      bid_type: "length_bid"
+      type: "overcall"
+    type: "overcall"
+    meaning: "length in named suit"
+    constraints:
+      shape:
+        any: ">=6"
+    next_state: "overcall"
+  
+  
+

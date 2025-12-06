@@ -27,6 +27,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConstraintFactory, PartnerKnowledgeConstraintFactory>();
         services.AddSingleton<IConstraintFactory, SeatRoleConstraintFactory>();
         services.AddSingleton<IConstraintFactory, CurrentContractConstraintFactory>();
+        services.AddSingleton<IConstraintFactory, RomanKeyCardConstrainFactory>();
         
         // Register Bid Derivations
         services.AddSingleton<IBidDerivationFactory, LengthBidDerivationFactory>();

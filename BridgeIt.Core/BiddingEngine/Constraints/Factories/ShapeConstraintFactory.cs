@@ -21,6 +21,12 @@ public class ShapeConstraintFactory : IConstraintFactory
             var composite = new CompositeConstraint();
             foreach (DictionaryEntry entry in dict)
             {
+                if (entry.Key.ToString() == "longest")
+                {
+                    composite.Add(new LongestConstraint(entry.Value.ToString()));
+                    continue;
+                }
+                
                 string suitName = entry.Key.ToString();
                 string lengthExpr = entry.Value.ToString();
                 composite.Add(new SuitLengthConstraint(suitName, lengthExpr));

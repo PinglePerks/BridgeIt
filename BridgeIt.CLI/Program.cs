@@ -1,5 +1,4 @@
-﻿using BridgeIt.Core.Analysis.Hand;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
@@ -21,7 +20,7 @@ services.AddBridgeItCore();
 services.AddLogging(builder => 
 {
     builder.AddConsole();
-    builder.SetMinimumLevel(LogLevel.Error); // Set to Debug to see your detailed logs
+    builder.SetMinimumLevel(LogLevel.Information); // Set to Debug to see your detailed logs
 });
 var provider = services.BuildServiceProvider();
 
@@ -33,7 +32,7 @@ var loader = provider.GetRequiredService<YamlRuleLoader>();
 var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 var rules = loadedRules.ToList();
 //rules.Add(new RespondingToNaturalOpening());
-rules.Add(new ResponseTo2ntOpening());
+//rules.Add(new ResponseTo2ntOpening());
 rules.Add(new GeneralGameObjectiveRule());
 
 // Register the loaded rules into the Engine dynamically

@@ -1,10 +1,10 @@
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hand;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Core;
 
-public sealed class BiddingContext
+public class BiddingContext
 {
     //immutable / raw data
     public Hand Hand { get; }

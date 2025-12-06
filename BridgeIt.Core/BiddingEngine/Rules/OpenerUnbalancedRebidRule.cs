@@ -9,6 +9,7 @@ namespace BridgeIt.Core.BiddingEngine.Rules;
 
 public class OpenerUnbalancedRebidRule : BiddingRuleBase
 {
+    public override string Name { get; } = "Codebased---Opener Unbalanced Rebid";
     public override int Priority { get; } = 25;
     public override bool IsApplicable(BiddingContext ctx)
     {
@@ -82,6 +83,8 @@ public class OpenerUnbalancedRebidRule : BiddingRuleBase
                 "natural",
                 compositeConstraint);
         }
+        
+        
         
         return new BiddingDecision(
             Bid.SuitBid(lowestBidLevel, bidSuit),

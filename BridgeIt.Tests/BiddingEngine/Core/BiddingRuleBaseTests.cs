@@ -9,6 +9,7 @@ public class BiddingRuleBaseTests
 {
     private class TestableBiddingRule : BiddingRuleBase
     {
+        public override string Name => "Testable Rule";
         public override int Priority => 0;
         public override bool IsApplicable(BiddingContext ctx) => false;
         public override BiddingDecision? Apply(BiddingContext ctx) => null;

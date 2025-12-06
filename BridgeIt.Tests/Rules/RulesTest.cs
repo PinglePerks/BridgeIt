@@ -4,4 +4,5 @@ namespace BridgeIt.Tests.Rules;
 public class RulesTest
 {
     
+    
 }

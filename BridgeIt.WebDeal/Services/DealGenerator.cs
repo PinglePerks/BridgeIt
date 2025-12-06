@@ -1,4 +1,4 @@
-using BridgeIt.Core.Analysis.Hand;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Dealer.Deal;
 using BridgeIt.WebDeal.Models;

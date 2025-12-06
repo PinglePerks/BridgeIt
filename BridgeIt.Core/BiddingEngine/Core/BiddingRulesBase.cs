@@ -1,6 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hand;
-using BridgeIt.Core.BiddingEngine.Constraints;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
@@ -8,6 +7,7 @@ namespace BridgeIt.Core.BiddingEngine.Core;
 
 public abstract class BiddingRuleBase : IBiddingRule
 {
+    public abstract string Name { get; }
     public abstract int Priority { get; }
     public abstract bool IsApplicable(BiddingContext ctx);
     public abstract BiddingDecision? Apply(BiddingContext ctx);
@@ -34,28 +34,6 @@ public abstract class BiddingRuleBase : IBiddingRule
         if (currentContract == null) return 1;
         if (currentContract.Type == BidType.NoTrumps) return currentContract.Level + 1;
         return currentContract.Level;
-    }
-}
-
-public class ResponseTo2ntOpening : BiddingRuleBase
-{
-    public override int Priority => 100;
-    public override bool IsApplicable(BiddingContext ctx) 
-        => ctx.AuctionEvaluation.PartnershipState == "responses_to_2nt_opening";
-
-    public override BiddingDecision? Apply(BiddingContext ctx)
-    {
-        if (ctx.HandEvaluation.Shape[Suit.Hearts] >= 5)
-        {
-            return new BiddingDecision(Bid.SuitBid(3, Suit.Diamonds), "Transfer to hearts", "transfer",
-                new SuitLengthConstraint("hearts", ">=5"));
-        }
-        if (ctx.HandEvaluation.Shape[Suit.Spades] >= 5)
-        {
-            return new BiddingDecision(Bid.SuitBid(3, Suit.Hearts), "Transfer to spades", "transfer",
-                new SuitLengthConstraint("spades", ">=5"));
-        } 
-        return null;
     }
 }
 
@@ -97,56 +75,6 @@ public class ResponseTo2ntOpening : BiddingRuleBase
 //         
 // }
 
-public class MajorFitWithPartner : BiddingRuleBase
-{
-    public override int Priority => 100;
-
-    public override bool IsApplicable(BiddingContext ctx)
-    {
-        if(ctx.AuctionEvaluation.PartnershipState != "natural_response") return false;
-        var partnerBid = ctx.AuctionEvaluation.PartnerLastBid;
-        if(partnerBid == null || partnerBid.Suit == null) return false;
-        return ctx.PartnershipKnowledge.HasFit(partnerBid.Suit!.Value, ctx.HandEvaluation.Shape[partnerBid.Suit.Value]);
-    }
-
-    public override BiddingDecision? Apply(BiddingContext ctx)
-    {
-        var nextBidLevel = GetNextSuitBidLevel(ctx.HandEvaluation.Shape.OrderByDescending(s => s.Value).First().Key,
-            ctx.AuctionEvaluation.CurrentContract);
-        var fitSuit = ctx.AuctionEvaluation.PartnerLastBid!.Suit;
-        var hcp = ctx.HandEvaluation.Hcp;
-        var losers = ctx.HandEvaluation.Losers;
-
-        if (hcp < 6) return new BiddingDecision(Bid.Pass(), "weak - under 6 hcp", "passed", new HcpConstraint("<=6"));
-
-        if (nextBidLevel == 2)
-        {
-            if (hcp < 10 || losers > 8)
-                return new BiddingDecision(Bid.SuitBid(nextBidLevel, fitSuit!.Value), "weak - under 10 hcp",
-                    "major_fit",null, true);
-        }
-        else
-        {
-            if (hcp < 10 || losers > 8)
-                return new BiddingDecision(Bid.Pass(), "weak - under 6 hcp", "passed", new HcpConstraint("<=10"));
-        }
-
-        if (nextBidLevel <= 3)
-        {
-            if (losers == 8)
-                return new BiddingDecision(Bid.SuitBid(3, fitSuit!.Value), "limited raise - not quite enough for game",
-                    "major_fit",null, true);
-        }
-
-        if (losers <= 7)
-        {
-            return new BiddingDecision(Bid.SuitBid(4, fitSuit!.Value), "Major fit + enough points for game",
-                "major_fit",null, true);
-        }
-
-        return new BiddingDecision(Bid.Pass(), "too high level to bid", "passed", new HcpConstraint("<=12"));
-    }
-}
 //
 // public class RedSuitTransfer : BiddingRuleBase
 // {
@@ -174,6 +102,7 @@ public class MajorFitWithPartner : BiddingRuleBase
 
 public class DefaultBidding : BiddingRuleBase
 {
+    public override string Name => "Codebased---Default bidding";
     public override int Priority => 1;
 
     public override bool IsApplicable(BiddingContext ctx)

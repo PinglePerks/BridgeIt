@@ -1,8 +1,12 @@
 @page "/new"
+@inject NavigationManager NavigationManager
 @using BridgeIt.Core.Domain.Primatives
 @using BridgeIt.WebDeal.Components
 @using BridgeIt.WebDeal.Models
 @using BridgeIt.WebDeal.Services
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.AspNetCore.WebUtilities;
+
 @inject DealService DealService
 
 <PageTitle>Bridge Table</PageTitle>
@@ -14,13 +18,13 @@
     <button class="deal-button" @onclick="DealNewHand">
         Deal Random Hand
     </button>
-    
+
     <button class="deal-button" @onclick="OpenCustomDealModal">
         Deal Constraint Hand
     </button>
-    
-    <CustomDealModal 
-        IsVisible="@showModal" 
+
+    <CustomDealModal
+        IsVisible="@showModal"
         OnSubmit="HandleCustomDeal"
         OnCancel="CloseCustomDealModal" />
 
@@ -30,14 +34,14 @@
 
             <!-- NORTH -->
             <div class="hand north">
-                <HandComponent Seat="@Seat.North" Hand="currentDeal[Seat.North]" />
+                <HandComponent Seat="GetSeatFromInt(SeatInt+2)" Hand="currentDeal[GetSeatFromInt(SeatInt+2)]" IsVertical=false />
             </div>
 
             <div class="middle-row">
 
                 <!-- WEST -->
                 <div class="hand west">
-                    <HandComponent Seat="@Seat.West" Hand="currentDeal[Seat.West]" IsVertical=true />
+                    <HandComponent Seat="GetSeatFromInt(SeatInt+1)" Hand="currentDeal[GetSeatFromInt(SeatInt+1)]" IsVertical=true />
                 </div>
 
                 <!-- TABLE CENTER -->
@@ -48,14 +52,14 @@
 
                 <!-- EAST -->
                 <div class="hand east">
-                    <HandComponent Seat="@Seat.East" Hand="currentDeal[Seat.East]" IsVertical=true />
+                    <HandComponent Seat="GetSeatFromInt(SeatInt+3)" Hand="currentDeal[GetSeatFromInt(SeatInt+3)]" IsVertical=true />
                 </div>
 
             </div>
 
             <!-- SOUTH -->
             <div class="hand south">
-                <HandComponent Seat="@Seat.South" Hand="currentDeal[Seat.South]" />
+                <HandComponent Seat="GetSeatFromInt(SeatInt)" Hand="currentDeal[GetSeatFromInt(SeatInt)]" IsPlayer="true" />
             </div>
 
         </div>
@@ -152,17 +156,45 @@
 @code {
     private Dictionary<Seat, Hand>? currentDeal;
 
-    protected override void OnInitialized()
+    private string? SeatStr { get; set; }
+
+    private int SeatInt { get; set; }
+
+    private Seat SeatToShow { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
+        var hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://localhost:7005/gamehub") // Point to the API URL
+            .Build();
+
+        await hubConnection.StartAsync();
+
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+        var queryParams = QueryHelpers.ParseQuery(uri.Query);
+
+        if (queryParams.TryGetValue("seat", out var param1Value))
+        {
+            SeatStr = param1Value.FirstOrDefault();
+        }
+
+        SeatInt = int.Parse(SeatStr);
+
         DealNewHand();
     }
-    
+
     private bool showModal = false;
 
     // Method to open the modal
     private void OpenCustomDealModal()
     {
         showModal = true;
+    }
+
+    private Seat GetSeatFromInt(int num)
+    {
+        return (Seat)(num % 4);
     }
 
     // Method to close the modal (passed to OnCancel)
@@ -181,4 +213,6 @@
     {
         currentDeal = DealService.DealRandomHand();
     }
+
 }
+

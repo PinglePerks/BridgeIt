@@ -32,9 +32,9 @@ public class AcolSystemTests
         var dealer = new Dealer.Deal.Dealer();
         
         //Hand Set Up
-        var northHandConstraints = HandSpecifications.BalancedOpener(15,16);
-        var eastHandConstraints = HandSpecifications.PreemptHand(Suit.Hearts);
-        var southHandConstraints = HandSpecifications.BalancedOpener(5,12);
+        var northHandConstraints = HandSpecifications.Hearts5Cards(15,17);
+        var eastHandConstraints = HandSpecifications.WeakPass;
+        var southHandConstraints = HandSpecifications.BalancedOpener(15,17);
         
         // Create a full deal (E/W get remaining cards)
         var deal = dealer.GenerateConstrainedDeal(northHandConstraints, eastHandConstraints, southHandConstraints);
@@ -55,55 +55,127 @@ public class AcolSystemTests
     {
         // Arrange
         var dealer = new Dealer.Deal.Dealer();
-        
+
+        var fullString = "North: A7 QT86 J872 T76\nEast: KJT854 7 3 AKJ84\nSouth: 96 AKJ93 AK5 Q92\nWest: Q32 542 QT964 53\n";
+            
+
+        var deal = SimpleHandParser.ParseBoard(fullString);
         //Hand Set Up
-        var northHandStr = "SA4 HAT96 DA863 C984";
-        var southHandStr = "SKJ9 HQJ432 DQT2 CQ2";
-
-        var northHand = northHandStr.ParseHand();
-        var southHand = southHandStr.ParseHand();
-        var allUsedCards = northHand.Cards.Concat(southHand.Cards).Select(c => c.ToSymbolString()).ToList();
-        
-        var fullDeck = new Deck(); // Creates a fresh 52-card deck
-
-// Filter out the used cards to get the remaining 26
-        var remainingCards = fullDeck.Cards
-            .Where(c => !allUsedCards.Contains(c.ToSymbolString()) && !allUsedCards.Contains(c.ToString())) 
-            // Note: Depending on your Parse implementation, you might need to match by value, not string representation.
-            // A safer way if you have Card objects is:
-            .Where(c => !northHand.Cards.Contains(c) && !southHand.Cards.Contains(c))
-            .ToList();
-        
-        for (var i = remainingCards.Count - 1; i > 0; i--)
-        {
-            var rand = new Random();
-            var j = rand.Next(i + 1);
-            (remainingCards[i], remainingCards[j]) = (remainingCards[j], remainingCards[i]);
-        }
-        
-        
-        
-
-// 5. Initialize the Dictionary
-        var deal =  new Dictionary<Seat, Hand>
-        {
-            [Seat.North] = northHand,
-            [Seat.South] = southHand,
-            // Deal the remaining 26 cards to East and West
-            [Seat.East]  = new (remainingCards.Take(13)),
-            [Seat.West]  = new (remainingCards.Skip(13).Take(13))
-        };
-        
         
         // Create a full deal (E/W get remaining cards)
         // Act
         // Run the auction starting with North
         var auction = _environment.Table.RunAuction(deal, Seat.North);
 
-        Console.WriteLine($"Opening Hand:     {deal[Seat.North]}\n" +
-                          $"Overcaller Hand: {deal[Seat.East]}\n" +
-                          $"Responder Hand:   {deal[Seat.South]}");
+        Console.WriteLine($"North Hand:     {deal[Seat.North]}\n" +
+                          $"East Hand: {deal[Seat.East]}\n" +
+                          $"South Hand:   {deal[Seat.South]}"+
+                          $"West Hand:   {deal[Seat.West]}");
+
         
-        Console.WriteLine("Final Auction Decisions:");
+        foreach (var decision in auction)
+        {
+            Console.WriteLine($"Bid: {decision.ChosenBid,-5} | {decision.Explanation}");
+        }
+    }
+}
+
+public static class SimpleHandParser
+{
+    // Expected Format:
+    // "North: Q9543 4 K9 98653\nEast: KJ6 AT63 QT6 J74\n..."
+    // Suits are assumed to be in order: Spades, Hearts, Diamonds, Clubs
+    
+    public static Dictionary<Seat, Hand> ParseBoard(string input)
+    {
+        var hands = new Dictionary<Seat, Hand>();
+        
+        // Split by lines to process each player
+        var lines = input.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var line in lines)
+        {
+            // Example line: "North: Q9543 4 K9 98653"
+            
+            // 1. Split Seat from Cards
+            var replace = line.Replace("[", "");
+            var cleanStr = replace.Replace("]", "");
+            var parts = cleanStr.Split(':');
+            if (parts.Length != 2) continue;
+
+            var seatStr = parts[0].Trim();
+            var cardsStr = parts[1].Trim();
+
+            // 2. Parse Seat
+            if (!Enum.TryParse<Seat>(seatStr, true, out var seat))
+            {
+                throw new ArgumentException($"Unknown seat: {seatStr}");
+            }
+
+            // 3. Parse Cards
+            // The cards string is space-separated by suit: "S H D C"
+            // e.g. "Q9543 4 K9 98653" -> ["Q9543", "4", "K9", "98653"]
+            var suitHoldings = cardsStr.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (suitHoldings.Length != 4)
+            {
+                throw new ArgumentException($"Invalid hand format for {seat}. Expected 4 suit groups, got {suitHoldings.Length}.");
+            }
+
+            var hand = ParseSingleHand(suitHoldings);
+            hands[seat] = hand;
+        }
+
+        // Validation: Ensure we have all 4 seats
+        if (hands.Count != 4)
+        {
+            // Optional: handle partial boards if needed, otherwise throw
+             // throw new ArgumentException("Input did not contain all 4 hands.");
+        }
+
+        return hands;
+    }
+
+    private static Hand ParseSingleHand(string[] suitHoldings)
+    {
+        // suitHoldings[0] = Spades
+        // suitHoldings[1] = Hearts
+        // suitHoldings[2] = Diamonds
+        // suitHoldings[3] = Clubs
+        
+        var cards = new List<Card>();
+
+        AddCards(cards, Suit.Spades, suitHoldings[0]);
+        AddCards(cards, Suit.Hearts, suitHoldings[1]);
+        AddCards(cards, Suit.Diamonds, suitHoldings[2]);
+        AddCards(cards, Suit.Clubs, suitHoldings[3]);
+
+        return new Hand(cards);
+    }
+
+    private static void AddCards(List<Card> cards, Suit suit, string ranks)
+    {
+        // 'ranks' is a string like "Q9543" or "-" or ""
+        if (ranks == "-") return; 
+
+        foreach (char r in ranks)
+        {
+            // Map char to Rank. Your existing Card.Parse logic might be reusable,
+            // but direct mapping is faster/safer for single chars.
+            // Or construct the string "QS" and use your existing Card.Parse extension.
+            
+            string cardString = $"{r}{suit.ShortName()}"; // e.g. "Q" + "S" -> "QS"
+            
+            try 
+            {
+                // Assuming you have a static Parse or Extension on string
+                // Adjust this call to match your exact Card.Parse implementation
+                cards.Add(SuitExtensions.ParseCard(cardString)); 
+            }
+            catch
+            {
+                Console.WriteLine($"Warning: Could not parse card '{cardString}'");
+            }
+        }
     }
 }

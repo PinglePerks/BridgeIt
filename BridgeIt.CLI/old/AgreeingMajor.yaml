@@ -1,0 +1,82 @@
+
+system_name: "Acol - Major Agreement"
+priority: 200 # Low priority. Conventions (like Preempts) will override this.
+description: "Agreeing Major"
+
+# Trigger for an opening bid (0 passes, or passes only)
+trigger:
+  conditions:
+    current_state: "natural"
+    any_of:
+      - partner_knowledge:
+          fit_in_suit: "hearts"
+      - partner_knowledge:
+          fit_in_suit: "spades"
+      
+
+nodes:
+  - dynamic_bid:
+      bid_type: "simple_raise"
+      level: 2
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      losers: ">=9"
+      partner_knowledge:
+        fit_in_suit: "spades"
+    next_state: "natural"
+
+  - dynamic_bid:
+      bid_type: "simple_raise"
+      level: 3
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      losers: "8"
+      partner_knowledge:
+        fit_in_suit: "spades"
+    next_state: "natural"
+
+  - dynamic_bid:
+      bid_type: "simple_raise"
+      level: 4
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      losers: "<=7"
+      partner_knowledge:
+        fit_in_suit: "spades"
+    next_state: "natural"
+    
+  - dynamic_bid:
+      bid_type: "simple_raise"
+      level: 2
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      losers: ">=9"
+      partner_knowledge:
+        fit_in_suit: "hearts"
+    next_state: "natural"
+
+  - dynamic_bid:
+      bid_type: "simple_raise"
+      level: 3
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      losers: "8"
+      partner_knowledge:
+        fit_in_suit: "hearts"
+    next_state: "natural"
+
+  - dynamic_bid:
+      bid_type: "simple_raise"
+      level: 4
+    type: "Natural"
+    meaning: "6-10 HCP, 6+ cards in suit" # Acol typically opens 4-card majors
+    constraints:
+      losers: "<=7"
+      partner_knowledge:
+        fit_in_suit: "hearts"
+    next_state: "natural"

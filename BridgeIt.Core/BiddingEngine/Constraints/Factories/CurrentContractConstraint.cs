@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace BridgeIt.Core.BiddingEngine.Constraints.Factories;
 
 public class CurrentContractConstraintFactory : IConstraintFactory
@@ -6,7 +8,23 @@ public class CurrentContractConstraintFactory : IConstraintFactory
 
     public IBidConstraint Create(object value)
     {
-        // Value comes from YAML as string "12-14"
-        return new HcpConstraint(value.ToString());
+        if (value is IDictionary rawDict)
+        {
+            var cleanDict = new Dictionary<string, string>();
+            
+            foreach (DictionaryEntry entry in rawDict)
+            {
+                cleanDict[entry.Key.ToString()] = entry.Value.ToString();
+            }
+            
+            cleanDict.TryGetValue("level", out var level);
+            cleanDict.TryGetValue("suit", out var suit);
+
+            return new CurrentContractConstraint(level);
+        }
+
+        throw new ArgumentException($"Invalid current contract constraint format. Expected Dictionary, got {value.GetType().Name}");
+
+        return new CurrentContractConstraint(value.ToString());
     }
 }

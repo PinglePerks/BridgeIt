@@ -1,11 +1,12 @@
 @using BridgeIt.Core.Domain.Primatives
+@using BridgeIt.WebDeal.Pages
 <div class="hand">
     <h5 class="seat-label">@Seat</h5>
 
     <div class="hand-container @((IsVertical) ? "vertical-seat" : "horizontal-seat")">
 
         @* ✅ Visible player hand (grouped by suit) *@
-        @if (Seat == PlayerSeat)
+        @if (IsPlayer)
         {
             @foreach (var suit in SuitOrder)
             {
@@ -144,7 +145,7 @@
 @code {
     [Parameter] public Seat Seat { get; set; }
     [Parameter] public Hand Hand { get; set; }
-    [Parameter] public Seat PlayerSeat { get; set; } = Seat.South;
+    [Parameter] public bool IsPlayer { get; set; } = false;
     [Parameter] public bool IsVertical { get; set; }
 
     private readonly Suit[] SuitOrder = new[] {
