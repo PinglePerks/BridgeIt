@@ -1,0 +1,6 @@
+@BridgeIt.Api_HostAddress = http://localhost:7000
+
+GET {{BridgeIt.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
