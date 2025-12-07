@@ -52,7 +52,7 @@ public class AcolSystemTests
         Console.WriteLine("Final Auction Decisions:");
         foreach (var decision in auction)
         {
-            Console.WriteLine($"Bid: {decision.ChosenBid,-5} | {decision.Explanation}");
+            Console.WriteLine($"Bid: {decision.Decision.ChosenBid,-5} | {decision.Decision.Explanation}");
         }
 
         // Assert
@@ -60,9 +60,9 @@ public class AcolSystemTests
         // Start at 0 (North), step 2 (Skip East), check South, step 2 (Skip West)...
         for (int i = 0; i < auction.Count && sequenceIndex < expectedBidSequence.Count; i += 2)
         {
-            var actualBid = auction[i].ChosenBid.ToString();
+            var actualBid = auction[i].Decision.ChosenBid.ToString();
             var expectedBid = expectedBidSequence[sequenceIndex];
-            var reason = auction[i].Explanation;
+            var reason = auction[i].Decision.Explanation;
 
             Assert.That(actualBid, Is.EqualTo(expectedBid), 
                 $"Mismatch at Move {i} (Player {auction[i]}). \n" +

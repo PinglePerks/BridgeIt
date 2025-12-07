@@ -19,7 +19,7 @@ public class HistoryPatternConstraint(List<string> pattern) : IBidConstraint
         if (pattern.Count == 1 && pattern[0] == "Pass*")
         {
             // True if empty (Dealer) OR all bids are Pass
-            return history.Count == 0 || history.All(b => b.ChosenBid.Type == BidType.Pass);
+            return history.Count == 0 || history.All(b => b.Decision.ChosenBid.Type == BidType.Pass);
         }
         
         // Pattern match
@@ -30,7 +30,7 @@ public class HistoryPatternConstraint(List<string> pattern) : IBidConstraint
             if (difference < -1) return false;
     
             // The first 'difference' items in history should all be Pass
-            if (!history.Take(difference).All(h => h.ChosenBid.Type == BidType.Pass))
+            if (!history.Take(difference).All(h => h.Decision.ChosenBid.Type == BidType.Pass))
                 return false;
     
             // Now check that the remaining history matches the pattern (skipping "Pass*")
@@ -38,7 +38,7 @@ public class HistoryPatternConstraint(List<string> pattern) : IBidConstraint
             {
                 var historyIndex = difference + i;
                 
-                if (pattern[i] != history[historyIndex].ChosenBid.ToString() && pattern[i] != "*")
+                if (pattern[i] != history[historyIndex].Decision.ChosenBid.ToString() && pattern[i] != "*")
                     return false;
             }
     

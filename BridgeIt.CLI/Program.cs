@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Extensions; // Import your new extension
@@ -33,7 +34,7 @@ var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 var rules = loadedRules.ToList();
 //rules.Add(new RespondingToNaturalOpening());
 //rules.Add(new ResponseTo2ntOpening());
-rules.Add(new GeneralGameObjectiveRule());
+// rules.Add(new GeneralGameObjectiveRule());
 
 // Register the loaded rules into the Engine dynamically
 // (Note: BiddingEngine needs to accept rules dynamically, or we register them back to DI)
@@ -54,8 +55,8 @@ var table = new BiddingTable(
     provider.GetRequiredService<IAuctionRules>(),
     provider.GetRequiredService<ISeatRotationService>(),
     provider.GetRequiredService<IBiddingObserver>(),
-    provider.GetRequiredService<ILogger<BiddingTable>>()
-);
+    provider.GetRequiredService<ILogger<BiddingTable>>(),
+    provider.GetRequiredService<IRuleLookupService>());
 
 var dealer = new Dealer();
 
@@ -74,5 +75,5 @@ var bids = table.RunAuction(dict, Seat.North);
 Console.WriteLine("Final Auction Decisions:");
 foreach (var decision in bids)
 {
-    Console.WriteLine($"Bid: {decision.ChosenBid,-5} | {decision.Explanation}");
+    Console.WriteLine($"Bid: {decision.Decision.ChosenBid,-5} | {decision.Decision.Explanation}");
 }

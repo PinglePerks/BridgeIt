@@ -4,6 +4,7 @@ using BridgeIt.Core.BiddingEngine.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Constraints.Factories;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Gameplay.Services;
@@ -47,6 +48,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IBiddingObserver, ConsoleBiddingObserver>();
         services.AddSingleton<IHandFormatter, HandFormatter>();
         services.AddSingleton<BiddingTable>();
+        services.AddSingleton<IRuleLookupService, RuleLookupService>();
         
         // 3. Register the Rule Loader (See next file)
         services.AddSingleton<YamlRuleLoader>();

@@ -1,4 +1,5 @@
 ﻿using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Domain.Primatives;
@@ -42,6 +43,7 @@ var table = new BiddingTable(
     provider.GetRequiredService<IAuctionRules>(),
     provider.GetRequiredService<ISeatRotationService>(),
     provider.GetRequiredService<IBiddingObserver>(),
-    provider.GetRequiredService<ILogger<BiddingTable>>()
+    provider.GetRequiredService<ILogger<BiddingTable>>(),
+    provider.GetRequiredService<IRuleLookupService>()
 );
 

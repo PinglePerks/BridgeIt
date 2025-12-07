@@ -67,9 +67,13 @@ public class AuctionEvaluationTests
     [TestCaseSource(nameof(SeatRoleTestCases))]
     public void GetSeatRole_ReturnsCorrectSeatRole(BidType[] bids, Seat dealer, Seat seatToTest, SeatRole expected)
     {
-        var auctionHistory = new AuctionHistory(
-            bids.Select(GetBiddingDecision).ToList(),
-            dealer);
+        var auctionBids = new List<AuctionBid>();
+        foreach (var bid in bids)
+        {
+            auctionBids.Add(new AuctionBid(dealer, GetBiddingDecision(bid)));
+        }
+
+        var auctionHistory = new AuctionHistory(auctionBids, dealer);
     
         var result = AuctionEvaluator.GetSeatRole(auctionHistory, seatToTest);
     

@@ -25,7 +25,7 @@ public class SimpleRulesTests
         )
         => new (
             hand,
-            auctionHistory ?? new AuctionHistory(new List<BiddingDecision>(), seat),
+            auctionHistory ?? new AuctionHistory(new List<AuctionBid>(), seat),
             seat, 
             vulnerability, 
             handEvaluation ?? new HandEvaluation(), 

@@ -37,7 +37,7 @@ public class PbnAnalysis
             var auction = _environment.Table.RunAuction(board.Hands, board.Dealer);
 
             // 2. Compare Bids
-            var engineBids = auction.Select(d => d.ChosenBid.ToString()).ToList();
+            var engineBids = auction.Select(d => d.Decision.ChosenBid.ToString()).ToList();
             
             // Basic Comparison Loop
             int movesToCompare = Math.Min(engineBids.Count, board.ActualAuction.Count);
@@ -76,7 +76,7 @@ public class PbnAnalysis
         var auction = _environment.Table.RunAuction(board.Hands, board.Dealer);
 
         // 2. Compare Bids
-        var engineBids = auction.Select(d => d.ChosenBid.ToString()).ToList();
+        var engineBids = auction.Select(d => d.Decision.ChosenBid.ToString()).ToList();
 
         // Basic Comparison Loop
         int movesToCompare = Math.Min(engineBids.Count, board.ActualAuction.Count);

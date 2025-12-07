@@ -75,7 +75,7 @@ public class AcolSystemTests
         
         foreach (var decision in auction)
         {
-            Console.WriteLine($"Bid: {decision.ChosenBid,-5} | {decision.Explanation}");
+            Console.WriteLine($"Bid: {decision.Decision.ChosenBid,-5} | {decision.Decision.Explanation}");
         }
     }
 }

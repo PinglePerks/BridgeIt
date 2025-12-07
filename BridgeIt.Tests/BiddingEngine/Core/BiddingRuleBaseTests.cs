@@ -1,3 +1,4 @@
+using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -12,6 +13,11 @@ public class BiddingRuleBaseTests
         public override string Name => "Testable Rule";
         public override int Priority => 0;
         public override bool IsApplicable(BiddingContext ctx) => false;
+        public override IBidConstraint? GetConstraintForBid(Bid bid, BiddingContext ctx)
+        {
+            throw new NotImplementedException();
+        }
+
         public override BiddingDecision? Apply(BiddingContext ctx) => null;
 
         // Expose protected methods as public for testing

@@ -67,9 +67,26 @@ public class YamlDerivedRule : BiddingRuleBase
                 var bid = option.Bid.DeriveBid(ctx);
 
                 if(IsValidBid(bid, ctx.AuctionEvaluation.CurrentContract))
-                    return new BiddingDecision(bid, $"Rule:{Name} || Reason:{option.Reason}", option.NextState, option.Logic);
+                    return new BiddingDecision(bid, $"Rule:{Name} || Reason:{option.Reason}", option.NextState);
             }
         }
+        return null;
+    }
+
+    public override IBidConstraint? GetConstraintForBid(Bid bid, BiddingContext ctx)
+    {
+        if (!IsApplicable(ctx)) return null;
+
+        foreach (var option in _options)
+        {
+            var potentialBid = option.Bid.DeriveBid(ctx);
+
+            if (potentialBid != null && potentialBid.ToString() == bid.ToString())
+            {
+                return option.Logic;
+            }
+        }
+
         return null;
     }
 

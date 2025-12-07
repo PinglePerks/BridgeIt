@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Table;
@@ -60,9 +61,9 @@ public class TestBridgeEnvironment
         var rules = loader.LoadRulesFromDirectory(directoryPath).ToList();
         //rules.Add(new RespondingToNaturalOpening());
         //rules.Add(new ResponseTo2ntOpening());
-        rules.Add(new MajorFitWithPartner());
-        rules.Add(new GeneralGameObjectiveRule());
-        rules.Add(new OpenerUnbalancedRebidRule());
+        // rules.Add(new MajorFitWithPartner());
+        // rules.Add(new GeneralGameObjectiveRule());
+        // rules.Add(new OpenerUnbalancedRebidRule());
         
         // Re-register or Instantiate Engine with these specific rules
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
@@ -109,7 +110,8 @@ public class TestBridgeEnvironment
             Provider.GetRequiredService<IAuctionRules>(),
             Provider.GetRequiredService<ISeatRotationService>(),
             Provider.GetRequiredService<IBiddingObserver>(),
-            logger
+            logger,
+            Provider.GetRequiredService<IRuleLookupService>()
         );
     }
 }

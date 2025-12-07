@@ -1,8 +1,13 @@
 using System.Collections.Concurrent;
 using BridgeIt.Api.Models;
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.Gameplay.Services;
+using BridgeIt.TestHarness.DealerIntegrationTests;
 
 namespace BridgeIt.Api.Services;
 
@@ -14,12 +19,35 @@ public class GameService
 
     public List<(Seat, Bid)> BidHistory = new();
     
+    private readonly BiddingEngine _biddingEngine;
+    
     public Seat Dealer { get; private set; } = Seat.North; // Rotates every game
     public Seat NextBidder { get; private set; }
     public int ConsecutivePasses { get; private set; } = 0;
     public bool IsAuctionOver { get; private set; } = false;
     
     public Bid? HighestBid { get; private set; }
+    
+    private IRuleLookupService _ruleLookupService { get; }
+    private ISeatRotationService _seatRotationService { get; }
+    
+    public GameService(BiddingEngine biddingEngine, ISeatRotationService rotation, IRuleLookupService ruleLookupService)
+    {
+        _biddingEngine = biddingEngine;
+        _ruleLookupService = ruleLookupService;
+        _seatRotationService = rotation;
+        ResetAuction();
+    }
+
+    public List<BidDto> GetBidHistoryDto()
+    {
+        var res = new List<BidDto>();
+        foreach (var bid in BidHistory)
+        {
+            res.Add(new BidDto((int)bid.Item1, bid.Item2.ToString()));
+        }
+        return res;
+    }
     
     public void ResetAuction()
     {
@@ -71,7 +99,9 @@ public class GameService
     {
         ResetAuction();
         var dealer = new Dealer.Deal.Dealer();
-        _currentDeal = dealer.GenerateRandomDeal();
+        //_currentDeal = dealer.GenerateRandomDeal();
+        _currentDeal = dealer.GenerateConstrainedDeal(HandSpecifications.Open1NT, null,
+            HandSpecifications.TransferToSpadesResponder);
     }
 
     // STEP 2: Client says "Deal the cards!"
@@ -167,5 +197,43 @@ public class GameService
             Seat.South => Seat.West,
             _ => Seat.North
         };
+    }
+    
+    public bool IsRobotTurn()
+    {
+        // If no human has claimed this seat, it's a robot
+        return !Players.Values.Contains(NextBidder);
+    }
+    
+    public Bid GetBotBid()
+    {
+        // 1. Reconstruct BiddingContext from current state
+        var hand = _currentDeal[NextBidder];
+        
+        // Convert your simple List<(Seat, Bid)> to the Core's AuctionHistory
+        // You might need a helper here to map your API models to Core models if they differ,
+        // but assuming they are the same types:
+        var decisionList = new List<AuctionBid>();
+        
+        // Calculate Dealer for history (it's the first bidder)
+        var auctionHistory = new AuctionHistory(decisionList, Dealer); 
+
+        foreach (var move in BidHistory)
+        {
+            // Re-creating decisions. Note: We might lack 'Explanation' for past moves, passing empty string.
+            var decision = new BiddingDecision(move.Item2, "History", "");
+            var auctionBid = new AuctionBid(move.Item1, decision);
+            auctionHistory.Add(auctionBid);
+        }
+
+        // 2. Build Context
+        // You need to replicate the context building logic from BiddingTable
+        var ctx = _biddingEngine.CreateBiddingContext(NextBidder, hand, auctionHistory, Dealer, _seatRotationService,
+            _ruleLookupService);
+
+        // 3. Ask Engine
+        var result = _biddingEngine.ChooseBid(ctx);
+        
+        return result.ChosenBid;
     }
 }

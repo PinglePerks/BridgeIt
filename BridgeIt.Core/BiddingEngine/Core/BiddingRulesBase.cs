@@ -1,5 +1,6 @@
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
@@ -10,6 +11,7 @@ public abstract class BiddingRuleBase : IBiddingRule
     public abstract string Name { get; }
     public abstract int Priority { get; }
     public abstract bool IsApplicable(BiddingContext ctx);
+    public abstract IBidConstraint? GetConstraintForBid(Bid bid, BiddingContext ctx);
     public abstract BiddingDecision? Apply(BiddingContext ctx);
 
     protected int Hcp(Hand hand) => HighCardPoints.Count(hand);
@@ -99,36 +101,36 @@ public abstract class BiddingRuleBase : IBiddingRule
 //     }
 //     
 // }
-
-public class DefaultBidding : BiddingRuleBase
-{
-    public override string Name => "Codebased---Default bidding";
-    public override int Priority => 1;
-
-    public override bool IsApplicable(BiddingContext ctx)
-        => ctx.AuctionEvaluation.SeatRole == SeatRole.Responder;
-
-    public override BiddingDecision? Apply(BiddingContext ctx)
-    {
-        //TODO; check if already agreed a fit?
-        
-        var suit = ctx.PartnershipKnowledge.BestFitSuit(ctx.HandEvaluation.Shape);
-
-        var lowestHcp = ctx.PartnershipKnowledge.PartnerHcpMin;
-
-        if (suit == null)
-        {
-            var totalHcp = lowestHcp + ctx.HandEvaluation.Hcp;
-            if (totalHcp >= 25) return new BiddingDecision(Bid.NoTrumpsBid(3), "No suit fit", "no_suit_fit");
-            
-            if(totalHcp >= 22) return new BiddingDecision(Bid.NoTrumpsBid(2), "No Suit fit", "no_suit_fit");
-        }
-        else
-        {
-            
-        }
-
-        return null;
-    }
-    
-}
+//
+// public class DefaultBidding : BiddingRuleBase
+// {
+//     public override string Name => "Codebased---Default bidding";
+//     public override int Priority => 1;
+//
+//     public override bool IsApplicable(BiddingContext ctx)
+//         => ctx.AuctionEvaluation.SeatRole == SeatRole.Responder;
+//
+//     public override BiddingDecision? Apply(BiddingContext ctx)
+//     {
+//         //TODO; check if already agreed a fit?
+//         
+//         var suit = ctx.PartnershipKnowledge.BestFitSuit(ctx.HandEvaluation.Shape);
+//
+//         var lowestHcp = ctx.PartnershipKnowledge.PartnerHcpMin;
+//
+//         if (suit == null)
+//         {
+//             var totalHcp = lowestHcp + ctx.HandEvaluation.Hcp;
+//             if (totalHcp >= 25) return new BiddingDecision(Bid.NoTrumpsBid(3), "No suit fit", "no_suit_fit");
+//             
+//             if(totalHcp >= 22) return new BiddingDecision(Bid.NoTrumpsBid(2), "No Suit fit", "no_suit_fit");
+//         }
+//         else
+//         {
+//             
+//         }
+//
+//         return null;
+//     }
+//     
+// }

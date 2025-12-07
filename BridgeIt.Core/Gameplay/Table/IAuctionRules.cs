@@ -4,5 +4,5 @@ namespace BridgeIt.Core.Gameplay.Table;
 
 public interface IAuctionRules
 {
-    bool ShouldStop(IReadOnlyList<BiddingDecision> bids);
+    bool ShouldStop(IReadOnlyList<AuctionBid> bids);
 }

@@ -1,6 +1,7 @@
 using System.Threading.Tasks.Dataflow;
 using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Domain.Utilities;
@@ -28,8 +29,8 @@ public static class AuctionEvaluator
         return new AuctionEvaluation()
         {
             CurrentContract = auctionHistory.Bids
-                .LastOrDefault(x => x.ChosenBid.Type == BidType.NoTrumps || x.ChosenBid.Type == BidType.Suit)?
-                .ChosenBid,
+                .LastOrDefault(x => x.Decision.ChosenBid.Type == BidType.NoTrumps || x.Decision.ChosenBid.Type == BidType.Suit)?
+                .Decision.ChosenBid,
             SeatRole = GetSeatRole(auctionHistory, seat),
             PartnershipState = GetPartnershipState(auctionHistory),
             PartnerLastBid = PartnerLastBid(auctionHistory),
@@ -54,35 +55,32 @@ public static class AuctionEvaluator
         };
         
     }
-    public static PartnershipKnowledge AnalyzeKnowledge(AuctionHistory history, Seat mySeat, Hand myHand)
+    
+    public static PartnershipKnowledge AnalyzeKnowledge(List<IBidConstraint> bidConstraints)
     {
         var knowledge = new PartnershipKnowledge();
-        
-        var partnersKnowledgeOfMe = new PartnershipKnowledge();
-        
 
-
-
-        var myBids = history.GetAllPartnerBids((Seat)mySeat + 2 % 4);
-        
-        foreach (var bid in myBids)
-            if (bid.AppliedConstraint != null)
-                partnersKnowledgeOfMe = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, partnersKnowledgeOfMe);
-        
-        knowledge.PartnerKnowledgeOfMe = partnersKnowledgeOfMe;
-        
-        AnalyzeKnowledgeOfMe(history, mySeat, myHand, knowledge);
+        foreach (var bidConstraint in bidConstraints)
+        {
+            
+            knowledge = ExtractKnowledgeFromConstraint(bidConstraint, knowledge);
+        }
         
         return knowledge;
     }
     
-    public static PartnershipKnowledge AnalyzeKnowledgeOfMe(AuctionHistory history, Seat mySeat, Hand myHand, PartnershipKnowledge knowledge)
+    public static PartnershipKnowledge AnalyzeKnowledgeOfMe(AuctionHistory history, Seat mySeat, Hand myHand, PartnershipKnowledge knowledge, Dictionary<Seat, List<IBidConstraint>> bidConstraints)
     {
         var partnerBids = history.GetAllPartnerBids(mySeat);
+
+        var partnerSeatIndex = ((int)mySeat + 2) % 4;
+
+        var partnerSeat = (Seat)partnerSeatIndex;
         
-        foreach (var bid in partnerBids)
-            if (bid.AppliedConstraint != null)
-                knowledge = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, knowledge);
+        var partnerConstraints = bidConstraints[partnerSeat];
+        
+        foreach (var c in partnerConstraints)
+            knowledge = ExtractKnowledgeFromConstraint(c, knowledge);
 
         var handShape = ShapeEvaluator.GetShape(myHand);
         
@@ -166,14 +164,14 @@ public static class AuctionEvaluator
     public static Bid? PartnerLastBid(AuctionHistory history)
     {
         if (history.Bids.Count < 2) return null;
-        return history.Bids[^2].ChosenBid;
+        return history.Bids[^2].Decision.ChosenBid;
     }
 
     private static string GetPartnershipState(AuctionHistory auctionHistory)
     {
-        if (auctionHistory.Bids.All(a => a.ChosenBid.Type == BidType.Pass)) return "opening";
+        if (auctionHistory.Bids.All(a => a.Decision.ChosenBid.Type == BidType.Pass)) return "opening";
         if (auctionHistory.Bids.Count < 2) return "opening";
-            return auctionHistory.Bids[^2].NextPartnershipState;
+            return auctionHistory.Bids[^2].Decision.NextPartnershipState;
     }
 }
 

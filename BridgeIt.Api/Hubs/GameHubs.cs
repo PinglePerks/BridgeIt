@@ -25,8 +25,9 @@ public class GameHub : Hub
 
     public async Task DealTheCards()
     {
-        _gameService.DealNewHand(); 
+        _gameService.DealNewHand();
 
+        await SendBidHistory();
         // 2. Now distribute the slices of that single truth
         foreach (var connection in _gameService.Players)
         {
@@ -38,6 +39,7 @@ public class GameHub : Hub
 
             await Clients.Client(connectionId).SendAsync("ReceiveHand", hand);
         }
+        
         await NextPlayer();
     }
 
@@ -84,7 +86,7 @@ public class GameHub : Hub
         _gameService.ProcessBid(seat, bid);
     
         // 4. BROADCAST
-        await Clients.All.SendAsync("BidMade", bid.ToString(), seat);
+        await SendBidHistory();
         await NextPlayer();
 
         // 5. CHECK FOR END OF AUCTION
@@ -97,8 +99,35 @@ public class GameHub : Hub
 
     public async Task NextPlayer()
     {
+        if (_gameService.IsRobotTurn())
+        {
+            await DoBotBid(_gameService.NextBidder);
+        }
+            
+
         await Clients.All.SendAsync("UpdateNextBidder", _gameService.NextBidder);
     }
+
+    public async Task DoBotBid(Seat seat)
+    {
+        var bid = _gameService.GetBotBid();
+        _gameService.ProcessBid(seat, bid);
+
+        await SendBidHistory();
+        
+        
+        
+        await NextPlayer();
+        
+        
+    }
+
+    public async Task SendBidHistory()
+    {
+        await Clients.All.SendAsync("BidHistory",  _gameService.GetBidHistoryDto());
+    }
+    
+    
     
     
 

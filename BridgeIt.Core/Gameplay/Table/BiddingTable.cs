@@ -1,6 +1,8 @@
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Output;
@@ -14,34 +16,28 @@ public class BiddingTable(
     IAuctionRules rules,
     ISeatRotationService rotation,
     IBiddingObserver observer,
-    ILogger<BiddingTable> logger
+    ILogger<BiddingTable> logger,
+    IRuleLookupService ruleLookupService
     )
 {
-    public IReadOnlyList<BiddingDecision> RunAuction(
+    public IReadOnlyList<AuctionBid> RunAuction(
         IReadOnlyDictionary<Seat, Hand> hands,
         Seat dealer)
     {
-        var auctionHistory = new AuctionHistory(new List<BiddingDecision>(), dealer);
+        var auctionHistory = new AuctionHistory(new List<AuctionBid>(), dealer);
         var current = dealer;
 
         while (true)
         {
-            var ctx = new BiddingContext(
-                hand: hands[current],
-                auctionHistory: auctionHistory,
-                seat: current,
-                vulnerability: Vulnerability.None,
-                handEvaluation: HandEvaluator.Evaluate(hands[current]),
-                partnershipKnowledge: AuctionEvaluator.AnalyzeKnowledge(auctionHistory, current, hands[current]),
-                auctionEvaluation: AuctionEvaluator.Evaluate(auctionHistory, current)
-                );
-            
+            var ctx = engine.CreateBiddingContext(current, hands[current], auctionHistory, dealer, rotation, ruleLookupService);
             
             logger.LogDebug($"Evaluating {current} hand");
             
             var decision = engine.ChooseBid(ctx);
             
-            auctionHistory.Add(decision);
+            var auctionBid = new AuctionBid(current, decision );
+            
+            auctionHistory.Add(auctionBid);
 
             observer.OnBid(current, decision);
 
@@ -53,4 +49,9 @@ public class BiddingTable(
 
         return auctionHistory.Bids;
     }
+
+
+    
+
+  
 }
