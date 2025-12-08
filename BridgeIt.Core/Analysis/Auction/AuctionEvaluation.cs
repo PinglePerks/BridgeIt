@@ -23,7 +23,7 @@ public class AuctionEvaluation
 
 public static class AuctionEvaluator
 {
-    public static AuctionEvaluation Evaluate(AuctionHistory auctionHistory, Seat seat)
+    public static AuctionEvaluation Evaluate(AuctionHistory auctionHistory, Seat seat, string nextState)
     {
         
         return new AuctionEvaluation()
@@ -32,7 +32,7 @@ public static class AuctionEvaluator
                 .LastOrDefault(x => x.Decision.ChosenBid.Type == BidType.NoTrumps || x.Decision.ChosenBid.Type == BidType.Suit)?
                 .Decision.ChosenBid,
             SeatRole = GetSeatRole(auctionHistory, seat),
-            PartnershipState = GetPartnershipState(auctionHistory),
+            PartnershipState = nextState,
             PartnerLastBid = PartnerLastBid(auctionHistory),
         };
     }

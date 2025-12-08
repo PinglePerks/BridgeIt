@@ -8,7 +8,7 @@ public class HandEvaluation
 {
     public int Hcp { get; init; }
     public int Losers { get; init; }
-    public Dictionary<Suit,int> Shape { get; init; } = new();
+    public Dictionary<Suit,int> Shape { get; init; }
     public bool IsBalanced { get; init; }
     public Dictionary<Suit,int> RKCB { get; init; } = new();
 }

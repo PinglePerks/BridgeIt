@@ -9,24 +9,25 @@ namespace BridgeIt.Core.BiddingEngine.RuleLookupService;
 
 public interface IRuleLookupService
 {
-    public Dictionary<Seat, List<IBidConstraint>> GetConstraintsFromBids(IReadOnlyList<AuctionBid> bidHistory, Vulnerability vulnerability, Seat dealer, Core.BiddingEngine engine);
+    public Dictionary<Seat, List<(IBidConstraint, string)>> GetConstraintsFromBids(IReadOnlyList<AuctionBid> bidHistory, Vulnerability vulnerability, Seat dealer, Core.BiddingEngine engine);
 
 }
 
 public class RuleLookupService : IRuleLookupService
 {
-    public Dictionary<Seat, List<IBidConstraint>> GetConstraintsFromBids(IReadOnlyList<AuctionBid> bidHistory, Vulnerability vulnerability, Seat dealer, Core.BiddingEngine engine)
+    public Dictionary<Seat, List<(IBidConstraint, string)>> GetConstraintsFromBids(IReadOnlyList<AuctionBid> bidHistory, Vulnerability vulnerability, Seat dealer, Core.BiddingEngine engine)
     {
         var bids = new List<AuctionBid>();
         
-        var dictConstraints = new Dictionary<Seat, List<IBidConstraint>>
+        var dictConstraints = new Dictionary<Seat, List<(IBidConstraint, string)>>
         {
-            { Seat.North, new List<IBidConstraint>() },
-            { Seat.East,  new List<IBidConstraint>() },
-            { Seat.South, new List<IBidConstraint>() },
-            { Seat.West,  new List<IBidConstraint>() }
+            { Seat.North, new List<(IBidConstraint, string)>() },
+            { Seat.East, new List<(IBidConstraint, string)>() },
+            { Seat.South, new List<(IBidConstraint, string)>() },
+            { Seat.West, new List<(IBidConstraint, string)>() },
         };
-        
+
+        var nextState = "";
         
         foreach (var bid in bidHistory)
         {
@@ -37,14 +38,18 @@ public class RuleLookupService : IRuleLookupService
                 auctionHistory,
                 bid.Seat,
                 vulnerability,
-                new HandEvaluation(),
+                HandEvaluator.Evaluate(new Hand(new List<Card>())),
                 new PartnershipKnowledge(),
-                AuctionEvaluator.Evaluate(auctionHistory, bid.Seat));
+                AuctionEvaluator.Evaluate(auctionHistory, bid.Seat, nextState));
             
             var constraint = engine.GetConstraintsFromBid(knownCtx, bid.Decision.ChosenBid);
-            
-            if (constraint != null)
+
+            if (constraint != (null, null))
+            {
                 dictConstraints[bid.Seat].Add(constraint);
+                nextState = constraint.Item2.ToString();
+            }
+              
             bids.Add(bid);
         }
         return dictConstraints;

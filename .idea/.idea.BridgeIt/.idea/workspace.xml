@@ -19,42 +19,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Api/Models/BidDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/AuctionBid.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Scenario/PuppetStayman.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Scenario/PuppetStayman.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/BridgeIt.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/BridgeIt.Api.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Overcalling/Overcalling.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Overcalling/Overcalling.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionHistory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionHistory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/HistoryPatternConstraint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/HistoryPatternConstraint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGameObjectiveRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGameObjectiveRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/MajorFitWithPartner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/MajorFitWithPartner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerBalancedRebidRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerBalancedRebidRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/YamlDerivedRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/YamlDerivedRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/BiddingDecision.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/BiddingDecision.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Extensions/ServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Extensions/ServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/BiddingTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/BiddingTable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/IAuctionRules.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/IAuctionRules.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/StandardAuctionRules.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/StandardAuctionRules.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/IntegrationTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/IntegrationTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/IntegrationTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/IntegrationTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnAnalysis/PbnAnalysis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnAnalysis/PbnAnalysis.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/Analysis/Auction/AuctionEvaluationTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/Analysis/Auction/AuctionEvaluationTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/BiddingEngine/Core/BiddingRuleBaseTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/BiddingEngine/Core/BiddingRuleBaseTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Web/Services/LocalBridgeGameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Web/Services/LocalBridgeGameService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +115,7 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGameObjectiveRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/YamlDerivedRule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlRuleLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/AuctionBid.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/BidType.cs" root0="FORCE_HIGHLIGHTING" />
@@ -156,6 +135,7 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/IAuctionRules.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Dealer/Class1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Dealer/Scenario/PuppetStayman.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Systems/Class1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/HandSpecifications.cs" root0="FORCE_HIGHLIGHTING" />
@@ -214,51 +194,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.BridgeIt.Api.executor": "Debug",
-    ".NET Launch Settings Profile.BridgeIt.Web: http.executor": "Run",
-    ".NET Launch Settings Profile.BridgeIt.Web: https.executor": "Run",
-    ".NET Launch Settings Profile.BridgeIt.WebDeal: BridgeIt.Client.executor": "Run",
-    ".NET Launch Settings Profile.BridgeIt.WebDeal: http.executor": "Run",
-    ".NET Project.BridgeIt.CLI.executor": "Run",
-    ".NET Project.BridgeIt.TestHarness.executor": "Run",
-    "0007c9e2-09fa-4af4-bbf9-4c2146839468.executor": "Debug",
-    "0924ce6e-fb75-473c-a6c3-e6326bed2703.executor": "Debug",
-    "1621ea02-671d-45a3-8282-c830ab3c1ffd.executor": "Debug",
-    "1cf8dff8-9cbd-4e4e-bc56-6c68be96cc43.executor": "Debug",
-    "1e13e4d5-4874-46b1-b630-e1eb94ac4fb8.executor": "Debug",
-    "20eded1b-cfe6-47b1-a5c4-96267c565a64.executor": "Debug",
-    "2b8224c5-c0ed-4cd4-9805-d5aa073e2ca0.executor": "Debug",
-    "359a2034-910d-4e89-9ca0-a15bdf41cb57.executor": "Debug",
-    "43d7b67f-6ac4-4718-9229-a100a33b6b47.executor": "Debug",
-    "4b42d0ce-0c17-43a1-aa38-4a23800dff85.executor": "Debug",
-    "5de7b337-a03d-4530-b6f4-72e5541bc508.executor": "Debug",
-    "653dedb6-caea-4f6c-bdcb-eeeb5096d29a.executor": "Run",
-    "7953a2ea-b074-4773-8d0a-56ebc4ea92fa.executor": "Debug",
-    "9664f776-5194-4715-aabc-8a1998c398fa.executor": "Debug",
-    "9a236c84-49c5-4660-9d2b-a74855476bd5.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "a28a3c60-8681-4aff-8bdd-62910ef333d7.executor": "Debug",
-    "a62611a8-0777-4d10-aaa5-2c5fcfb0f736.executor": "Debug",
-    "bce0dfac-c94c-48e4-848f-d6e512e9125e.executor": "Debug",
-    "defaea00-bfb8-4d4d-9553-a0c88a981268.executor": "Debug",
-    "e3e8795a-fb4e-4c8a-8ac0-8d1b4f576b6a.executor": "Run",
-    "e5218fee-031e-4c4e-b536-78a7ab157fda.executor": "Debug",
-    "fb4cb39a-f52f-4aec-ae8b-3a41f107523d.executor": "Debug",
-    "git-widget-placeholder": "feature/allow-for-human-players",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.BridgeIt.Api.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.Web: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.Web: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.WebDeal: BridgeIt.Client.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.WebDeal: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.BridgeIt.CLI.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.BridgeIt.TestHarness.executor&quot;: &quot;Run&quot;,
+    &quot;0007c9e2-09fa-4af4-bbf9-4c2146839468.executor&quot;: &quot;Debug&quot;,
+    &quot;0924ce6e-fb75-473c-a6c3-e6326bed2703.executor&quot;: &quot;Debug&quot;,
+    &quot;1621ea02-671d-45a3-8282-c830ab3c1ffd.executor&quot;: &quot;Debug&quot;,
+    &quot;1cf8dff8-9cbd-4e4e-bc56-6c68be96cc43.executor&quot;: &quot;Debug&quot;,
+    &quot;1e13e4d5-4874-46b1-b630-e1eb94ac4fb8.executor&quot;: &quot;Debug&quot;,
+    &quot;20eded1b-cfe6-47b1-a5c4-96267c565a64.executor&quot;: &quot;Debug&quot;,
+    &quot;2b8224c5-c0ed-4cd4-9805-d5aa073e2ca0.executor&quot;: &quot;Debug&quot;,
+    &quot;359a2034-910d-4e89-9ca0-a15bdf41cb57.executor&quot;: &quot;Debug&quot;,
+    &quot;43d7b67f-6ac4-4718-9229-a100a33b6b47.executor&quot;: &quot;Debug&quot;,
+    &quot;4b42d0ce-0c17-43a1-aa38-4a23800dff85.executor&quot;: &quot;Debug&quot;,
+    &quot;5de7b337-a03d-4530-b6f4-72e5541bc508.executor&quot;: &quot;Debug&quot;,
+    &quot;653dedb6-caea-4f6c-bdcb-eeeb5096d29a.executor&quot;: &quot;Run&quot;,
+    &quot;7953a2ea-b074-4773-8d0a-56ebc4ea92fa.executor&quot;: &quot;Debug&quot;,
+    &quot;9664f776-5194-4715-aabc-8a1998c398fa.executor&quot;: &quot;Debug&quot;,
+    &quot;9a236c84-49c5-4660-9d2b-a74855476bd5.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;a28a3c60-8681-4aff-8bdd-62910ef333d7.executor&quot;: &quot;Debug&quot;,
+    &quot;a62611a8-0777-4d10-aaa5-2c5fcfb0f736.executor&quot;: &quot;Debug&quot;,
+    &quot;bce0dfac-c94c-48e4-848f-d6e512e9125e.executor&quot;: &quot;Debug&quot;,
+    &quot;defaea00-bfb8-4d4d-9553-a0c88a981268.executor&quot;: &quot;Debug&quot;,
+    &quot;e3e8795a-fb4e-4c8a-8ac0-8d1b4f576b6a.executor&quot;: &quot;Run&quot;,
+    &quot;e5218fee-031e-4c4e-b536-78a7ab157fda.executor&quot;: &quot;Debug&quot;,
+    &quot;fb4cb39a-f52f-4aec-ae8b-3a41f107523d.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/allow-for-human-players&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.web.browsers&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.BridgeIt.Api">
     <configuration name="BridgeIt.AI" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -524,7 +504,8 @@
       <workItem from="1764192139539" duration="34906000" />
       <workItem from="1764493763664" duration="13376000" />
       <workItem from="1764508324461" duration="11160000" />
-      <workItem from="1764598832000" duration="158087000" />
+      <workItem from="1764598832000" duration="164070000" />
+      <workItem from="1765155648967" duration="2550000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -622,7 +603,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765045182023</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Removes constraints from bid and inferred instead">
+      <option name="closed" value="true" />
+      <created>1765133338538</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1765133338539</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -660,7 +649,8 @@
     <MESSAGE value="web" />
     <MESSAGE value="Latest 6 Dec" />
     <MESSAGE value="latest" />
-    <option name="LAST_COMMIT_MESSAGE" value="latest" />
+    <MESSAGE value="Removes constraints from bid and inferred instead" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removes constraints from bid and inferred instead" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -730,27 +720,14 @@
           <option name="timeStamp" value="142" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs</url>
-          <line>138</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" containingFunctionPresentation="Method 'ExtractKnowledgeFromConstraint'">
-            <startOffsets>
-              <option value="5224" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5258" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs</url>
           <line>213</line>
           <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs" containingFunctionPresentation="Method 'SimpleRulesTest'">
             <startOffsets>
-              <option value="7068" />
+              <option value="-1" />
             </startOffsets>
             <endOffsets>
-              <option value="7068" />
+              <option value="-1" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="163" />
@@ -769,43 +746,82 @@
           <option name="timeStamp" value="175" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs</url>
-          <line>112</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" containingFunctionPresentation="Method 'DoBotBid'">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/PartnershipKnowledge.cs</url>
+          <line>39</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/PartnershipKnowledge.cs" containingFunctionPresentation="Method 'PartnerDeniedMajor'">
             <startOffsets>
-              <option value="3064" />
+              <option value="986" />
             </startOffsets>
             <endOffsets>
-              <option value="3099" />
+              <option value="1076" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="186" />
+          <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs</url>
-          <line>210</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" containingFunctionPresentation="Method 'GetBotBid'">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs</url>
+          <line>135</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" containingFunctionPresentation="Method 'ExtractKnowledgeFromConstraint'">
             <startOffsets>
-              <option value="6527" />
+              <option value="5038" />
             </startOffsets>
             <endOffsets>
-              <option value="6563" />
+              <option value="5100" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="187" />
+          <option name="timeStamp" value="198" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs</url>
-          <line>230</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" containingFunctionPresentation="Method 'GetBotBid'">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs</url>
+          <line>39</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs" containingFunctionPresentation="Method 'IsMet'">
             <startOffsets>
-              <option value="7463" />
+              <option value="1205" />
             </startOffsets>
             <endOffsets>
-              <option value="7605" />
+              <option value="1233" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="189" />
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs</url>
+          <line>62</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs" containingFunctionPresentation="Method 'IsMet'">
+            <startOffsets>
+              <option value="2322" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2475" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="201" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs</url>
+          <line>48</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs" containingFunctionPresentation="Method 'IsMet'">
+            <startOffsets>
+              <option value="1599" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1728" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="203" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs</url>
+          <line>57</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/PartnerKnowledgeConstraint.cs" containingFunctionPresentation="Method 'IsMet'">
+            <startOffsets>
+              <option value="2130" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2181" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="204" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

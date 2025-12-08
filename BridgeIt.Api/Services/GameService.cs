@@ -104,6 +104,13 @@ public class GameService
             HandSpecifications.TransferToSpadesResponder);
     }
 
+
+    public void GetPuppetStaymanDeal()
+    {
+        var dealer = new Dealer.Deal.Dealer();
+        _currentDeal =  dealer.GeneratePuppetDeal();
+    }
+
     // STEP 2: Client says "Deal the cards!"
     public Hand  GetHandForPlayer(Seat seat)
     {

@@ -23,6 +23,27 @@ public class GameHub : Hub
         await Clients.Caller.SendAsync("PlayerIdentified", seat);
     }
 
+    public async void GenerateScenarioDeal(string scenario)
+    {
+        if (scenario == "puppetstayman")
+        {
+            _gameService.GetPuppetStaymanDeal();
+            foreach (var connection in _gameService.Players)
+            {
+                string connectionId = connection.Key;
+                Seat seat = connection.Value;
+
+                // This now pulls from the SAME deck
+                Hand hand = _gameService.GetHandForPlayer(seat); 
+
+                await Clients.Client(connectionId).SendAsync("ReceiveHand", hand);
+            }
+        }
+        
+    }
+    
+    
+
     public async Task DealTheCards()
     {
         _gameService.DealNewHand();
@@ -81,6 +102,11 @@ public class GameHub : Hub
             await Clients.Caller.SendAsync("SystemMessage", "Invalid Bid (Insufficient rank or illegal double).");
             return;
         }
+        if (_gameService.IsAuctionOver)
+        {
+            await Clients.All.SendAsync("AuctionEnded", _gameService.HighestBid);
+            return;
+        }
 
         // 3. PROCESS
         _gameService.ProcessBid(seat, bid);
@@ -90,22 +116,27 @@ public class GameHub : Hub
         await NextPlayer();
 
         // 5. CHECK FOR END OF AUCTION
+
+    }
+
+    public async Task NextPlayer()
+    {
         if (_gameService.IsAuctionOver)
         {
             await Clients.All.SendAsync("AuctionEnded", _gameService.HighestBid);
             // Trigger play phase...
         }
-    }
-
-    public async Task NextPlayer()
-    {
-        if (_gameService.IsRobotTurn())
+        else
         {
-            await DoBotBid(_gameService.NextBidder);
-        }
+            if (_gameService.IsRobotTurn())
+            {
+                await DoBotBid(_gameService.NextBidder);
+            }
             
 
-        await Clients.All.SendAsync("UpdateNextBidder", _gameService.NextBidder);
+            await Clients.All.SendAsync("UpdateNextBidder", _gameService.NextBidder);
+        }
+
     }
 
     public async Task DoBotBid(Seat seat)

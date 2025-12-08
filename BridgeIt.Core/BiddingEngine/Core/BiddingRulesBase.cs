@@ -11,7 +11,7 @@ public abstract class BiddingRuleBase : IBiddingRule
     public abstract string Name { get; }
     public abstract int Priority { get; }
     public abstract bool IsApplicable(BiddingContext ctx);
-    public abstract IBidConstraint? GetConstraintForBid(Bid bid, BiddingContext ctx);
+    public abstract (IBidConstraint?, string?) GetConstraintForBid(Bid bid, BiddingContext ctx);
     public abstract BiddingDecision? Apply(BiddingContext ctx);
 
     protected int Hcp(Hand hand) => HighCardPoints.Count(hand);

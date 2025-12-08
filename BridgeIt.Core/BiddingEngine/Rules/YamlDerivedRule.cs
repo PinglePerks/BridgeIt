@@ -72,10 +72,11 @@ public class YamlDerivedRule : BiddingRuleBase
         }
         return null;
     }
+    
 
-    public override IBidConstraint? GetConstraintForBid(Bid bid, BiddingContext ctx)
+    public override (IBidConstraint?, string?) GetConstraintForBid(Bid bid, BiddingContext ctx)
     {
-        if (!IsApplicable(ctx)) return null;
+        if (!IsApplicable(ctx)) return (null, null);
 
         foreach (var option in _options)
         {
@@ -83,11 +84,11 @@ public class YamlDerivedRule : BiddingRuleBase
 
             if (potentialBid != null && potentialBid.ToString() == bid.ToString())
             {
-                return option.Logic;
+                return (option.Logic,  option.NextState);
             }
         }
 
-        return null;
+        return (null, null);
     }
 
     // --- Helpers ---
