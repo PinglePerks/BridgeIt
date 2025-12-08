@@ -13,7 +13,7 @@ public class BiddingRuleBaseTests
         public override string Name => "Testable Rule";
         public override int Priority => 0;
         public override bool IsApplicable(BiddingContext ctx) => false;
-        public override IBidConstraint? GetConstraintForBid(Bid bid, BiddingContext ctx)
+        public override (IBidConstraint?, string?) GetConstraintForBid(Bid bid, BiddingContext ctx)
         {
             throw new NotImplementedException();
         }

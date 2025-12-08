@@ -102,7 +102,7 @@ public class HcpConstraintTests
         // Note: Creating a dummy Hand might require an internal list if constructor verifies it,
         // but here we assume it's fine to pass a minimal object.
         var dummyHand = new Hand(new List<Card>()); 
-        var dummyHistory = new AuctionHistory(new List<BiddingDecision>(), Seat.North);
+        var dummyHistory = new AuctionHistory(new List<AuctionBid>(), Seat.North);
         
         return new BiddingContext(
             dummyHand,

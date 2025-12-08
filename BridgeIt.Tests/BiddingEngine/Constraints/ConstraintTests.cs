@@ -212,13 +212,14 @@ public static class TestHelper
         var partnerKnowledge = knowledge ?? new PartnershipKnowledge();
 
         // 2. Build History
-        var bidList = new List<BiddingDecision>();
+        
+        var bidList = new List<AuctionBid>();
         if (historyStrs != null)
         {
             foreach (var s in historyStrs)
             {
                 var bid = s == "Pass" ? Bid.Pass() : s.ToBid();
-                bidList.Add(new BiddingDecision(bid, "", ""));
+                bidList.Add(new AuctionBid(Seat.North, new BiddingDecision(bid, "", "")));
             }
         }
         var auctionHistory = new AuctionHistory(bidList, Seat.North);
