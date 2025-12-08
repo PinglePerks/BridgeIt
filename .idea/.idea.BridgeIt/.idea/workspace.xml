@@ -18,22 +18,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Scenario/PuppetStayman.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Scenario/PuppetStayman.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/YamlDerivedRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/YamlDerivedRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" afterDir="false" />
-    </list>
+    <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -505,7 +490,7 @@
       <workItem from="1764493763664" duration="13376000" />
       <workItem from="1764508324461" duration="11160000" />
       <workItem from="1764598832000" duration="164070000" />
-      <workItem from="1765155648967" duration="2550000" />
+      <workItem from="1765155648967" duration="2873000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -611,7 +596,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765133338539</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="allows humans">
+      <option name="closed" value="true" />
+      <created>1765200475932</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1765200475932</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -650,7 +643,8 @@
     <MESSAGE value="Latest 6 Dec" />
     <MESSAGE value="latest" />
     <MESSAGE value="Removes constraints from bid and inferred instead" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removes constraints from bid and inferred instead" />
+    <MESSAGE value="allows humans" />
+    <option name="LAST_COMMIT_MESSAGE" value="allows humans" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
