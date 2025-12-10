@@ -9,5 +9,5 @@ public class StaticBidDerivation : IBidDerivation
     
     public StaticBidDerivation(Bid bid) => _bid = bid;
     
-    public Bid? DeriveBid(BiddingContext ctx) => _bid;
+    public Bid? DeriveBid(DecisionContext ctx) => _bid;
 }

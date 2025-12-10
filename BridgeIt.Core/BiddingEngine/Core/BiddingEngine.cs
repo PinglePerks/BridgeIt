@@ -1,55 +1,49 @@
 
 
+using System.ComponentModel.DataAnnotations;
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
-using BridgeIt.Core.Gameplay.Services;
+using BridgeIt.Core.Players;
 using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.BiddingEngine.Core;
 
-public sealed class BiddingEngine
+public sealed class BiddingEngine : IPlayer
 {
     private readonly List<IBiddingRule> _rules;
     private readonly ILogger<BiddingEngine> _logger;
 
-    public (IBidConstraint?, string?) GetConstraintsFromBid(BiddingContext biddingContext, Bid bid)
+    public BidInformation GetConstraintsFromBid(DecisionContext decisionContext, Bid bid)
     {
         foreach (var rule in _rules)
         {
-            var (bidConstraint, nextState) = rule.GetConstraintForBid(bid, biddingContext);
-             if (bidConstraint != null)
-                 return (bidConstraint, nextState);
+            var bidInformation = rule.GetConstraintForBid(bid, decisionContext);
+             if (bidInformation != null)
+                 return bidInformation;
         }
 
-        return (null, null);
+        return new BidInformation(bid, null, null);
     }
     
-    public BiddingContext CreateBiddingContext(Seat currentSeat, Hand currentHand, AuctionHistory auctionHistory, Seat dealer, ISeatRotationService rotation, IRuleLookupService ruleLookupService)
+    public BiddingContext CreateBiddingContext(Seat currentSeat, Hand currentHand, AuctionHistory auctionHistory)
     {
-        var output = GetPartnerConstraints(auctionHistory.Bids, Vulnerability.None, dealer,
-            rotation.PartnerOf(currentSeat), ruleLookupService);
-        
-        var constraints = output.Select(o => o.Item1).ToList();
-        var nextState = output.Select(o => o.Item2).LastOrDefault();
         return new BiddingContext(
-            hand: currentHand,   
+            hand: currentHand,
             auctionHistory: auctionHistory,
             seat: currentSeat,
-            vulnerability: Vulnerability.None,
-            handEvaluation: HandEvaluator.Evaluate(currentHand),
-            partnershipKnowledge: AuctionEvaluator.AnalyzeKnowledge(constraints),
-            auctionEvaluation: AuctionEvaluator.Evaluate(auctionHistory, currentSeat, nextState)
-        );
-        
+            vulnerability: Vulnerability.None);
+
     } 
     
-    protected internal List<(IBidConstraint, string)> GetPartnerConstraints(IReadOnlyList<AuctionBid> bidHistory, Vulnerability vulnerability, Seat dealer, Seat partner, IRuleLookupService ruleLookupService)
+    protected internal List<BidInformation> GetPartnerConstraints(BiddingContext ctx, IRuleLookupService ruleLookupService)
     {
-        var dict = ruleLookupService.GetConstraintsFromBids(bidHistory, vulnerability, dealer, this);
+        var dict = ruleLookupService.GetConstraintsFromBids(ctx, this);
+        
+        var partner = ctx.Seat.GetPartner();
         
         return dict[partner];
 
@@ -61,16 +55,15 @@ public sealed class BiddingEngine
         _logger = logger;
     }
 
-    public BiddingDecision ChooseBid(BiddingContext ctx)
+    public Bid ChooseBid(BiddingContext ctx)
     {
-        var tmpPartner = ctx.PartnershipKnowledge;
+        var decisionContext = new DecisionContext(ctx);
+        return ChooseBid(decisionContext);
+    }
 
-        _logger.LogInformation($"Partner - min hcp: {tmpPartner.PartnerHcpMin}\n" +
-                               $"max hcp: {tmpPartner.PartnerHcpMax}\n" +
-                               $"shape min clubs: {tmpPartner.PartnerMinShape[Suit.Clubs]}\n" +
-                               $"shape min diamonds: {tmpPartner.PartnerMinShape[Suit.Diamonds]}\n" +
-                               $"shape min hearts: {tmpPartner.PartnerMinShape[Suit.Hearts]}\n" +
-                               $"shape min spades: {tmpPartner.PartnerMinShape[Suit.Spades]}\n");
+    public Bid ChooseBid(DecisionContext ctx)
+    {
+        
         foreach (var rule in _rules)
         {
             if (!rule.IsApplicable(ctx))
@@ -83,11 +76,17 @@ public sealed class BiddingEngine
             
             if (decision != null)
             {
-                _logger.LogDebug($"\n Seat: {ctx.Seat}\nRule {rule.Name} applied\n Bid:{decision.ChosenBid}\n");
+                _logger.LogDebug($"\n Seat: {ctx.Data.Seat}\nRule {rule.Name} applied\n Bid:{decision}\n");
                 return decision;
             }
         }
         // fallback
-        return new BiddingDecision(Bid.Pass(), "No applicable rule found", "passed");
+        return Bid.Pass();
+    }
+
+    
+    public Task<Bid> GetBidAsync(BiddingContext context)
+    {
+        throw new NotImplementedException();
     }
 }

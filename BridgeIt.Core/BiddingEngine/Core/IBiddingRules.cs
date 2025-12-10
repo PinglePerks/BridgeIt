@@ -7,8 +7,8 @@ public interface IBiddingRule
 {
     string Name { get; }
     int Priority { get; }
-    bool IsApplicable(BiddingContext ctx);
-    BiddingDecision? Apply(BiddingContext ctx);
-    (IBidConstraint?, string?) GetConstraintForBid(Bid bid, BiddingContext ctx);
+    bool IsApplicable(DecisionContext ctx);
+    Bid? Apply(DecisionContext ctx);
+    BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx);
     
 }

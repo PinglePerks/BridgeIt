@@ -7,12 +7,12 @@ namespace BridgeIt.Core.BiddingEngine.BidDerivation;
 
 public interface IBidDerivation
 {
-    Bid? DeriveBid(BiddingContext ctx);
+    Bid? DeriveBid(DecisionContext ctx);
 }
 
 public abstract class BidDerivationBase : IBidDerivation
 {
-    public abstract Bid? DeriveBid(BiddingContext ctx);
+    public abstract Bid? DeriveBid(DecisionContext ctx);
     
     protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract)
     {

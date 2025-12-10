@@ -3,10 +3,11 @@ using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
+using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Extensions;
 using BridgeIt.Core.Gameplay.Output;
-using BridgeIt.Core.Gameplay.Services;
+using BridgeIt.Core.Players;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -21,6 +22,8 @@ public class TestBridgeEnvironment
     public IServiceProvider Provider { get; private set; }
     public BiddingEngine Engine { get; private set; }
     public BiddingTable Table { get; private set; }
+    
+    public Dictionary<Seat, IPlayer> Players { get; private set; }
 
     // Builder Pattern for flexibility
     public static TestBridgeEnvironment Create()
@@ -29,6 +32,8 @@ public class TestBridgeEnvironment
         env.Initialize();
         return env;
     }
+    
+    
 
     private void Initialize()
     {
@@ -40,7 +45,6 @@ public class TestBridgeEnvironment
         // 2. Register Services needed for the Table if not covered by AddBridgeItCore
         // (Assuming AddBridgeItCore registers these, but being safe based on your Program.cs)
         services.TryAddSingleton<IAuctionRules, StandardAuctionRules>();
-        services.TryAddSingleton<ISeatRotationService, ClockwiseSeatRotationService>();
         services.TryAddSingleton<IBiddingObserver, ConsoleBiddingObserver>(); // Or a silent Mock for tests
         services.TryAddSingleton<IHandFormatter, HandFormatter>();
         services.TryAddSingleton<BiddingTable>();
@@ -53,6 +57,14 @@ public class TestBridgeEnvironment
         });
 
         Provider = services.BuildServiceProvider();
+
+        Players = new Dictionary<Seat, IPlayer>()
+        {
+            { Seat.North, Engine },
+            { Seat.East, Engine },
+            { Seat.South, Engine },
+            { Seat.West, Engine },
+        };
     }
     
     public TestBridgeEnvironment WithAllRules(string directoryPath)
@@ -106,12 +118,7 @@ public class TestBridgeEnvironment
         var logger = Provider.GetRequiredService<ILogger<BiddingTable>>();
         // We need a table that uses OUR specific Engine instance, not the empty one from DI
         Table = new BiddingTable(
-            Engine,
-            Provider.GetRequiredService<IAuctionRules>(),
-            Provider.GetRequiredService<ISeatRotationService>(),
-            Provider.GetRequiredService<IBiddingObserver>(),
-            logger,
-            Provider.GetRequiredService<IRuleLookupService>()
+            Provider.GetRequiredService<IAuctionRules>()
         );
     }
 }

@@ -75,5 +75,5 @@ var bids = table.RunAuction(dict, Seat.North);
 Console.WriteLine("Final Auction Decisions:");
 foreach (var decision in bids)
 {
-    Console.WriteLine($"Bid: {decision.Decision.ChosenBid,-5} | {decision.Decision.Explanation}");
+    Console.WriteLine($"Bid: {decision.Bid.ChosenBid,-5} | {decision.Bid.Explanation}");
 }

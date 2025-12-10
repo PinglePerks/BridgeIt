@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.BidDerivation;
 using BridgeIt.Core.BiddingEngine.BidDerivation.Factories;
 using BridgeIt.Core.BiddingEngine.Constraints;
@@ -5,6 +6,7 @@ using BridgeIt.Core.BiddingEngine.Constraints.Factories;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Bidding;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Rules;
@@ -53,12 +55,12 @@ public class YamlDerivedRule : BiddingRuleBase
         }
     }
 
-    public override bool IsApplicable(BiddingContext ctx)
+    public override bool IsApplicable(DecisionContext ctx)
     {
         return _triggerConstraint.IsMet(ctx);
     }
 
-    public override BiddingDecision? Apply(BiddingContext ctx)
+    public override Bid? Apply(DecisionContext ctx)
     {
         foreach (var option in _options)
         {
@@ -66,17 +68,18 @@ public class YamlDerivedRule : BiddingRuleBase
             {
                 var bid = option.Bid.DeriveBid(ctx);
 
-                if(IsValidBid(bid, ctx.AuctionEvaluation.CurrentContract))
-                    return new BiddingDecision(bid, $"Rule:{Name} || Reason:{option.Reason}", option.NextState);
+                if(IsValidBid(bid, ctx.Data.AuctionHistory))
+                    return bid;
             }
         }
         return null;
     }
     
 
-    public override (IBidConstraint?, string?) GetConstraintForBid(Bid bid, BiddingContext ctx)
+    public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
-        if (!IsApplicable(ctx)) return (null, null);
+        
+        if (!IsApplicable(ctx)) return null;
 
         foreach (var option in _options)
         {
@@ -84,11 +87,11 @@ public class YamlDerivedRule : BiddingRuleBase
 
             if (potentialBid != null && potentialBid.ToString() == bid.ToString())
             {
-                return (option.Logic,  option.NextState);
+                return new BidInformation(bid, option.Logic, option.NextState );
             }
         }
 
-        return (null, null);
+        return null;
     }
 
     // --- Helpers ---
@@ -146,8 +149,11 @@ public class YamlDerivedRule : BiddingRuleBase
         return composite;
     }
     
-    private bool IsValidBid(Bid? candidate, Bid? currentContract)
+    private bool IsValidBid(Bid? candidate, AuctionHistory auctionHistory)
     {
+        var currentContract = AuctionEvaluator.Evaluate(auctionHistory).CurrentContract;
+        
+        
         if (candidate == null) return false;
         // Pass is always valid (unless specific competitive rules prevent it, but standard bridge allows pass)
         if (candidate.Type == BidType.Pass) return true;

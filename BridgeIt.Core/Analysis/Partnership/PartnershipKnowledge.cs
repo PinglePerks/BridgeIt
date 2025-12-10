@@ -8,11 +8,9 @@ public class PartnershipKnowledge
     // --- High Card Points ---
     public int PartnerHcpMin { get; set; } = 0;
     public int PartnerHcpMax { get; set; } = 40;
-    
     public Suit? FitInSuit { get; set; }
     
     
-
     // --- Suit Lengths (Min known length) ---
     public Dictionary<Suit, int> PartnerMinShape { get; } = new()
     {
@@ -31,7 +29,6 @@ public class PartnershipKnowledge
 
     public PartnershipKnowledge? PartnerKnowledgeOfMe { get; set; }
     
-
     // --- Specific Attributes ---
     public bool PartnerIsBalanced { get; set; } = false;
 
@@ -49,7 +46,6 @@ public class PartnershipKnowledge
         return (PartnerMinShape[suit] + myLength) >= 8;
     }
     
-
     public Suit? BestFitSuit(Dictionary<Suit, int> myHand)
     {
         foreach (var suit in PartnerMinShape.Keys)
@@ -60,6 +56,5 @@ public class PartnershipKnowledge
         return null;
     }
     
-
     public bool HasPossibleFit(Suit suit, int myLength) => (PartnerMaxShape[suit] + myLength) >= 8;
 }

@@ -1,4 +1,5 @@
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Constraints;
@@ -7,7 +8,7 @@ public class LongestConstraint(string suit) : IBidConstraint
 {
     public Suit Suit = suit.ToSuit(); // "hearts", "spades", etc
 
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         var shape = ctx.HandEvaluation.Shape;
         var length = shape[Suit];

@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Tests.Analysis.Hand;
@@ -15,7 +16,7 @@ public class HighCardPointsTests
     [TestCase("S9", 0, Description = "Nine = 0")]
     public void Count_CalculatesIndividualHonorsCorrectly(string handString, int expectedPoints)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = HighCardPoints.Count(hand);
         Assert.That(result, Is.EqualTo(expectedPoints));
     }
@@ -28,7 +29,7 @@ public class HighCardPointsTests
     [TestCase("S23456789", 0, Description = "No Honors = 0")]
     public void Count_CalculatesSuitCombinationsCorrectly(string handString, int expectedPoints)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = HighCardPoints.Count(hand);
         Assert.That(result, Is.EqualTo(expectedPoints));
     }
@@ -47,7 +48,7 @@ public class HighCardPointsTests
         // Total = 11. Let's adjust the test case string to be exactly 12.
         // Add a Jack to Clubs -> C: Q J 4 (2+1=3). Total 12.
         
-        var hand = ("SKJ42 HQ53 DK872 CQJ4").ParseHand();
+        var hand = ("SKJ42 HQ53 DK872 CQJ4").ToHand();
         var result = HighCardPoints.Count(hand);
         Assert.That(result, Is.EqualTo(12));
     }
@@ -58,7 +59,7 @@ public class HighCardPointsTests
     {
         // Theoretical max for 13 cards:
         // 4 Aces (16) + 4 Kings (12) + 4 Queens (8) + 1 Jack (1) = 37 HCP
-        var hand = ("SAKQJ HAKQ DAKQ CAKQ").ParseHand();
+        var hand = ("SAKQJ HAKQ DAKQ CAKQ").ToHand();
         var result = HighCardPoints.Count(hand);
         Assert.That(result, Is.EqualTo(37));
     }
@@ -78,7 +79,7 @@ public class HighCardPointsTests
     public void Count(string handString, int expectedPoints)
     {
         //Arrange
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         
         //Act
         var result = HighCardPoints.Count(hand);

@@ -3,8 +3,8 @@ namespace BridgeIt.Core.Domain.Primatives;
 public readonly record struct Card(Suit Suit, Rank Rank)
 {
     public override string ToString()
-        => $"{Rank.ShortName()}{Suit.ShortName()}";
+        => $"{RankExtensions.ToString(Rank)}{Suit.ToShortString()}";
 
     public string ToSymbolString()
-        => $"{Rank.ShortName()}{Suit.ToSymbol()}";
+        => $"{RankExtensions.ToString(Rank)}{Suit.ToSymbol()}";
 }

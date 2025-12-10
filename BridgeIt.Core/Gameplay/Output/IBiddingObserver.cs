@@ -5,5 +5,5 @@ namespace BridgeIt.Core.Gameplay.Output;
 
 public interface IBiddingObserver
 {
-    void OnBid(Seat seat, BiddingDecision decision);
+    void OnBid(Seat seat, Bid decision);
 }

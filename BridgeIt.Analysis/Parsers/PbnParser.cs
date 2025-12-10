@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using BridgeIt.Analysis.Models;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Analysis.Parsers;
@@ -139,10 +140,10 @@ public class PbnParser
         {
             // Convert PBN rank char to your Card.Parse format
             // PBN: T, J, Q, K, A. Your Card.Parse likely supports these.
-            string cardStr = $"{rankChar}{suit.ShortName()}"; // e.g. "KS"
+            string cardStr = $"{rankChar}{suit.ToShortString()}"; // e.g. "KS"
             try 
             {
-                cards.Add(cardStr.ParseCard());
+                cards.Add(cardStr.ToCard());
             }
             catch 
             {

@@ -1,4 +1,5 @@
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Constraints;
@@ -27,7 +28,7 @@ public class SuitLengthConstraint : IBidConstraint
         
     }
 
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         // 3. Handle the NULL case (Any suit matches criteria)
         if (Suit == null)
@@ -52,9 +53,10 @@ public class SuitLengthConstraint : IBidConstraint
 
     // Logic: Returns the first Suit that meets the criteria, or null if none
     // Changed from returning bool to returning Suit?
-    protected internal Suit? GetLongestMatchingSuit(BiddingContext ctx)
+    protected internal Suit? GetLongestMatchingSuit(DecisionContext ctx)
     {
         // We iterate through the shape dictionary to find a match
+        
         foreach(var kvp in ctx.HandEvaluation.Shape)
         {
             int count = kvp.Value;

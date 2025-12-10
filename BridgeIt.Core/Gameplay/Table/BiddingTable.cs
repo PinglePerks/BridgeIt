@@ -6,48 +6,42 @@ using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Output;
-using BridgeIt.Core.Gameplay.Services;
+using BridgeIt.Core.Players;
 using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.Gameplay.Table;
 
 public class BiddingTable(
-    BiddingEngine.Core.BiddingEngine engine,
-    IAuctionRules rules,
-    ISeatRotationService rotation,
-    IBiddingObserver observer,
-    ILogger<BiddingTable> logger,
-    IRuleLookupService ruleLookupService
+    IAuctionRules rules
     )
 {
-    public IReadOnlyList<AuctionBid> RunAuction(
+    public async Task<AuctionHistory> RunAuction(
         IReadOnlyDictionary<Seat, Hand> hands,
+        IReadOnlyDictionary<Seat, IPlayer> players,
         Seat dealer)
     {
-        var auctionHistory = new AuctionHistory(new List<AuctionBid>(), dealer);
         var current = dealer;
-
+        
+        var auctionHistory = new AuctionHistory(dealer);
+        
+        var vulnerability = Vulnerability.None;
+        
+        
         while (true)
         {
-            var ctx = engine.CreateBiddingContext(current, hands[current], auctionHistory, dealer, rotation, ruleLookupService);
+            var context = new BiddingContext(hands[current], auctionHistory, current, vulnerability);
             
-            logger.LogDebug($"Evaluating {current} hand");
+            var bid = await players[current].GetBidAsync(context);
             
-            var decision = engine.ChooseBid(ctx);
+            auctionHistory.Add(new AuctionBid(current, bid));
             
-            var auctionBid = new AuctionBid(current, decision );
-            
-            auctionHistory.Add(auctionBid);
-
-            observer.OnBid(current, decision);
-
             if (rules.ShouldStop(auctionHistory.Bids))
                 break;
 
-            current = rotation.Next(current);
+            current = current.GetNextSeat();
         }
 
-        return auctionHistory.Bids;
+        return auctionHistory;
     }
 
 

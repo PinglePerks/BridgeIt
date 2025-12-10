@@ -1,4 +1,6 @@
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.Players;
 using BridgeIt.TestHarness.DealerIntegrationTests;
 using BridgeIt.TestHarness.Setup;
 using NUnit.Framework;
@@ -26,7 +28,7 @@ public class AcolSystemTests
     }
     
     [Test]
-    public void RunScenario()
+    public async Task RunScenario()
     {
         // Arrange
         var dealer = new Dealer.Deal.Dealer();
@@ -41,7 +43,7 @@ public class AcolSystemTests
 
         // Act
         // Run the auction starting with North
-        var auction = _environment.Table.RunAuction(deal, Seat.North);
+        var auction = await _environment.Table.RunAuction(deal,_environment.Players, Seat.North);
 
         Console.WriteLine($"Opening Hand:     {deal[Seat.North]}\n" +
                           $"Overcaller Hand: {deal[Seat.East]}\n" +
@@ -51,7 +53,7 @@ public class AcolSystemTests
     }
     
     [Test]
-    public void RunExactScenario()
+    public async Task RunExactScenario()
     {
         // Arrange
         var dealer = new Dealer.Deal.Dealer();
@@ -65,7 +67,7 @@ public class AcolSystemTests
         // Create a full deal (E/W get remaining cards)
         // Act
         // Run the auction starting with North
-        var auction = _environment.Table.RunAuction(deal, Seat.North);
+        var auction = await _environment.Table.RunAuction(deal,_environment.Players, Seat.North);
 
         Console.WriteLine($"North Hand:     {deal[Seat.North]}\n" +
                           $"East Hand: {deal[Seat.East]}\n" +
@@ -73,9 +75,9 @@ public class AcolSystemTests
                           $"West Hand:   {deal[Seat.West]}");
 
         
-        foreach (var decision in auction)
+        foreach (var decision in auction.Bids)
         {
-            Console.WriteLine($"Bid: {decision.Decision.ChosenBid,-5} | {decision.Decision.Explanation}");
+            Console.WriteLine($"Bid: {decision.Bid,-5}");
         }
     }
 }
@@ -164,13 +166,13 @@ public static class SimpleHandParser
             // but direct mapping is faster/safer for single chars.
             // Or construct the string "QS" and use your existing Card.Parse extension.
             
-            string cardString = $"{r}{suit.ShortName()}"; // e.g. "Q" + "S" -> "QS"
+            string cardString = $"{r}{suit.ToShortString()}"; // e.g. "Q" + "S" -> "QS"
             
             try 
             {
                 // Assuming you have a static Parse or Extension on string
                 // Adjust this call to match your exact Card.Parse implementation
-                cards.Add(SuitExtensions.ParseCard(cardString)); 
+                cards.Add(cardString.ToCard()); 
             }
             catch
             {

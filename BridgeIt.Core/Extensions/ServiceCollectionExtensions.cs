@@ -3,11 +3,9 @@ using BridgeIt.Core.BiddingEngine.BidDerivation.Factories;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Constraints.Factories;
-using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Output;
-using BridgeIt.Core.Gameplay.Services;
 using BridgeIt.Core.Gameplay.Table;
 using OneLevelResponderBidDerivation = BridgeIt.Core.BiddingEngine.BidDerivation.OneLevelResponderBidDerivation;
 
@@ -23,9 +21,9 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConstraintFactory, HcpConstraintFactory>();
         services.AddSingleton<IConstraintFactory, ShapeConstraintFactory>();
         services.AddSingleton<IConstraintFactory, LosingTrickCountCounstraintFactory>();
-        services.AddSingleton<IConstraintFactory, CurrentStateConstraintFactory>();
+        //services.AddSingleton<IConstraintFactory, CurrentStateConstraintFactory>();
         services.AddSingleton<IConstraintFactory, HistoryPatternConstraintFactory>();
-        services.AddSingleton<IConstraintFactory, PartnerKnowledgeConstraintFactory>();
+        //services.AddSingleton<IConstraintFactory, PartnerKnowledgeConstraintFactory>();
         services.AddSingleton<IConstraintFactory, SeatRoleConstraintFactory>();
         services.AddSingleton<IConstraintFactory, CurrentContractConstraintFactory>();
         services.AddSingleton<IConstraintFactory, RomanKeyCardConstrainFactory>();
@@ -44,10 +42,9 @@ public static class ServiceCollectionExtensions
         // 2. Register Core Services
         services.AddSingleton<BiddingEngine.Core.BiddingEngine>();
         services.AddSingleton<IAuctionRules, StandardAuctionRules>();
-        services.AddSingleton<ISeatRotationService, ClockwiseSeatRotationService>();
         services.AddSingleton<IBiddingObserver, ConsoleBiddingObserver>();
         services.AddSingleton<IHandFormatter, HandFormatter>();
-        services.AddSingleton<BiddingTable>();
+        //services.AddSingleton<BiddingTable>();
         services.AddSingleton<IRuleLookupService, RuleLookupService>();
         
         // 3. Register the Rule Loader (See next file)

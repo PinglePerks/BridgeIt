@@ -19,7 +19,7 @@ public class PbnAnalysis
     }
 
     [Test]
-    public void ValidateEngineAgainstPbnFile()
+    public async Task ValidateEngineAgainstPbnFile()
     {
         var parser = new PbnParser();
         var boards = parser.ParseFile("/Users/mattyperky/Documents/pbn bridge/214550427545623544460.pbn");
@@ -34,10 +34,10 @@ public class PbnAnalysis
             }
 
             // 1. Set up the table with the Real Deal
-            var auction = _environment.Table.RunAuction(board.Hands, board.Dealer);
+            var auction = await _environment.Table.RunAuction(board.Hands,_environment.Players, board.Dealer);
 
             // 2. Compare Bids
-            var engineBids = auction.Select(d => d.Decision.ChosenBid.ToString()).ToList();
+            var engineBids = auction.Bids.Select(d => d.Bid.ToString()).ToList();
             
             // Basic Comparison Loop
             int movesToCompare = Math.Min(engineBids.Count, board.ActualAuction.Count);
@@ -60,7 +60,7 @@ public class PbnAnalysis
     }
 
     [Test]
-    public void ValidateEngineAgainstPbnFileFirstBoard()
+    public async Task ValidateEngineAgainstPbnFileFirstBoard()
     {
         var parser = new PbnParser();
         var boards = parser.ParseFile("/Users/mattyperky/Downloads/214550427545623544460.pbn");
@@ -73,10 +73,10 @@ public class PbnAnalysis
         }
 
         // 1. Set up the table with the Real Deal
-        var auction = _environment.Table.RunAuction(board.Hands, board.Dealer);
+        var auction = await _environment.Table.RunAuction(board.Hands, _environment.Players, board.Dealer);
 
         // 2. Compare Bids
-        var engineBids = auction.Select(d => d.Decision.ChosenBid.ToString()).ToList();
+        var engineBids =  auction.Bids.Select(d => d.Bid.ToString()).ToList();
 
         // Basic Comparison Loop
         int movesToCompare = Math.Min(engineBids.Count, board.ActualAuction.Count);

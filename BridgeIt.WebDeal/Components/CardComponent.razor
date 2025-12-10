@@ -2,7 +2,7 @@
 
 <div class="card" style="border: 1px solid black; padding: 5px; margin: 2px; width: 40px; text-align: center; background-color: white;">
     <span style="color: @GetColor(Card.Suit)">
-        @Card.Rank.ShortName()@Card.Suit.ToSymbol()
+        @RankExtensions.ToString(Card.Rank)@Card.Suit.ToSymbol()
     </span>
 </div>
 
