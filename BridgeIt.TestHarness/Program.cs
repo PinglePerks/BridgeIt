@@ -37,7 +37,7 @@ var engine = new BiddingEngine(loadedRules,logger);
 
 // --- 3. Play ---
 // Injecting the engine manually for this CLI run since we created it after DI build
-var table = new BiddingTable(
-    provider.GetRequiredService<IAuctionRules>()
-);
+//var table = new BiddingTable(
+    //provider.GetRequiredService<IAuctionRules>()
+//);
 

@@ -21,12 +21,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConstraintFactory, HcpConstraintFactory>();
         services.AddSingleton<IConstraintFactory, ShapeConstraintFactory>();
         services.AddSingleton<IConstraintFactory, LosingTrickCountCounstraintFactory>();
-        //services.AddSingleton<IConstraintFactory, CurrentStateConstraintFactory>();
         services.AddSingleton<IConstraintFactory, HistoryPatternConstraintFactory>();
-        //services.AddSingleton<IConstraintFactory, PartnerKnowledgeConstraintFactory>();
+        services.AddSingleton<IConstraintFactory, PartnerKnowledgeConstraintFactory>();
         services.AddSingleton<IConstraintFactory, SeatRoleConstraintFactory>();
         services.AddSingleton<IConstraintFactory, CurrentContractConstraintFactory>();
         services.AddSingleton<IConstraintFactory, RomanKeyCardConstrainFactory>();
+        services.AddSingleton<IConstraintFactory, CurrentStateConstraintFactory>();
         
         // Register Bid Derivations
         services.AddSingleton<IBidDerivationFactory, LengthBidDerivationFactory>();
@@ -42,7 +42,6 @@ public static class ServiceCollectionExtensions
         // 2. Register Core Services
         services.AddSingleton<BiddingEngine.Core.BiddingEngine>();
         services.AddSingleton<IAuctionRules, StandardAuctionRules>();
-        services.AddSingleton<IBiddingObserver, ConsoleBiddingObserver>();
         services.AddSingleton<IHandFormatter, HandFormatter>();
         //services.AddSingleton<BiddingTable>();
         services.AddSingleton<IRuleLookupService, RuleLookupService>();

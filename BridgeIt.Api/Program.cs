@@ -3,6 +3,9 @@ using BridgeIt.Api.Services;
 using BridgeIt.Core.Extensions;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.Domain.IBidValidityChecker;
+using BridgeIt.Core.Gameplay.Output;
+using BridgeIt.Core.Gameplay.Table;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,12 @@ builder.Services.AddBridgeItCore();
 // --- 3. Register Game Logic ---
 // GameService needs to be a Singleton to hold state across SignalR requests
 builder.Services.AddSingleton<GameService>();
+builder.Services.AddSingleton<IBiddingObserver, SignalRBiddingObserver>();
+builder.Services.AddSingleton<BiddingTable>(); 
+builder.Services.AddSingleton<IBidValidityChecker, BidValidityChecker>();
+
+
+
 
 // --- 4. Load Rules at Startup (The "Warm-up" Pattern) ---
 // We register a hosted service or run a manual scope to load rules *once* at startup.
@@ -43,6 +52,9 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(sp =>
 
     return loader.LoadRulesFromDirectory(path).ToList();
 });
+
+
+
 
 // --- 5. Configure CORS ---
 builder.Services.AddCors(options =>

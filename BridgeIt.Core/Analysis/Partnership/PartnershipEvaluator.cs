@@ -1,21 +1,20 @@
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.BiddingEngine;
 using BridgeIt.Core.BiddingEngine.Constraints;
-using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
-using BridgeIt.Core.Domain.Utilities;
 
 namespace BridgeIt.Core.Analysis.Partnership;
 
 public static class PartnershipEvaluator {
     
-    public static PartnershipKnowledge AnalyzeKnowledge(List<IBidConstraint> bidConstraints)
+    public static PartnershipKnowledge AnalyzeKnowledge(List<BidInformation> bidInfo)
     {
         var knowledge = new PartnershipKnowledge();
+        
+        knowledge.CurrentPartnershipState = bidInfo.LastOrDefault()?.PartnershipState;
 
-        foreach (var bidConstraint in bidConstraints)
+        foreach (var bidConstraint in bidInfo.Select(b => b.Constraint))
         {
-            
             knowledge = ExtractKnowledgeFromConstraint(bidConstraint, knowledge);
         }
         

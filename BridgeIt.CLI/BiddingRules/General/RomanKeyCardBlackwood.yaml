@@ -1,48 +1,48 @@
-system_name: "Roman Key Card Blackwood"
-priority: 300
-description: "Roman Key Card Blackwood"
-
-trigger:
-  conditions:
-#    any_of:
-#    - current_state: "roman_key_card_blackwood"
-    partner_knowledge:
-      combined_hcp: ">= 30"
-      fit_in_suit: "any"
-
-nodes:
-  - bid: "4NT"
-    type: "Artificial"
-    meaning: "RKC Blackwood"
-    constraints:
-      partner_knowledge:
-        combined_hcp: ">= 25"
-        fit_in_suit: "any"
-    next_state: "roman_key_card_blackwood"
-    
-  - bid: "5C"
-    type: "Artificial"
-    meaning: "RKC Blackwood"
-    constraints:
-      any_of:
-      - roman_key_card: 0
-      - roman_key_card: 3
-    next_state: "natural_response"
-
-  - bid: "5D"
-    type: "Artificial"
-    meaning: "RKC Blackwood"
-    constraints:
-      any_of:
-        - roman_key_card: 1
-        - roman_key_card: 4
-    next_state: "natural_response"
-
-  - bid: "5H"
-    type: "Artificial"
-    meaning: "RKC Blackwood"
-    constraints:
-      roman_key_card: 2
-    next_state: "natural_response"
-    
-  
+#system_name: "Roman Key Card Blackwood"
+#priority: 300
+#description: "Roman Key Card Blackwood"
+#
+#trigger:
+#  conditions:
+##    any_of:
+##    - current_state: "roman_key_card_blackwood"
+#    partner_knowledge:
+#      combined_hcp: ">= 30"
+#      fit_in_suit: "any"
+#
+#nodes:
+#  - bid: "4NT"
+#    type: "Artificial"
+#    meaning: "RKC Blackwood"
+#    constraints:
+#      partner_knowledge:
+#        combined_hcp: ">= 25"
+#        fit_in_suit: "any"
+#    next_state: "roman_key_card_blackwood"
+#    
+#  - bid: "5C"
+#    type: "Artificial"
+#    meaning: "RKC Blackwood"
+#    constraints:
+#      any_of:
+#      - roman_key_card: 0
+#      - roman_key_card: 3
+#    next_state: "natural_response"
+#
+#  - bid: "5D"
+#    type: "Artificial"
+#    meaning: "RKC Blackwood"
+#    constraints:
+#      any_of:
+#        - roman_key_card: 1
+#        - roman_key_card: 4
+#    next_state: "natural_response"
+#
+#  - bid: "5H"
+#    type: "Artificial"
+#    meaning: "RKC Blackwood"
+#    constraints:
+#      roman_key_card: 2
+#    next_state: "natural_response"
+#    
+#  

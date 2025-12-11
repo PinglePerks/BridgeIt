@@ -48,6 +48,7 @@ public class TestBridgeEnvironment
         services.TryAddSingleton<IBiddingObserver, ConsoleBiddingObserver>(); // Or a silent Mock for tests
         services.TryAddSingleton<IHandFormatter, HandFormatter>();
         services.TryAddSingleton<BiddingTable>();
+        services.TryAddSingleton<IRuleLookupService, RuleLookupService>();
         
         services.AddLogging(builder => 
         {
@@ -57,14 +58,7 @@ public class TestBridgeEnvironment
         });
 
         Provider = services.BuildServiceProvider();
-
-        Players = new Dictionary<Seat, IPlayer>()
-        {
-            { Seat.North, Engine },
-            { Seat.East, Engine },
-            { Seat.South, Engine },
-            { Seat.West, Engine },
-        };
+        
     }
     
     public TestBridgeEnvironment WithAllRules(string directoryPath)
@@ -80,6 +74,16 @@ public class TestBridgeEnvironment
         // Re-register or Instantiate Engine with these specific rules
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
         Engine = new BiddingEngine(rules,logger);
+        
+        var robotPlayer = new RobotPlayer(Engine, Provider.GetRequiredService<IRuleLookupService>());
+
+        Players = new Dictionary<Seat, IPlayer>()
+        {
+            { Seat.North, robotPlayer },
+            { Seat.East, robotPlayer },
+            { Seat.South, robotPlayer },
+            { Seat.West, robotPlayer }
+        };
         RebuildTable();
         return this;
     }
@@ -109,6 +113,16 @@ public class TestBridgeEnvironment
         // Re-register or Instantiate Engine with these specific rules
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
         Engine = new BiddingEngine(rules,logger);
+        
+        var robotPlayer = new RobotPlayer(Engine, Provider.GetRequiredService<IRuleLookupService>());
+
+        Players = new Dictionary<Seat, IPlayer>()
+        {
+            { Seat.North, robotPlayer },
+            { Seat.East, robotPlayer },
+            { Seat.South, robotPlayer },
+            { Seat.West, robotPlayer }
+        };
         RebuildTable();
         return this;
     }
@@ -117,9 +131,9 @@ public class TestBridgeEnvironment
     {
         var logger = Provider.GetRequiredService<ILogger<BiddingTable>>();
         // We need a table that uses OUR specific Engine instance, not the empty one from DI
-        Table = new BiddingTable(
-            Provider.GetRequiredService<IAuctionRules>()
-        );
+        // Table = new BiddingTable(
+        //     Provider.GetRequiredService<IAuctionRules>()
+        //);
     }
 }
 

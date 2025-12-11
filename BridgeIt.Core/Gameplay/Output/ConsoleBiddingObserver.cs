@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
@@ -5,9 +6,9 @@ namespace BridgeIt.Core.Gameplay.Output;
 
 public sealed class ConsoleBiddingObserver : IBiddingObserver
 {
-    public void OnBid(Seat seat, Bid decision)
+    public void OnBid(AuctionHistory auctionHistory)
     {
-        Console.WriteLine($"{seat, -7}: {decision.ToString(),-5}" );
+        Console.WriteLine($"auctionHistory" );
 
     }
     

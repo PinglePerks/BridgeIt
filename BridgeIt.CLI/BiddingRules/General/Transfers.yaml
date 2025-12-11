@@ -9,7 +9,7 @@ trigger:
 
 nodes:
   - dynamic_bid:
-      bid_type: "transfer" # Requires TransferBidDerivation factory
+      bid_type: "transfer"
     type: "Convention"
     meaning: "Completing transfer (Forced)"
     next_state: "natural_response"

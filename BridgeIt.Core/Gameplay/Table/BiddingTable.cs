@@ -12,7 +12,8 @@ using Microsoft.Extensions.Logging;
 namespace BridgeIt.Core.Gameplay.Table;
 
 public class BiddingTable(
-    IAuctionRules rules
+    IAuctionRules rules,
+    IBiddingObserver observer
     )
 {
     public async Task<AuctionHistory> RunAuction(
@@ -26,7 +27,6 @@ public class BiddingTable(
         
         var vulnerability = Vulnerability.None;
         
-        
         while (true)
         {
             var context = new BiddingContext(hands[current], auctionHistory, current, vulnerability);
@@ -34,6 +34,8 @@ public class BiddingTable(
             var bid = await players[current].GetBidAsync(context);
             
             auctionHistory.Add(new AuctionBid(current, bid));
+            
+            observer.OnBid(auctionHistory);
             
             if (rules.ShouldStop(auctionHistory.Bids))
                 break;

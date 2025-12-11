@@ -10,6 +10,8 @@ public class PartnershipKnowledge
     public int PartnerHcpMax { get; set; } = 40;
     public Suit? FitInSuit { get; set; }
     
+    public string? CurrentPartnershipState { get; set; }
+    
     
     // --- Suit Lengths (Min known length) ---
     public Dictionary<Suit, int> PartnerMinShape { get; } = new()

@@ -28,7 +28,7 @@ public class AcolSystemTests
     
     [Test]
     [TestCaseSource(typeof(RealGameIntegrationTestCases), nameof(RealGameIntegrationTestCases.NonGameTestCase))]
-    public async void RunScenario(string dealStr, Seat dealer, List<string> expectedBidSequence)
+    public async Task RunScenario(string dealStr, Seat dealer, List<string> expectedBidSequence)
     {
         var deal = SimpleHandParser.ParseBoard(dealStr);
         

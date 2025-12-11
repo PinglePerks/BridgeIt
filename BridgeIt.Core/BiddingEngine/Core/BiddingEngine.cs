@@ -7,12 +7,11 @@ using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
-using BridgeIt.Core.Players;
 using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.BiddingEngine.Core;
 
-public sealed class BiddingEngine : IPlayer
+public sealed class BiddingEngine
 {
     private readonly List<IBiddingRule> _rules;
     private readonly ILogger<BiddingEngine> _logger;
@@ -53,12 +52,6 @@ public sealed class BiddingEngine : IPlayer
     {
         _rules = rules.OrderByDescending(r => r.Priority).ToList();
         _logger = logger;
-    }
-
-    public Bid ChooseBid(BiddingContext ctx)
-    {
-        var decisionContext = new DecisionContext(ctx);
-        return ChooseBid(decisionContext);
     }
 
     public Bid ChooseBid(DecisionContext ctx)
