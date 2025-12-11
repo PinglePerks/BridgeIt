@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using BridgeIt.Api.Hubs;
 using BridgeIt.Api.Models;
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
@@ -9,6 +10,7 @@ using BridgeIt.Core.Domain.IBidValidityChecker;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Players;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BridgeIt.Api.Services;
 
@@ -32,17 +34,20 @@ public class GameService
     private readonly IBidValidityChecker _bidValidityChecker;
     private readonly IRuleLookupService _lookup;
     private readonly BiddingTable _table;
+    private readonly IHubContext<GameHub> _hubContext;
     
     public GameService(
         BiddingEngine biddingEngine, 
         IBidValidityChecker bidValidityChecker, 
         BiddingTable table, 
-        IRuleLookupService ruleLookupService)
+        IRuleLookupService ruleLookupService,
+        IHubContext<GameHub> hubContext)
     {
         _biddingEngine = biddingEngine;
         _bidValidityChecker = bidValidityChecker;
         _table = table;
         _lookup = ruleLookupService;
+        _hubContext = hubContext;
 
         // Initialize all seats as Robots by default
         foreach (Seat seat in Enum.GetValues(typeof(Seat)))
@@ -55,7 +60,15 @@ public class GameService
     {
         ConnectionMap[connectionId] = seat;
         // Replace the robot with a HumanPlayer for this seat
-        _players[seat] = new HumanPlayer();
+
+        var human = new HumanPlayer();
+        
+        human.OnTurn += async (sender, s) => 
+        {
+            await _hubContext.Clients.Client(connectionId).SendAsync("UpdateNextBidder", seat);
+        };
+        
+        _players[seat] = human;
     }
 
     public void ReceiveHumanBid(string connectionId, Bid bid)
@@ -99,6 +112,4 @@ public class GameService
     {
         BidHistoryDto = history.Bids.Select(b => new BidDto((int)b.Seat, b.Bid.ToString())).ToList();
     }
-    
-    // ... (DealCustom, GetPuppetStaymanDeal, etc.) ...
 }

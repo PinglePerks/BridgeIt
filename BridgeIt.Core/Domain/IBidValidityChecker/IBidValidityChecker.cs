@@ -6,22 +6,22 @@ namespace BridgeIt.Core.Domain.IBidValidityChecker;
 
 public interface IBidValidityChecker
 {
-    bool IsValid(AuctionBid bid, AuctionHistory auctionHistory);
+    bool IsValid(AuctionBid bid, AuctionBid? lastNonPassBid);
 }
 
 public class BidValidityChecker : IBidValidityChecker
 {
-    public bool IsValid(AuctionBid bid, AuctionHistory auctionHistory)
+    public bool IsValid(AuctionBid bid, AuctionBid? lastNonPassBid)
     {
         var newBid = bid.Bid;
         
         if (newBid.Type == BidType.Pass) return true;
+        
+        var lastBid = lastNonPassBid?.Bid;
+        var lastBidder = lastNonPassBid?.Seat;
 
         if (newBid.Type == BidType.Double)
         {
-            var lastBidder = auctionHistory.Bids
-                .LastOrDefault(x => x.Bid.Type != BidType.Pass)?
-                .Seat;
             if(lastBidder == null) return false;
             if(lastBidder.Value.GetPartner() == bid.Seat) return false;
             return true;
@@ -29,17 +29,16 @@ public class BidValidityChecker : IBidValidityChecker
         
         if (newBid.Type == BidType.Redouble)
         {
-            var lastAuctionBid = auctionHistory.Bids
-                .LastOrDefault(x => x.Bid.Type != BidType.Pass);
+            var lastAuctionBid = lastNonPassBid?.Bid;
             if(lastAuctionBid == null) return false;
-            if (lastAuctionBid.Seat.GetPartner() == bid.Seat ||
-                lastAuctionBid.Bid.Type != BidType.Double) return false;
+            if (lastBidder!.Value.GetPartner() == bid.Seat ||
+                lastBid!.Type != BidType.Double) return false;
             return true;
         }
-        var currentContract = auctionHistory.Bids.LastOrDefault(x => x.Bid.Type != BidType.Pass)?.Bid;
-        if(currentContract == null) return true;
+;
+        if(lastBid == null) return true;
         
-        return NewBidHigherThanLastBid(currentContract, newBid);
+        return NewBidHigherThanLastBid(lastBid, newBid);
         
     }
     

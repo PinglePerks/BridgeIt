@@ -13,6 +13,8 @@ namespace BridgeIt.Core.Players;
 public interface IPlayer
 {
     Task<Bid> GetBidAsync(BiddingContext context);
+    
+    event EventHandler<Seat> OnTurn;
 }
 
 public class HumanPlayer : IPlayer
@@ -25,12 +27,12 @@ public class HumanPlayer : IPlayer
         // Reset the TCS for a new turn
         _bidTcs = new TaskCompletionSource<Bid>();
         
-        // You might want to trigger an event here to notify the UI 
-        // via SignalR that it is this player's turn.
-        // OnTurnNeeded?.Invoke(this, context.Seat);
+        OnTurn?.Invoke(this, context.Seat);
 
         return _bidTcs.Task;
     }
+
+    public event EventHandler<Seat>? OnTurn;
 
     // This is called by the GameHub when a bid is received from the client
     public void SetBid(Bid bid)
@@ -59,5 +61,7 @@ public class RobotPlayer(BiddingEngine.Core.BiddingEngine engine,
         
         return engine.ChooseBid(decisionContext);
     }
+    
+    public event EventHandler<Seat>? OnTurn;
 }
 
