@@ -6,13 +6,15 @@ namespace BridgeIt.Core.Domain.IBidValidityChecker;
 
 public interface IBidValidityChecker
 {
-    bool IsValid(AuctionBid bid, AuctionBid? lastNonPassBid);
+    bool IsValid(AuctionBid bid, AuctionHistory auctionHistory);
 }
 
 public class BidValidityChecker : IBidValidityChecker
 {
-    public bool IsValid(AuctionBid bid, AuctionBid? lastNonPassBid)
+    public bool IsValid(AuctionBid bid, AuctionHistory auctionHistory)
     {
+        var lastNonPassBid = auctionHistory.Bids.LastOrDefault(x => x.Bid.Type != BidType.Pass);
+        var lastContractBid = auctionHistory.Bids.LastOrDefault(x => x.Bid.Type != BidType.Pass && x.Bid.Type != BidType.Redouble && x.Bid.Type != BidType.Double);
         var newBid = bid.Bid;
         
         if (newBid.Type == BidType.Pass) return true;
@@ -38,8 +40,7 @@ public class BidValidityChecker : IBidValidityChecker
 ;
         if(lastBid == null) return true;
         
-        return NewBidHigherThanLastBid(lastBid, newBid);
-        
+        return NewBidHigherThanLastBid(lastContractBid!.Bid, newBid);
     }
     
     private bool NewBidHigherThanLastBid(Bid highestBid, Bid newBid)

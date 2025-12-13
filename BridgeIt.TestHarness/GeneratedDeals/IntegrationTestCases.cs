@@ -1,3 +1,4 @@
+using BridgeIt.Dealer.Scenario;
 using NUnit.Framework;
 
 namespace BridgeIt.TestHarness.DealerIntegrationTests;
@@ -153,5 +154,20 @@ public class IntegrationTestCases
             }
         ).SetName("Slam_Hand");
     }
+
+    public static IEnumerable<TestCaseData> OpenerRebid()
+    {
+        yield return new TestCaseData(
+            HandSpecifications.Hearts5Clubs4(12,15),
+            HandSpecifications.BalancedOpener(6,10),
+            new List<string>
+            {
+                "1H",
+                "1NT",
+                "2C"
+            }
+        ).SetName("Opener 5H, 4C");
+    }
+    
     
 }

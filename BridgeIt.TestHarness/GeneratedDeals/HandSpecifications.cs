@@ -54,5 +54,14 @@ public static class HandSpecifications
         LosingTrickCount.Count(h) <= maxLosers &&
         ShapeEvaluator.GetShape(h)[Suit.Hearts] >= 5;
     
+    public static Func<Hand, bool> Hearts5Clubs4(int minHcp, int maxHcp) => h =>
+        HighCardPoints.Count(h) >=  minHcp &&
+        HighCardPoints.Count(h) <= maxHcp &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] == 5 &&
+        ShapeEvaluator.GetShape(h)[Suit.Clubs] == 4;
+    
+    
+    
+    
 
 }

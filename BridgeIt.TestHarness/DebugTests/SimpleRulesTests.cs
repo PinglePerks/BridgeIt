@@ -213,6 +213,6 @@ private static IEnumerable<TestCaseData> BasicAcolOpeningTestCases()
         Assert.That(result.Level, Is.EqualTo(expectedBid.Level));
         
         Assert.That(result.Suit, Is.EqualTo(expectedBid.Suit));
-
     }   
+    
 }

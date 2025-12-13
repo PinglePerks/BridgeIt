@@ -23,8 +23,7 @@ public class GameHub : Hub
         _gameService.AddHumanPlayer(Context.ConnectionId, seat);
         await Clients.Caller.SendAsync("PlayerIdentified", seat);
     }
-
-
+    
     public async Task DealCards()
     {
         _gameService.DealNewHand();
@@ -38,7 +37,6 @@ public class GameHub : Hub
 
             await Clients.Client(connectionId).SendAsync("ReceiveHand", hand);
         }
-        
     }
 
     public async Task StartGame()
@@ -48,7 +46,8 @@ public class GameHub : Hub
 
     public async Task MakeBid(string bidStr)
     {
-        _gameService.ReceiveHumanBid(Context.ConnectionId, bidStr.ToBid());
+        if(_gameService.ReceiveHumanBid(Context.ConnectionId, bidStr.ToBid()))
+            await Clients.Caller.SendAsync("BidMadeSuccessfully", bidStr);
     }
 
 

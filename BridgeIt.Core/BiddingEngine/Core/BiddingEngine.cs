@@ -20,9 +20,12 @@ public sealed class BiddingEngine
     {
         foreach (var rule in _rules)
         {
-            var bidInformation = rule.GetConstraintForBid(bid, decisionContext);
-             if (bidInformation != null)
-                 return bidInformation;
+            if (rule.IsApplicable(decisionContext))
+            {
+                var bidInformation = rule.GetConstraintForBid(bid, decisionContext);
+                if (bidInformation != null)
+                    return bidInformation;
+            }
         }
 
         return new BidInformation(bid, null, null);

@@ -19,11 +19,13 @@ public interface IPlayer
 
 public class HumanPlayer : IPlayer
 {
+    public AuctionHistory? CurrentHistory { get; private set; }
     private TaskCompletionSource<Bid> _bidTcs;
 
     // This is called by the BiddingTable loop
     public Task<Bid> GetBidAsync(BiddingContext context)
     {
+        CurrentHistory = context.AuctionHistory;
         // Reset the TCS for a new turn
         _bidTcs = new TaskCompletionSource<Bid>();
         

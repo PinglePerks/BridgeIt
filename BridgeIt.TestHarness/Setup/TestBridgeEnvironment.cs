@@ -65,7 +65,8 @@ public class TestBridgeEnvironment
     {
         var loader = Provider.GetRequiredService<YamlRuleLoader>();
         var rules = loader.LoadRulesFromDirectory(directoryPath).ToList();
-        //rules.Add(new RespondingToNaturalOpening());
+        rules.Add(new OpenerUnbalancedRebidRule());
+        
         //rules.Add(new ResponseTo2ntOpening());
         // rules.Add(new MajorFitWithPartner());
         // rules.Add(new GeneralGameObjectiveRule());
@@ -129,11 +130,7 @@ public class TestBridgeEnvironment
 
     private void RebuildTable()
     {
-        var logger = Provider.GetRequiredService<ILogger<BiddingTable>>();
-        // We need a table that uses OUR specific Engine instance, not the empty one from DI
-        // Table = new BiddingTable(
-        //     Provider.GetRequiredService<IAuctionRules>()
-        //);
+        Table = Provider.GetRequiredService<BiddingTable>();
     }
 }
 

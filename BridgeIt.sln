@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Dealer", "BridgeIt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Analysis", "BridgeIt.Analysis\BridgeIt.Analysis.csproj", "{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.Web", "BridgeIt.Web\BridgeIt.Web.csproj", "{EF139918-CA90-4432-A9AF-270222A1ACDB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.AI", "BridgeIt.AI\BridgeIt.AI.csproj", "{CBC2BC12-03A3-4C5D-8CBE-4B062E36150B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeIt.WebDeal", "BridgeIt.WebDeal\BridgeIt.WebDeal.csproj", "{94CD9B54-1CA3-40A3-95DE-E5AED3347455}"
@@ -57,10 +55,6 @@ Global
 		{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{632C4ADD-9D8B-4536-A529-EFD7B2B34F88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF139918-CA90-4432-A9AF-270222A1ACDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF139918-CA90-4432-A9AF-270222A1ACDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF139918-CA90-4432-A9AF-270222A1ACDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF139918-CA90-4432-A9AF-270222A1ACDB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBC2BC12-03A3-4C5D-8CBE-4B062E36150B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBC2BC12-03A3-4C5D-8CBE-4B062E36150B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBC2BC12-03A3-4C5D-8CBE-4B062E36150B}.Release|Any CPU.ActiveCfg = Release|Any CPU

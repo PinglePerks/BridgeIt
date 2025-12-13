@@ -2,7 +2,6 @@ using System.Collections.Concurrent;
 using BridgeIt.Api.Hubs;
 using BridgeIt.Api.Models;
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
@@ -71,28 +70,31 @@ public class GameService
         _players[seat] = human;
     }
 
-    public void ReceiveHumanBid(string connectionId, Bid bid)
+    public bool ReceiveHumanBid(string connectionId, Bid bid)
     {
         if (ConnectionMap.TryGetValue(connectionId, out var seat))
         {
             if (_players[seat] is HumanPlayer human)
             {
-                // Completes the Task awaiting in BiddingTable
+                var history = human.CurrentHistory;
+                var auctionBid = new AuctionBid(seat, bid);
+
+                if (!_bidValidityChecker.IsValid(auctionBid, history))
+                    return false;
+                
                 human.SetBid(bid);
+                return true;
             }
         }
+
+        return false;
+
     }
 
     public async Task StartGame()
     {
-        // 1. Deal
-
-        // 2. Run the Table Loop
-        // This is a long-running async method that waits for humans
-        var history = await _table.RunAuction(_currentDeal, _players, Seat.North);
+        _ = Task.Run(() => _table.RunAuction(_currentDeal, _players, Seat.North));
         
-        // 3. Update History for UI (post-game, or rely on Observer for live updates)
-        UpdateBidHistory(history);
     }
 
     public Hand GetHandForPlayer(Seat seat) => _currentDeal[seat];

@@ -20,7 +20,6 @@ public class AcolSystemTests
         _environment = TestBridgeEnvironment.Create()
             .WithAllRules(AcolRulesPath);
         
-            
         // Check we actually loaded rules
         // Assert.That(_environment.Engine.RuleCount, Is.GreaterThan(0)); 
     }
@@ -33,11 +32,12 @@ public class AcolSystemTests
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.MinRespondHand))]
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.AgreeAMajorFit))]
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.SlamHands))]
+    [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.OpenerRebid))]
+    
     public async Task RunScenario(Func<Hand, bool> northHandStr, Func<Hand, bool> southHandStr, List<string> expectedBidSequence)
     {
         // Arrange
         var dealer = new Dealer.Deal.Dealer();
-
         
         // Create a full deal (E/W get remaining cards)
         var deal = dealer.GenerateConstrainedDeal(northHandStr, southHandStr);

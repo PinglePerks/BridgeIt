@@ -1,6 +1,7 @@
+using BridgeIt.Analysis.MachineLearning;
 using BridgeIt.Analysis.Parsers;
 
-namespace BridgeIt.Analysis.MachineLearning;
+namespace BridgeIt.AI.AI;
 
 public class TrainingData
 {
