@@ -1,4 +1,5 @@
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Dealer.Scenario;
 
 namespace BridgeIt.Dealer.Deal;
 
@@ -79,6 +80,33 @@ public class Dealer : IDealer
         throw new Exception("Could not generate a hand meeting constraints after 100,000 attempts.");
     }
     
-    
+    public Dictionary<Seat, Hand> GenerateScenarioDeal(
+        Func<Hand, bool> northConstraints,
+        Func<Hand, bool> southConstraints,
+        Func<Dictionary<Seat,Hand>, bool> boardConstraints)
+    {
+        // Simple "Monte Carlo" generation: Shuffle and check constraints.
+        // For complex constraints, you might need a constructive builder.
+        
+        int attempts = 0;
+        while (attempts < 100000)
+        {
+            var deal = GenerateRandomDeal();
+
+            if (northConstraints(deal[Seat.North]) && southConstraints(deal[Seat.South]) && boardConstraints(deal)) return deal;
+            attempts++;
+        }
+
+
+
+        throw new Exception("Could not generate a hand meeting constraints after 100,000 attempts.");
+    }
+
+    public Dictionary<Seat, Hand> GeneratePuppetDeal(Seat opener = Seat.North, Seat responder = Seat.South)
+        => GenerateScenarioDeal(HandSpecification.BasicPuppetStaymanOpener,
+            HandSpecification.BasicPuppetStaymanResponder,
+            HandSpecification.HasSpadeOrHeartFit(opener, responder));
+
+
 }
 

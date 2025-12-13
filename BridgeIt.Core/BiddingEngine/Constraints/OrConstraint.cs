@@ -8,7 +8,7 @@ public class OrConstraint : IBidConstraint
     
     public void Add(IBidConstraint constraint) => _constraints.Add(constraint);
 
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         return _constraints.Any(c => c.IsMet(ctx));
     }

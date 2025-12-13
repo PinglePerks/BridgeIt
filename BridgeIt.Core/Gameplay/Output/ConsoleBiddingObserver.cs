@@ -1,13 +1,12 @@
-using BridgeIt.Core.Domain.Bidding;
-using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.Analysis.Auction;
 
 namespace BridgeIt.Core.Gameplay.Output;
 
 public sealed class ConsoleBiddingObserver : IBiddingObserver
 {
-    public void OnBid(Seat seat, BiddingDecision decision)
+    public void OnBid(AuctionHistory auctionHistory)
     {
-        Console.WriteLine($"{seat, -7}: {decision.ChosenBid,-5} | {decision.Explanation}");
-
+        var lastBid = auctionHistory.Bids[^1];
+        Console.WriteLine($"Bid {lastBid.Bid} Seat {lastBid.Seat}" );
     }
 }

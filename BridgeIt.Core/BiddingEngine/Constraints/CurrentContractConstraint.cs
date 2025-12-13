@@ -5,7 +5,7 @@ namespace BridgeIt.Core.BiddingEngine.Constraints;
 
 public class CurrentContractConstraint(string? levelConstraint) : IBidConstraint
 {
-public bool IsMet(BiddingContext ctx)
+public bool IsMet(DecisionContext ctx)
     {
         var currentContract = ctx.AuctionEvaluation.CurrentContract;
         if (currentContract == null) return true;

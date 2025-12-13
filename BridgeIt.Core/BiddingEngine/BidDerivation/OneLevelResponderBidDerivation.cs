@@ -7,7 +7,7 @@ namespace BridgeIt.Core.BiddingEngine.BidDerivation;
 public class OneLevelResponderBidDerivation() : BidDerivationBase
 {
 
-    public override Bid DeriveBid(BiddingContext ctx)
+    public override Bid DeriveBid(DecisionContext ctx)
     {
         var partnerBid = ctx.AuctionEvaluation.PartnerLastBid;
         var currentBid = ctx.AuctionEvaluation.CurrentContract;

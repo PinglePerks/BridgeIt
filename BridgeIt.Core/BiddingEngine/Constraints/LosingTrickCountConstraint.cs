@@ -31,7 +31,7 @@ public class LosingTrickCountConstraint : IBidConstraint
         }
     }
     
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         var losers = ctx.HandEvaluation.Losers;
         return  losers >= Min && losers <= Max;

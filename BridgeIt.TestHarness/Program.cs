@@ -1,10 +1,10 @@
 ﻿using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Extensions;
 using BridgeIt.Core.Gameplay.Output;
-using BridgeIt.Core.Gameplay.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging; // Assuming your Deck/Hand moved here per previous advice
 
@@ -37,11 +37,7 @@ var engine = new BiddingEngine(loadedRules,logger);
 
 // --- 3. Play ---
 // Injecting the engine manually for this CLI run since we created it after DI build
-var table = new BiddingTable(
-    engine, 
-    provider.GetRequiredService<IAuctionRules>(),
-    provider.GetRequiredService<ISeatRotationService>(),
-    provider.GetRequiredService<IBiddingObserver>(),
-    provider.GetRequiredService<ILogger<BiddingTable>>()
-);
+//var table = new BiddingTable(
+    //provider.GetRequiredService<IAuctionRules>()
+//);
 

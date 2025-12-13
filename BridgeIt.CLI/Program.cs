@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Extensions; // Import your new extension
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Output;
-using BridgeIt.Core.Gameplay.Services;
+using BridgeIt.Core.Players;
 using BridgeIt.Dealer.Deal;
 using Microsoft.Extensions.Logging; 
 using Microsoft.Extensions.Logging.Console;// Assuming your Deck/Hand moved here per previous advice
@@ -16,6 +17,7 @@ var services = new ServiceCollection();
 
 // One-line setup for the entire engine
 services.AddBridgeItCore(); 
+services.AddSingleton<IBiddingObserver, ConsoleBiddingObserver>();
 
 services.AddLogging(builder => 
 {
@@ -31,9 +33,10 @@ const string RulesDirectory = "/Users/mattyperky/RiderProjects/BridgeIt/BridgeIt
 var loader = provider.GetRequiredService<YamlRuleLoader>();
 var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 var rules = loadedRules.ToList();
+rules.Add(new OpenerUnbalancedRebidRule());
 //rules.Add(new RespondingToNaturalOpening());
 //rules.Add(new ResponseTo2ntOpening());
-rules.Add(new GeneralGameObjectiveRule());
+// rules.Add(new GeneralGameObjectiveRule());
 
 // Register the loaded rules into the Engine dynamically
 // (Note: BiddingEngine needs to accept rules dynamically, or we register them back to DI)
@@ -47,15 +50,13 @@ var logger = provider.GetRequiredService<ILogger<BiddingEngine>>();
 var engine = new BiddingEngine(rules, logger); 
 // In a real app, you might have a BiddingRuleRegistry service.
 
+
+
 // --- 3. Play ---
 // Injecting the engine manually for this CLI run since we created it after DI build
 var table = new BiddingTable(
-    engine, 
     provider.GetRequiredService<IAuctionRules>(),
-    provider.GetRequiredService<ISeatRotationService>(),
-    provider.GetRequiredService<IBiddingObserver>(),
-    provider.GetRequiredService<ILogger<BiddingTable>>()
-);
+    provider.GetRequiredService<IBiddingObserver>());
 
 var dealer = new Dealer();
 
@@ -69,10 +70,12 @@ Console.WriteLine("\n--- Hands Dealt ---");
 foreach(var seat in dict.Keys) Console.WriteLine($"{seat}: {dict[seat]}");
 Console.WriteLine("-------------------\n");
 
-var bids = table.RunAuction(dict, Seat.North);
-
-Console.WriteLine("Final Auction Decisions:");
-foreach (var decision in bids)
+var players = new Dictionary<Seat, IPlayer>
 {
-    Console.WriteLine($"Bid: {decision.ChosenBid,-5} | {decision.Explanation}");
-}
+    { Seat.North, new RobotPlayer(engine, provider.GetRequiredService<IRuleLookupService>()) },
+    { Seat.East, new RobotPlayer(engine, provider.GetRequiredService<IRuleLookupService>()) },
+    { Seat.South, new RobotPlayer(engine, provider.GetRequiredService<IRuleLookupService>()) },
+    { Seat.West, new RobotPlayer(engine, provider.GetRequiredService<IRuleLookupService>()) },
+};
+
+await table.RunAuction(dict, players, Seat.North);

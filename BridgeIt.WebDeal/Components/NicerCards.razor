@@ -2,7 +2,7 @@
 @using BridgeIt.WebDeal.Pages
 <div class="playing-card @Card.Suit">
     <div class="corner top-left">
-        <span class="rank" style="color:@GetColor(Card.Suit)">@Card.Rank.ShortName()</span>
+        <span class="rank" style="color:@GetColor(Card.Suit)">@RankExtensions.ToString(Card.Rank)</span>
         <span class="suit" style="color:@GetColor(Card.Suit)">@Card.Suit.ToSymbol()</span>
     </div>
 
@@ -11,7 +11,7 @@
     </div>
 
     <div class="corner bottom-right">
-        <span class="rank" style="color:@GetColor(Card.Suit)">@Card.Rank.ShortName()</span>
+        <span class="rank" style="color:@GetColor(Card.Suit)">@RankExtensions.ToString(Card.Rank)</span>
         <span class="suit" style="color:@GetColor(Card.Suit)">@Card.Suit.ToSymbol()</span>
     </div>
 </div>

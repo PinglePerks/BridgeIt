@@ -20,7 +20,6 @@ public class AcolSystemTests
         _environment = TestBridgeEnvironment.Create()
             .WithAllRules(AcolRulesPath);
         
-            
         // Check we actually loaded rules
         // Assert.That(_environment.Engine.RuleCount, Is.GreaterThan(0)); 
     }
@@ -33,11 +32,12 @@ public class AcolSystemTests
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.MinRespondHand))]
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.AgreeAMajorFit))]
     [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.SlamHands))]
-    public void RunScenario(Func<Hand, bool> northHandStr, Func<Hand, bool> southHandStr, List<string> expectedBidSequence)
+    [TestCaseSource(typeof(IntegrationTestCases), nameof(IntegrationTestCases.OpenerRebid))]
+    
+    public async Task RunScenario(Func<Hand, bool> northHandStr, Func<Hand, bool> southHandStr, List<string> expectedBidSequence)
     {
         // Arrange
         var dealer = new Dealer.Deal.Dealer();
-
         
         // Create a full deal (E/W get remaining cards)
         var deal = dealer.GenerateConstrainedDeal(northHandStr, southHandStr);
@@ -47,25 +47,25 @@ public class AcolSystemTests
         Console.WriteLine("-------------------\n");
         // Act
         // Run the auction starting with North
-        var auction = _environment.Table.RunAuction(deal, Seat.North);
+        var auction = await _environment.Table.RunAuction(deal,_environment.Players, Seat.North);
         
         Console.WriteLine("Final Auction Decisions:");
-        foreach (var decision in auction)
+        foreach (var decision in auction.Bids)
         {
-            Console.WriteLine($"Bid: {decision.ChosenBid,-5} | {decision.Explanation}");
+            Console.WriteLine($"Bid: {decision.Bid,-5} | {decision.Bid}");
         }
 
         // Assert
         int sequenceIndex = 0;
         // Start at 0 (North), step 2 (Skip East), check South, step 2 (Skip West)...
-        for (int i = 0; i < auction.Count && sequenceIndex < expectedBidSequence.Count; i += 2)
+        for (int i = 0; i < auction.Bids.Count && sequenceIndex < expectedBidSequence.Count; i += 2)
         {
-            var actualBid = auction[i].ChosenBid.ToString();
+            var actualBid = auction.Bids[i].Bid.ToString();
             var expectedBid = expectedBidSequence[sequenceIndex];
-            var reason = auction[i].Explanation;
+            var reason = auction.Bids[i].Bid;
 
             Assert.That(actualBid, Is.EqualTo(expectedBid), 
-                $"Mismatch at Move {i} (Player {auction[i]}). \n" +
+                $"Mismatch at Move {i} (Player {auction.Bids[i]}). \n" +
                 $"Expected: {expectedBid}\n" +
                 $"Actual:   {actualBid}\n" +
                 $"Reason:   {reason}\n" +

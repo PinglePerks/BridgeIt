@@ -1,171 +1,117 @@
 using System.Collections.Concurrent;
+using BridgeIt.Api.Hubs;
 using BridgeIt.Api.Models;
-using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Analysis.Auction;
+using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
+using BridgeIt.Core.Domain.IBidValidityChecker;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.Gameplay.Table;
+using BridgeIt.Core.Players;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BridgeIt.Api.Services;
 
 public class GameService
 {
-    public ConcurrentDictionary<string, Seat> Players = new();
+    // Maps ConnectionId -> Seat (for UI identification)
+    public ConcurrentDictionary<string, Seat> ConnectionMap = new();
     
+    // Maps Seat -> Actual Player Logic (Human or Robot)
+    private readonly Dictionary<Seat, IPlayer> _players = new();
+
+    // The current deal
     private Dictionary<Seat, Hand> _currentDeal = new();
+    
+    // Auction History (for UI display)
+    // Ideally, this should come from BiddingTable result, but we can mirror it here 
+    // or expose it via an Observer.
+    public List<BidDto> BidHistoryDto = new(); 
 
-    public List<(Seat, Bid)> BidHistory = new();
+    private readonly BiddingEngine _biddingEngine;
+    private readonly IBidValidityChecker _bidValidityChecker;
+    private readonly IRuleLookupService _lookup;
+    private readonly BiddingTable _table;
+    private readonly IHubContext<GameHub> _hubContext;
     
-    public Seat Dealer { get; private set; } = Seat.North; // Rotates every game
-    public Seat NextBidder { get; private set; }
-    public int ConsecutivePasses { get; private set; } = 0;
-    public bool IsAuctionOver { get; private set; } = false;
-    
-    public Bid? HighestBid { get; private set; }
-    
-    public void ResetAuction()
+    public GameService(
+        BiddingEngine biddingEngine, 
+        IBidValidityChecker bidValidityChecker, 
+        BiddingTable table, 
+        IRuleLookupService ruleLookupService,
+        IHubContext<GameHub> hubContext)
     {
-        NextBidder = Dealer; 
-        BidHistory.Clear();
-        ConsecutivePasses = 0;
-        IsAuctionOver = false;
-        HighestBid = null;
-    }
-    
-    public bool IsValidBid(Bid newBid)
-    {
-        // 1. Logic for PASS
-        if (newBid.Type == BidType.Pass) return true;
+        _biddingEngine = biddingEngine;
+        _bidValidityChecker = bidValidityChecker;
+        _table = table;
+        _lookup = ruleLookupService;
+        _hubContext = hubContext;
 
-        // 2. Logic for DOUBLE (Must follow opponent bid)
-        if (newBid.Type == BidType.Double) 
+        // Initialize all seats as Robots by default
+        foreach (Seat seat in Enum.GetValues(typeof(Seat)))
         {
-            return HighestBid != null && !LastBidWasMyPartnership(NextBidder);
+            _players[seat] = new RobotPlayer(_biddingEngine, _lookup);
         }
-
-        // 3. Logic for REDOUBLE (Must follow opponent Double)
-        if (newBid.Type == BidType.Redouble)
-        {
-            var last = BidHistory.LastOrDefault();
-            return last.Item2.Type == BidType.Double;
-        }
-
-        // 4. Standard Bid (Must be higher than current high bid)
-        if (HighestBid == null) return true;
-
-        return NewBidHigherThanLastBid(HighestBid, newBid); // You need a CompareTo method in your Shared.Bid
     }
 
-    private bool NewBidHigherThanLastBid(Bid highestBid, Bid newBid)
+    public void AddHumanPlayer(string connectionId, Seat seat)
     {
-        if (newBid.Level > highestBid.Level) return true;
-        if (newBid.Level == highestBid.Level)
+        ConnectionMap[connectionId] = seat;
+        // Replace the robot with a HumanPlayer for this seat
+
+        var human = new HumanPlayer();
+        
+        human.OnTurn += async (sender, s) => 
         {
-            if (newBid.Type == BidType.NoTrumps && highestBid.Type == BidType.Suit) return true;
-            if (newBid.Suit > highestBid.Suit) return true;
+            await _hubContext.Clients.Client(connectionId).SendAsync("UpdateNextBidder", seat);
+        };
+        
+        _players[seat] = human;
+    }
+
+    public bool ReceiveHumanBid(string connectionId, Bid bid)
+    {
+        if (ConnectionMap.TryGetValue(connectionId, out var seat))
+        {
+            if (_players[seat] is HumanPlayer human)
+            {
+                var history = human.CurrentHistory;
+                var auctionBid = new AuctionBid(seat, bid);
+
+                if (!_bidValidityChecker.IsValid(auctionBid, history))
+                    return false;
+                
+                human.SetBid(bid);
+                return true;
+            }
         }
+
         return false;
+
     }
-    
-    public bool IsTurn(Seat seat) => seat == NextBidder;
-    
+
+    public async Task StartGame()
+    {
+        _ = Task.Run(() => _table.RunAuction(_currentDeal, _players, Seat.North));
+        
+    }
+
+    public Hand GetHandForPlayer(Seat seat) => _currentDeal[seat];
+
     public void DealNewHand()
     {
-        ResetAuction();
-        var dealer = new Dealer.Deal.Dealer();
+        // ... (Your dealing logic) ...
+        var dealer = new BridgeIt.Dealer.Deal.Dealer();
         _currentDeal = dealer.GenerateRandomDeal();
+        BidHistoryDto.Clear();
     }
 
-    // STEP 2: Client says "Deal the cards!"
-    public Hand  GetHandForPlayer(Seat seat)
+    // Helper to get DTOs for the UI
+    public List<BidDto> GetBidHistoryDto() => BidHistoryDto;
+
+    private void UpdateBidHistory(AuctionHistory history)
     {
-        return _currentDeal[seat];
-    }
-    
-    public void DealCustom(CustomDealRequest req)
-    {
-        // Map the DTO to your Core Constraints
-        // Using your Dealer's "GenerateConstrainedDeal" method
-        ResetAuction();
-        Func<Hand, bool> southConstraint = h =>
-        {
-            // 1. HCP Check or Losers Check
-            if (req.HcpCheck == "hcp")
-            {
-                int pts = HighCardPoints.Count(h);
-                if (pts < req.MinHcp || pts > req.MaxHcp) return false;
-            }
-            else
-            {
-                int losers = LosingTrickCount.Count(h);
-                if (losers < req.MinLosers || losers > req.MaxLosers) return false;
-            }
-
-            // 2. Balanced Check
-            if (req.BalancedCheck == "balanced" && !ShapeEvaluator.IsBalanced(h)) return false;
-
-            // 3. Suit Check
-            if (req.BalancedCheck != "balanced")
-            {
-                if (ShapeEvaluator.IsBalanced(h)) return false;
-                
-                var shape = ShapeEvaluator.GetShape(h);
-                foreach (var kvp in req.Shape)
-                {
-                    if (kvp.Value == null) continue;
-                    if (shape[kvp.Key] != kvp.Value) return false;
-                }
-            }
-
-            return true;
-        };
-        var dealer = new Dealer.Deal.Dealer();
-        _currentDeal = dealer.GenerateConstrainedDeal(h => true, southConstraint);
-        
-    }
-    private bool LastBidWasMyPartnership(Seat me)
-    {
-        if (BidHistory.Count == 0) return false;
-        var lastBidder = BidHistory.Last().Item1;
-        
-        // North(0) and South(2) are partners (Even numbers)
-        // East(1) and West(3) are partners (Odd numbers)
-        return (int)me % 2 == (int)lastBidder % 2;
-    }
-    
-    public void ProcessBid(Seat seat, Bid bid)
-    {
-        BidHistory.Add((seat, bid));
-
-        if (bid.Type == BidType.Pass)
-        {
-            ConsecutivePasses++;
-            if (ConsecutivePasses >= 3 && BidHistory.Count > 3) 
-            {
-                IsAuctionOver = true;
-                // Logic to determine Contract goes here
-            }
-        }
-        else
-        {
-            ConsecutivePasses = 0; // Reset pass count
-            
-            if (bid.Type != BidType.Redouble && bid.Type != BidType.Double)
-            {
-                HighestBid = bid;
-            }
-        }
-
-        // Rotate Turn
-        NextBidder = NextSeat(NextBidder);
-    }
-
-    private Seat NextSeat(Seat current)
-    {
-        return current switch
-        {
-            Seat.North => Seat.East,
-            Seat.East => Seat.South,
-            Seat.South => Seat.West,
-            _ => Seat.North
-        };
+        BidHistoryDto = history.Bids.Select(b => new BidDto((int)b.Seat, b.Bid.ToString())).ToList();
     }
 }

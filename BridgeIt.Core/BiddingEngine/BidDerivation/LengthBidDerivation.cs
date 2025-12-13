@@ -1,12 +1,13 @@
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.BidDerivation;
 
 public class LengthBidDerivation(string type, string? forbidden) : BidDerivationBase
 {
-    public override Bid? DeriveBid(BiddingContext ctx)
+    public override Bid? DeriveBid(DecisionContext ctx)
     {
         if (forbidden == null) return CalculateBid(ctx);
         var forbiddenBid = forbidden.ToBid();
@@ -15,7 +16,7 @@ public class LengthBidDerivation(string type, string? forbidden) : BidDerivation
         return null;
     }
 
-    protected internal virtual Bid CalculateBid(BiddingContext ctx)
+    protected internal virtual Bid CalculateBid(DecisionContext ctx)
     {
         var suit 
             = ctx.HandEvaluation.Shape.OrderByDescending(s => s.Value).First().Key;

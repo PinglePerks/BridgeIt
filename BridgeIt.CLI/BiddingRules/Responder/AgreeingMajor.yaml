@@ -1,62 +1,62 @@
-system_name: "Responder Support Major"
-priority: 60
-description: "Raising partner's major opening"
-
-trigger:
-  conditions:
-    current_state: "natural_response"
-    seat_role: "responder"
-    any_of:
-      - partner_knowledge:
-          fit_in_suit: "hearts"
-      - partner_knowledge:
-          fit_in_suit: "spades"
-
-
-nodes:
-  # --- HEARTS SUPPORT ---
-  - dynamic_bid:
-      bid_type: "simple_raise"
-      level: 2
-    type: "Natural"
-    meaning: "Simple Raise (6-9 HCP)"
-    constraints:
-      hcp: "6-9"
-      # Check history: Did partner open Hearts?
-      history_pattern: ["Pass*","1H", "*"]
-      shape: { hearts: ">=3" } # 3 is enough for 5-card major systems, Acol usually prefers 4 unless partner promised 5
-    next_state: "played_contract"
-
-  - dynamic_bid:
-      bid_type: "simple_raise"
-      level: 3
-    type: "Natural"
-    meaning: "Limit Raise (10-12 HCP)"
-    constraints:
-      hcp: "10-12"
-      history_pattern: ["Pass*","1H", "*"]
-      shape: { hearts: ">=4" }
-    next_state: "played_contract"
-
-  # --- SPADES SUPPORT ---
-  - dynamic_bid:
-      bid_type: "simple_raise"
-      level: 2
-    type: "Natural"
-    meaning: "Simple Raise (6-9 HCP)"
-    constraints:
-      hcp: "6-9"
-      history_pattern: ["Pass*","1S", "*"]
-      shape: { spades: ">=3" }
-    next_state: "played_contract"
-
-  - dynamic_bid:
-      bid_type: "simple_raise"
-      level: 3
-    type: "Natural"
-    meaning: "Limit Raise (10-12 HCP)"
-    constraints:
-      hcp: "10-12"
-      history_pattern: ["Pass*","1S", "*"]
-      shape: { spades: ">=4" }
-    next_state: "played_contract"
+#system_name: "Responder Support Major"
+#priority: 60
+#description: "Raising partner's major opening"
+#
+#trigger:
+#  conditions:
+#    current_state: "natural_response"
+#    seat_role: "responder"
+#    any_of:
+#      - partner_knowledge:
+#          fit_in_suit: "hearts"
+#      - partner_knowledge:
+#          fit_in_suit: "spades"
+#
+#
+#nodes:
+#  # --- HEARTS SUPPORT ---
+#  - dynamic_bid:
+#      bid_type: "simple_raise"
+#      level: 2
+#    type: "Natural"
+#    meaning: "Simple Raise (6-9 HCP)"
+#    constraints:
+#      hcp: "6-9"
+#      # Check history: Did partner open Hearts?
+#      history_pattern: ["Pass*","1H", "*"]
+#      shape: { hearts: ">=3" } # 3 is enough for 5-card major systems, Acol usually prefers 4 unless partner promised 5
+#    next_state: "played_contract"
+#
+#  - dynamic_bid:
+#      bid_type: "simple_raise"
+#      level: 3
+#    type: "Natural"
+#    meaning: "Limit Raise (10-12 HCP)"
+#    constraints:
+#      hcp: "10-12"
+#      history_pattern: ["Pass*","1H", "*"]
+#      shape: { hearts: ">=4" }
+#    next_state: "played_contract"
+#
+#  # --- SPADES SUPPORT ---
+#  - dynamic_bid:
+#      bid_type: "simple_raise"
+#      level: 2
+#    type: "Natural"
+#    meaning: "Simple Raise (6-9 HCP)"
+#    constraints:
+#      hcp: "6-9"
+#      history_pattern: ["Pass*","1S", "*"]
+#      shape: { spades: ">=3" }
+#    next_state: "played_contract"
+#
+#  - dynamic_bid:
+#      bid_type: "simple_raise"
+#      level: 3
+#    type: "Natural"
+#    meaning: "Limit Raise (10-12 HCP)"
+#    constraints:
+#      hcp: "10-12"
+#      history_pattern: ["Pass*","1S", "*"]
+#      shape: { spades: ">=4" }
+#    next_state: "played_contract"

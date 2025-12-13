@@ -6,7 +6,10 @@ public static class ShapeEvaluator
 {
     public static Dictionary<Suit, int> GetShape(Domain.Primatives.Hand hand)
     {
-        var shape = new Dictionary<Suit, int>();
+        var shape = new Dictionary<Suit, int>()
+        {
+            
+        };
         
         foreach (Suit suit in Enum.GetValues(typeof(Suit)))
         {

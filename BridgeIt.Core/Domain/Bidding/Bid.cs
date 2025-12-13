@@ -32,7 +32,7 @@ public sealed class Bid
             BidType.Pass => "Pass",
             BidType.Double => "X",
             BidType.Redouble => "XX",
-            BidType.Suit => $"{Level}{Suit.Value.ShortName()}",
+            BidType.Suit => $"{Level}{Suit.Value.ToShortString()}",
             BidType.NoTrumps => $"{Level}NT",
             _ => throw new ArgumentOutOfRangeException()
         };

@@ -84,7 +84,7 @@ public class HcpConstraintTests
     }
 
     // --- Helper to inject specific HCP into the Context ---
-    private BiddingContext CreateContextWithHcp(int hcp)
+    private DecisionContext CreateContextWithHcp(int hcp)
     {
         // Create the specific evaluation data we want to test
         var handEvaluation = new HandEvaluation
@@ -102,16 +102,15 @@ public class HcpConstraintTests
         // Note: Creating a dummy Hand might require an internal list if constructor verifies it,
         // but here we assume it's fine to pass a minimal object.
         var dummyHand = new Hand(new List<Card>()); 
-        var dummyHistory = new AuctionHistory(new List<BiddingDecision>(), Seat.North);
+        var dummyHistory = new AuctionHistory(Seat.North);
         
-        return new BiddingContext(
-            dummyHand,
-            dummyHistory,
-            Seat.North,
-            Vulnerability.None,
-            handEvaluation, // <--- The important part
-            new PartnershipKnowledge(),
-            new AuctionEvaluation()
+        
+        
+        return new DecisionContext(
+            new BiddingContext(dummyHand, dummyHistory, Seat.North, Vulnerability.None),
+            handEvaluation,
+            new AuctionEvaluation(),
+            new PartnershipKnowledge()
         );
     }
 }

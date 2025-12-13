@@ -45,14 +45,13 @@ public class LocalBridgeGameService : IBridgeGameService
         };
 
         _dealer = Seat.North; // Fixed for now, can rotate
-        _auctionHistory = new AuctionHistory(new List<BiddingDecision>(), _dealer);
+        _auctionHistory = new AuctionHistory(new List<AuctionBid>(), _dealer);
         
         return Task.FromResult(_currentDeal);
     }
 
     public Task<BiddingDecision> HumanBidAsync(Bid bid)
     {
-        // For a human, we just validate (optional) and add to history
         var decision = new BiddingDecision(bid, "Human Player", "human_move");
         _auctionHistory.Add(decision);
         return Task.FromResult(decision);

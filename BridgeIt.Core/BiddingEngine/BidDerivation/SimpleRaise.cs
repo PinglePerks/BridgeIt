@@ -10,7 +10,7 @@ public class SimpleRaise : BidDerivationBase
     {
         _level = level;
     }
-    public override Bid DeriveBid(BiddingContext ctx)
+    public override Bid DeriveBid(DecisionContext ctx)
     {
         var suit  = ctx.PartnershipKnowledge.FitInSuit;
         //if(suit == null) return Bid.NoTrumpsBid(5);

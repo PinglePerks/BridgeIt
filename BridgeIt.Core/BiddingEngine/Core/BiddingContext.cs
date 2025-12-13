@@ -12,27 +12,17 @@ public class BiddingContext
     public Seat Seat { get; }
     public Vulnerability Vulnerability { get; }
     
-    //derived data
-    public AuctionEvaluation AuctionEvaluation { get; }
-    public HandEvaluation HandEvaluation { get; }
-    public PartnershipKnowledge PartnershipKnowledge { get; } = new();
     
     public BiddingContext(
         Hand hand,
         AuctionHistory auctionHistory,
         Seat seat,
-        Vulnerability vulnerability,
-        HandEvaluation handEvaluation,
-        PartnershipKnowledge partnershipKnowledge,
-        AuctionEvaluation auctionEvaluation)
+        Vulnerability vulnerability)
     {
         Hand = hand;
         AuctionHistory = auctionHistory;
         Seat = seat;
-        HandEvaluation = handEvaluation;
-        AuctionEvaluation = auctionEvaluation;
         Vulnerability = vulnerability;
-        PartnershipKnowledge = partnershipKnowledge;
     }
 }
 

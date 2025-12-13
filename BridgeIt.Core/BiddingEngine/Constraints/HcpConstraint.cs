@@ -30,7 +30,7 @@ public class HcpConstraint : IBidConstraint
         }
     }
 
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         int hcp = ctx.HandEvaluation.Hcp;
         return hcp >= Min && hcp <= Max;

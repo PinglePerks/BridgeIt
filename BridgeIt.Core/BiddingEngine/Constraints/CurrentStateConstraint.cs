@@ -11,8 +11,8 @@ public class CurrentStateConstraint : IBidConstraint
         _currentState = currentState;
     }
 
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
-        return ctx.AuctionEvaluation.PartnershipState == _currentState;
+        return ctx.PartnershipKnowledge.CurrentPartnershipState == _currentState;
     }
 }

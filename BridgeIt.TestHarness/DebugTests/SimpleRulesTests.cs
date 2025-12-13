@@ -14,7 +14,8 @@ namespace BridgeIt.TestHarness.DebugTests;
 public class SimpleRulesTests
 {
     private static readonly Faker Faker = new ();
-    private static BiddingContext GetContext(
+
+    private static DecisionContext GetContext(
         Hand hand,
         AuctionHistory? auctionHistory = null,
         AuctionEvaluation? auctionEvaluation = null,
@@ -22,15 +23,12 @@ public class SimpleRulesTests
         PartnershipKnowledge? partnershipKnowledge = null,
         Seat seat = Seat.North,
         Vulnerability vulnerability = Vulnerability.None
-        )
-        => new (
-            hand,
-            auctionHistory ?? new AuctionHistory(new List<BiddingDecision>(), seat),
-            seat, 
-            vulnerability, 
-            handEvaluation ?? new HandEvaluation(), 
-            partnershipKnowledge ?? Mock.Of<PartnershipKnowledge>(), 
-            auctionEvaluation ?? Mock.Of<AuctionEvaluation>());
+    )
+    {
+        var ctx = new BiddingContext(hand, auctionHistory ?? new AuctionHistory(seat), seat, vulnerability);
+        return new DecisionContext(ctx, handEvaluation ?? new HandEvaluation(), auctionEvaluation ?? Mock.Of<AuctionEvaluation>(), partnershipKnowledge ?? Mock.Of<PartnershipKnowledge>());
+    }
+
 
     private static IEnumerable<TestCaseData> BasicAcol2LevelOpeningTestCases()
     {
@@ -212,9 +210,9 @@ private static IEnumerable<TestCaseData> BasicAcolOpeningTestCases()
         
         var result = env.Engine.ChooseBid(ctx);
         
-        Assert.That(result.ChosenBid.Level, Is.EqualTo(expectedBid.Level));
+        Assert.That(result.Level, Is.EqualTo(expectedBid.Level));
         
-        Assert.That(result.ChosenBid.Suit, Is.EqualTo(expectedBid.Suit));
-
+        Assert.That(result.Suit, Is.EqualTo(expectedBid.Suit));
     }   
+    
 }

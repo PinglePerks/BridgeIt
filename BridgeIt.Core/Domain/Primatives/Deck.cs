@@ -27,14 +27,4 @@ public class Deck
             (_cards[i], _cards[j]) = (_cards[j], _cards[i]);
         }
     }
-
-    public Card Draw()
-    {
-        if (_cards.Count == 0)
-            throw new InvalidOperationException("Deck is empty.");
-
-        var c = _cards[^1];
-        _cards.RemoveAt(_cards.Count - 1);
-        return c;
-    }
 }

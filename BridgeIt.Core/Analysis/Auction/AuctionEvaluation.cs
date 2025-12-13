@@ -1,186 +1,79 @@
-using System.Threading.Tasks.Dataflow;
-using BridgeIt.Core.Analysis.Hands;
-using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
-using BridgeIt.Core.Domain.Utilities;
+
 
 namespace BridgeIt.Core.Analysis.Auction;
 
 public class AuctionEvaluation
 {
-    public SeatRole SeatRole { get; init; }
-    // public bool IsCompetition { get; init; }
-    // public bool IsForcing { get; init; }
-    // public Suit? AgreedSuit { get; init; }
-    // public bool HasAgreedSuit { get; init; }
-    public Suit? SuitFit {get; init;}
+    public SeatRoleType SeatRoleType { get; init; }
     public Bid? CurrentContract { get; init; }
+    public Bid? OpeningBid { get; init; }
     public Bid? PartnerLastBid { get; init; }
-    public string PartnershipState { get; init; }
+    public Seat? OpeningSeat {get; init;}
+    public Seat? NextSeatToBid { get; init; }
 }
 
 public static class AuctionEvaluator
 {
-    public static AuctionEvaluation Evaluate(AuctionHistory auctionHistory, Seat seat)
+    public static AuctionEvaluation Evaluate(AuctionHistory auctionHistory)
     {
-        
+
         return new AuctionEvaluation()
         {
-            CurrentContract = auctionHistory.Bids
-                .LastOrDefault(x => x.ChosenBid.Type == BidType.NoTrumps || x.ChosenBid.Type == BidType.Suit)?
-                .ChosenBid,
-            SeatRole = GetSeatRole(auctionHistory, seat),
-            PartnershipState = GetPartnershipState(auctionHistory),
+            NextSeatToBid = GetNextSeatToBid(auctionHistory),
+            CurrentContract = GetCurrentContract(auctionHistory),
+            SeatRoleType = GetSeatRole(auctionHistory),
+            OpeningBid = GetOpeningBid(auctionHistory),
             PartnerLastBid = PartnerLastBid(auctionHistory),
+            OpeningSeat = GetOpeningSeat(auctionHistory)
         };
     }
-
-    public static SeatRole GetSeatRole(AuctionHistory auctionHistory, Seat currentSeat)
+    
+    private static Bid? PartnerLastBid(AuctionHistory history)
     {
-        var openingSeat = auctionHistory.OpeningBidder();
-        if (openingSeat == null) return SeatRole.NoBids;
+        if (history.Bids.Count < 2) return null;
+        return history.Bids[^2].Bid;
+    }
+    
+    private static Seat GetNextSeatToBid(AuctionHistory auctionHistory)
+    {
+        var auctionBid = auctionHistory.Bids.LastOrDefault();
         
-        if (openingSeat == currentSeat) return SeatRole.Opener;
+        return auctionBid == null ? auctionHistory.Dealer : auctionBid.Seat.GetNextSeat();
+    }
+    
+    
+    private static Bid? GetCurrentContract(AuctionHistory auctionHistory)
+        => auctionHistory.Bids
+            .LastOrDefault(x => x.Bid.Type == BidType.NoTrumps || x.Bid.Type == BidType.Suit)?
+            .Bid;
+    
+    private static Seat? GetOpeningSeat(AuctionHistory auctionHistory) 
+        => auctionHistory.Bids.FirstOrDefault(x => x.Bid.Type != BidType.Pass)?.Seat;
+    
+    private static Bid? GetOpeningBid(AuctionHistory auctionHistory) 
+        => auctionHistory.Bids.FirstOrDefault(x => x.Bid.Type != BidType.Pass)?.Bid;
+
+
+    public static SeatRoleType GetSeatRole(AuctionHistory auctionHistory)
+    {
+        var currentSeat = GetNextSeatToBid(auctionHistory);
+        
+        var openingSeat = GetOpeningSeat(auctionHistory);
+        if (openingSeat == null) return SeatRoleType.NoBids;
+        
+        if (openingSeat == currentSeat) return SeatRoleType.Opener;
         
         var difference = ((int)currentSeat - (int)openingSeat + 4) % 4;
 
         return difference switch
         {
-            1 => SeatRole.Overcaller,
-            2 => SeatRole.Responder,
-            3 => SeatRole.Overcaller,
+            1 => SeatRoleType.Overcaller,
+            2 => SeatRoleType.Responder,
+            3 => SeatRoleType.Overcaller,
             _ => throw new ArgumentOutOfRangeException()
         };
         
     }
-    public static PartnershipKnowledge AnalyzeKnowledge(AuctionHistory history, Seat mySeat, Hand myHand)
-    {
-        var knowledge = new PartnershipKnowledge();
-        
-        var partnersKnowledgeOfMe = new PartnershipKnowledge();
-        
-
-
-
-        var myBids = history.GetAllPartnerBids((Seat)mySeat + 2 % 4);
-        
-        foreach (var bid in myBids)
-            if (bid.AppliedConstraint != null)
-                partnersKnowledgeOfMe = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, partnersKnowledgeOfMe);
-        
-        knowledge.PartnerKnowledgeOfMe = partnersKnowledgeOfMe;
-        
-        AnalyzeKnowledgeOfMe(history, mySeat, myHand, knowledge);
-        
-        return knowledge;
-    }
-    
-    public static PartnershipKnowledge AnalyzeKnowledgeOfMe(AuctionHistory history, Seat mySeat, Hand myHand, PartnershipKnowledge knowledge)
-    {
-        var partnerBids = history.GetAllPartnerBids(mySeat);
-        
-        foreach (var bid in partnerBids)
-            if (bid.AppliedConstraint != null)
-                knowledge = ExtractKnowledgeFromConstraint(bid.AppliedConstraint, knowledge);
-
-        var handShape = ShapeEvaluator.GetShape(myHand);
-        
-        knowledge.FitInSuit = knowledge.BestFitSuit(handShape);
-        
-        
-        return knowledge;
-    }
-    
-    public static PartnershipKnowledge ExtractKnowledgeFromConstraint(IBidConstraint constraint, PartnershipKnowledge knowledge)
-    {
-        switch (constraint)
-        {
-            case CompositeConstraint composite:
-
-                foreach (var child in composite.Constraints)
-                {
-                    knowledge = ExtractKnowledgeFromConstraint(child, knowledge);
-                }
-                return knowledge;
-            
-            case HcpConstraint hcpConstraint:
-                knowledge.PartnerHcpMax = Math.Min(knowledge.PartnerHcpMax, hcpConstraint.Max);
-                
-                knowledge.PartnerHcpMin = Math.Max(knowledge.PartnerHcpMin, hcpConstraint.Min);
-                return knowledge;
-            
-            case BalancedConstraint balancedConstraint:
-                knowledge.PartnerIsBalanced = true;
-                foreach (Suit s in Enum.GetValues(typeof(Suit)))
-                {
-                    knowledge.PartnerMinShape[s] = 2;
-                    knowledge.PartnerMaxShape[s] = 5;
-                }
-                
-                return knowledge;
-            
-            case SuitLengthConstraint suitLengthConstraint:
-                if (suitLengthConstraint.Suit == null) return knowledge;
-
-                knowledge.PartnerMinShape[suitLengthConstraint.Suit!.Value] = Math.Max(suitLengthConstraint.MinLen,
-                    knowledge.PartnerMinShape[suitLengthConstraint.Suit!.Value]);
-
-                knowledge.PartnerMaxShape[suitLengthConstraint.Suit!.Value] = Math.Min(suitLengthConstraint.MaxLen,
-                    knowledge.PartnerMaxShape[suitLengthConstraint.Suit!.Value]);
-                
-                
-                return knowledge;
-            
-            case PartnerKnowledgeConstraint partnerKnowledgeConstraint:
-                if (knowledge.PartnerKnowledgeOfMe == null)
-                    return knowledge;
-                var partnershipKnowledgeOfMe = knowledge.PartnerKnowledgeOfMe;
-
-                partnerKnowledgeConstraint.Requirements.TryGetValue("fit_in_suit", out var suit);
-                if (suit != null && suit != "any")
-                {
-                    var s = suit.ToSuit();
-                    var min = 8 - partnershipKnowledgeOfMe.PartnerMinShape[s];
-                    knowledge.PartnerMinShape[s] = Math.Max(min, knowledge.PartnerMinShape[s]);
-                }
-                
-                partnerKnowledgeConstraint.Requirements.TryGetValue("combined_hcp", out var hcp);
-                if (hcp != null)
-                {
-                    knowledge.PartnerHcpMin = StringParser.ParseMinimum(hcp) - partnershipKnowledgeOfMe.PartnerHcpMin;
-                }
-                
-                
-                
-
-                return knowledge;
-                
-                
-            default:
-                return knowledge;
-            
-        }
-    }
-
-    public static Bid? PartnerLastBid(AuctionHistory history)
-    {
-        if (history.Bids.Count < 2) return null;
-        return history.Bids[^2].ChosenBid;
-    }
-
-    private static string GetPartnershipState(AuctionHistory auctionHistory)
-    {
-        if (auctionHistory.Bids.All(a => a.ChosenBid.Type == BidType.Pass)) return "opening";
-        if (auctionHistory.Bids.Count < 2) return "opening";
-            return auctionHistory.Bids[^2].NextPartnershipState;
-    }
-}
-
-public enum SeatRole
-{
-    NoBids,
-    Opener,
-    Responder,
-    Overcaller
 }

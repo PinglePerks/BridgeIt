@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Tests.Analysis.Hand;
@@ -14,7 +15,7 @@ public class LosingTrickCountTests
 
     public void CountSuitLosers_CalculatesLosersInSuitCorrectly(string handString, int expectedPoints)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = LosingTrickCount.Count(hand);
         Assert.That(result, Is.EqualTo(expectedPoints));
     }
@@ -24,7 +25,7 @@ public class LosingTrickCountTests
     [TestCase("", 0, Description = "Empty suit - no losers")]
     public void CountSuitLosers_EmptySuit_ReturnsZero(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var suitCards = hand.Cards.ToArray();
         var result = LosingTrickCount.CountSuitLosers(suitCards);
         Assert.That(result, Is.EqualTo(expectedLosers));
@@ -38,7 +39,7 @@ public class LosingTrickCountTests
     [TestCase("S2", 1, Description = "Singleton small card - 1 loser")]
     public void CountSuitLosers_SingletonCards_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var suitCards = hand.Cards.ToArray();
         var result = LosingTrickCount.CountSuitLosers(suitCards);
         Assert.That(result, Is.EqualTo(expectedLosers));
@@ -54,7 +55,7 @@ public class LosingTrickCountTests
     [TestCase("S32", 2, Description = "Doubleton xx - 2 losers")]
     public void CountSuitLosers_DoubletonCards_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var suitCards = hand.Cards.ToArray();
         var result = LosingTrickCount.CountSuitLosers(suitCards);
         Assert.That(result, Is.EqualTo(expectedLosers));
@@ -75,7 +76,7 @@ public class LosingTrickCountTests
     [TestCase("S432", 3, Description = "xxx - 3 losers")]
     public void CountSuitLosers_ThreeCardSuits_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var suitCards = hand.Cards.ToArray();
         var result = LosingTrickCount.CountSuitLosers(suitCards);
         Assert.That(result, Is.EqualTo(expectedLosers));
@@ -98,7 +99,7 @@ public class LosingTrickCountTests
     [TestCase("S5432", 3, Description = "xxxx - 3 losers")]
     public void CountSuitLosers_FourPlusCardSuits_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var suitCards = hand.Cards.ToArray();
         var result = LosingTrickCount.CountSuitLosers(suitCards);
         Assert.That(result, Is.EqualTo(expectedLosers));
@@ -112,7 +113,7 @@ public class LosingTrickCountTests
     [TestCase("S98765432", 3, Description = "Long suit with no honors - 3 losers")]
     public void CountSuitLosers_LongSuits_CapsAtThreeLosers(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var suitCards = hand.Cards.ToArray();
         var result = LosingTrickCount.CountSuitLosers(suitCards);
         Assert.That(result, Is.EqualTo(expectedLosers));
@@ -128,7 +129,7 @@ public class LosingTrickCountTests
     [TestCase("SAKQ HAKQ DAKQ CAKQ", 0, Description = "All suits AKQ - no losers")]
     public void Count_FullHand_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = LosingTrickCount.Count(hand);
         Assert.That(result, Is.EqualTo(expectedLosers));
     }
@@ -140,7 +141,7 @@ public class LosingTrickCountTests
     [TestCase("SK HK DK CK", 4, Description = "All singleton Kings")]
     public void Count_BalancedHands_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = LosingTrickCount.Count(hand);
         Assert.That(result, Is.EqualTo(expectedLosers));
     }
@@ -151,7 +152,7 @@ public class LosingTrickCountTests
     [TestCase("SAKQJ9876 HA D C", 0, Description = "7-card suit with two voids")]
     public void Count_UnbalancedHands_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = LosingTrickCount.Count(hand);
         Assert.That(result, Is.EqualTo(expectedLosers));
     }
@@ -162,7 +163,7 @@ public class LosingTrickCountTests
     [TestCase("SAKQ2 H432 D432 C432", 9, Description = "One very strong suit")]
     public void Count_RealisticHands_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = LosingTrickCount.Count(hand);
         Assert.That(result, Is.EqualTo(expectedLosers));
     }
@@ -173,7 +174,7 @@ public class LosingTrickCountTests
     [TestCase("SAK H D C", 0, Description = "AK doubleton with three voids")]
     public void Count_HandsWithVoids_CalculatesCorrectly(string handString, int expectedLosers)
     {
-        var hand = handString.ParseHand();
+        var hand = handString.ToHand();
         var result = LosingTrickCount.Count(hand);
         Assert.That(result, Is.EqualTo(expectedLosers));
     }

@@ -7,20 +7,20 @@ namespace BridgeIt.Tests.Analysis.Auction;
 [TestFixture]
 public class AuctionEvaluationTests
 {
-    private BiddingDecision GetBiddingDecision(BidType bidType)
+    private Bid GetBiddingDecision(BidType bidType)
     {
         if (bidType == BidType.Pass)
         {
-            return new BiddingDecision(Bid.Pass(), "", "");
+            return Bid.Pass();
         }
 
         if (bidType == BidType.NoTrumps)
         {
-            return new BiddingDecision(Bid.NoTrumpsBid(1), "", "");
+            return Bid.NoTrumpsBid(1);
         }
-        
-        return new BiddingDecision(Bid.SuitBid(1, Suit.Clubs), "", "");
-        
+
+        return Bid.SuitBid(1, Suit.Clubs);
+
     }
     private static IEnumerable<TestCaseData> SeatRoleTestCases
     {
@@ -29,49 +29,50 @@ public class AuctionEvaluationTests
             yield return new TestCaseData(
                 new[] { BidType.Pass, BidType.NoTrumps, BidType.Suit },
                 Seat.North,
-                Seat.East,
-                SeatRole.Opener
-            ).SetName("Pass then NT, East is Opener");
+                SeatRoleType.Responder
+            ).SetName("Pass then NT then bid, West is Responder");
     
             yield return new TestCaseData(
                 new[] { BidType.Pass, BidType.Pass },
                 Seat.North,
-                Seat.East,
-                SeatRole.NoBids
+                SeatRoleType.NoBids
             ).SetName("All Passes, No Bids");
     
             yield return new TestCaseData(
                 new[] { BidType.Pass, BidType.Pass, BidType.NoTrumps },
                 Seat.West,
-                Seat.East,
-                SeatRole.Opener
+                SeatRoleType.Overcaller
             ).SetName("NT then Pass, East is Responder");
             
             yield return new TestCaseData(
                 new[] { BidType.Pass, BidType.Pass, BidType.NoTrumps },
                 Seat.West,
-                Seat.South,
-                SeatRole.Overcaller
+                SeatRoleType.Overcaller
             ).SetName("East open, South is Overcaller");
     
             yield return new TestCaseData(
                 new[] { BidType.NoTrumps, BidType.Suit },
                 Seat.South,
-                Seat.East,
-                SeatRole.Overcaller
+                SeatRoleType.Responder
             ).SetName("NT then Suit, East is Overcaller");
         }
     }
     
     [Test]
     [TestCaseSource(nameof(SeatRoleTestCases))]
-    public void GetSeatRole_ReturnsCorrectSeatRole(BidType[] bids, Seat dealer, Seat seatToTest, SeatRole expected)
+    public void GetSeatRole_ReturnsCorrectSeatRole(BidType[] bids, Seat dealer, SeatRoleType expected)
     {
-        var auctionHistory = new AuctionHistory(
-            bids.Select(GetBiddingDecision).ToList(),
-            dealer);
-    
-        var result = AuctionEvaluator.GetSeatRole(auctionHistory, seatToTest);
+        
+        var auctionHistory = new AuctionHistory(dealer);
+        var seat = dealer;
+        
+        foreach (var bid in bids)
+        {
+            auctionHistory.Add(new AuctionBid(seat, GetBiddingDecision(bid)));
+            seat = seat.GetNextSeat();
+        }
+        
+        var result = AuctionEvaluator.GetSeatRole(auctionHistory);
     
         Assert.That(result, Is.EqualTo(expected));
     }

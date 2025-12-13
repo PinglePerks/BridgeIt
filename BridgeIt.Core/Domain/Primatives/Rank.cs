@@ -19,7 +19,7 @@ public enum Rank
 
 public static class RankExtensions
 {
-    public static string ShortName(this Rank rank) =>
+    public static string ToString(this Rank rank) =>
         rank switch
         {
             Rank.Two => "2",

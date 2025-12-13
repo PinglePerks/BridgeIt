@@ -1,5 +1,6 @@
 using System.Text;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Constraints;
@@ -12,7 +13,7 @@ public class PartnerKnowledgeConstraint : IBidConstraint
         Requirements = requirements;
     }
 
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         var k = ctx.PartnershipKnowledge;
         

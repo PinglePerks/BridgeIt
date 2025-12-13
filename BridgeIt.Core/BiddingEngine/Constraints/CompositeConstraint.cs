@@ -8,7 +8,7 @@ public class CompositeConstraint : IBidConstraint
 
     public void Add(IBidConstraint constraint) => Constraints.Add(constraint);
 
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         return Constraints.All(c => c.IsMet(ctx));
     }

@@ -49,6 +49,6 @@ public static class HandVectorizer
         var suit = (Suit)suitVal;
         var rank = (Rank)rankVal;
         
-        return $"{rank.ShortName()}{suit.ToSymbol()}";
+        return $"{RankExtensions.ToString(rank)}{suit.ToSymbol()}";
     }
 }

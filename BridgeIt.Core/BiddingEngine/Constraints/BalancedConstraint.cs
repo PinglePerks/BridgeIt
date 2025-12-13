@@ -5,7 +5,7 @@ namespace BridgeIt.Core.BiddingEngine.Constraints;
 
 public class BalancedConstraint : IBidConstraint
 {
-    public bool IsMet(BiddingContext ctx)
+    public bool IsMet(DecisionContext ctx)
     {
         return ctx.HandEvaluation.IsBalanced;
     }
