@@ -78,4 +78,4 @@ var players = new Dictionary<Seat, IPlayer>
     { Seat.West, new RobotPlayer(engine, provider.GetRequiredService<IRuleLookupService>()) },
 };
 
-await table.RunAuction(dict, players, Seat.North);
+//await table.RunAuction(dict, players, Seat.North);

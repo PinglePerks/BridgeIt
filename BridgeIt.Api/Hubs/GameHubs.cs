@@ -31,8 +31,7 @@ public class GameHub : Hub
         {
             string connectionId = connection.Key;
             Seat seat = connection.Value;
-
-            // This now pulls from the SAME deck
+            
             Hand hand = _gameService.GetHandForPlayer(seat); 
 
             await Clients.Client(connectionId).SendAsync("ReceiveHand", hand);
@@ -48,6 +47,16 @@ public class GameHub : Hub
     {
         if(_gameService.ReceiveHumanBid(Context.ConnectionId, bidStr.ToBid()))
             await Clients.Caller.SendAsync("BidMadeSuccessfully", bidStr);
+        await Clients.Caller.SendAsync("UnsuccessfulBid", bidStr);
+    }
+    
+    //******************TEST MODE**********************
+    public async Task TestAllHands()
+    {
+        var hands = _gameService.GetAllHands();
+        
+        await Clients.Caller.SendAsync("GetAllHands", hands);
+        
     }
 
 

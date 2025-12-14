@@ -19,7 +19,8 @@ public class BiddingTable(
     public async Task<AuctionHistory> RunAuction(
         IReadOnlyDictionary<Seat, Hand> hands,
         IReadOnlyDictionary<Seat, IPlayer> players,
-        Seat dealer)
+        Seat dealer,
+        CancellationToken token = default)
     {
         var current = dealer;
         
@@ -29,9 +30,15 @@ public class BiddingTable(
         
         while (true)
         {
+            if (token.IsCancellationRequested) 
+                token.ThrowIfCancellationRequested();
+            
             var context = new BiddingContext(hands[current], auctionHistory, current, vulnerability);
             
             var bid = await players[current].GetBidAsync(context);
+            
+            if (token.IsCancellationRequested) 
+                token.ThrowIfCancellationRequested();
             
             auctionHistory.Add(new AuctionBid(current, bid));
             

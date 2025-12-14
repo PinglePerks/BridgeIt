@@ -35,6 +35,8 @@ public class GameService
     private readonly BiddingTable _table;
     private readonly IHubContext<GameHub> _hubContext;
     
+    private CancellationTokenSource? _gameCts;
+    
     public GameService(
         BiddingEngine biddingEngine, 
         IBidValidityChecker bidValidityChecker, 
@@ -88,20 +90,63 @@ public class GameService
         }
 
         return false;
-
     }
 
     public async Task StartGame()
     {
-        _ = Task.Run(() => _table.RunAuction(_currentDeal, _players, Seat.North));
+        if (_gameCts != null)
+        {
+            await _gameCts.CancelAsync();
+            _gameCts.Dispose();
+        }
         
+        _gameCts = new CancellationTokenSource();
+        var token = _gameCts.Token;
+        
+        DealNewHand();
+        
+        await NotifyPlayersOfNewDeal();
+        
+        _ = Task.Run(async () =>
+        {
+            try 
+            {
+                // Ensure RunAuction accepts a CancellationToken!
+                await _table.RunAuction(_currentDeal, _players, Seat.North, token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Game was stopped, this is expected behavior
+            }
+            catch (Exception ex)
+            {
+                // Log unexpected errors
+                Console.WriteLine($"Auction error: {ex.Message}");
+            }
+        }, token);
+        
+    }
+    
+    private async Task NotifyPlayersOfNewDeal()
+    {
+        // Tell everyone the board is reset
+        await _hubContext.Clients.All.SendAsync("ResetTable");
+
+        // Send individual hands
+        foreach (var connection in ConnectionMap)
+        {
+            var seat = connection.Value;
+            if (_currentDeal.TryGetValue(seat, out var hand))
+            {
+                await _hubContext.Clients.Client(connection.Key).SendAsync("ReceiveHand", hand);
+            }
+        }
     }
 
     public Hand GetHandForPlayer(Seat seat) => _currentDeal[seat];
 
     public void DealNewHand()
     {
-        // ... (Your dealing logic) ...
         var dealer = new BridgeIt.Dealer.Deal.Dealer();
         _currentDeal = dealer.GenerateRandomDeal();
         BidHistoryDto.Clear();
@@ -114,4 +159,6 @@ public class GameService
     {
         BidHistoryDto = history.Bids.Select(b => new BidDto((int)b.Seat, b.Bid.ToString())).ToList();
     }
+    
+    public Dictionary<Seat, Hand> GetAllHands() => _currentDeal;
 }

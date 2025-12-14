@@ -9,22 +9,22 @@
 // {
 //     public override string Name { get; } = "Codebased: General Game Objective";
 //     public override int Priority { get; } = 1;
-//     public override bool IsApplicable(BiddingContext ctx)
-//     {
-//         return ctx.AuctionEvaluation.CurrentContract != null;
-//     }
-//
-//     public override IBidConstraint? GetConstraintForBid(Bid bid, BiddingContext ctx)
+//     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
 //     {
 //         throw new NotImplementedException();
 //     }
 //
-//     public override BiddingDecision? Apply(BiddingContext ctx)
+//     public override bool IsApplicable(DecisionContext ctx)
+//     {
+//         return ctx.AuctionEvaluation.CurrentContract != null;
+//     }
+//     
+//     public override Bid? xApply(DecisionContext ctx)
 //     {
 //         // 1. Gather Information
 //         var myHcp = ctx.HandEvaluation.Hcp;
 //         var partnerMinHcp = ctx.PartnershipKnowledge.PartnerHcpMin;
-//         var totalHcp = myHcp + partnerMinHcp;
+//         var totalMinHcp = myHcp + partnerMinHcp;
 //
 //         var currentContract = ctx.AuctionEvaluation.CurrentContract;
 //         
@@ -33,7 +33,7 @@
 //         var isBalanced = ctx.HandEvaluation.IsBalanced; // Simplified; ideally check partnership balance
 //
 //         // 2. Determine Optimal Contract Level & Strain
-//         Bid? targetContract = DetermineTargetContract(totalHcp, bestFit, isBalanced);
+//         Bid? targetContract = DetermineTargetContract(totalMinHcp, bestFit, isBalanced);
 //
 //         if (targetContract == null) 
 //             return new BiddingDecision(Bid.Pass(), $"{Name} || Reason: No game interest found", "part_score");
@@ -59,7 +59,7 @@
 //                (targetContract.Level == currentContract.Level && targetContract.Suit > currentContract.Suit))
 //             {
 //                 return new BiddingDecision(targetContract, 
-//                     $"Driving to game/slam based on {totalHcp} combined HCP", "driving_to_game");
+//                     $"Driving to game/slam based on {totalMinHcp} combined HCP", "driving_to_game");
 //             }
 //         }
 //         else if (targetContract.Type == BidType.NoTrumps)
@@ -70,7 +70,7 @@
 //                 // If partner is currently in a suit, this might be a "correction" to NT
 //                 // Simple logic: Jump to 3NT
 //                 return new BiddingDecision(targetContract, 
-//                     $"Combined strength {totalHcp} suggests 3NT", "driving_to_game");
+//                     $"Combined strength {totalMinHcp} suggests 3NT", "driving_to_game");
 //             }
 //         }
 //
@@ -81,17 +81,9 @@
 //         return null; // Let the engine fallback to Pass or other rules if we can't construct a path
 //     }
 //
-//     private Suit? GetBestFit(BiddingContext ctx)
+//     private Suit? GetBestFit(DecisionContext ctx)
 //     {
-//         // Check Majors first
-//         if (ctx.PartnershipKnowledge.HasFit(Suit.Hearts, ctx.HandEvaluation.Shape[Suit.Hearts])) return Suit.Hearts;
-//         if (ctx.PartnershipKnowledge.HasFit(Suit.Spades, ctx.HandEvaluation.Shape[Suit.Spades])) return Suit.Spades;
-//         
-//         // Then Minors
-//         if (ctx.PartnershipKnowledge.HasFit(Suit.Diamonds, ctx.HandEvaluation.Shape[Suit.Diamonds])) return Suit.Diamonds;
-//         if (ctx.PartnershipKnowledge.HasFit(Suit.Clubs, ctx.HandEvaluation.Shape[Suit.Clubs])) return Suit.Clubs;
-//
-//         return null;
+//         return ctx.PartnershipKnowledge.BestFitSuit(ctx.HandEvaluation.Shape);
 //     }
 //
 //     private Bid? DetermineTargetContract(int totalHcp, Suit? fit, bool amBalanced)
