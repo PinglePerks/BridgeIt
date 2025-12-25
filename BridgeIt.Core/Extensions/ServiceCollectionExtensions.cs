@@ -3,6 +3,7 @@ using BridgeIt.Core.BiddingEngine.BidDerivation.Factories;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Constraints.Factories;
+using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Output;
@@ -38,6 +39,8 @@ public static class ServiceCollectionExtensions
         // services.AddSingleton<IBiddingRule, RespondingToNaturalOpening>();
         // services.AddSingleton<IBiddingRule, RedSuitTransfer>();
         // services.AddSingleton<IBiddingRule, ResponseTo2ntOpening>();
+
+        services.AddSingleton<IEngineObserver, EngineObserver>();
         
         // 2. Register Core Services
         services.AddSingleton<BiddingEngine.Core.BiddingEngine>();

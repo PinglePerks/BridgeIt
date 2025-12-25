@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
@@ -47,7 +48,7 @@ rules.Add(new OpenerUnbalancedRebidRule());
 
 // Hack for CLI simplicity: Re-register the engine with the specific rules found
 var logger = provider.GetRequiredService<ILogger<BiddingEngine>>();
-var engine = new BiddingEngine(rules, logger); 
+var engine = new BiddingEngine(rules, logger, new EngineObserver()); 
 // In a real app, you might have a BiddingRuleRegistry service.
 
 

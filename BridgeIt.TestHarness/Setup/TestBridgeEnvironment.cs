@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
@@ -50,12 +51,14 @@ public class TestBridgeEnvironment
         services.TryAddSingleton<BiddingTable>();
         services.TryAddSingleton<IRuleLookupService, RuleLookupService>();
         
+        
         services.AddLogging(builder => 
         {
             builder.AddConsole();
             builder.AddDebug();
             builder.SetMinimumLevel(LogLevel.Debug); // Set to Debug to see your detailed logs
         });
+        
 
         Provider = services.BuildServiceProvider();
         
@@ -73,8 +76,11 @@ public class TestBridgeEnvironment
         // rules.Add(new OpenerUnbalancedRebidRule());
         
         // Re-register or Instantiate Engine with these specific rules
+        
+        var observer = new EngineObserver();
+
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
-        Engine = new BiddingEngine(rules,logger);
+        Engine = new BiddingEngine(rules, logger, observer);
         
         var robotPlayer = new RobotPlayer(Engine, Provider.GetRequiredService<IRuleLookupService>());
 
@@ -113,7 +119,7 @@ public class TestBridgeEnvironment
         }
         // Re-register or Instantiate Engine with these specific rules
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
-        Engine = new BiddingEngine(rules,logger);
+        Engine = new BiddingEngine(rules,logger, new EngineObserver());
         
         var robotPlayer = new RobotPlayer(Engine, Provider.GetRequiredService<IRuleLookupService>());
 

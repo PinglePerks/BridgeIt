@@ -64,8 +64,8 @@ public static class PartnershipEvaluator {
                 knowledge.PartnerIsBalanced = true;
                 foreach (Suit s in Enum.GetValues(typeof(Suit)))
                 {
-                    knowledge.PartnerMinShape[s] = 2;
-                    knowledge.PartnerMaxShape[s] = 5;
+                    knowledge.PartnerMinShape[s] = Math.Max(2, knowledge.PartnerMinShape[s]);
+                    knowledge.PartnerMaxShape[s] = Math.Min(5, knowledge.PartnerMaxShape[s]);
                 }
                 
                 return knowledge;
