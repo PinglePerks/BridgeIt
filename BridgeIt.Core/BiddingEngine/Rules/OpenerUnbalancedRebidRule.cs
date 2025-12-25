@@ -20,19 +20,19 @@ public class OpenerUnbalancedRebidRule : BiddingRuleBase
         
         var secondBid = ctx.Data.AuctionHistory.GetAllBidsFromSeat(ctx.Data.Seat).Count == 1;
         
-        var unbalanced = !ctx.HandEvaluation.IsBalanced;
-        
-        return opener && secondBid && unbalanced && isFirstBidSuit;
+        return opener && secondBid && isFirstBidSuit;
     }
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
+        if (bid.Type == BidType.NoTrumps) return GetConstraintForBidBalanced(bid, ctx);
+        if (bid.Type != BidType.Suit) return null;
         
         var compositeConstraint = new CompositeConstraint();
         var seatBids = ctx.Data.AuctionHistory.GetAllBidsFromSeat(ctx.Data.Seat);
-
+        
         var firstSuit = seatBids.First().Suit;
-        var secondSuit = seatBids.Last().Suit;
+        var secondSuit = bid.Suit;
         
         if (firstSuit == secondSuit)
         {
@@ -54,9 +54,20 @@ public class OpenerUnbalancedRebidRule : BiddingRuleBase
         }
         return new BidInformation(bid, compositeConstraint, string.Empty);
     }
+
+    public BidInformation? GetConstraintForBidBalanced(Bid bid, DecisionContext ctx)
+    {
+        var constraints = new CompositeConstraint();
+        constraints.Add(new BalancedConstraint());
+        if (bid.Level == 1) constraints.Add(new HcpConstraint("15-17"));
+        if (bid.Level == 2) constraints.Add(new HcpConstraint("18-19"));
+        return new BidInformation(bid, constraints, string.Empty);
+    }
+
     
     public override Bid? Apply(DecisionContext ctx)
     {
+        if(ctx.HandEvaluation.IsBalanced) return ApplyBalancedRebid(ctx);
         var secondSuit = GetSecondSuit(ctx);
         
         if (secondSuit == null) return null;
@@ -66,6 +77,15 @@ public class OpenerUnbalancedRebidRule : BiddingRuleBase
         return biddingDecision;
     }
 
+    protected internal virtual Bid? ApplyBalancedRebid(DecisionContext ctx)
+    {
+        var hcp = ctx.HandEvaluation.Hcp;
+        if (hcp <= 17) return Bid.NoTrumpsBid(1);
+        return Bid.NoTrumpsBid(2);
+    }
+    
+    
+    
     protected internal virtual Suit? GetSecondSuit(DecisionContext ctx)
     {
         var firstBidSuit = ctx.Data.AuctionHistory.GetAllBidsFromSeat(ctx.Data.Seat).First().Suit;
@@ -115,7 +135,6 @@ public class OpenerUnbalancedRebidRule : BiddingRuleBase
         }
 
         return 0;
-
     }
     
     

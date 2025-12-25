@@ -1,4 +1,5 @@
 ﻿using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Table;
@@ -32,7 +33,7 @@ var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 
 // Hack for CLI simplicity: Re-register the engine with the specific rules found
 var logger = provider.GetRequiredService<ILogger<BiddingEngine>>();
-var engine = new BiddingEngine(loadedRules,logger); 
+var engine = new BiddingEngine(loadedRules,logger, new EngineObserver()); 
 // In a real app, you might have a BiddingRuleRegistry service.
 
 // --- 3. Play ---
