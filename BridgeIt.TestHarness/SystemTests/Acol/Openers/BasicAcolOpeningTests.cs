@@ -92,7 +92,7 @@ public class BasicAcolOpeningTests
     }
     
     [Test]
-    public async Task Opener_AlwaysBids1C_WithLongDiamondsAndOpeningStrength()
+    public async Task Opener_AlwaysBids1C_WithLongClubsAndOpeningStrength()
     {
         var testDeals = _dealer.GenerateMultipleConstrainedDeals(50, HandSpecification.AcolMinor1LevelOpening(Suit.Clubs), HandSpecification.AcolOpeningPass);
 

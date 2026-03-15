@@ -19,12 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenPbnTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/old/00_Openings_2Level.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/00_Openings_2Level.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/PuppetStayman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/HandSpecification.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Services/SignalRObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Services/SignalRObserver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/BridgeIt.TestHarness.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/BridgeIt.TestHarness.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" afterDir="false" />
     </list>
@@ -149,8 +147,7 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Systems/LoadedSystem/BasicAcol.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/HandSpecifications.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/IntegrationTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenPbnTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/result.json" root0="FORCE_HIGHLIGHTING" />
@@ -518,7 +515,7 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="13882000" />
+      <workItem from="1773439151998" duration="15119000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -640,7 +637,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773595867872</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Added test harness cases">
+      <option name="closed" value="true" />
+      <created>1773603060732</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1773603060732</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -680,7 +685,8 @@
     <MESSAGE value="Removes web FE" />
     <MESSAGE value="WIP" />
     <MESSAGE value="Reworks TestHarness and added one test." />
-    <option name="LAST_COMMIT_MESSAGE" value="Reworks TestHarness and added one test." />
+    <MESSAGE value="Added test harness cases" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added test harness cases" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

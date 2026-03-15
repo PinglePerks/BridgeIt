@@ -7,6 +7,6 @@ public sealed class ConsoleBiddingObserver : IBiddingObserver
     public void OnBid(AuctionHistory auctionHistory)
     {
         var lastBid = auctionHistory.Bids[^1];
-        Console.WriteLine($"Bid {lastBid.Bid} Seat {lastBid.Seat}" );
+        Console.WriteLine($"Bid {lastBid.Bid,-8} Seat {lastBid.Seat}");
     }
 }

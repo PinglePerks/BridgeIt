@@ -19,7 +19,6 @@ public class SignalRBiddingObserver : IBiddingObserver
 
     public void OnBid(AuctionHistory auctionHistory)
     {
-        // Broadcast to all clients immediately
         _hubContext.Clients.All.SendAsync("BidHistory",  auctionHistory.Bids.Select(b => new BidDto((int)b.Seat, b.Bid.ToString())).ToList());
     }
     

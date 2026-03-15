@@ -30,6 +30,10 @@
         <None Update="TestFiles\**\*.pbn">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+
+        <None Update="TestFiles\GoldenGames.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
