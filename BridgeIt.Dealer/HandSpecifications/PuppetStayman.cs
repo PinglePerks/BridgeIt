@@ -1,10 +1,22 @@
 using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Domain.Primatives;
 
-namespace BridgeIt.TestHarness.DealerIntegrationTests;
+namespace BridgeIt.Dealer.HandSpecifications;
 
-public static class HandSpecifications
+public static class HandSpecification
 {
+    public static Func<Hand, bool> BasicPuppetStaymanOpener =>
+        h => HighCardPoints.Count(h) >= 20 && HighCardPoints.Count(h) <= 22 && ShapeEvaluator.IsBalanced(h);
+
+    public static Func<Hand, bool> BasicPuppetStaymanResponder =>
+        h => HighCardPoints.Count(h) >= 4 && ShapeEvaluator.GetShape(h)[Suit.Hearts] <= 4 && 
+             ShapeEvaluator.GetShape(h)[Suit.Spades] <=4;
+    
+    public static Func<Dictionary<Seat,Hand>, bool> HasSpadeOrHeartFit(Seat opener, Seat responder) =>
+        h => ShapeEvaluator.GetShape(h[opener])[Suit.Spades] + ShapeEvaluator.GetShape(h[responder])[Suit.Spades] >= 8
+        || ShapeEvaluator.GetShape(h[opener])[Suit.Hearts] + ShapeEvaluator.GetShape(h[responder])[Suit.Hearts] >= 8;
+    
+    //Building blocks
     public static bool IsBalanced(Hand h) => ShapeEvaluator.IsBalanced(h);
 
     public static Func<Hand, bool> BalancedOpener(int minHcp, int maxHcp) =>
@@ -60,8 +72,22 @@ public static class HandSpecifications
         ShapeEvaluator.GetShape(h)[Suit.Hearts] == 5 &&
         ShapeEvaluator.GetShape(h)[Suit.Clubs] == 4;
     
+    //Basic Acol
+    public static Func<Hand, bool> Acol1NtOpening => BalancedOpener(12, 14);
     
-    
-    
+    //TODO: Currently simplified to only balanced but could be other types for pass
+    public static Func<Hand, bool> AcolOpeningPass => BalancedOpener(1, 11);
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

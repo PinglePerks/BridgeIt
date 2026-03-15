@@ -43,6 +43,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IEngineObserver, EngineObserver>();
         
         // 2. Register Core Services
+        services.AddSingleton<BiddingTable>();
         services.AddSingleton<BiddingEngine.Core.BiddingEngine>();
         services.AddSingleton<IAuctionRules, StandardAuctionRules>();
         services.AddSingleton<IHandFormatter, HandFormatter>();

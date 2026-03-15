@@ -19,20 +19,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Systems/LoadedSystem/BasicAcol.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipEvaluator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipKnowledge.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipKnowledge.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Domain/Extensions/StringExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Domain/Extensions/StringExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Hand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Hand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Extensions/ServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Extensions/ServiceCollectionExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/Scenario/PuppetStayman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/PuppetStayman.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/Scenario/PuppetStayman.json" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/PuppetStayman.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/BridgeIt.TestHarness.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/BridgeIt.TestHarness.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/HandSpecifications.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/IntegrationTestCases.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/IntegrationTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/IntegrationTests/AcolSystemTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/IntegrationTests/IntegrationTestCases.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/OpenerTests/OpenerTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnAnalysis/PbnAnalysis.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTestCases.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/SpecificRulesTest.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +60,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="version/0.1" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -97,9 +105,12 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Analysis/Class1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Analysis/Models/PbnBoard.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Analysis/Parsers/PbnParser.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Api/Hubs/GameHubs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Models/CustomDealRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Models/GameState.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Api/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Api/Services/GameService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.CLI/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.CLI/SpecificDeals.cs" root0="FORCE_HIGHLIGHTING" />
@@ -110,6 +121,8 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/KeyCardCalculator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/LosingTrickCount.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Analysis/Partnership/PartnershipEvaluator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Analysis/Partnership/PartnershipKnowledge.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/BidDerivation/Factories/IBidDerivationFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/BidDerivation/IBidDerivation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/CurrentContractConstraint.cs" root0="FORCE_HIGHLIGHTING" />
@@ -123,14 +136,18 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGameObjectiveRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGoingForGame.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlRuleLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/BidType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Domain/Extensions/StringExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Card.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Deck.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Hand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Domain/Primatives/Hand.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Rank.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Seat.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Suit.cs" root0="FORCE_HIGHLIGHTING" />
@@ -144,16 +161,13 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Systems/Class1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Systems/LoadedSystem/BasicAcol.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/HandSpecifications.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/IntegrationTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/IntegrationTests/AcolSystemTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/IntegrationTests/IntegrationTestCases.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/OpenerTests/OpenerTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnAnalysis/PbnAnalysis.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SpecificRulesTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/result.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Auction/AuctionEvaluationTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Hands/HighCardPointsTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Hands/KeyCardCalculator.cs" root0="FORCE_HIGHLIGHTING" />
@@ -232,6 +246,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "a09d4460-c3f7-479f-93e0-404b105aaf76.executor": "Debug",
     "a28a3c60-8681-4aff-8bdd-62910ef333d7.executor": "Debug",
     "a62611a8-0777-4d10-aaa5-2c5fcfb0f736.executor": "Debug",
     "bce0dfac-c94c-48e4-848f-d6e512e9125e.executor": "Debug",
@@ -239,7 +254,7 @@
     "e3e8795a-fb4e-4c8a-8ac0-8d1b4f576b6a.executor": "Run",
     "e5218fee-031e-4c4e-b536-78a7ab157fda.executor": "Debug",
     "fb4cb39a-f52f-4aec-ae8b-3a41f107523d.executor": "Debug",
-    "git-widget-placeholder": "version/0.1",
+    "git-widget-placeholder": "version/0.2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -249,7 +264,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.BridgeIt.Api">
+  <component name="RunManager" selected=".NET Project.BridgeIt.TestHarness">
     <configuration name="BridgeIt.AI" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -517,7 +532,7 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="1832000" />
+      <workItem from="1773439151998" duration="8815000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -623,7 +638,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766669319681</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1773570589763</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1773570589763</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +684,8 @@
     <MESSAGE value="latest updates" />
     <MESSAGE value="updates" />
     <MESSAGE value="Removes web FE" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removes web FE" />
+    <MESSAGE value="WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -757,19 +781,6 @@
           <option name="timeStamp" value="148" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/SpecificRulesTest.cs</url>
-          <line>16</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/SpecificRulesTest.cs" containingFunctionPresentation="Method 'Check1NTOpener'">
-            <startOffsets>
-              <option value="441" />
-            </startOffsets>
-            <endOffsets>
-              <option value="479" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="155" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs</url>
           <line>65</line>
           <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" containingFunctionPresentation="Method 'RunExactScenario'">
@@ -794,6 +805,32 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs</url>
+          <line>27</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" containingFunctionPresentation="Method 'Opener_AlwaysBids1NT_WithBalanced12to14'">
+            <startOffsets>
+              <option value="933" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1023" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="160" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs</url>
+          <line>61</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" containingFunctionPresentation="Method 'WithAllRules'">
+            <startOffsets>
+              <option value="2028" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2089" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="162" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

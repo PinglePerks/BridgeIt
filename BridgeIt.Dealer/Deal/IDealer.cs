@@ -1,5 +1,5 @@
 using BridgeIt.Core.Domain.Primatives;
-using BridgeIt.Dealer.Scenario;
+using BridgeIt.Dealer.HandSpecifications;
 
 namespace BridgeIt.Dealer.Deal;
 
@@ -46,6 +46,25 @@ public class Dealer : IDealer
             }
             attempts++;
         }
+        
+        throw new Exception("Could not generate a hand meeting constraints after 100,000 attempts.");
+    }
+    
+    public List<Dictionary<Seat, Hand>> GenerateMultipleConstrainedDeals(long numberOfDeals,
+        Func<Hand, bool> northConstraint,
+        Func<Hand, bool>? southConstraint)
+    {
+        // Simple "Monte Carlo" generation: Shuffle and check constraints.
+        // For complex constraints, you might need a constructive builder.
+        
+        var deals = new List<Dictionary<Seat, Hand>>();
+
+        for (var i = 0; i < numberOfDeals; i++)
+        {
+            deals.Add(GenerateConstrainedDeal(northConstraint, southConstraint));
+        }
+
+        return deals;
         
         throw new Exception("Could not generate a hand meeting constraints after 100,000 attempts.");
     }
