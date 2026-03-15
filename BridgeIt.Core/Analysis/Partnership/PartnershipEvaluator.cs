@@ -7,15 +7,26 @@ namespace BridgeIt.Core.Analysis.Partnership;
 
 public static class PartnershipEvaluator {
     
-    public static PartnershipKnowledge AnalyzeKnowledge(List<BidInformation> bidInfo)
+    public static PartnershipKnowledge AnalyzeKnowledge(List<BidInformation> bidInfos)
     {
         var knowledge = new PartnershipKnowledge();
         
-        knowledge.CurrentPartnershipState = bidInfo.LastOrDefault()?.PartnershipState;
+        knowledge.CurrentPartnershipState = bidInfos.LastOrDefault()?.PartnershipState;
 
-        foreach (var bidConstraint in bidInfo.Select(b => b.Constraint))
+        foreach (var info in bidInfos)
         {
-            knowledge = ExtractKnowledgeFromConstraint(bidConstraint, knowledge);
+            if (info.PartnershipState != null)
+                knowledge.CurrentPartnershipState = info.PartnershipState;
+            
+            if (info.Constraint != null)
+            {
+                knowledge = ExtractKnowledgeFromConstraint(info.Constraint, knowledge);
+            }
+            
+            // TODO: Future expansion for Negative Inferences
+            // If info.RejectedConstraints is added to BidInformation, process them here
+            // e.g. foreach(var rejected in info.RejectedConstraints) ApplyNegative(rejected, knowledge);
+            
         }
         
         return knowledge;

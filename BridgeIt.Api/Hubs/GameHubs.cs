@@ -49,6 +49,19 @@ public class GameHub : Hub
             await Clients.Caller.SendAsync("BidMadeSuccessfully", bidStr);
         await Clients.Caller.SendAsync("UnsuccessfulBid", bidStr);
     }
+
+    public async Task TestHandString()
+    {
+        var hands = _gameService.GetAllHands();
+
+        var fullString = "";
+        foreach (var hand in hands)
+        {
+            fullString += hand.Key.ToString()+':'+ hand.Value.ToString() + '\n';
+        }
+
+        await Clients.Caller.SendAsync("HandsString", fullString);
+    }
     
     //******************TEST MODE**********************
     public async Task TestAllHands()
@@ -56,7 +69,6 @@ public class GameHub : Hub
         var hands = _gameService.GetAllHands();
         
         await Clients.Caller.SendAsync("GetAllHands", hands);
-        
     }
 
 

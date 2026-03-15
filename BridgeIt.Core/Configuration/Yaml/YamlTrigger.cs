@@ -1,5 +1,3 @@
-using YamlDotNet.Serialization;
-
 namespace BridgeIt.Core.Configuration.Yaml;
 
 public class YamlTrigger

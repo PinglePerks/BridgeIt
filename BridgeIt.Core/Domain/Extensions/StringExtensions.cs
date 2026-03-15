@@ -74,6 +74,7 @@ public static class StringExtensions
             nameof(bidString));
     }
     
+    
     public static Hand ToHand(this string handStr)
     {
         var parts = handStr.Split(' ', StringSplitOptions.RemoveEmptyEntries);

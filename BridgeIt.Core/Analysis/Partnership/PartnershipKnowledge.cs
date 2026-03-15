@@ -9,7 +9,6 @@ public class PartnershipKnowledge
     public int PartnerHcpMin { get; set; } = 0;
     public int PartnerHcpMax { get; set; } = 40;
     public Suit? FitInSuit { get; set; }
-    
     public string? CurrentPartnershipState { get; set; }
     
     

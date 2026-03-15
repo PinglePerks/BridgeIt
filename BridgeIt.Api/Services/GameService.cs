@@ -127,6 +127,7 @@ public class GameService
         
     }
     
+    
     private async Task NotifyPlayersOfNewDeal()
     {
         // Tell everyone the board is reset
@@ -161,4 +162,6 @@ public class GameService
     }
     
     public Dictionary<Seat, Hand> GetAllHands() => _currentDeal;
+    
+    
 }

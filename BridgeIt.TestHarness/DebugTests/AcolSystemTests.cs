@@ -54,7 +54,7 @@ public class AcolSystemTests
     public async Task RunExactScenario()
     {
         // Arrange
-        var fullString = "North: AKJ7 QT86 J8 AKT\nEast: T854 7 372 J8764\nSouth: 96 AKJ93 AK5 Q92\nWest: Q32 542 QT964 53\n";
+        var fullString = "North:AKJT964/9/J75/A5 East:2/JT875/KT3/QT94 South:Q85/AKQ4/Q964/63 West:73/632/A82/KJ872";
             
 
         var deal = SimpleHandParser.ParseBoard(fullString);
@@ -67,7 +67,7 @@ public class AcolSystemTests
 
         Console.WriteLine($"North Hand:     {deal[Seat.North]}\n" +
                           $"East Hand: {deal[Seat.East]}\n" +
-                          $"South Hand:   {deal[Seat.South]}"+
+                          $"South Hand:   {deal[Seat.South]}\n"+
                           $"West Hand:   {deal[Seat.West]}");
 
         
