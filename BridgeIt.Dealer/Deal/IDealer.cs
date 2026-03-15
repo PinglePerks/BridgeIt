@@ -52,7 +52,7 @@ public class Dealer : IDealer
     
     public List<Dictionary<Seat, Hand>> GenerateMultipleConstrainedDeals(long numberOfDeals,
         Func<Hand, bool> northConstraint,
-        Func<Hand, bool>? southConstraint)
+        Func<Hand, bool>? southConstraint = null)
     {
         // Simple "Monte Carlo" generation: Shuffle and check constraints.
         // For complex constraints, you might need a constructive builder.

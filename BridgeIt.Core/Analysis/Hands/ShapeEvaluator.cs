@@ -4,12 +4,9 @@ namespace BridgeIt.Core.Analysis.Hands;
 
 public static class ShapeEvaluator
 {
-    public static Dictionary<Suit, int> GetShape(Domain.Primatives.Hand hand)
+    public static Dictionary<Suit, int> GetShape(Hand hand)
     {
-        var shape = new Dictionary<Suit, int>()
-        {
-            
-        };
+        var shape = new Dictionary<Suit, int>();
         
         foreach (Suit suit in Enum.GetValues(typeof(Suit)))
         {
@@ -35,5 +32,15 @@ public static class ShapeEvaluator
 
         return shape.SequenceEqual([5, 4, 2, 2]) ||
                shape.SequenceEqual([6, 3, 2, 2]);
+    }
+
+// ... existing code ...
+    public static Suit LongestAndStrongest(Hand hand)
+    {
+        return GetShape(hand)
+            .OrderByDescending(s => s.Value)
+            .ThenByDescending(s => s.Key)
+            .First()
+            .Key;
     }
 }
