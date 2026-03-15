@@ -53,9 +53,6 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(sp =>
     return loader.LoadRulesFromDirectory(path).ToList();
 });
 
-
-
-
 // --- 5. Configure CORS ---
 builder.Services.AddCors(options =>
 {

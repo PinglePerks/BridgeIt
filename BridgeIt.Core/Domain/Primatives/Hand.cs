@@ -25,9 +25,9 @@ public class Hand
                     .ToArray()
             );
 
-        return $"{FormatSuit(Suit.Spades)} " +
-               $"{FormatSuit(Suit.Hearts)} " +
-               $"{FormatSuit(Suit.Diamonds)} " +
+        return $"{FormatSuit(Suit.Spades)}/" +
+               $"{FormatSuit(Suit.Hearts)}/" +
+               $"{FormatSuit(Suit.Diamonds)}/" +
                $"{FormatSuit(Suit.Clubs)}";
     }
     

@@ -14,7 +14,7 @@ public static class SimpleHandParser
         var hands = new Dictionary<Seat, Hand>();
         
         // Split by lines to process each player
-        var lines = input.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        var lines = input.Split(new[] { '\r', '\n', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var line in lines)
         {
@@ -38,7 +38,7 @@ public static class SimpleHandParser
             // 3. Parse Cards
             // The cards string is space-separated by suit: "S H D C"
             // e.g. "Q9543 4 K9 98653" -> ["Q9543", "4", "K9", "98653"]
-            var suitHoldings = cardsStr.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var suitHoldings = cardsStr.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (suitHoldings.Length != 4)
             {
