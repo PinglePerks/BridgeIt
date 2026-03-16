@@ -25,6 +25,11 @@ public class SuitLengthConstraint : IBidConstraint
         {
             MaxLen = int.Parse(lengthExpression.Replace("<=", "").Trim());
         }
+        else if (lengthExpression.Contains("="))
+        {
+            MinLen = int.Parse(lengthExpression.Replace("=", "").Trim());
+            MaxLen = MinLen;
+        }
         
     }
 

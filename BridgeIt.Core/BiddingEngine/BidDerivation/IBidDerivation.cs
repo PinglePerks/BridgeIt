@@ -1,4 +1,3 @@
-using System.Data;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -8,12 +7,16 @@ namespace BridgeIt.Core.BiddingEngine.BidDerivation;
 public interface IBidDerivation
 {
     Bid? DeriveBid(DecisionContext ctx);
+
+    bool CanProduceBid(Bid bid);
 }
 
 public abstract class BidDerivationBase : IBidDerivation
 {
     public abstract Bid? DeriveBid(DecisionContext ctx);
-    
+    public abstract bool CanProduceBid(Bid bid);
+
+
     protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract)
     {
         if (currentContract == null) return 1;

@@ -3,11 +3,10 @@ using BridgeIt.Core.Domain.Bidding;
 
 namespace BridgeIt.Core.BiddingEngine.BidDerivation;
 
-public class StaticBidDerivation : IBidDerivation
+public class StaticBidDerivation(Bid bid) : IBidDerivation
 {
-    private readonly Bid _bid;
-    
-    public StaticBidDerivation(Bid bid) => _bid = bid;
-    
-    public Bid? DeriveBid(DecisionContext ctx) => _bid;
+    public Bid? DeriveBid(DecisionContext ctx) => bid;
+
+    public bool CanProduceBid(Bid bid1)
+        => bid1 == bid;
 }

@@ -1,9 +1,7 @@
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Analysis.Partnership;
-using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
-using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.RuleLookupService;
@@ -11,7 +9,6 @@ namespace BridgeIt.Core.BiddingEngine.RuleLookupService;
 public interface IRuleLookupService
 {
     public Dictionary<Seat, List<BidInformation>> GetConstraintsFromBids(BiddingContext ctx, Core.BiddingEngine engine);
-
 }
 
 public class RuleLookupService : IRuleLookupService
@@ -52,7 +49,7 @@ public class RuleLookupService : IRuleLookupService
             // 4. Construct Context
             // Note: We use an empty hand/evaluation because we are analyzing history, 
             // not making a decision for the current user's hand.
-            var bidContext = new BiddingContext(null, replayHistory, currentBidder, ctx.Vulnerability);
+            var bidContext = new BiddingContext(null!, replayHistory, currentBidder, ctx.Vulnerability);
             var decisionContext = new DecisionContext(bidContext, new HandEvaluation(), AuctionEvaluator.Evaluate(replayHistory), knowledgeOfPartner);
 
             // 5. Ask Engine: "Given this context, what does this Bid mean?"

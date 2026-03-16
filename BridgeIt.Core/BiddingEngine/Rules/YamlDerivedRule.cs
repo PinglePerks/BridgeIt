@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.BidDerivation;
 using BridgeIt.Core.BiddingEngine.BidDerivation.Factories;
@@ -7,6 +8,7 @@ using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Extensions;
+using BridgeIt.Core.Domain.IBidValidityChecker;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Rules;
@@ -54,6 +56,7 @@ public class YamlDerivedRule : BiddingRuleBase
             _options.Add((bidDerivation, logic, node.NextState, node.Meaning));
         }
     }
+    
 
     public override bool IsApplicable(DecisionContext ctx)
     {
@@ -75,10 +78,8 @@ public class YamlDerivedRule : BiddingRuleBase
         return null;
     }
     
-
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
-        
         if (!IsApplicable(ctx)) return null;
 
         foreach (var option in _options)
@@ -91,7 +92,7 @@ public class YamlDerivedRule : BiddingRuleBase
             }
         }
 
-        return null;
+        return new BidInformation(bid, null, null );;
     }
 
     // --- Helpers ---

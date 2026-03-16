@@ -15,15 +15,15 @@ nodes:
       shape: "balanced"
     next_state: "overcall"
 
-  - dynamic_bid:
-      bid_type: "length_bid"
-      type: "overcall"
-    type: "overcall"
-    meaning: "length in named suit"
-    constraints:
-      shape:
-        any: ">=6"
-    next_state: "overcall"
+#  - dynamic_bid:
+#      bid_type: "length_bid"
+#      type: "overcall"
+#    type: "overcall"
+#    meaning: "length in named suit"
+#    constraints:
+#      shape:
+#        any: ">=6"
+#    next_state: "overcall"
   
   
 

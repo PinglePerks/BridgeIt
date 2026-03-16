@@ -1,4 +1,3 @@
-using BridgeIt.Core.BiddingEngine.BidDerivation;
 using BridgeIt.Core.BiddingEngine.BidDerivation.Factories;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using Microsoft.Extensions.DependencyInjection;

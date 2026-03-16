@@ -1,5 +1,5 @@
 system_name: "Acol - 2 level (3 weak 2s)"
-priority: 20
+priority: 21
 description: "2 Level - Traditional Acol with Weak 1NT and 4-card Majors"
 
 # Trigger for an opening bid (0 passes, or passes only)
@@ -8,50 +8,41 @@ trigger:
     history_pattern: ["Pass*"] # Regex: Matches empty, "Pass", "Pass, Pass", etc.
 
 nodes:
-  - bid: "2NT"
-    type: "Natural"
-    meaning: "20-22 HCP, Balanced"
-    constraints:
-      hcp: "20-22"
-      shape: "balanced"
-    next_state: "2nt_response"
-    
-  - bid: "2S"
+  - bid: "3S"
     type: "Weak"
     meaning: "Weak hand, 6 cards in spades"
     constraints:
       shape:
-        spades: "=6"
+        spades: "=7"
       hcp: 6-10
     next_state: "natural_response"
     
-  - bid: "2H"
+  - bid: "3H"
     type: "Weak"
     meaning: "Weak hand, 6 cards in hearts"
     constraints:
       shape:
-        hearts: "=6"
+        hearts: "=7"
       hcp: 6-10
     next_state: "natural_response"
     
-  - bid: "2D"
+  - bid: "3D"
     type: "Weak"
     meaning: "Weak hand, 6 cards in diamonds"
     constraints:
       shape:
-        diamonds: "=6"
+        diamonds: "=7"
       hcp: 6-10
     next_state: "natural_response"
     
-  - bid: "2C"
-    type: "Artificial"
-    meaning: "Very strong hand"
+  - bid: "3C"
+    type: "Weak"
+    meaning: "Weak hand, 6 cards in diamonds"
     constraints:
-      any_of:
-        - hcp: ">=23"
-          shape: "balanced"
-        - losers: "<=3"
-    next_state: "strong"
+      shape:
+        clubs: "=7"
+      hcp: 6-10
+    next_state: "natural_response"
 
 #  - dynamic_bid: 
 #      bid_type: "length_bid"
