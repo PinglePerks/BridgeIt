@@ -1,185 +1,23 @@
 [
 {
-  "RuleName": "Acol - Basic Openings",
+  "RuleName": "Acol - 2 level (3 weak 2s)",
   "Bid": {
-    "Type": "Pass",
-    "Level": 0,
-    "Suit": null
+    "Type": "Suit",
+    "Level": 3,
+    "Suit": "Diamonds"
   },
-  "Hand": "853/AT9/J64/J983",
+  "Hand": "J872/2/KQ65432/5",
   "HandEvaluation": {
     "Hcp": 6,
     "Shape": {
-      "Clubs": 4,
-      "Diamonds": 3,
-      "Hearts": 3,
-      "Spades": 3
-    }
-  },
-  "AuctionEvaluation": {
-    "SeatRoleType": "NoBids"
-  },
-  "PartnershipKnowledge": {
-    "PartnershipKnowledge": {
-      "PartnerHcpMin": 0,
-      "PartnerHcpMax": 40,
-      "FitInSuit": null,
-      "CurrentPartnershipState": null,
-      "PartnerMinShape": {
-        "Spades": 0,
-        "Hearts": 0,
-        "Diamonds": 0,
-        "Clubs": 0
-      },
-      "PartnerMaxShape": {
-        "Spades": 13,
-        "Hearts": 13,
-        "Diamonds": 13,
-        "Clubs": 13
-      },
-      "PartnerKnowledgeOfMe": null,
-      "PartnerIsBalanced": false
-    }
-  }
-},
-{
-  "RuleName": "Acol - Basic Openings",
-  "Bid": {
-    "Type": "Suit",
-    "Level": 1,
-    "Suit": "Hearts"
-  },
-  "Hand": "J2/KJ87652/AQ/AQ",
-  "HandEvaluation": {
-    "Hcp": 17,
-    "Shape": {
-      "Clubs": 2,
-      "Diamonds": 2,
-      "Hearts": 7,
-      "Spades": 2
-    }
-  },
-  "AuctionEvaluation": {
-    "SeatRoleType": "NoBids"
-  },
-  "PartnershipKnowledge": {
-    "PartnershipKnowledge": {
-      "PartnerHcpMin": 0,
-      "PartnerHcpMax": 40,
-      "FitInSuit": null,
-      "CurrentPartnershipState": null,
-      "PartnerMinShape": {
-        "Spades": 0,
-        "Hearts": 0,
-        "Diamonds": 0,
-        "Clubs": 0
-      },
-      "PartnerMaxShape": {
-        "Spades": 13,
-        "Hearts": 13,
-        "Diamonds": 13,
-        "Clubs": 13
-      },
-      "PartnerKnowledgeOfMe": null,
-      "PartnerIsBalanced": false
-    }
-  }
-},
-{
-  "Rule": "NO RULE MATCHED",
-  "Hand": "AK74/43/K87/7642",
-  "HandEvaluation": {
-    "Hcp": 10,
-    "Shape": {
-      "Clubs": 4,
-      "Diamonds": 3,
-      "Hearts": 2,
-      "Spades": 4
-    }
-  },
-  "AuctionEvaluation": {
-    "SeatRoleType": "Overcaller"
-  },
-  "PartnershipKnowledge": {
-    "PartnershipKnowledge": {
-      "PartnerHcpMin": 0,
-      "PartnerHcpMax": 11,
-      "FitInSuit": null,
-      "CurrentPartnershipState": "opening",
-      "PartnerMinShape": {
-        "Spades": 0,
-        "Hearts": 0,
-        "Diamonds": 0,
-        "Clubs": 0
-      },
-      "PartnerMaxShape": {
-        "Spades": 13,
-        "Hearts": 13,
-        "Diamonds": 13,
-        "Clubs": 13
-      },
-      "PartnerKnowledgeOfMe": null,
-      "PartnerIsBalanced": false
-    }
-  }
-},
-{
-  "RuleName": "Responder New Suit (No Fit)",
-  "Bid": {
-    "Type": "Suit",
-    "Level": 1,
-    "Suit": "Spades"
-  },
-  "Hand": "QT96/Q/T9532/KT5",
-  "HandEvaluation": {
-    "Hcp": 7,
-    "Shape": {
-      "Clubs": 3,
-      "Diamonds": 5,
+      "Clubs": 1,
+      "Diamonds": 7,
       "Hearts": 1,
       "Spades": 4
     }
   },
   "AuctionEvaluation": {
-    "SeatRoleType": "Responder"
-  },
-  "PartnershipKnowledge": {
-    "PartnershipKnowledge": {
-      "PartnerHcpMin": 12,
-      "PartnerHcpMax": 19,
-      "FitInSuit": null,
-      "CurrentPartnershipState": "natural_response",
-      "PartnerMinShape": {
-        "Spades": 0,
-        "Hearts": 4,
-        "Diamonds": 0,
-        "Clubs": 0
-      },
-      "PartnerMaxShape": {
-        "Spades": 13,
-        "Hearts": 13,
-        "Diamonds": 13,
-        "Clubs": 13
-      },
-      "PartnerKnowledgeOfMe": null,
-      "PartnerIsBalanced": false
-    }
-  }
-},
-{
-  "Rule": "NO RULE MATCHED",
-  "Hand": "853/AT9/J64/J983",
-  "HandEvaluation": {
-    "Hcp": 6,
-    "Shape": {
-      "Clubs": 4,
-      "Diamonds": 3,
-      "Hearts": 3,
-      "Spades": 3
-    }
-  },
-  "AuctionEvaluation": {
-    "SeatRoleType": "Overcaller"
+    "SeatRoleType": "NoBids"
   },
   "PartnershipKnowledge": {
     "PartnershipKnowledge": {
@@ -187,82 +25,6 @@
       "PartnerHcpMax": 40,
       "FitInSuit": null,
       "CurrentPartnershipState": null,
-      "PartnerMinShape": {
-        "Spades": 0,
-        "Hearts": 0,
-        "Diamonds": 0,
-        "Clubs": 0
-      },
-      "PartnerMaxShape": {
-        "Spades": 13,
-        "Hearts": 13,
-        "Diamonds": 13,
-        "Clubs": 13
-      },
-      "PartnerKnowledgeOfMe": null,
-      "PartnerIsBalanced": false
-    }
-  }
-},
-{
-  "Rule": "NO RULE MATCHED",
-  "Hand": "J2/KJ87652/AQ/AQ",
-  "HandEvaluation": {
-    "Hcp": 17,
-    "Shape": {
-      "Clubs": 2,
-      "Diamonds": 2,
-      "Hearts": 7,
-      "Spades": 2
-    }
-  },
-  "AuctionEvaluation": {
-    "SeatRoleType": "Opener"
-  },
-  "PartnershipKnowledge": {
-    "PartnershipKnowledge": {
-      "PartnerHcpMin": 6,
-      "PartnerHcpMax": 40,
-      "FitInSuit": null,
-      "CurrentPartnershipState": "natural_response",
-      "PartnerMinShape": {
-        "Spades": 4,
-        "Hearts": 0,
-        "Diamonds": 0,
-        "Clubs": 0
-      },
-      "PartnerMaxShape": {
-        "Spades": 13,
-        "Hearts": 13,
-        "Diamonds": 13,
-        "Clubs": 13
-      },
-      "PartnerKnowledgeOfMe": null,
-      "PartnerIsBalanced": false
-    }
-  }
-},
-{
-  "Rule": "NO RULE MATCHED",
-  "Hand": "AK74/43/K87/7642",
-  "HandEvaluation": {
-    "Hcp": 10,
-    "Shape": {
-      "Clubs": 4,
-      "Diamonds": 3,
-      "Hearts": 2,
-      "Spades": 4
-    }
-  },
-  "AuctionEvaluation": {
-    "SeatRoleType": "Overcaller"
-  },
-  "PartnershipKnowledge": {
-    "PartnershipKnowledge": {
-      "PartnerHcpMin": 0,
-      "PartnerHcpMax": 11,
-      "FitInSuit": null,
-      "CurrentPartnershipState": "opening",
       "PartnerMinShape": {
         "Spades": 0,
         "Hearts": 0,

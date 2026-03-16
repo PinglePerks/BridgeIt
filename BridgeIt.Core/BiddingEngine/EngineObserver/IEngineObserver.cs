@@ -1,11 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 
 namespace BridgeIt.Core.BiddingEngine.EngineObserver;
-
 
 public interface IEngineObserver
 {

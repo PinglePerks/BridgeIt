@@ -94,7 +94,14 @@ public static class HandSpecification
                                                                              && ShapeEvaluator.LongestAndStrongest(h) == suit 
                                                                              && ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5
                                                                              && ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
-    
+
+    public static Func<Hand, bool> AcolWeakAndLongOpening(Suit suit, int num = 6) => h =>
+        ShapeEvaluator.GetShape(h)[suit] == num
+        && ShapeEvaluator.LongestAndStrongest(h) == suit
+        && HighCardPoints.Count(h) < 10
+        && HighCardPoints.Count(h) >= 6;
+
+
 
 
 

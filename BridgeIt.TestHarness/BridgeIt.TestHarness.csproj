@@ -31,7 +31,7 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
 
-        <None Update="TestFiles\GoldenGames.pbn">
+        <None Update="TestFiles\GoldenGames\GoldenGames.pbn">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

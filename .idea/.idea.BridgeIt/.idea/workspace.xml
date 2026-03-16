@@ -19,11 +19,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenPbnTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/PartnershipBiddingState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolWeakOpeningTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/TestFiles/GoldenGames/214550427545623544460.pbn" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/TestFiles/GoldenGames/2146080236725618640.pbn" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/TestFiles/GoldenGames/21468717941360534950.pbn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Services/SignalRObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Services/SignalRObserver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Opener/Acol-2Level_Openings.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Opener/Acol-2Level_Openings.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Overcalling/Overcalling.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Overcalling/Overcalling.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/DecisionContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/DecisionContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/HandSpecification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/HandSpecification.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/BridgeIt.TestHarness.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/BridgeIt.TestHarness.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenPbnTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,6 +135,7 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlRuleLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/BidType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/PartnershipBiddingState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Domain/Extensions/StringExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Card.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Deck.cs" root0="FORCE_HIGHLIGHTING" />
@@ -147,9 +156,10 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Systems/LoadedSystem/BasicAcol.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenPbnTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolWeakOpeningTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.TestHarness/result.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Auction/AuctionEvaluationTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Hands/HighCardPointsTests.cs" root0="FORCE_HIGHLIGHTING" />
@@ -515,7 +525,7 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="15119000" />
+      <workItem from="1773439151998" duration="21910000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -645,7 +655,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773603060732</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="adds golden games initial bid check">
+      <option name="closed" value="true" />
+      <created>1773609300606</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1773609300606</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -686,7 +704,8 @@
     <MESSAGE value="WIP" />
     <MESSAGE value="Reworks TestHarness and added one test." />
     <MESSAGE value="Added test harness cases" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added test harness cases" />
+    <MESSAGE value="adds golden games initial bid check" />
+    <option name="LAST_COMMIT_MESSAGE" value="adds golden games initial bid check" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -808,17 +827,95 @@
           <option name="timeStamp" value="159" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs</url>
-          <line>56</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" containingFunctionPresentation="Method 'WithAllRules'">
+          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs</url>
+          <line>23</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs" containingFunctionPresentation="Method 'GetGoldenHands'">
             <startOffsets>
-              <option value="1802" />
+              <option value="635" />
             </startOffsets>
             <endOffsets>
-              <option value="1863" />
+              <option value="732" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="162" />
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs</url>
+          <line>60</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs" containingFunctionPresentation="Method 'Engine_OpeningBidPerfectly_OnGoldenGames'">
+            <startOffsets>
+              <option value="2134" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2188" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs</url>
+          <line>55</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs" containingFunctionPresentation="Method 'Engine_OpeningBidPerfectly_OnGoldenGames'">
+            <startOffsets>
+              <option value="1956" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1957" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolWeakOpeningTests.cs</url>
+          <line>69</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolWeakOpeningTests.cs" containingFunctionPresentation="Method 'Opener_AlwaysBids3D_WithWeakAnd7LongDiamonds'">
+            <startOffsets>
+              <option value="2649" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2739" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/BiddingTable.cs</url>
+          <line>28</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Gameplay/Table/BiddingTable.cs" containingFunctionPresentation="Method 'RunAuction'">
+            <startOffsets>
+              <option value="855" />
+            </startOffsets>
+            <endOffsets>
+              <option value="894" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/Players/IPlayer.cs</url>
+          <line>57</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Players/IPlayer.cs" containingFunctionPresentation="Method 'GetBidAsync'">
+            <startOffsets>
+              <option value="1599" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1675" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs</url>
+          <line>26</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" containingFunctionPresentation="Method 'GetConstraintsFromBid'">
+            <startOffsets>
+              <option value="856" />
+            </startOffsets>
+            <endOffsets>
+              <option value="924" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="173" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -827,6 +924,7 @@
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Core.BiddingContext" memberName="AuctionHistory" />
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Rules.YamlDerivedRule" memberName="_options" />
         <PinnedItemInfo parentTag="Type#System.Collections.Generic.KeyValuePair`2" memberName="Value" />
+        <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Rules.YamlDerivedRule" memberName="Priority" />
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Core.BiddingContext" memberName="Seat" />
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.Bidding.BiddingContext" memberName="AuctionHistory" />
       </pinned-members>
