@@ -16,32 +16,32 @@ nodes:
       shape: "balanced"
     next_state: "2nt_response"
     
-  - bid: "2S"
-    type: "Weak"
-    meaning: "Weak hand, 6 cards in spades"
-    constraints:
-      shape:
-        spades: "=6"
-      hcp: 6-10
-    next_state: "natural_response"
-    
-  - bid: "2H"
-    type: "Weak"
-    meaning: "Weak hand, 6 cards in hearts"
-    constraints:
-      shape:
-        hearts: "=6"
-      hcp: 6-10
-    next_state: "natural_response"
-    
-  - bid: "2D"
-    type: "Weak"
-    meaning: "Weak hand, 6 cards in diamonds"
-    constraints:
-      shape:
-        diamonds: "=6"
-      hcp: 6-10
-    next_state: "natural_response"
+#  - bid: "2S"
+#    type: "Weak"
+#    meaning: "Weak hand, 6 cards in spades"
+#    constraints:
+#      shape:
+#        spades: "=6"
+#      hcp: 6-10
+#    next_state: "natural_response"
+#    
+#  - bid: "2H"
+#    type: "Weak"
+#    meaning: "Weak hand, 6 cards in hearts"
+#    constraints:
+#      shape:
+#        hearts: "=6"
+#      hcp: 6-10
+#    next_state: "natural_response"
+#    
+#  - bid: "2D"
+#    type: "Weak"
+#    meaning: "Weak hand, 6 cards in diamonds"
+#    constraints:
+#      shape:
+#        diamonds: "=6"
+#      hcp: 6-10
+#    next_state: "natural_response"
     
   - bid: "2C"
     type: "Artificial"

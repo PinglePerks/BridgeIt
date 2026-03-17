@@ -34,7 +34,7 @@ const string RulesDirectory = "/Users/mattyperky/RiderProjects/BridgeIt/BridgeIt
 var loader = provider.GetRequiredService<YamlRuleLoader>();
 var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
 var rules = loadedRules.ToList();
-rules.Add(new OpenerUnbalancedRebidRule());
+//rules.Add(new OpenerUnbalancedRebidRule());
 //rules.Add(new RespondingToNaturalOpening());
 //rules.Add(new ResponseTo2ntOpening());
 // rules.Add(new GeneralGameObjectiveRule());

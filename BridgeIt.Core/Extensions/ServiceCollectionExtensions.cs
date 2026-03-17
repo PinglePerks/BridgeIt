@@ -2,12 +2,13 @@ using BridgeIt.Core.BiddingEngine.BidDerivation.Factories;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Constraints.Factories;
+using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
+using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Gameplay.Table;
-using OneLevelResponderBidDerivation = BridgeIt.Core.BiddingEngine.BidDerivation.OneLevelResponderBidDerivation;
 
 namespace BridgeIt.Core.Extensions;
 
@@ -29,15 +30,15 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConstraintFactory, CurrentStateConstraintFactory>();
         
         // Register Bid Derivations
-        services.AddSingleton<IBidDerivationFactory, LengthBidDerivationFactory>();
-        services.AddSingleton<IBidDerivationFactory, SimpleRaiseDerivationFactor>();
-        services.AddSingleton<IBidDerivationFactory, TransferDerivationFactory>();
-        services.AddSingleton<IBidDerivationFactory, OneLevelResponderBidDerivationFactory>();
-        services.AddSingleton<IBidDerivationFactory, ResponderBidDerivationFactory>();
+        // services.AddSingleton<IBidDerivationFactory, LengthBidDerivationFactory>();
+        // services.AddSingleton<IBidDerivationFactory, SimpleRaiseDerivationFactor>();
+        // services.AddSingleton<IBidDerivationFactory, TransferDerivationFactory>();
+        // services.AddSingleton<IBidDerivationFactory, OneLevelResponderBidDerivationFactory>();
+        // services.AddSingleton<IBidDerivationFactory, ResponderBidDerivationFactory>();
 
         // services.AddSingleton<IBiddingRule, RespondingToNaturalOpening>();
         // services.AddSingleton<IBiddingRule, RedSuitTransfer>();
-        // services.AddSingleton<IBiddingRule, ResponseTo2ntOpening>();
+        services.AddSingleton<IBiddingRule, WeakOpeningRule>();
 
         services.AddSingleton<IEngineObserver, EngineObserver>();
         

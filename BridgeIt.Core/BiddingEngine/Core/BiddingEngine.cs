@@ -22,7 +22,7 @@ public sealed class BiddingEngine
     {
         foreach (var rule in _rules)
         {
-            if (rule.IsApplicable(decisionContext))
+            if (rule.CouldExplainBid(bid, decisionContext))
             {
                 var bidInformation = rule.GetConstraintForBid(bid, decisionContext);
                 if (bidInformation != null)
@@ -45,7 +45,7 @@ public sealed class BiddingEngine
         
         foreach (var rule in _rules)
         {
-            if (!rule.IsApplicable(ctx))
+            if (!rule.CouldMakeBid(ctx))
             {
                 continue;
             }

@@ -4,7 +4,7 @@ namespace BridgeIt.Core.Analysis.Hands;
 
 public static class LosingTrickCount
 {
-    public static int Count(Domain.Primatives.Hand hand)
+    public static int Count(Hand hand)
     {
         var losers = 0;
 

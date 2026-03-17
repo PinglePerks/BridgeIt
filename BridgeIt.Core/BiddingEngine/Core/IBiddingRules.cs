@@ -10,9 +10,11 @@ public interface IBiddingRule
     int Priority { get; }
     
     //Forward solving
-    bool IsApplicable(DecisionContext ctx);
+    bool CouldMakeBid(DecisionContext ctx);
     Bid? Apply(DecisionContext ctx);
     
     //Backward solving
-    BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx);
+    bool CouldExplainBid(Bid bid, DecisionContext ctx);
+    BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx); 
+    
 }

@@ -8,8 +8,6 @@ using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Extensions;
-using BridgeIt.Core.Domain.IBidValidityChecker;
-using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Rules;
 
@@ -58,11 +56,16 @@ public class YamlDerivedRule : BiddingRuleBase
     }
     
 
-    public override bool IsApplicable(DecisionContext ctx)
+    public override bool CouldMakeBid(DecisionContext ctx)
     {
         return _triggerConstraint.IsMet(ctx);
     }
 
+    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
+    {
+        return _triggerConstraint.IsMet(ctx) && _options.Any(o => o.Bid.DeriveBid(ctx) == bid);
+    }
+    
     public override Bid? Apply(DecisionContext ctx)
     {
         foreach (var option in _options)
@@ -80,7 +83,7 @@ public class YamlDerivedRule : BiddingRuleBase
     
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
-        if (!IsApplicable(ctx)) return null;
+        if (!CouldMakeBid(ctx)) return null;
 
         foreach (var option in _options)
         {
