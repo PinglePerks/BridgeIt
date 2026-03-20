@@ -58,10 +58,14 @@ public class TestBridgeEnvironment
         var loader = Provider.GetRequiredService<YamlRuleLoader>();
         var rules = loader.LoadRulesFromDirectory(fullPath).ToList();
         
+        // Opening rules
         rules.Add(new WeakOpeningRule());
         rules.Add(new Acol1SuitOpeningRule());
         rules.Add(new Acol1NTOpeningRule());
         rules.Add(new Acol2NTOpeningRule());
+        rules.Add(new AcolStrongOpening());
+        
+        
         //rules.Add(new ResponseTo2ntOpening());
         var observer = Provider.GetRequiredService<IEngineObserver>();
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();

@@ -1,13 +1,13 @@
-using BridgeIt.Core.BiddingEngine;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
+
+namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 
 public class Acol2NTOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 1NT Opening";
     public override int Priority { get; } = 20; // Higher priority than a standard suit opening
-    
 
     private const int MinHcp = 20;
     private const int MaxHcp = 22;

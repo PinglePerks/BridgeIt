@@ -1,8 +1,9 @@
-using BridgeIt.Core.BiddingEngine;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
+
+namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 
 public class Acol1SuitOpeningRule : BiddingRuleBase
 {

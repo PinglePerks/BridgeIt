@@ -1,16 +1,17 @@
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
+using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 
-public class Acol1NTOpeningRule : BiddingRuleBase
+public class AcolStrongOpening : BiddingRuleBase
 {
-    public override string Name { get; } = "Acol 1NT Opening";
-    public override int Priority { get; } = 20; // Higher priority than a standard suit opening
+    public override string Name { get; } = "Acol Strong Opening";
+    public override int Priority { get; } = 19; // Higher priority than a standard suit opening
 
-    private const int MinHcp = 12;
-    private const int MaxHcp = 14;
+    private const int MinHcp = 20;
+    private const int MaxHcp = 35;
 
     public override bool CouldMakeBid(DecisionContext ctx)
     {
@@ -23,21 +24,20 @@ public class Acol1NTOpeningRule : BiddingRuleBase
 
     public override Bid? Apply(DecisionContext ctx)
     {
-        return Bid.NoTrumpsBid(1);
+        return Bid.SuitBid(2, Suit.Clubs);
     }
 
     public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
     {
         if (ctx.AuctionEvaluation.CurrentContract != null) return false;
         
-        return bid is { Type: BidType.NoTrumps, Level: 2 };
+        return bid is { Type: BidType.Suit, Level: 2, Suit: Suit.Clubs };
     }
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
         var constraints = new CompositeConstraint();
         constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
-        constraints.Add(new BalancedConstraint()); // Assuming you have this!
         
         return new BidInformation(bid, constraints, null);
     }
