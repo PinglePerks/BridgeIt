@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -26,7 +27,7 @@ public class WeakOpeningRule : BiddingRuleBase
     public override bool CouldMakeBid(DecisionContext ctx)
     {
         // 1. History Check: Must be the opening bid (no previous bids by anyone)
-        if (ctx.Data.AuctionHistory.Bids.Any(b => b.Bid.Type != BidType.Pass))
+        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
             return false;
 
         if (!_constraints.All(c => c.IsMet(ctx)))
@@ -47,10 +48,8 @@ public class WeakOpeningRule : BiddingRuleBase
 
     public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
     {
-        if (ctx.AuctionEvaluation.CurrentContract != null)
-        {
+        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
             return false;
-        }
 
         if (bid.Type == BidType.Suit && bid.Level >= 2 && _forbiddenBids.All(x => x != bid))
         {

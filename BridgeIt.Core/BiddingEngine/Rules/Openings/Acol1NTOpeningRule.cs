@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -14,7 +15,7 @@ public class Acol1NTOpeningRule : BiddingRuleBase
 
     public override bool CouldMakeBid(DecisionContext ctx)
     {
-        if (ctx.Data.AuctionHistory.Bids.Any(b => b.Bid.Type != BidType.Pass))
+        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
             return false;
 
         return ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp 
@@ -28,9 +29,10 @@ public class Acol1NTOpeningRule : BiddingRuleBase
 
     public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
     {
-        if (ctx.AuctionEvaluation.CurrentContract != null) return false;
+        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
+            return false;
         
-        return bid is { Type: BidType.NoTrumps, Level: 2 };
+        return bid is { Type: BidType.NoTrumps, Level: 1 };
     }
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)

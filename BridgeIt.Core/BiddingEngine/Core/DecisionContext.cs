@@ -21,12 +21,4 @@ public class DecisionContext
         PartnershipKnowledge = partnershipKnowledge;
         ValidityChecker = new BidValidityChecker();
     }
-
-    public DecisionContext(BiddingContext data)
-    {
-        Data = data;
-        HandEvaluation = HandEvaluator.Evaluate(data.Hand);
-        AuctionEvaluation = AuctionEvaluator.Evaluate(data.AuctionHistory);
-        PartnershipKnowledge = new PartnershipKnowledge();
-    }
 }
