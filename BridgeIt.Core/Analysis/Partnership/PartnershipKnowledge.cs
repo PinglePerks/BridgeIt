@@ -1,7 +1,8 @@
 
+using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
-namespace BridgeIt.Core.Analysis.Auction;
+namespace BridgeIt.Core.Analysis.Partnership;
 
 public class PartnershipKnowledge
 {
@@ -9,7 +10,7 @@ public class PartnershipKnowledge
     public int PartnerHcpMin { get; set; } = 0;
     public int PartnerHcpMax { get; set; } = 40;
     public Suit? FitInSuit { get; set; }
-    public string? CurrentPartnershipState { get; set; }
+    public PartnershipBiddingState PartnershipBiddingState { get; set; }
     
     
     // --- Suit Lengths (Min known length) ---

@@ -37,4 +37,19 @@ public sealed class Bid
             _ => throw new ArgumentOutOfRangeException()
         };
     }
+    
+    public static int NextLevelForSuit(Suit suit, Bid? currentContract)
+    {
+        if (currentContract == null) return 1;
+        if (currentContract.Type == BidType.NoTrumps) return currentContract.Level + 1;
+        return suit <= currentContract.Suit ? currentContract.Level + 1 : currentContract.Level;
+    }
+
+    public static int NextLevelForNoTrumps(Bid? currentContract)
+    {
+        if (currentContract == null) return 1;
+        if (currentContract.Type == BidType.NoTrumps) return currentContract.Level + 1;
+        return currentContract.Level; // NT always outranks any suit at same level
+    }
+
 }

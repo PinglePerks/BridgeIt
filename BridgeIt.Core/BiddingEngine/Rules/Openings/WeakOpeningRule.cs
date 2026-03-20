@@ -77,7 +77,7 @@ public class WeakOpeningRule : BiddingRuleBase
         
         
         
-        var bidInformation = new BidInformation(bid, compositeConstraint, null);
+        var bidInformation = new BidInformation(bid, compositeConstraint, PartnershipBiddingState.ConstructiveSearch);
         
         return bidInformation;
     }

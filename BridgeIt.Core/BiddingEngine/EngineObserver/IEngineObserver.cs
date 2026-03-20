@@ -63,6 +63,9 @@ public class EngineObserver : IEngineObserver
             AuctionEvaluation = new
             {
                 ctx.AuctionEvaluation.SeatRoleType,
+                ctx.AuctionEvaluation.PartnerLastBid,
+                ctx.AuctionEvaluation.AuctionPhase,
+                ctx.AuctionEvaluation.BiddingRound
             },
             PartnershipKnowledge = new
             {

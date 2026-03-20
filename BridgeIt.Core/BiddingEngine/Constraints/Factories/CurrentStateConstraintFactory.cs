@@ -1,3 +1,5 @@
+using BridgeIt.Core.Domain.Bidding;
+
 namespace BridgeIt.Core.BiddingEngine.Constraints.Factories;
 
 public class CurrentStateConstraintFactory : IConstraintFactory
@@ -6,6 +8,6 @@ public class CurrentStateConstraintFactory : IConstraintFactory
 
     public IBidConstraint Create(object value)
     {
-        return new CurrentStateConstraint(value.ToString());
+        return new CurrentStateConstraint(Enum.Parse<PartnershipBiddingState>(value.ToString()));
     }
 }

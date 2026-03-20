@@ -1,13 +1,5 @@
-
-
-using System.ComponentModel.DataAnnotations;
-using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hands;
-using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
-using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.Domain.Bidding;
-using BridgeIt.Core.Domain.Primatives;
 using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.BiddingEngine.Core;
@@ -30,7 +22,7 @@ public sealed class BiddingEngine
             }
         }
 
-        return new BidInformation(bid, null, null);
+        return new BidInformation(bid, null, PartnershipBiddingState.Unknown);
     }
     
     public BiddingEngine(IEnumerable<IBiddingRule> rules, ILogger<BiddingEngine> logger, IEngineObserver observer)

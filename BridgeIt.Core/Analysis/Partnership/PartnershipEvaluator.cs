@@ -1,6 +1,7 @@
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine;
 using BridgeIt.Core.BiddingEngine.Constraints;
+using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.Analysis.Partnership;
@@ -11,12 +12,11 @@ public static class PartnershipEvaluator {
     {
         var knowledge = new PartnershipKnowledge();
         
-        knowledge.CurrentPartnershipState = bidInfos.LastOrDefault()?.PartnershipState;
+        knowledge.PartnershipBiddingState = bidInfos.LastOrDefault()?.PartnershipBiddingState ?? PartnershipBiddingState.Unknown;
 
         foreach (var info in bidInfos)
         {
-            if (info.PartnershipState != null)
-                knowledge.CurrentPartnershipState = info.PartnershipState;
+            knowledge.PartnershipBiddingState = info.PartnershipBiddingState;
             
             if (info.Constraint != null)
             {

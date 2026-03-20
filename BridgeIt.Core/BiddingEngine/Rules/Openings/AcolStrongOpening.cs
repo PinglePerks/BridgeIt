@@ -41,6 +41,6 @@ public class AcolStrongOpening : BiddingRuleBase
         var constraints = new CompositeConstraint();
         constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
         
-        return new BidInformation(bid, constraints, null);
+        return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
     }
 }

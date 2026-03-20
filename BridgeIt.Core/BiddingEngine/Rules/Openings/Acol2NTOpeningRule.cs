@@ -41,6 +41,6 @@ public class Acol2NTOpeningRule : BiddingRuleBase
         constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
         constraints.Add(new BalancedConstraint()); // Assuming you have this!
         
-        return new BidInformation(bid, constraints, null);
+        return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
     }
 }

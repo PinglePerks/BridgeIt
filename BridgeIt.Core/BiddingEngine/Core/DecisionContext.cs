@@ -1,5 +1,6 @@
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Analysis.Partnership;
 using BridgeIt.Core.Domain.IBidValidityChecker;
 
 namespace BridgeIt.Core.BiddingEngine.Core;

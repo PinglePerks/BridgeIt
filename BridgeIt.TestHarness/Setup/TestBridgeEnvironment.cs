@@ -4,6 +4,7 @@ using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
@@ -64,6 +65,8 @@ public class TestBridgeEnvironment
         rules.Add(new Acol1NTOpeningRule());
         rules.Add(new Acol2NTOpeningRule());
         rules.Add(new AcolStrongOpening());
+        
+        rules.Add(new AcolRedSuitTransfer());
         
         
         //rules.Add(new ResponseTo2ntOpening());

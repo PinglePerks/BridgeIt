@@ -49,6 +49,6 @@ public class Acol1SuitOpeningRule : BiddingRuleBase
         constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
         constraints.Add(new SuitLengthConstraint(bid.Suit.ToString()!, ">=4"));
         
-        return new BidInformation(bid, constraints, null);
+        return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
     }
 }

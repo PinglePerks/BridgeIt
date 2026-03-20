@@ -1,4 +1,3 @@
-using System.Net.Sockets;
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.BidDerivation;
 using BridgeIt.Core.BiddingEngine.BidDerivation.Factories;
@@ -15,7 +14,7 @@ public class YamlDerivedRule : BiddingRuleBase
 {
     public override string Name { get; }
     private readonly YamlSystem _definition;
-    private readonly List<(IBidDerivation Bid, IBidConstraint Logic, string NextState, string Reason)> _options;
+    private readonly List<(IBidDerivation Bid, IBidConstraint Logic, PartnershipBiddingState NextState, PartnershipBiddingState Reason)> _options;
     private readonly IEnumerable<IConstraintFactory> _constraintFactories;
     
     private readonly IEnumerable<IBidDerivationFactory> _derivationFactories;
@@ -29,7 +28,7 @@ public class YamlDerivedRule : BiddingRuleBase
         Name = definition.SystemName;
         _definition = definition;
         _constraintFactories = constraintFactories;
-        _options = new List<(IBidDerivation, IBidConstraint, string, string)>();
+        _options = new List<(IBidDerivation, IBidConstraint, PartnershipBiddingState, PartnershipBiddingState)>();
         _derivationFactories = derivationFactories;
 
         _triggerConstraint = ParseConstraints(definition.Trigger.Conditions);
@@ -95,7 +94,7 @@ public class YamlDerivedRule : BiddingRuleBase
             }
         }
 
-        return new BidInformation(bid, null, null );;
+        return new BidInformation(bid, null, PartnershipBiddingState.Unknown );;
     }
 
     // --- Helpers ---

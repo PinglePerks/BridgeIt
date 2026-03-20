@@ -12,6 +12,8 @@ public class AuctionEvaluation
     public Bid? PartnerLastBid { get; init; }
     public Seat? OpeningSeat {get; init;}
     public Seat? NextSeatToBid { get; init; }
+    public AuctionPhase AuctionPhase { get; init; }
+    public int BiddingRound { get; init; }
 }
 
 public static class AuctionEvaluator
@@ -25,16 +27,52 @@ public static class AuctionEvaluator
             CurrentContract = GetCurrentContract(auctionHistory),
             SeatRoleType = GetSeatRole(auctionHistory),
             OpeningBid = GetOpeningBid(auctionHistory),
-            PartnerLastBid = PartnerLastBid(auctionHistory),
-            OpeningSeat = GetOpeningSeat(auctionHistory)
+            PartnerLastBid = GetPartnerLastBid(auctionHistory),
+            OpeningSeat = GetOpeningSeat(auctionHistory),
+            AuctionPhase = GetAuctionPhase(auctionHistory),
+            BiddingRound = GetBiddingRound(auctionHistory),
         };
     }
     
-    private static Bid? PartnerLastBid(AuctionHistory history)
+    private static int GetBiddingRound(AuctionHistory history)
     {
-        if (history.Bids.Count < 2) return null;
-        return history.Bids[^2].Bid;
+        var currentSeat = GetNextSeatToBid(history);
+    
+        var openingBidIndex = history.Bids
+            .Select((b, i) => (b, i))
+            .FirstOrDefault(x => x.b.Bid.Type != BidType.Pass).i;
+    
+        // PreOpening — no one has opened yet
+        if (history.Bids.All(b => b.Bid.Type == BidType.Pass)) return 0;
+
+        // Count every turn (pass or bid) the current seat has had since the opening bid
+        var turnsSinceOpening = history.Bids
+            .Skip(openingBidIndex)
+            .Count(b => b.Seat == currentSeat);
+
+        return turnsSinceOpening + 1;
     }
+
+    
+    private static Bid? GetPartnerLastBid(AuctionHistory history)
+    {
+        var currentSeat = GetNextSeatToBid(history);
+        var partnerSeat = currentSeat.GetPartner();
+        return history.Bids.LastOrDefault(b => b.Seat == partnerSeat)?.Bid;
+    }
+    
+    private static AuctionPhase GetAuctionPhase(AuctionHistory history)
+    {
+        var nonPassBids = history.Bids.Where(b => b.Bid.Type != BidType.Pass).ToList();
+        if (!nonPassBids.Any()) return AuctionPhase.PreOpening;
+
+        var openingSeat = nonPassBids.First().Seat;
+        var oppositionHasBid = nonPassBids.Any(b => b.Seat != openingSeat && b.Seat != openingSeat.GetPartner());
+    
+        return oppositionHasBid ? AuctionPhase.Contested : AuctionPhase.Uncontested;
+    }
+
+
     
     private static Seat GetNextSeatToBid(AuctionHistory auctionHistory)
     {
@@ -76,4 +114,12 @@ public static class AuctionEvaluator
         };
         
     }
+}
+
+public enum AuctionPhase
+{
+    PreOpening,    // No non-pass bids have been made
+    Uncontested,   // One side has opened; opponents have only passed
+    Contested,     // Both sides have made non-pass bids
+    //Terminated    // Auction closed (3+ consecutive passes after a contract exists)
 }

@@ -23,21 +23,11 @@ public abstract class BiddingRuleBase : IBiddingRule
     
     protected bool AllPassed(IReadOnlyList<Bid> bids) => bids.All(b => b.Type == BidType.Pass);
 
-    protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract)
-    {
-        if (currentContract == null) return 1;
-        var level = currentContract.Level;
-        if (currentContract.Type == BidType.NoTrumps) return level + 1;
-        if (suit <= currentContract.Suit) return level + 1;
-        return level;
-    }
+    protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract) 
+        => Bid.NextLevelForSuit(suit, currentContract);
 
-    protected int GetNextNtBidLevel(Bid? currentContract)
-    {
-        if (currentContract == null) return 1;
-        if (currentContract.Type == BidType.NoTrumps) return currentContract.Level + 1;
-        return currentContract.Level;
-    }
+    protected int GetNextNtBidLevel(Bid? currentContract) 
+        => Bid.NextLevelForNoTrumps(currentContract);
 }
 
 // public class RespondingToNaturalOpening : BiddingRuleBase
