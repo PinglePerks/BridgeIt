@@ -19,21 +19,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/1NT_opening/BasicAcolOpeningTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1NTOpeningRule.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1SuitOpeningRule.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol2NTOpeningBid.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Opener/Acol-Basic_Openings.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Opener/Acol-Basic_Openings.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Responder/ResponsesTo1NT.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Responder/ResponsesTo1NT.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/HcpConstraint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/HcpConstraint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/SuitLengthConstraint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/SuitLengthConstraint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Extensions/ServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Extensions/ServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/HandSpecification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/HandSpecification.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolWeakOpeningTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolWeakOpeningTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/General/RomanKeyCardBlackwood.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/General/RomanKeyCardBlackwood.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/General/Transfers.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/General/Transfers.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Overcalling/Overcall1NT.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/Overcalling/Overcall1NT.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Overcalling/Overcalling.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/Overcalling/Overcalling.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Responder/AgreeingMajor.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/Responder/AgreeingMajor.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Responder/RespondingToOpening(NoFit).yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/Responder/RespondingToOpening(NoFit).yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Responder/ResponsesTo1NT.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/Responder/ResponsesTo1NT.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.CLI/BiddingRules/Responder/ResponsesTo2NT.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.CLI/old/Responder/ResponsesTo2NT.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGameObjectiveRule.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGoingForGame.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/MajorFitWithPartner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerBalancedRebidRule.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/ResponseTo2ntOpening.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +58,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="version/0.2" />
+        <entry key="$PROJECT_DIR$" value="version/0.3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -134,11 +139,9 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGameObjectiveRule.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGoingForGame.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/GeneralGoingForGame.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol2NTOpeningBid.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/YamlDerivedRule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlRuleLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" root0="SKIP_HIGHLIGHTING" />
@@ -255,7 +258,7 @@
     "e3e8795a-fb4e-4c8a-8ac0-8d1b4f576b6a.executor": "Run",
     "e5218fee-031e-4c4e-b536-78a7ab157fda.executor": "Debug",
     "fb4cb39a-f52f-4aec-ae8b-3a41f107523d.executor": "Debug",
-    "git-widget-placeholder": "feature/dynamic-bid",
+    "git-widget-placeholder": "version/0.3-stage1-OpeningOnly",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -533,7 +536,7 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="60974000" />
+      <workItem from="1773439151998" duration="63231000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -695,7 +698,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773780537705</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1774017823538</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1774017823538</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -733,14 +744,14 @@
     <MESSAGE value="latest updates" />
     <MESSAGE value="updates" />
     <MESSAGE value="Removes web FE" />
-    <MESSAGE value="WIP" />
     <MESSAGE value="Reworks TestHarness and added one test." />
     <MESSAGE value="Added test harness cases" />
     <MESSAGE value="adds golden games initial bid check" />
     <MESSAGE value="added new test harness cases" />
     <MESSAGE value="Latest" />
     <MESSAGE value="Latest update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Latest update" />
+    <MESSAGE value="WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -771,27 +782,27 @@
           <option name="timeStamp" value="185" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs</url>
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs</url>
           <line>64</line>
           <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" containingFunctionPresentation="Method 'GetConstraintForBid'">
             <startOffsets>
-              <option value="1859" />
+              <option value="1868" />
             </startOffsets>
             <endOffsets>
-              <option value="1884" />
+              <option value="1893" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="192" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs</url>
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs</url>
           <line>44</line>
           <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" containingFunctionPresentation="Method 'Apply'">
             <startOffsets>
-              <option value="1372" />
+              <option value="1381" />
             </startOffsets>
             <endOffsets>
-              <option value="1392" />
+              <option value="1401" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="194" />

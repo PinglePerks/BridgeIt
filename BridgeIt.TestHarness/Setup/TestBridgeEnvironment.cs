@@ -3,6 +3,7 @@ using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
+using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
@@ -58,6 +59,9 @@ public class TestBridgeEnvironment
         var rules = loader.LoadRulesFromDirectory(fullPath).ToList();
         
         rules.Add(new WeakOpeningRule());
+        rules.Add(new Acol1SuitOpeningRule());
+        rules.Add(new Acol1NTOpeningRule());
+        rules.Add(new Acol2NTOpeningRule());
         //rules.Add(new ResponseTo2ntOpening());
         var observer = Provider.GetRequiredService<IEngineObserver>();
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
