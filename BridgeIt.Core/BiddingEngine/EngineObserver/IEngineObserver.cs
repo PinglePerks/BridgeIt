@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
+using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.EngineObserver;
 
@@ -15,6 +16,8 @@ public interface IEngineObserver
 
     // Called if no rules match (Pass fallback)
     void OnNoRuleMatched(DecisionContext context);
+    
+    void PrintHands(Seat seat, Hand hand);
 }
 
 public class EngineObserver : IEngineObserver
@@ -31,6 +34,14 @@ public class EngineObserver : IEngineObserver
             Converters = { new JsonStringEnumConverter() }
         };
         _writer.WriteLine("["); // Start JSON array
+    }
+
+    public void PrintHands(Seat seat, Hand hand)
+    {
+        var str = new Dictionary<Seat, string>{{seat, hand.ToString()}};
+        var json = JsonSerializer.Serialize(str, _options);
+        _writer.WriteLine(json + ",");
+        _writer.Flush();
     }
     public void OnRuleSkipped(string ruleName, DecisionContext context)
     {

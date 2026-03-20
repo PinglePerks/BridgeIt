@@ -52,7 +52,9 @@ public class Dealer : IDealer
     
     public List<Dictionary<Seat, Hand>> GenerateMultipleConstrainedDeals(long numberOfDeals,
         Func<Hand, bool> northConstraint,
-        Func<Hand, bool>? southConstraint = null)
+        Func<Hand, bool>? eastConstraint = null,
+        Func<Hand, bool>? southConstraint = null,
+        Func<Hand, bool>? westConstraint = null)
     {
         // Simple "Monte Carlo" generation: Shuffle and check constraints.
         // For complex constraints, you might need a constructive builder.
@@ -61,7 +63,7 @@ public class Dealer : IDealer
 
         for (var i = 0; i < numberOfDeals; i++)
         {
-            deals.Add(GenerateConstrainedDeal(northConstraint, southConstraint));
+            deals.Add(GenerateConstrainedDeal(northConstraint, eastConstraint, southConstraint, westConstraint));
         }
 
         return deals;
@@ -72,7 +74,8 @@ public class Dealer : IDealer
     public Dictionary<Seat, Hand> GenerateConstrainedDeal(
         Func<Hand, bool> northConstraint,
         Func<Hand, bool>? eastConstraint,
-        Func<Hand, bool>? southConstraint)
+        Func<Hand, bool>? southConstraint,
+        Func<Hand, bool>? westConstraint = null)
     {
         // Simple "Monte Carlo" generation: Shuffle and check constraints.
         // For complex constraints, you might need a constructive builder.
@@ -89,7 +92,9 @@ public class Dealer : IDealer
                 {
                     if (eastConstraint == null || eastConstraint(deal[Seat.East]))
                     {
-                        return deal;
+                        if (westConstraint == null || westConstraint(deal[Seat.West]))
+
+                            return deal;
                     }
                 }
             }

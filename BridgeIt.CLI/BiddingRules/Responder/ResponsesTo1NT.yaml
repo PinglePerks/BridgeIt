@@ -48,8 +48,7 @@ nodes:
     type: "Natural"
     meaning: "Invitational to 3NT (11-12 HCP)"
     constraints:
-      hcp: "12-13"
-      shape: "balanced"
+      hcp: "12"
     next_state: "natural_response"
 
   # --- GAME FORCE NT ---
@@ -58,5 +57,4 @@ nodes:
     meaning: "Sign off in Game (13+ HCP)"
     constraints:
       hcp: ">= 13"
-      shape: "balanced"
     next_state: "natural_response"

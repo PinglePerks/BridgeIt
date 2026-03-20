@@ -21,7 +21,7 @@ public class BasicAcolWeakOpeningTests
     [Test]
     public async Task Opener_AlwaysBids2H_WithWeakAndLongHearts()
     {
-        var testDeals = _dealer.GenerateMultipleConstrainedDeals(50, HandSpecification.AcolWeakAndLongOpening(Suit.Hearts), HandSpecification.AcolOpeningPass);
+        var testDeals = _dealer.GenerateMultipleConstrainedDeals(50, HandSpecification.AcolWeakAndLongOpening(Suit.Hearts, 6), HandSpecification.AcolOpeningPass);
 
         foreach(var deal in testDeals)
         {

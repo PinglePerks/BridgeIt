@@ -7,6 +7,12 @@ public class HcpConstraint : IBidConstraint
     public readonly int Min = 0;
     public readonly int Max = 40;
 
+    public HcpConstraint(int minHcp, int maxHcp)
+    {
+        Min = minHcp;
+        Max = maxHcp;
+    }
+
     public HcpConstraint(string rangeString)
     {
         if (rangeString.Contains('-'))

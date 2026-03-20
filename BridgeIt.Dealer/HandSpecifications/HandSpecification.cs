@@ -101,6 +101,45 @@ public static class HandSpecification
         && HighCardPoints.Count(h) < 10
         && HighCardPoints.Count(h) >= 6;
 
+    public static Func<Hand, bool> Generator(
+        int minHcpPoints,
+        int maxHcpPoints,
+        Dictionary<Suit, int> minShape, // Swapped order so min is first (standard practice)
+        Dictionary<Suit, int> maxShape,
+        Suit? targetSuit = null,        // Added this to fix the missing 'suit' variable!
+        bool longestAndStronger = true)
+    {
+        return h => 
+        {
+            // 1. Check High Card Points
+            int hcp = HighCardPoints.Count(h);
+            if (hcp < minHcpPoints || hcp > maxHcpPoints) 
+                return false;
+
+            // 2. Evaluate the Hand's Shape
+            var actualShape = ShapeEvaluator.GetShape(h);
+
+            // 3. Check Minimum Shape Constraints
+            // Using GetValueOrDefault ensures that if actualShape doesn't contain a Suit (because they have 0 of them), it defaults to 0 instead of crashing.
+            if (minShape != null && !minShape.All(kv => actualShape.GetValueOrDefault(kv.Key, 0) >= kv.Value))
+                return false;
+
+            // 4. Check Maximum Shape Constraints
+            if (maxShape != null && !maxShape.All(kv => actualShape.GetValueOrDefault(kv.Key, 0) <= kv.Value))
+                return false;
+
+            // 5. Check Longest and Strongest Suit Target
+            if (longestAndStronger && targetSuit.HasValue)
+            {
+                if (ShapeEvaluator.LongestAndStrongest(h) != targetSuit.Value)
+                    return false;
+            }
+
+            // If it survives all checks, it's a valid hand!
+            return true;
+        };
+    }
+
 
 
 

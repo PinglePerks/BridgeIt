@@ -38,10 +38,12 @@ public sealed class BiddingEngine
         _rules = rules.OrderByDescending(r => r.Priority).ToList();
         _logger = logger;
         _observer = observer;
+        
     }
 
     public Bid ChooseBid(DecisionContext ctx)
     {
+        _observer.PrintHands(ctx.Data.Seat, ctx.Data.Hand);
         
         foreach (var rule in _rules)
         {

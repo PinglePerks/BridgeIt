@@ -42,7 +42,7 @@ public class SuitLengthConstraint : IBidConstraint
             var suit = GetLongestMatchingSuit(ctx);
             if (suit != null)
             {
-                Suit = suit.Value;
+                //Suit = suit.Value;
                 return true;
             }
             return false;

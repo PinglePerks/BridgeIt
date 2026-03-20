@@ -38,7 +38,6 @@ public static class ServiceCollectionExtensions
 
         // services.AddSingleton<IBiddingRule, RespondingToNaturalOpening>();
         // services.AddSingleton<IBiddingRule, RedSuitTransfer>();
-        services.AddSingleton<IBiddingRule, WeakOpeningRule>();
 
         services.AddSingleton<IEngineObserver, EngineObserver>();
         

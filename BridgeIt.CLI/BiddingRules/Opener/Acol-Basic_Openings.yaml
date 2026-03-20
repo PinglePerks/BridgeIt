@@ -53,10 +53,3 @@ nodes:
       shape:
         clubs: ">= 4"
     next_state: "natural_response"
-  
-  - bid: "Pass"
-    type: "Natural"
-    meaning: "Pass (Weak)"
-    constraints:
-      hcp: "<=11" # Adjusted to avoid overlap with 12 HCP openings
-    next_state: "opening"
