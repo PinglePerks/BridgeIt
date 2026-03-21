@@ -14,15 +14,15 @@ public class WeakOpeningRule : BiddingRuleBase
     private const int MinHcp = 6;
     private const int MaxHcp = 9;
     
-    private List<Bid> _forbiddenBids = [Bid.SuitBid(2, Suit.Clubs)];
+    private readonly HashSet<Bid> _reservedBids;
     private List<IBidConstraint> _constraints;
 
-    public WeakOpeningRule()
+    public WeakOpeningRule(IEnumerable<Bid> reservedBids)
     {
         _constraints = new List<IBidConstraint>();
         _constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
         _constraints.Add(new SuitLengthConstraint("any", $">=6"));
-        
+        _reservedBids = reservedBids.ToHashSet(); 
     }
     public override bool CouldMakeBid(DecisionContext ctx)
     {
@@ -35,10 +35,7 @@ public class WeakOpeningRule : BiddingRuleBase
         
         var bid = MakeBid(ctx);
                 
-        if (_forbiddenBids.Any(x => bid == x))
-            return false;
-
-        return true;
+        return !_reservedBids.Contains(bid);
     }
 
     public override Bid? Apply(DecisionContext ctx)
@@ -51,7 +48,7 @@ public class WeakOpeningRule : BiddingRuleBase
         if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
             return false;
 
-        if (bid.Type == BidType.Suit && bid.Level >= 2 && _forbiddenBids.All(x => x != bid))
+        if (bid.Type == BidType.Suit && bid.Level >= 2 && !_reservedBids.Contains(bid))
         {
             return true;
         }

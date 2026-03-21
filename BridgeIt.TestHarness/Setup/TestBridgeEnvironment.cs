@@ -6,6 +6,7 @@ using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 using BridgeIt.Core.Configuration.Yaml;
+using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Extensions;
@@ -60,7 +61,7 @@ public class TestBridgeEnvironment
         var rules = loader.LoadRulesFromDirectory(fullPath).ToList();
         
         // Opening rules
-        rules.Add(new WeakOpeningRule());
+        rules.Add(new WeakOpeningRule(reservedBids: [Bid.SuitBid(2, Suit.Clubs)]));
         rules.Add(new Acol1SuitOpeningRule());
         rules.Add(new Acol1NTOpeningRule());
         rules.Add(new Acol2NTOpeningRule());

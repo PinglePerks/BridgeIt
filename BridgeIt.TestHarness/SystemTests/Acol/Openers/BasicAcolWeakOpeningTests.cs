@@ -61,6 +61,20 @@ public class BasicAcolWeakOpeningTests
     }
     
     [Test]
+    public async Task Opener_AlwaysPasses_WithWeakAnd6Clubs()
+    {
+        var testDeals = _dealer.GenerateMultipleConstrainedDeals(50, HandSpecification.AcolWeakAndLongOpening(Suit.Clubs), HandSpecification.AcolOpeningPass);
+
+        foreach(var deal in testDeals)
+        {
+            var auction = await _environment.Table.RunAuction(deal, _environment.Players, Seat.North);
+            var openingBid = auction.Bids.First().Bid.ToString();
+            
+            Assert.That(openingBid, Is.EqualTo("Pass"), $"Failed with hand: {deal[Seat.North]}");
+        }
+    }
+    
+    [Test]
     public async Task Opener_AlwaysBids3D_WithWeakAnd7LongDiamonds()
     {
         var testDeals = _dealer.GenerateMultipleConstrainedDeals(50, HandSpecification.AcolWeakAndLongOpening(Suit.Diamonds, 7));
