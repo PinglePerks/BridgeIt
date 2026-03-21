@@ -1,4 +1,3 @@
-using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -57,7 +56,7 @@ public class AcolRedSuitTransfer: BiddingRuleBase
         if (bid.Suit == Suit.Diamonds) suit = Suit.Hearts;
         else suit = Suit.Spades;
         var constraints = new CompositeConstraint();
-        constraints.Add(new SuitLengthConstraint(suit.ToString(), "5"));
+        constraints.Add(new SuitLengthConstraint(suit, 5, 11));
 
         return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
     }

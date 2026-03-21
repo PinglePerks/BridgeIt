@@ -14,15 +14,7 @@ public abstract class BiddingRuleBase : IBiddingRule
     public abstract BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx);
     public abstract Bid? Apply(DecisionContext ctx);
     public abstract bool CouldExplainBid(Bid bid, DecisionContext ctx);
-
-    protected int Hcp(Hand hand) => HighCardPoints.Count(hand);
-
-    protected bool IsBalanced(Hand hand) => ShapeEvaluator.IsBalanced(hand);
     
-    protected Suit LongestAndStrongest(Hand hand) => hand.Cards.GroupBy(c => c.Suit).OrderByDescending(g => g.Count()).First().Key;
-    
-    protected bool AllPassed(IReadOnlyList<Bid> bids) => bids.All(b => b.Type == BidType.Pass);
-
     protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract) 
         => Bid.NextLevelForSuit(suit, currentContract);
 

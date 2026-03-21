@@ -11,6 +11,13 @@ public class SuitLengthConstraint : IBidConstraint
     public readonly int MaxLen = 14;
     //private readonly Suit? _suit = null;
 
+    public SuitLengthConstraint(Suit? suit, int minLen, int maxLen)
+    {
+        Suit = suit;
+        MinLen = minLen;
+        MaxLen = maxLen;
+    }
+
     public SuitLengthConstraint(string suit, string lengthExpression)
     {
         if (suit == "any")

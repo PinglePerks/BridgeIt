@@ -11,6 +11,7 @@ public class HandEvaluation
     public Dictionary<Suit, int> Shape { get; init; } = new();
     public bool IsBalanced { get; init; }
     public Dictionary<Suit,int> RomanKeyCardCount { get; init; } = new();
+    public Suit LongestAndStrongest {get; init;}
 }
 
 public static class HandEvaluator
@@ -23,7 +24,8 @@ public static class HandEvaluator
             Losers = LosingTrickCount.Count(hand),
             Shape = ShapeEvaluator.GetShape(hand),
             IsBalanced = ShapeEvaluator.IsBalanced(hand),
-            RomanKeyCardCount = KeyCardCalculator.CalculateAll(hand)
+            RomanKeyCardCount = KeyCardCalculator.CalculateAll(hand),
+            LongestAndStrongest = ShapeEvaluator.LongestAndStrongest(hand)
         };
     }
 }

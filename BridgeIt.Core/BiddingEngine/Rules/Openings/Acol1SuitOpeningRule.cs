@@ -25,7 +25,7 @@ public class Acol1SuitOpeningRule : BiddingRuleBase
 
     public override Bid? Apply(DecisionContext ctx)
     {
-        var longestSuit = LongestAndStrongest(ctx.Data.Hand);
+        var longestSuit = ctx.HandEvaluation.LongestAndStrongest;
         
         // Acol 4-card major logic
         if (longestSuit is Suit.Hearts or Suit.Spades) return Bid.SuitBid(1, longestSuit);

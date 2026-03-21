@@ -63,7 +63,7 @@ public class WeakOpeningRule : BiddingRuleBase
         
         var levelString = (bidLevel + Number).ToString();
         
-        var lengthConstraint = new SuitLengthConstraint(bidSuit.ToString()!, $"={levelString}");
+        var lengthConstraint = new SuitLengthConstraint(bidSuit, bidLevel, bidLevel);
         
         var compositeConstraint = new CompositeConstraint();
 
@@ -81,9 +81,9 @@ public class WeakOpeningRule : BiddingRuleBase
 
     protected internal virtual Bid MakeBid(DecisionContext ctx)
     {
-        var suit = LongestAndStrongest(ctx.Data.Hand);
+        var suit = ctx.HandEvaluation.LongestAndStrongest;
         
-        var level = ctx.Data.Hand.CountSuit(suit);
+        var level = ctx.HandEvaluation.Shape[suit];
         
         return Bid.SuitBid(level - Number, suit);
     }

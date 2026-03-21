@@ -23,7 +23,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IConstraintFactory, ShapeConstraintFactory>();
         services.AddSingleton<IConstraintFactory, LosingTrickCountCounstraintFactory>();
         services.AddSingleton<IConstraintFactory, HistoryPatternConstraintFactory>();
-        services.AddSingleton<IConstraintFactory, PartnerKnowledgeConstraintFactory>();
         services.AddSingleton<IConstraintFactory, SeatRoleConstraintFactory>();
         services.AddSingleton<IConstraintFactory, CurrentContractConstraintFactory>();
         services.AddSingleton<IConstraintFactory, RomanKeyCardConstrainFactory>();

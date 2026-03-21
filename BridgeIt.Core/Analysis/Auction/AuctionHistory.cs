@@ -22,11 +22,3 @@ public class AuctionHistory
     }
     
 }
-
-public static class AuctionHistoryExtensions
-{
-    public static List<Bid> GetAllBidsFromSeat(this AuctionHistory auctionHistory, Seat seat) 
-        => auctionHistory.Bids.Where(x => x.Seat == seat).Select(x => x.Bid).ToList();
-    public static Bid? GetLastBidFromSeat(this AuctionHistory auctionHistory, Seat seat) 
-        => auctionHistory.Bids.Where(x => x.Seat == seat).Select(x => x.Bid).LastOrDefault();
-}
