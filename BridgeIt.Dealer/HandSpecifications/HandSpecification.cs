@@ -9,14 +9,17 @@ public static class HandSpecification
         h => HighCardPoints.Count(h) >= 20 && HighCardPoints.Count(h) <= 22 && ShapeEvaluator.IsBalanced(h);
 
     public static Func<Hand, bool> BasicPuppetStaymanResponder =>
-        h => HighCardPoints.Count(h) >= 4 && ShapeEvaluator.GetShape(h)[Suit.Hearts] <= 4 && 
+        h => HighCardPoints.Count(h) >= 4 && ShapeEvaluator.GetShape(h)[Suit.Hearts] <= 4 &&
              ShapeEvaluator.GetShape(h)[Suit.Spades] <=4;
-    
+
     public static Func<Dictionary<Seat,Hand>, bool> HasSpadeOrHeartFit(Seat opener, Seat responder) =>
         h => ShapeEvaluator.GetShape(h[opener])[Suit.Spades] + ShapeEvaluator.GetShape(h[responder])[Suit.Spades] >= 8
         || ShapeEvaluator.GetShape(h[opener])[Suit.Hearts] + ShapeEvaluator.GetShape(h[responder])[Suit.Hearts] >= 8;
-    
-    //Building blocks
+
+    // =============================================
+    // Building Blocks
+    // =============================================
+
     public static bool IsBalanced(Hand h) => ShapeEvaluator.IsBalanced(h);
 
     public static Func<Hand, bool> BalancedOpener(int minHcp, int maxHcp) =>
@@ -28,10 +31,10 @@ public static class HandSpecification
 
     public static Func<Hand, bool> TransferToSpadesResponder =>
         h => ShapeEvaluator.GetShape(h)[Suit.Spades] >= 5 &&
-             ShapeEvaluator.GetShape(h)[Suit.Hearts] <= 4; // Using new dictionary-based method
+             ShapeEvaluator.GetShape(h)[Suit.Hearts] <= 4;
 
     public static Func<Hand, bool> TransferToHeartsResponder =>
-        h => ShapeEvaluator.GetShape(h)[Suit.Hearts] >= 5; // Using new dictionary-based method
+        h => ShapeEvaluator.GetShape(h)[Suit.Hearts] >= 5;
 
     // "Stayman Hand" (11+ HCP, 4-card Major)
     public static Func<Hand, bool> StaymanResponder => h =>
@@ -55,43 +58,46 @@ public static class HandSpecification
     public static Func<Hand, bool> WeakPass => h =>
         HighCardPoints.Count(h) < 11 &&
         ShapeEvaluator.IsBalanced(h);
-    
+
     public static Func<Hand, bool> Hearts5Cards(int minHcp, int maxHcp) => h =>
         HighCardPoints.Count(h) >=  minHcp &&
         HighCardPoints.Count(h) <= maxHcp &&
         ShapeEvaluator.GetShape(h)[Suit.Hearts] >= 5;
-    
+
     public static Func<Hand, bool> Hearts5CardsLosers(int minLosers, int maxLosers) => h =>
         LosingTrickCount.Count(h) >=  minLosers &&
         LosingTrickCount.Count(h) <= maxLosers &&
         ShapeEvaluator.GetShape(h)[Suit.Hearts] >= 5;
-    
+
     public static Func<Hand, bool> Hearts5Clubs4(int minHcp, int maxHcp) => h =>
         HighCardPoints.Count(h) >=  minHcp &&
         HighCardPoints.Count(h) <= maxHcp &&
         ShapeEvaluator.GetShape(h)[Suit.Hearts] == 5 &&
         ShapeEvaluator.GetShape(h)[Suit.Clubs] == 4;
-    
-    
-    
-    //Basic Acol
+
+    // =============================================
+    // Basic Acol Openings
+    // =============================================
+
     public static Func<Hand, bool> Acol1NtOpening => BalancedOpener(12, 14);
     public static Func<Hand, bool> Acol2NtOpening => BalancedOpener(20, 22);
-    
-    //TODO: Currently simplified to only balanced but could be other types for pass
-    public static Func<Hand, bool> AcolOpeningPass => BalancedOpener(1, 11);
+
+    // Any hand that should pass as dealer — sub-opening strength AND no weak preempt shape
+    public static Func<Hand, bool> AcolOpeningPass => h =>
+        HighCardPoints.Count(h) < 12 &&
+        (HighCardPoints.Count(h) < 6 || ShapeEvaluator.GetShape(h).Values.All(v => v < 6));
 
     private static Func<Hand, bool> OneLevelUnbalancedOpening =>
         h => HighCardPoints.Count(h) >= 12
              && HighCardPoints.Count(h) <= 19
              && !IsBalanced(h)
              && LosingTrickCount.Count(h) > 4;
-    
+
     public static Func<Hand, bool> AcolMajor1LevelOpening(Suit suit) => h => OneLevelUnbalancedOpening(h)
                                                                              && ShapeEvaluator.LongestAndStrongest(h) == suit;
-    
+
     public static Func<Hand, bool> AcolMinor1LevelOpening(Suit suit) => h => OneLevelUnbalancedOpening(h)
-                                                                             && ShapeEvaluator.LongestAndStrongest(h) == suit 
+                                                                             && ShapeEvaluator.LongestAndStrongest(h) == suit
                                                                              && ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5
                                                                              && ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
 
@@ -101,26 +107,78 @@ public static class HandSpecification
         && HighCardPoints.Count(h) < 10
         && HighCardPoints.Count(h) >= 6;
 
+    // =============================================
+    // Responses to 1NT Opening (Acol 12-14)
+    // =============================================
+
+    // Weak hand, no 5+ major — should Pass
+    public static Func<Hand, bool> ResponseTo1NT_WeakPass => h =>
+        HighCardPoints.Count(h) < 11 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
+
+    // Weak takeout — 5+ hearts, too weak for Stayman/game try
+    public static Func<Hand, bool> ResponseTo1NT_WeakTakeoutHearts => h =>
+        HighCardPoints.Count(h) < 11 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] >= 5;
+
+    // Weak takeout — 5+ spades (no 5+ hearts), too weak for game try
+    public static Func<Hand, bool> ResponseTo1NT_WeakTakeoutSpades => h =>
+        HighCardPoints.Count(h) < 11 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] >= 5 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5;
+
+    // Invitational (11-12 HCP), no 4-card major — bids 2NT
+    public static Func<Hand, bool> ResponseTo1NT_Invitational => h =>
+        HighCardPoints.Count(h) >= 11 && HighCardPoints.Count(h) <= 12 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 4;
+
+    // Game-forcing (13+ HCP), no 4-card major — bids 3NT
+    public static Func<Hand, bool> ResponseTo1NT_GameForcing => h =>
+        HighCardPoints.Count(h) >= 13 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 4;
+
+    // Stayman — 11+ HCP with exactly 4-card major (not 5+, which would transfer)
+    public static Func<Hand, bool> ResponseTo1NT_Stayman => h =>
+        HighCardPoints.Count(h) >= 11 &&
+        (ShapeEvaluator.GetShape(h)[Suit.Hearts] == 4 || ShapeEvaluator.GetShape(h)[Suit.Spades] == 4) &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
+
+    // =============================================
+    // Opponent Specs (for uncontested test scenarios)
+    // =============================================
+
+    // Non-interfering opponent — will always pass (no opening strength, no preempt shape)
+    public static Func<Hand, bool> PassingOpponent => h =>
+        HighCardPoints.Count(h) < 12 &&
+        (HighCardPoints.Count(h) < 6 || ShapeEvaluator.GetShape(h).Values.All(v => v < 6));
+
+    // =============================================
+    // Generic Hand Generator
+    // =============================================
+
     public static Func<Hand, bool> Generator(
         int minHcpPoints,
         int maxHcpPoints,
-        Dictionary<Suit, int> minShape, // Swapped order so min is first (standard practice)
+        Dictionary<Suit, int> minShape,
         Dictionary<Suit, int> maxShape,
-        Suit? targetSuit = null,        // Added this to fix the missing 'suit' variable!
+        Suit? targetSuit = null,
         bool longestAndStronger = true)
     {
-        return h => 
+        return h =>
         {
             // 1. Check High Card Points
             int hcp = HighCardPoints.Count(h);
-            if (hcp < minHcpPoints || hcp > maxHcpPoints) 
+            if (hcp < minHcpPoints || hcp > maxHcpPoints)
                 return false;
 
             // 2. Evaluate the Hand's Shape
             var actualShape = ShapeEvaluator.GetShape(h);
 
             // 3. Check Minimum Shape Constraints
-            // Using GetValueOrDefault ensures that if actualShape doesn't contain a Suit (because they have 0 of them), it defaults to 0 instead of crashing.
             if (minShape != null && !minShape.All(kv => actualShape.GetValueOrDefault(kv.Key, 0) >= kv.Value))
                 return false;
 
@@ -139,18 +197,4 @@ public static class HandSpecification
             return true;
         };
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

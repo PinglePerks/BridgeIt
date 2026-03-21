@@ -7,7 +7,7 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 
 public class Acol2NTOpeningRule : BiddingRuleBase
 {
-    public override string Name { get; } = "Acol 1NT Opening";
+    public override string Name { get; } = "Acol 2NT Opening";
     public override int Priority { get; } = 20; // Higher priority than a standard suit opening
 
     private const int MinHcp = 20;
