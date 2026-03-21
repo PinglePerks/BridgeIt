@@ -40,8 +40,15 @@ public class CompleteTransfer : BiddingRuleBase
 
         if (ctx.AuctionEvaluation.BiddingRound != 2) return false;
 
-        return ctx.AuctionEvaluation.CurrentContract == Bid.SuitBid(2, Suit.Diamonds) ||
-               ctx.AuctionEvaluation.CurrentContract == Bid.SuitBid(2, Suit.Hearts);
+        // 2D transfer → must be explaining 2H completion
+        if (ctx.AuctionEvaluation.CurrentContract == Bid.SuitBid(2, Suit.Diamonds))
+            return bid == Bid.SuitBid(2, Suit.Hearts);
+
+        // 2H transfer → must be explaining 2S completion
+        if (ctx.AuctionEvaluation.CurrentContract == Bid.SuitBid(2, Suit.Hearts))
+            return bid == Bid.SuitBid(2, Suit.Spades);
+
+        return false;
     }
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)

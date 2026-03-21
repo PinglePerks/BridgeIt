@@ -22,7 +22,7 @@ public class AcolStaymanOver1NT: BiddingRuleBase
         
         if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
         
-        return ctx.HandEvaluation.Shape[Suit.Hearts] >= 4 || ctx.HandEvaluation.Shape[Suit.Spades] >= 4 && ctx.HandEvaluation.Hcp >= HcpMin;
+        return (ctx.HandEvaluation.Shape[Suit.Hearts] >= 4 || ctx.HandEvaluation.Shape[Suit.Spades] >= 4) && ctx.HandEvaluation.Hcp >= HcpMin;
     }
 
     public override Bid? Apply(DecisionContext ctx)
@@ -39,7 +39,7 @@ public class AcolStaymanOver1NT: BiddingRuleBase
         
         if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
         
-        if (bid.Suit != Suit.Clubs && bid.Level != 2) return false;
+        if (bid.Suit != Suit.Clubs || bid.Level != 2) return false;
         return true;
     }
 

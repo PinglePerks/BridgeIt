@@ -70,7 +70,8 @@ public class TestBridgeEnvironment
         
         rules.Add(new AcolRedSuitTransferOver1NT());
         rules.Add(new AcolStaymanOver1NT());
-        
+        rules.Add(new AcolNTRaiseOver1NT());
+
         rules.Add(new CompleteTransfer());
         
         

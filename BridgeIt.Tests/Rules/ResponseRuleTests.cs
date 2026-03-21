@@ -3,6 +3,7 @@ using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Analysis.Partnership;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -281,5 +282,379 @@ public class ResponseRuleTests
         var suitConstraint = composite!.Constraints.OfType<SuitLengthConstraint>().FirstOrDefault();
         Assert.That(suitConstraint!.Suit, Is.EqualTo(Suit.Spades));
         Assert.That(suitConstraint.MinLen, Is.EqualTo(5));
+    }
+
+    // =============================================
+    // GetLevelVerdict
+    // =============================================
+
+    [TestCase(5, 12, 14, ExpectedResult = LevelVerdict.SignOff)]   // max = 5+14 = 19
+    [TestCase(10, 12, 14, ExpectedResult = LevelVerdict.SignOff)]  // max = 10+14 = 24
+    [TestCase(11, 12, 14, ExpectedResult = LevelVerdict.Invite)]   // min=23, max=25
+    [TestCase(12, 12, 14, ExpectedResult = LevelVerdict.Invite)]   // min=24, max=26
+    [TestCase(13, 12, 14, ExpectedResult = LevelVerdict.BidGame)]  // min = 13+12 = 25
+    [TestCase(15, 12, 14, ExpectedResult = LevelVerdict.BidGame)]  // min = 15+12 = 27
+    [TestCase(8, 15, 17, ExpectedResult = LevelVerdict.Invite)]    // strong NT: min=23, max=25
+    [TestCase(10, 15, 17, ExpectedResult = LevelVerdict.BidGame)]  // strong NT: min=25
+    public LevelVerdict GetLevelVerdict_ReturnsCorrectVerdict(
+        int myHcp, int partnerMin, int partnerMax)
+    {
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var knowledge = new PartnershipKnowledge
+        {
+            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch,
+            PartnerHcpMin = partnerMin,
+            PartnerHcpMax = partnerMax
+        };
+        var history = new AuctionHistory(Seat.North);
+        history.Add(new AuctionBid(Seat.North, Bid.NoTrumpsBid(1)));
+        history.Add(new AuctionBid(Seat.East, Bid.Pass()));
+        var handEval = new HandEvaluation
+        {
+            Hcp = myHcp, Shape = shape, IsBalanced = true, Losers = 7,
+            LongestAndStrongest = Suit.Diamonds
+        };
+        var aucEval = AuctionEvaluator.Evaluate(history);
+        var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+
+        return decCtx.GetLevelVerdict();
+    }
+
+    [Test]
+    public void GetLevelVerdict_MinorSuitThreshold29_SignOffWhenMaxBelow()
+    {
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 2 }, { Suit.Hearts, 2 }, { Suit.Diamonds, 5 }, { Suit.Clubs, 4 } };
+        var knowledge = new PartnershipKnowledge
+        {
+            PartnerHcpMin = 12, PartnerHcpMax = 14,
+            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch
+        };
+        var history = new AuctionHistory(Seat.North);
+        history.Add(new AuctionBid(Seat.North, Bid.NoTrumpsBid(1)));
+        history.Add(new AuctionBid(Seat.East, Bid.Pass()));
+        var handEval = new HandEvaluation
+        {
+            Hcp = 13, Shape = shape, IsBalanced = false, Losers = 7,
+            LongestAndStrongest = Suit.Diamonds
+        };
+        var aucEval = AuctionEvaluator.Evaluate(history);
+        var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+
+        // 13 HCP + partner 12-14: max=27 < 29 → SignOff (can't make 5-level minor)
+        Assert.That(decCtx.GetLevelVerdict(gameThreshold: 29), Is.EqualTo(LevelVerdict.SignOff));
+    }
+
+    [Test]
+    public void GetLevelVerdict_MinorSuitThreshold29_InviteWhenStraddling()
+    {
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 2 }, { Suit.Hearts, 2 }, { Suit.Diamonds, 5 }, { Suit.Clubs, 4 } };
+        var knowledge = new PartnershipKnowledge
+        {
+            PartnerHcpMin = 12, PartnerHcpMax = 19,
+            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch
+        };
+        var history = new AuctionHistory(Seat.North);
+        history.Add(new AuctionBid(Seat.North, Bid.SuitBid(1, Suit.Diamonds)));
+        history.Add(new AuctionBid(Seat.East, Bid.Pass()));
+        var handEval = new HandEvaluation
+        {
+            Hcp = 15, Shape = shape, IsBalanced = false, Losers = 7,
+            LongestAndStrongest = Suit.Diamonds
+        };
+        var aucEval = AuctionEvaluator.Evaluate(history);
+        var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+
+        // 15 HCP + partner 12-19: min=27, max=34 → Invite (straddles 29)
+        Assert.That(decCtx.GetLevelVerdict(gameThreshold: 29), Is.EqualTo(LevelVerdict.Invite));
+    }
+
+    // =============================================
+    // AcolNTRaiseOver1NT — CouldMakeBid
+    // =============================================
+
+    [Test]
+    public void NTRaise_CouldMakeBid_TrueForBalancedHand()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(10, shape);
+
+        Assert.That(rule.CouldMakeBid(ctx), Is.True);
+    }
+
+    [Test]
+    public void NTRaise_CouldMakeBid_TrueEvenWithWeakHand()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 4 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(3, shape);
+
+        // This rule always applies in the right context — it handles Pass too
+        Assert.That(rule.CouldMakeBid(ctx), Is.True);
+    }
+
+    [Test]
+    public void NTRaise_CouldMakeBid_FalseWhenWrongState()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var ctx = CreateWrongStateContext();
+        Assert.That(rule.CouldMakeBid(ctx), Is.False);
+    }
+
+    [Test]
+    public void NTRaise_CouldMakeBid_FalseWhenNotRound1()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var history = new AuctionHistory(Seat.North);
+        history.Add(new AuctionBid(Seat.North, Bid.NoTrumpsBid(1)));
+        history.Add(new AuctionBid(Seat.East, Bid.Pass()));
+        history.Add(new AuctionBid(Seat.South, Bid.NoTrumpsBid(2)));
+        history.Add(new AuctionBid(Seat.West, Bid.Pass()));
+        // Now it's North's turn (BiddingRound 2)
+
+        var handEval = new HandEvaluation
+        {
+            Hcp = 13, Shape = new Dictionary<Suit, int>
+                { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } },
+            IsBalanced = true, Losers = 6, LongestAndStrongest = Suit.Diamonds
+        };
+        var aucEval = AuctionEvaluator.Evaluate(history);
+        var knowledge = new PartnershipKnowledge
+        {
+            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch
+        };
+        var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.North, Vulnerability.None);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+
+        Assert.That(rule.CouldMakeBid(decCtx), Is.False);
+    }
+
+    // =============================================
+    // AcolNTRaiseOver1NT — Apply (uses GetLevelVerdict)
+    // =============================================
+
+    [TestCase(5, "Pass")]
+    [TestCase(8, "Pass")]
+    [TestCase(10, "Pass")]
+    [TestCase(11, "2NT")]
+    [TestCase(12, "2NT")]
+    [TestCase(13, "3NT")]
+    [TestCase(16, "3NT")]
+    public void NTRaise_Apply_CorrectBidForHcp(int hcp, string expectedBid)
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(hcp, shape);
+
+        var bid = rule.Apply(ctx);
+        Assert.That(bid!.ToString(), Is.EqualTo(expectedBid));
+    }
+
+    // =============================================
+    // AcolNTRaiseOver1NT — CouldExplainBid (Backward)
+    // =============================================
+
+    [Test]
+    public void NTRaise_CouldExplainBid_TrueForPass()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        Assert.That(rule.CouldExplainBid(Bid.Pass(), ctx), Is.True);
+    }
+
+    [Test]
+    public void NTRaise_CouldExplainBid_TrueFor2NT()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        Assert.That(rule.CouldExplainBid(Bid.NoTrumpsBid(2), ctx), Is.True);
+    }
+
+    [Test]
+    public void NTRaise_CouldExplainBid_TrueFor3NT()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        Assert.That(rule.CouldExplainBid(Bid.NoTrumpsBid(3), ctx), Is.True);
+    }
+
+    [Test]
+    public void NTRaise_CouldExplainBid_FalseFor1NT()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        Assert.That(rule.CouldExplainBid(Bid.NoTrumpsBid(1), ctx), Is.False);
+    }
+
+    [Test]
+    public void NTRaise_CouldExplainBid_FalseForSuitBid()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        Assert.That(rule.CouldExplainBid(Bid.SuitBid(2, Suit.Hearts), ctx), Is.False);
+    }
+
+    // =============================================
+    // AcolNTRaiseOver1NT — GetConstraintForBid
+    // =============================================
+
+    [Test]
+    public void NTRaise_GetConstraint_Pass_Hcp0to10()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        var info = rule.GetConstraintForBid(Bid.Pass(), ctx);
+        Assert.That(info, Is.Not.Null);
+        var hcp = info!.Constraint as HcpConstraint;
+        Assert.That(hcp, Is.Not.Null);
+        Assert.That(hcp!.Min, Is.EqualTo(0));
+        Assert.That(hcp.Max, Is.EqualTo(10));
+        Assert.That(info.PartnershipBiddingState, Is.EqualTo(PartnershipBiddingState.SignOff));
+    }
+
+    [Test]
+    public void NTRaise_GetConstraint_2NT_Hcp11to12_GameInvitational()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        var info = rule.GetConstraintForBid(Bid.NoTrumpsBid(2), ctx);
+        Assert.That(info, Is.Not.Null);
+        var hcp = info!.Constraint as HcpConstraint;
+        Assert.That(hcp!.Min, Is.EqualTo(11));
+        Assert.That(hcp.Max, Is.EqualTo(12));
+        Assert.That(info.PartnershipBiddingState, Is.EqualTo(PartnershipBiddingState.GameInvitational));
+    }
+
+    [Test]
+    public void NTRaise_GetConstraint_3NT_Hcp13Plus_SignOff()
+    {
+        var rule = new AcolNTRaiseOver1NT();
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
+        var ctx = CreateResponseTo1NTContext(0, shape);
+
+        var info = rule.GetConstraintForBid(Bid.NoTrumpsBid(3), ctx);
+        Assert.That(info, Is.Not.Null);
+        var hcp = info!.Constraint as HcpConstraint;
+        Assert.That(hcp!.Min, Is.EqualTo(13));
+        Assert.That(hcp.Max, Is.EqualTo(30));
+        Assert.That(info.PartnershipBiddingState, Is.EqualTo(PartnershipBiddingState.SignOff));
+    }
+
+    // =============================================
+    // CompleteTransfer — CouldMakeBid
+    // =============================================
+
+    private static DecisionContext CreateCompleteTransferContext(Suit transferSuit)
+    {
+        // North opens 1NT, East passes, South bids transfer, West passes — North to complete
+        var history = new AuctionHistory(Seat.North);
+        history.Add(new AuctionBid(Seat.North, Bid.NoTrumpsBid(1)));
+        history.Add(new AuctionBid(Seat.East, Bid.Pass()));
+        history.Add(new AuctionBid(Seat.South, Bid.SuitBid(2, transferSuit)));
+        history.Add(new AuctionBid(Seat.West, Bid.Pass()));
+
+        var handEval = new HandEvaluation
+        {
+            Hcp = 13,
+            Shape = new Dictionary<Suit, int>
+                { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } },
+            IsBalanced = true, Losers = 6, LongestAndStrongest = Suit.Diamonds
+        };
+        var aucEval = AuctionEvaluator.Evaluate(history);
+        var knowledge = new PartnershipKnowledge
+        {
+            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch,
+            PartnerHcpMin = 0, PartnerHcpMax = 40
+        };
+        var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.North, Vulnerability.None);
+        return new DecisionContext(ctx, handEval, aucEval, knowledge);
+    }
+
+    [Test]
+    public void CompleteTransfer_CouldMakeBid_TrueAfter2D()
+    {
+        var rule = new CompleteTransfer();
+        var ctx = CreateCompleteTransferContext(Suit.Diamonds);
+        Assert.That(rule.CouldMakeBid(ctx), Is.True);
+    }
+
+    [Test]
+    public void CompleteTransfer_CouldMakeBid_TrueAfter2H()
+    {
+        var rule = new CompleteTransfer();
+        var ctx = CreateCompleteTransferContext(Suit.Hearts);
+        Assert.That(rule.CouldMakeBid(ctx), Is.True);
+    }
+
+    [Test]
+    public void CompleteTransfer_Apply_After2D_Bids2H()
+    {
+        var rule = new CompleteTransfer();
+        var ctx = CreateCompleteTransferContext(Suit.Diamonds);
+        Assert.That(rule.Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Hearts)));
+    }
+
+    [Test]
+    public void CompleteTransfer_Apply_After2H_Bids2S()
+    {
+        var rule = new CompleteTransfer();
+        var ctx = CreateCompleteTransferContext(Suit.Hearts);
+        Assert.That(rule.Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Spades)));
+    }
+
+    [Test]
+    public void CompleteTransfer_CouldExplainBid_TrueFor2H_After2DTransfer()
+    {
+        var rule = new CompleteTransfer();
+        var ctx = CreateCompleteTransferContext(Suit.Diamonds);
+        Assert.That(rule.CouldExplainBid(Bid.SuitBid(2, Suit.Hearts), ctx), Is.True);
+    }
+
+    [Test]
+    public void CompleteTransfer_CouldExplainBid_FalseFor2S_After2DTransfer()
+    {
+        var rule = new CompleteTransfer();
+        var ctx = CreateCompleteTransferContext(Suit.Diamonds);
+        // 2D transfer should only explain 2H, not 2S
+        Assert.That(rule.CouldExplainBid(Bid.SuitBid(2, Suit.Spades), ctx), Is.False);
+    }
+
+    [Test]
+    public void CompleteTransfer_CouldExplainBid_TrueFor2S_After2HTransfer()
+    {
+        var rule = new CompleteTransfer();
+        var ctx = CreateCompleteTransferContext(Suit.Hearts);
+        Assert.That(rule.CouldExplainBid(Bid.SuitBid(2, Suit.Spades), ctx), Is.True);
     }
 }
