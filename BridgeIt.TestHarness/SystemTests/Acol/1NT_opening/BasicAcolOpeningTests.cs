@@ -36,9 +36,12 @@ public class BasicAcolOpeningTests
             var auction = await _environment.Table.RunAuction(deal, _environment.Players, Seat.North);
             var openingBid = auction.Bids.First().Bid.ToString();
             var responderBid = auction.Bids[2].Bid.ToString();
+            var openerReBid = auction.Bids[4].Bid.ToString();
             
             Assert.That(openingBid, Is.EqualTo("1NT"), $"Failed with hand: {deal[Seat.North]}");
             Assert.That(responderBid, Is.EqualTo("2D"), $"Failed with hand: {deal[Seat.South]}");
+            Assert.That(openerReBid, Is.EqualTo("2H"), $"Failed with hand: {deal[Seat.South]}");
+            ;
         }
     }
     
@@ -59,9 +62,12 @@ public class BasicAcolOpeningTests
             var auction = await _environment.Table.RunAuction(deal, _environment.Players, Seat.North);
             var openingBid = auction.Bids.First().Bid.ToString();
             var responderBid = auction.Bids[2].Bid.ToString();
+            var openerReBid = auction.Bids[4].Bid.ToString();
+
             
             Assert.That(openingBid, Is.EqualTo("1NT"), $"Failed with hand: {deal[Seat.North]}");
             Assert.That(responderBid, Is.EqualTo("2H"), $"Failed with hand: {deal[Seat.South]}");
+            Assert.That(openerReBid, Is.EqualTo("2S"), $"Failed with hand: {deal[Seat.South]}");
         }
     }
     

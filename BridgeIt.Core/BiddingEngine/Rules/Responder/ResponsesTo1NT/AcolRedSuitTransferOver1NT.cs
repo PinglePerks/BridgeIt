@@ -5,20 +5,19 @@ using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 
-public class AcolRedSuitTransfer: BiddingRuleBase
+public class AcolRedSuitTransferOver1NT: BiddingRuleBase
 {
     public override string Name { get; } = "Red Suit Transfer";
     public override int Priority { get; } = 30; // Higher priority than a standard suit opening
+    private Bid ApplicableOpeningBid => Bid.NoTrumpsBid(1);
 
     public override bool CouldMakeBid(DecisionContext ctx)
     {
         if (ctx.PartnershipKnowledge.PartnershipBiddingState != PartnershipBiddingState.ConstructiveSearch)
             return false;
         
-        if (ctx.AuctionEvaluation.CurrentContract == null) return false;
+        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
         
-        if (ctx.AuctionEvaluation.CurrentContract.Type != BidType.NoTrumps) return false;
-
         if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
         
         return ctx.HandEvaluation.Shape[Suit.Hearts] >= 5 || ctx.HandEvaluation.Shape[Suit.Spades] >= 5;
@@ -42,7 +41,7 @@ public class AcolRedSuitTransfer: BiddingRuleBase
         
         if (ctx.AuctionEvaluation.CurrentContract == null) return false;
         
-        if (ctx.AuctionEvaluation.CurrentContract.Type != BidType.NoTrumps) return false;
+        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
 
         if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
         

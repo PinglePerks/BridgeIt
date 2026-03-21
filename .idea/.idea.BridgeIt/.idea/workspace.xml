@@ -19,14 +19,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/CompleteTransfer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver1NT.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/InvitationOver1NT.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionHistory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionHistory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/SuitLengthConstraint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/SuitLengthConstraint.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1SuitOpeningRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1SuitOpeningRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransfer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransfer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransfer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransferOver1NT.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseRuleTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseRuleTests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,10 +129,12 @@
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/GeneralGoingForGame.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/CompleteTransfer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1NTOpeningRule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol2NTOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransfer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransferOver1NT.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/InvitationOver1NT.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/YamlDerivedRule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlRuleLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" root0="SKIP_HIGHLIGHTING" />
@@ -257,7 +259,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
+    "settings.editor.selected.configurable": "CodeLensConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -529,7 +531,7 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="75457000" />
+      <workItem from="1773439151998" duration="79933000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -747,7 +749,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774080641376</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Removes PartnerKnowledgeConstraint.cs for now">
+      <option name="closed" value="true" />
+      <created>1774083065750</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1774083065750</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -798,7 +808,8 @@
     <MESSAGE value="Claude suggested changes" />
     <MESSAGE value="added rst &amp; partner states logic" />
     <MESSAGE value="corrects forbidden bids" />
-    <option name="LAST_COMMIT_MESSAGE" value="corrects forbidden bids" />
+    <MESSAGE value="Removes PartnerKnowledgeConstraint.cs for now" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removes PartnerKnowledgeConstraint.cs for now" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
