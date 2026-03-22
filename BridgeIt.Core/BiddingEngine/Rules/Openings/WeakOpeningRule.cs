@@ -47,8 +47,6 @@ public class WeakOpeningRule : BiddingRuleBase
         var bidLevel = bid.Level;
         var bidSuit = bid.Suit;
         
-        var levelString = (bidLevel + Number).ToString();
-        
         var lengthConstraint = new SuitLengthConstraint(bidSuit, bidLevel, bidLevel);
         
         var compositeConstraint = new CompositeConstraint();

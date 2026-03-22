@@ -1,5 +1,4 @@
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;

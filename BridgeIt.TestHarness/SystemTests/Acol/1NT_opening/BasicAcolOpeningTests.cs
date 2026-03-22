@@ -41,7 +41,6 @@ public class BasicAcolOpeningTests
             Assert.That(openingBid, Is.EqualTo("1NT"), $"Failed with hand: {deal[Seat.North]}");
             Assert.That(responderBid, Is.EqualTo("2D"), $"Failed with hand: {deal[Seat.South]}");
             Assert.That(openerReBid, Is.EqualTo("2H"), $"Failed with hand: {deal[Seat.South]}");
-            ;
         }
     }
     

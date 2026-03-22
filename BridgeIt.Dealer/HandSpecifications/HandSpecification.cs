@@ -80,6 +80,9 @@ public static class HandSpecification
     // =============================================
 
     public static Func<Hand, bool> Acol1NtOpening => BalancedOpener(12, 14);
+    
+    public static Func<Hand, bool> Acol1NtRebid => BalancedOpener(15, 17);
+    public static Func<Hand, bool> Acol2NtRebid => BalancedOpener(18, 19);
     public static Func<Hand, bool> Acol2NtOpening => BalancedOpener(20, 22);
 
     // Any hand that should pass as dealer — sub-opening strength AND no weak preempt shape
