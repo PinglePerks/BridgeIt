@@ -111,7 +111,7 @@ public class HcpConstraintTests
             new BiddingContext(dummyHand, dummyHistory, Seat.North, Vulnerability.None),
             handEvaluation,
             new AuctionEvaluation(),
-            new PartnershipKnowledge()
+            new TableKnowledge(Seat.North)
         );
     }
 }

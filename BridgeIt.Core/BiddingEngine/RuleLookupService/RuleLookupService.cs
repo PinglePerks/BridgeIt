@@ -2,6 +2,7 @@ using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Analysis.Partnership;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.RuleLookupService;
@@ -21,31 +22,32 @@ public class RuleLookupService : IRuleLookupService
 
         // 2. Replay the auction linearly
         var replayHistory = new AuctionHistory(ctx.AuctionHistory.Dealer);
-        
+
         foreach (var bid in ctx.AuctionHistory.Bids)
         {
-            // Identify who is bidding and who is their partner
             var currentBidder = bid.Seat;
-            var partner = currentBidder.GetPartner();
 
-            // 3. Build knowledge for the context of THIS specific bid
-            
-            // A. What does the Bidder know about their Partner?
-            // derived from the Partner's previous bids
-            var knowledgeOfPartner = PartnershipEvaluator.AnalyzeKnowledge(derivedConstraints[partner]);
+            // 3. Build TableKnowledge from the perspective of the current bidder
+            var tableKnowledge = new TableKnowledge(currentBidder);
+            foreach (var (seat, bidInfos) in derivedConstraints)
+            {
+                if (seat != currentBidder)
+                {
+                    tableKnowledge.Players[seat] = PlayerKnowledgeEvaluator.AnalyzeKnowledge(bidInfos);
+                }
+            }
 
-            // B. (Recursive Step) What does the Bidder know that Partner knows about the Bidder?
-            // derived from the Bidder's OWN previous bids
-            var partnerKnowledgeOfMe = PartnershipEvaluator.AnalyzeKnowledge(derivedConstraints[currentBidder]);
-            
-            // C. Link them
-            knowledgeOfPartner.PartnerKnowledgeOfMe = partnerKnowledgeOfMe;
+            // Extract partnership bidding state from partner's last bid info
+            var partnerBids = derivedConstraints[currentBidder.GetPartner()];
+            var partnershipState = partnerBids.LastOrDefault()?.PartnershipBiddingState
+                                   ?? PartnershipBiddingState.Unknown;
 
             // 4. Construct Context
-            // Note: We use an empty hand/evaluation because we are analyzing history, 
+            // Note: We use an empty hand/evaluation because we are analyzing history,
             // not making a decision for the current user's hand.
             var bidContext = new BiddingContext(null!, replayHistory, currentBidder, ctx.Vulnerability);
-            var decisionContext = new DecisionContext(bidContext, new HandEvaluation(), AuctionEvaluator.Evaluate(replayHistory), knowledgeOfPartner);
+            var decisionContext = new DecisionContext(bidContext, new HandEvaluation(),
+                AuctionEvaluator.Evaluate(replayHistory), tableKnowledge, partnershipState);
 
             // 5. Ask Engine: "Given this context, what does this Bid mean?"
             var bidInfo = engine.GetConstraintsFromBid(decisionContext, bid.Bid);

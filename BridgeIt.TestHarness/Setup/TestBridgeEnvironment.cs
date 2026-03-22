@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
-using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
@@ -71,6 +70,7 @@ public class TestBridgeEnvironment
         rules.Add(new AcolRedSuitTransferOver1NT());
         rules.Add(new AcolStaymanOver1NT());
         rules.Add(new AcolNTRaiseOver1NT());
+        rules.Add(new AcolNT11PointRaiseOver1NT());
 
         rules.Add(new CompleteTransfer());
         

@@ -52,15 +52,29 @@ public class RobotPlayer(BiddingEngine.Core.BiddingEngine engine,
     public async Task<Bid> GetBidAsync(BiddingContext context)
     {
         var handEval = HandEvaluator.Evaluate(context.Hand);
-        
+
         var auctionEval = AuctionEvaluator.Evaluate(context.AuctionHistory);
-        
+
         var constraints = ruleLookupService.GetConstraintsFromBids(context, engine);
-        
-        var partnerShipKnowledge = PartnershipEvaluator.AnalyzeKnowledge(constraints[context.Seat.GetPartner()]);
-        
-        var decisionContext = new DecisionContext(context, handEval, auctionEval, partnerShipKnowledge);
-        
+
+        // Build TableKnowledge from all seats' inferred constraints
+        var tableKnowledge = new TableKnowledge(context.Seat);
+        foreach (var (seat, bidInfos) in constraints)
+        {
+            if (seat != context.Seat)
+            {
+                tableKnowledge.Players[seat] = PlayerKnowledgeEvaluator.AnalyzeKnowledge(bidInfos);
+            }
+        }
+        tableKnowledge.ApplyCrossTableInferences(handEval.Hcp);
+
+        // Extract partnership bidding state from partner's last bid info
+        var partnerBids = constraints[context.Seat.GetPartner()];
+        var partnershipState = partnerBids.LastOrDefault()?.PartnershipBiddingState
+                               ?? PartnershipBiddingState.Unknown;
+
+        var decisionContext = new DecisionContext(context, handEval, auctionEval, tableKnowledge, partnershipState);
+
         return engine.ChooseBid(decisionContext);
     }
     

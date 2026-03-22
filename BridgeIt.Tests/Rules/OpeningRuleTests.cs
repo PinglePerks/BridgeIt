@@ -36,7 +36,7 @@ public class OpeningRuleTests
         var history = new AuctionHistory(Seat.North);
         var aucEval = AuctionEvaluator.Evaluate(history);
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.North, Vulnerability.None);
-        return new DecisionContext(ctx, handEval, aucEval, new PartnershipKnowledge());
+        return new DecisionContext(ctx, handEval, aucEval, new TableKnowledge(Seat.North));
     }
 
     private static DecisionContext CreateNonOpeningContext(int hcp, bool balanced)
@@ -58,7 +58,7 @@ public class OpeningRuleTests
 
         var aucEval = AuctionEvaluator.Evaluate(history);
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
-        return new DecisionContext(ctx, handEval, aucEval, new PartnershipKnowledge());
+        return new DecisionContext(ctx, handEval, aucEval, new TableKnowledge(Seat.South));
     }
 
     // =============================================

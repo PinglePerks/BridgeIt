@@ -15,33 +15,26 @@ public class Acol1SuitOpeningRule : BiddingRuleBase
     private const int MinHcp = 12;
     private const int MaxHcp = 19; 
 
-    public override bool CouldMakeBid(DecisionContext ctx)
-    {
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
+    protected override bool IsApplicableContext(AuctionEvaluation auction)
+        => auction.SeatRoleType == SeatRoleType.NoBids;
 
-        return ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp;
-    }
+    protected override bool IsHandApplicable(DecisionContext ctx)
+        => ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp;
 
     public override Bid? Apply(DecisionContext ctx)
     {
         var longestSuit = ctx.HandEvaluation.LongestAndStrongest;
-        
+
         // Acol 4-card major logic
         if (longestSuit is Suit.Hearts or Suit.Spades) return Bid.SuitBid(1, longestSuit);
         if (ctx.HandEvaluation.Shape[Suit.Spades] >= 5) return Bid.SuitBid(1, Suit.Spades);
         if (ctx.HandEvaluation.Shape[Suit.Hearts] >= 5) return Bid.SuitBid(1, Suit.Hearts);
-        
+
         return Bid.SuitBid(1, longestSuit);
     }
 
-    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
-    {
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
-
-        return bid.Type == BidType.Suit && bid.Level == 1;
-    }
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+        => bid.Type == BidType.Suit && bid.Level == 1;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {

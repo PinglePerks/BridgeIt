@@ -13,27 +13,18 @@ public class Acol2NTOpeningRule : BiddingRuleBase
     private const int MinHcp = 20;
     private const int MaxHcp = 22;
 
-    public override bool CouldMakeBid(DecisionContext ctx)
-    {
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
+    protected override bool IsApplicableContext(AuctionEvaluation auction)
+        => auction.SeatRoleType == SeatRoleType.NoBids;
 
-        return ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp 
-               && ctx.HandEvaluation.IsBalanced;
-    }
+    protected override bool IsHandApplicable(DecisionContext ctx)
+        => ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp
+           && ctx.HandEvaluation.IsBalanced;
 
     public override Bid? Apply(DecisionContext ctx)
-    {
-        return Bid.NoTrumpsBid(2);
-    }
+        => Bid.NoTrumpsBid(2);
 
-    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
-    {
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
-        
-        return bid.Type == BidType.NoTrumps && bid.Level == 2;
-    }
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+        => bid.Type == BidType.NoTrumps && bid.Level == 2;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {

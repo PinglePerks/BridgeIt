@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -11,17 +12,16 @@ public class AcolRedSuitTransferOver1NT: BiddingRuleBase
     public override int Priority { get; } = 30; // Higher priority than a standard suit opening
     private Bid ApplicableOpeningBid => Bid.NoTrumpsBid(1);
 
-    public override bool CouldMakeBid(DecisionContext ctx)
+    protected override bool IsApplicableContext(AuctionEvaluation auction)
     {
-        if (ctx.PartnershipKnowledge.PartnershipBiddingState != PartnershipBiddingState.ConstructiveSearch)
-            return false;
-        
-        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
-        
-        if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
-        
-        return ctx.HandEvaluation.Shape[Suit.Hearts] >= 5 || ctx.HandEvaluation.Shape[Suit.Spades] >= 5;
+        if (auction.AuctionPhase != AuctionPhase.Uncontested) return false;
+        if (auction.BiddingRound != 1) return false;
+        if (auction.PartnerLastNonPassBid != ApplicableOpeningBid) return false;
+        return true;
     }
+
+    protected override bool IsHandApplicable(DecisionContext ctx)
+        => ctx.HandEvaluation.Shape[Suit.Hearts] >= 5 || ctx.HandEvaluation.Shape[Suit.Spades] >= 5;
 
     public override Bid? Apply(DecisionContext ctx)
     {
@@ -34,20 +34,8 @@ public class AcolRedSuitTransferOver1NT: BiddingRuleBase
         return Bid.SuitBid(heartlevel, Suit.Hearts);
     }
 
-    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
-    {
-        if (ctx.PartnershipKnowledge.PartnershipBiddingState != PartnershipBiddingState.ConstructiveSearch)
-            return false;
-        
-        if (ctx.AuctionEvaluation.CurrentContract == null) return false;
-        
-        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
-
-        if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
-        
-        if (bid.Suit != Suit.Diamonds && bid.Suit != Suit.Hearts) return false;
-        return true;
-    }
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+        => bid.Suit is Suit.Diamonds or Suit.Hearts && bid.Level == 2;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {

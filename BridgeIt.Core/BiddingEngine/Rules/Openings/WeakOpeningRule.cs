@@ -24,37 +24,23 @@ public class WeakOpeningRule : BiddingRuleBase
         _constraints.Add(new SuitLengthConstraint("any", $">=6"));
         _reservedBids = reservedBids.ToHashSet(); 
     }
-    public override bool CouldMakeBid(DecisionContext ctx)
-    {
-        // 1. History Check: Must be the opening bid (no previous bids by anyone)
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
+    protected override bool IsApplicableContext(AuctionEvaluation auction)
+        => auction.SeatRoleType == SeatRoleType.NoBids;
 
+    protected override bool IsHandApplicable(DecisionContext ctx)
+    {
         if (!_constraints.All(c => c.IsMet(ctx)))
             return false;
-        
+
         var bid = MakeBid(ctx);
-                
         return !_reservedBids.Contains(bid);
     }
 
     public override Bid? Apply(DecisionContext ctx)
-    {
-        return MakeBid(ctx);
-    }
+        => MakeBid(ctx);
 
-    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
-    {
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
-
-        if (bid.Type == BidType.Suit && bid.Level >= 2 && !_reservedBids.Contains(bid))
-        {
-            return true;
-        }
-        
-        return false;
-    }
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+        => bid.Type == BidType.Suit && bid.Level >= 2 && !_reservedBids.Contains(bid);
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {

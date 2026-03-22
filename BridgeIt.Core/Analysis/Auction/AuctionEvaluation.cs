@@ -10,6 +10,13 @@ public class AuctionEvaluation
     public Bid? CurrentContract { get; init; }
     public Bid? OpeningBid { get; init; }
     public Bid? PartnerLastBid { get; init; }
+
+    /// <summary>Last non-pass bid made by partner (skips passes)</summary>
+    public Bid? PartnerLastNonPassBid { get; init; }
+
+    /// <summary>Last non-pass bid made by the current seat</summary>
+    public Bid? MyLastNonPassBid { get; init; }
+
     public Seat? OpeningSeat {get; init;}
     public Seat? NextSeatToBid { get; init; }
     public AuctionPhase AuctionPhase { get; init; }
@@ -28,6 +35,8 @@ public static class AuctionEvaluator
             SeatRoleType = GetSeatRole(auctionHistory),
             OpeningBid = GetOpeningBid(auctionHistory),
             PartnerLastBid = GetPartnerLastBid(auctionHistory),
+            PartnerLastNonPassBid = GetPartnerLastNonPassBid(auctionHistory),
+            MyLastNonPassBid = GetMyLastNonPassBid(auctionHistory),
             OpeningSeat = GetOpeningSeat(auctionHistory),
             AuctionPhase = GetAuctionPhase(auctionHistory),
             BiddingRound = GetBiddingRound(auctionHistory),
@@ -59,6 +68,21 @@ public static class AuctionEvaluator
         var currentSeat = GetNextSeatToBid(history);
         var partnerSeat = currentSeat.GetPartner();
         return history.Bids.LastOrDefault(b => b.Seat == partnerSeat)?.Bid;
+    }
+
+    private static Bid? GetPartnerLastNonPassBid(AuctionHistory history)
+    {
+        var currentSeat = GetNextSeatToBid(history);
+        var partnerSeat = currentSeat.GetPartner();
+        return history.Bids
+            .LastOrDefault(b => b.Seat == partnerSeat && b.Bid.Type != BidType.Pass)?.Bid;
+    }
+
+    private static Bid? GetMyLastNonPassBid(AuctionHistory history)
+    {
+        var currentSeat = GetNextSeatToBid(history);
+        return history.Bids
+            .LastOrDefault(b => b.Seat == currentSeat && b.Bid.Type != BidType.Pass)?.Bid;
     }
     
     private static AuctionPhase GetAuctionPhase(AuctionHistory history)

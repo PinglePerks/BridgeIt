@@ -35,16 +35,13 @@ public class ResponseRuleTests
         };
 
         var aucEval = AuctionEvaluator.Evaluate(history);
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch,
-            PartnerHcpMin = 12,
-            PartnerHcpMax = 14,
-            PartnerIsBalanced = true
-        };
+        var tableKnowledge = new TableKnowledge(Seat.South);
+        tableKnowledge.Partner.HcpMin = 12;
+        tableKnowledge.Partner.HcpMax = 14;
+        tableKnowledge.Partner.IsBalanced = true;
 
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
-        return new DecisionContext(ctx, handEval, aucEval, knowledge);
+        return new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
     }
 
     private static DecisionContext CreateWrongStateContext()
@@ -65,13 +62,10 @@ public class ResponseRuleTests
 
         var aucEval = AuctionEvaluator.Evaluate(history);
         // Wrong state — not ConstructiveSearch after 1NT
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnershipBiddingState = PartnershipBiddingState.Unknown
-        };
+        var tableKnowledge = new TableKnowledge(Seat.South);
 
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
-        return new DecisionContext(ctx, handEval, aucEval, knowledge);
+        return new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
     }
 
     // =============================================
@@ -144,12 +138,9 @@ public class ResponseRuleTests
         };
 
         var aucEval = AuctionEvaluator.Evaluate(history);
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch
-        };
+        var tableKnowledge = new TableKnowledge(Seat.South);
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
-        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
 
         Assert.That(rule.CouldMakeBid(decCtx), Is.False);
     }
@@ -301,12 +292,9 @@ public class ResponseRuleTests
     {
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch,
-            PartnerHcpMin = partnerMin,
-            PartnerHcpMax = partnerMax
-        };
+        var tableKnowledge = new TableKnowledge(Seat.South);
+        tableKnowledge.Partner.HcpMin = partnerMin;
+        tableKnowledge.Partner.HcpMax = partnerMax;
         var history = new AuctionHistory(Seat.North);
         history.Add(new AuctionBid(Seat.North, Bid.NoTrumpsBid(1)));
         history.Add(new AuctionBid(Seat.East, Bid.Pass()));
@@ -317,7 +305,7 @@ public class ResponseRuleTests
         };
         var aucEval = AuctionEvaluator.Evaluate(history);
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
-        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
 
         return decCtx.GetLevelVerdict();
     }
@@ -327,11 +315,9 @@ public class ResponseRuleTests
     {
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 2 }, { Suit.Hearts, 2 }, { Suit.Diamonds, 5 }, { Suit.Clubs, 4 } };
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnerHcpMin = 12, PartnerHcpMax = 14,
-            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch
-        };
+        var tableKnowledge = new TableKnowledge(Seat.South);
+        tableKnowledge.Partner.HcpMin = 12;
+        tableKnowledge.Partner.HcpMax = 14;
         var history = new AuctionHistory(Seat.North);
         history.Add(new AuctionBid(Seat.North, Bid.NoTrumpsBid(1)));
         history.Add(new AuctionBid(Seat.East, Bid.Pass()));
@@ -342,7 +328,7 @@ public class ResponseRuleTests
         };
         var aucEval = AuctionEvaluator.Evaluate(history);
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
-        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
 
         // 13 HCP + partner 12-14: max=27 < 29 → SignOff (can't make 5-level minor)
         Assert.That(decCtx.GetLevelVerdict(gameThreshold: 29), Is.EqualTo(LevelVerdict.SignOff));
@@ -353,11 +339,9 @@ public class ResponseRuleTests
     {
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 2 }, { Suit.Hearts, 2 }, { Suit.Diamonds, 5 }, { Suit.Clubs, 4 } };
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnerHcpMin = 12, PartnerHcpMax = 19,
-            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch
-        };
+        var tableKnowledge = new TableKnowledge(Seat.South);
+        tableKnowledge.Partner.HcpMin = 12;
+        tableKnowledge.Partner.HcpMax = 19;
         var history = new AuctionHistory(Seat.North);
         history.Add(new AuctionBid(Seat.North, Bid.SuitBid(1, Suit.Diamonds)));
         history.Add(new AuctionBid(Seat.East, Bid.Pass()));
@@ -368,7 +352,7 @@ public class ResponseRuleTests
         };
         var aucEval = AuctionEvaluator.Evaluate(history);
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
-        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
 
         // 15 HCP + partner 12-19: min=27, max=34 → Invite (straddles 29)
         Assert.That(decCtx.GetLevelVerdict(gameThreshold: 29), Is.EqualTo(LevelVerdict.Invite));
@@ -427,12 +411,9 @@ public class ResponseRuleTests
             IsBalanced = true, Losers = 6, LongestAndStrongest = Suit.Diamonds
         };
         var aucEval = AuctionEvaluator.Evaluate(history);
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch
-        };
+        var tableKnowledge = new TableKnowledge(Seat.North);
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.North, Vulnerability.None);
-        var decCtx = new DecisionContext(ctx, handEval, aucEval, knowledge);
+        var decCtx = new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
 
         Assert.That(rule.CouldMakeBid(decCtx), Is.False);
     }
@@ -592,13 +573,11 @@ public class ResponseRuleTests
             IsBalanced = true, Losers = 6, LongestAndStrongest = Suit.Diamonds
         };
         var aucEval = AuctionEvaluator.Evaluate(history);
-        var knowledge = new PartnershipKnowledge
-        {
-            PartnershipBiddingState = PartnershipBiddingState.ConstructiveSearch,
-            PartnerHcpMin = 0, PartnerHcpMax = 40
-        };
+        var tableKnowledge = new TableKnowledge(Seat.North);
+        tableKnowledge.Partner.HcpMin = 0;
+        tableKnowledge.Partner.HcpMax = 40;
         var ctx = new BiddingContext(new Hand(new List<Card>()), history, Seat.North, Vulnerability.None);
-        return new DecisionContext(ctx, handEval, aucEval, knowledge);
+        return new DecisionContext(ctx, handEval, aucEval, tableKnowledge);
     }
 
     [Test]

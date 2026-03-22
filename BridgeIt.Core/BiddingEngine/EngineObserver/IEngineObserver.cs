@@ -67,12 +67,9 @@ public class EngineObserver : IEngineObserver
                 ctx.AuctionEvaluation.AuctionPhase,
                 ctx.AuctionEvaluation.BiddingRound
             },
-            PartnershipKnowledge = new
-            {
-                ctx.PartnershipKnowledge,
-            },
+            TableKnowledge = ctx.TableKnowledge,
         };
-        
+
         var json = JsonSerializer.Serialize(logEntry, _options);
         _writer.WriteLine(json + ",");
         _writer.Flush();
@@ -93,10 +90,7 @@ public class EngineObserver : IEngineObserver
             {
                 ctx.AuctionEvaluation.SeatRoleType,
             },
-            PartnershipKnowledge = new
-            {
-                ctx.PartnershipKnowledge,
-            },
+            TableKnowledge = ctx.TableKnowledge,
         };
         
         var json = JsonSerializer.Serialize(logEntry, _options);

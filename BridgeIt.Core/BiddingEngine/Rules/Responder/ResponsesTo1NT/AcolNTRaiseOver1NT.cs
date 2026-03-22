@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -21,20 +22,15 @@ public class AcolNTRaiseOver1NT : BiddingRuleBase
 
     private Bid ApplicableOpeningBid => Bid.NoTrumpsBid(1);
 
-    public override bool CouldMakeBid(DecisionContext ctx)
+    protected override bool IsApplicableContext(AuctionEvaluation auction)
     {
-        if (ctx.PartnershipKnowledge.PartnershipBiddingState != PartnershipBiddingState.ConstructiveSearch)
-            return false;
-
-        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
-
-        if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
-
-        // This rule always applies for responder's first bid after 1NT.
-        // Higher-priority rules (transfers, Stayman) will have already
-        // claimed hands with 5-card majors or 4-card major + 11+ HCP.
+        if (auction.AuctionPhase != AuctionPhase.Uncontested) return false;
+        if (auction.BiddingRound != 1) return false;
+        if (auction.PartnerLastNonPassBid != ApplicableOpeningBid) return false;
         return true;
     }
+
+    // No IsHandApplicable override — this is the catch-all after transfers/Stayman
 
     public override Bid? Apply(DecisionContext ctx)
     {
@@ -47,19 +43,11 @@ public class AcolNTRaiseOver1NT : BiddingRuleBase
         };
     }
 
-    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
     {
-        if (ctx.PartnershipKnowledge.PartnershipBiddingState != PartnershipBiddingState.ConstructiveSearch)
-            return false;
-
-        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
-
-        if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
-
         // Explains Pass, 2NT, or 3NT after 1NT opening
         if (bid.Type == BidType.Pass) return true;
         if (bid.Type == BidType.NoTrumps && bid.Level is 2 or 3) return true;
-
         return false;
     }
 

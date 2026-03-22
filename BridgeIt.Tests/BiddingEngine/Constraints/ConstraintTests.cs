@@ -197,21 +197,21 @@ public static class TestHelper
     public static DecisionContext CreateContext(
         HandEvaluation? eval = null,
         AuctionEvaluation? aucEval = null,
-        PartnershipKnowledge? knowledge = null,
+        TableKnowledge? tableKnowledge = null,
         string[]? historyStrs = null)
     {
         // 1. Defaults
-        var handEval = eval ?? new HandEvaluation 
-        { 
-            Hcp = 0, IsBalanced = false, Losers = 0, Shape = new Dictionary<Suit, int>() 
+        var handEval = eval ?? new HandEvaluation
+        {
+            Hcp = 0, IsBalanced = false, Losers = 0, Shape = new Dictionary<Suit, int>()
         };
-        
+
         var auctionEval = aucEval ?? new AuctionEvaluation();
-        
-        var partnerKnowledge = knowledge ?? new PartnershipKnowledge();
+
+        var tk = tableKnowledge ?? new TableKnowledge(Seat.North);
 
         // 2. Build History
-        
+
         var auctionHistory = new AuctionHistory(Seat.North);
 
         if (historyStrs != null)
@@ -225,14 +225,14 @@ public static class TestHelper
 
         // 3. Dummy Objects
         var dummyHand = new Hand(new List<Card>());
-        
+
         var biddingContext = new BiddingContext(dummyHand, auctionHistory, Seat.North, Vulnerability.None);
 
         return new DecisionContext(
             biddingContext,
             handEval,
             auctionEval,
-            partnerKnowledge
+            tk
         );
     }
 }

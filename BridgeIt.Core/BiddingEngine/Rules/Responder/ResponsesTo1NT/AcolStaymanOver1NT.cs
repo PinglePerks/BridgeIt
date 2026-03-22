@@ -1,3 +1,4 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -13,35 +14,25 @@ public class AcolStaymanOver1NT: BiddingRuleBase
     
     private int HcpMin => 11;
 
-    public override bool CouldMakeBid(DecisionContext ctx)
+    protected override bool IsApplicableContext(AuctionEvaluation auction)
     {
-        if (ctx.PartnershipKnowledge.PartnershipBiddingState != PartnershipBiddingState.ConstructiveSearch)
-            return false;
-        
-        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
-        
-        if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
-        
-        return (ctx.HandEvaluation.Shape[Suit.Hearts] >= 4 || ctx.HandEvaluation.Shape[Suit.Spades] >= 4) && ctx.HandEvaluation.Hcp >= HcpMin;
+        if (auction.AuctionPhase != AuctionPhase.Uncontested) return false;
+        if (auction.BiddingRound != 1) return false;
+        if (auction.PartnerLastNonPassBid != ApplicableOpeningBid) return false;
+        return true;
     }
+
+    protected override bool IsHandApplicable(DecisionContext ctx)
+        => (ctx.HandEvaluation.Shape[Suit.Hearts] >= 4 || ctx.HandEvaluation.Shape[Suit.Spades] >= 4)
+           && ctx.HandEvaluation.Hcp >= HcpMin;
 
     public override Bid? Apply(DecisionContext ctx)
     {
         return Bid.SuitBid(2, Suit.Clubs);
     }
 
-    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
-    {
-        if (ctx.PartnershipKnowledge.PartnershipBiddingState != PartnershipBiddingState.ConstructiveSearch)
-            return false;
-        
-        if (ctx.AuctionEvaluation.CurrentContract != ApplicableOpeningBid) return false;
-        
-        if (ctx.AuctionEvaluation.BiddingRound != 1) return false;
-        
-        if (bid.Suit != Suit.Clubs || bid.Level != 2) return false;
-        return true;
-    }
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+        => bid.Suit == Suit.Clubs && bid.Level == 2;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {

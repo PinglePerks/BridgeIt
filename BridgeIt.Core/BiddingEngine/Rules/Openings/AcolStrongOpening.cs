@@ -14,27 +14,18 @@ public class AcolStrongOpening : BiddingRuleBase
     private const int MinHcp = 20;
     private const int MaxHcp = 35;
 
-    public override bool CouldMakeBid(DecisionContext ctx)
-    {
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
+    protected override bool IsApplicableContext(AuctionEvaluation auction)
+        => auction.SeatRoleType == SeatRoleType.NoBids;
 
-        return ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp 
-               && ctx.HandEvaluation.IsBalanced;
-    }
+    protected override bool IsHandApplicable(DecisionContext ctx)
+        => ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp
+           && ctx.HandEvaluation.IsBalanced;
 
     public override Bid? Apply(DecisionContext ctx)
-    {
-        return Bid.SuitBid(2, Suit.Clubs);
-    }
+        => Bid.SuitBid(2, Suit.Clubs);
 
-    public override bool CouldExplainBid(Bid bid, DecisionContext ctx)
-    {
-        if (ctx.AuctionEvaluation.SeatRoleType != SeatRoleType.NoBids)
-            return false;
-        
-        return bid is { Type: BidType.Suit, Level: 2, Suit: Suit.Clubs };
-    }
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+        => bid is { Type: BidType.Suit, Level: 2, Suit: Suit.Clubs };
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
