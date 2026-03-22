@@ -136,16 +136,15 @@ public class OpenerRebidPhase3aTests
     }
 
     /// <summary>
-    /// Creates a wrong-context scenario — partner opened (not us), so we're not the opener.
+    /// Creates a wrong-context scenario — it's East's turn (overcaller position),
+    /// so this player is not the opener.
+    /// North opened 1H, now it's East's turn to bid.
     /// </summary>
     private static DecisionContext CreateNotOpenerContext()
     {
         var history = new AuctionHistory(Seat.North);
         history.Add(new AuctionBid(Seat.North, Bid.SuitBid(1, Suit.Hearts)));
-        history.Add(new AuctionBid(Seat.East, Bid.Pass()));
-        history.Add(new AuctionBid(Seat.South, Bid.SuitBid(2, Suit.Hearts)));
-        history.Add(new AuctionBid(Seat.West, Bid.Pass()));
-        // East to bid — not the opener
+        // Next to bid: East (overcaller position)
 
         var handEval = new HandEvaluation
         {

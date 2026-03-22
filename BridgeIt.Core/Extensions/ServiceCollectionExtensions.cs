@@ -49,7 +49,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IRuleLookupService, RuleLookupService>();
         
         // 3. Register the Rule Loader (See next file)
-        services.AddSingleton<YamlRuleLoader>();
+        //services.AddSingleton<YamlRuleLoader>();
 
         return services;
     }

@@ -31,9 +31,9 @@ var provider = services.BuildServiceProvider();
 // --- 2. Load Rules ---
 // We define the path here, but the Logic is in the Core
 const string RulesDirectory = "/Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.CLI/BiddingRules";
-var loader = provider.GetRequiredService<YamlRuleLoader>();
-var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
-var rules = loadedRules.ToList();
+//var loader = provider.GetRequiredService<YamlRuleLoader>();
+//var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
+var rules = new List<IBiddingRule>();
 //rules.Add(new OpenerUnbalancedRebidRule());
 //rules.Add(new RespondingToNaturalOpening());
 //rules.Add(new ResponseTo2ntOpening());

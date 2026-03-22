@@ -1,8 +1,13 @@
 using BridgeIt.Api.Hubs;
 using BridgeIt.Api.Services;
 using BridgeIt.Core.Extensions;
-using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.Rules.Openings;
+using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
+using BridgeIt.Core.Domain.Bidding;
+using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Domain.IBidValidityChecker;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Gameplay.Table;
@@ -29,29 +34,37 @@ builder.Services.AddSingleton<IBidValidityChecker, BidValidityChecker>();
 
 
 
-// --- 4. Load Rules at Startup (The "Warm-up" Pattern) ---
-// We register a hosted service or run a manual scope to load rules *once* at startup.
-// This is cleaner than doing it in the main flow.
-var rulesDirectory = Path.Combine(AppContext.BaseDirectory, "BiddingRules"); 
-// Ensure your YAML files are copied to output! (See .csproj note below)
-
-// Manually resolve loader *once* to populate the engine, 
-// OR simpler: Register a factory/config that BiddingEngine uses.
-// Given your current BiddingEngine takes IEnumerable<IBiddingRule>, 
-// we need to tell DI how to construct that list.
-
-// BEST PRACTICE FIX: Register the Rules List in DI
-builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(sp => 
+// --- 4. Register Bidding Rules ---
+builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingRule>
 {
-    var loader = sp.GetRequiredService<YamlRuleLoader>();
-    
-    // Check if directory exists, or fallback to a default relative path
-    // For local dev, hardcoded path is risky. Better to use relative.
-    var path = "/Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.CLI/BiddingRules"; 
-    // Or better: Path.Combine(builder.Environment.ContentRootPath, "Rules");
+    // Openings
+    new Acol1NTOpeningRule(),
+    new Acol1SuitOpeningRule(),
+    new Acol2NTOpeningRule(),
+    new AcolStrongOpening(),
+    new WeakOpeningRule(new[] { Bid.SuitBid(2, Suit.Clubs) }), // 2C reserved for strong opening
 
-    return loader.LoadRulesFromDirectory(path).ToList();
-});
+    // Responses to 1-suit
+    new AcolJacoby2NTOver1Major(),
+    new AcolRaiseMajorOver1Suit(),
+    new AcolRaiseMinorOver1Suit(),
+    new AcolNewSuitOver1Suit(),
+    new Acol1NTResponseTo1Suit(),
+
+    // Responses to 1NT
+    new AcolStaymanOver1NT(),
+    new AcolRedSuitTransferOver1NT(),
+    new AcolNTRaiseOver1NT(),
+    // InvitationOver1NT — not yet implemented
+
+    // Opener rebids
+    new AcolStaymanResponse(),
+    new AcolOpenerAfterNTInvite(),
+    new AcolOpenerAfterMajorRaise(),
+    new AcolRebidBalanced(),
+    new AcolRebidSuit(),
+    new CompleteTransfer(),
+}.OrderByDescending(r => r.Priority).ToList());
 
 // --- 5. Configure CORS ---
 builder.Services.AddCors(options =>

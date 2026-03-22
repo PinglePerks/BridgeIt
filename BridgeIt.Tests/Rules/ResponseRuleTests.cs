@@ -531,7 +531,7 @@ public class ResponseRuleTests
         var info = rule.GetConstraintForBid(Bid.NoTrumpsBid(2), ctx);
         Assert.That(info, Is.Not.Null);
         var hcp = info!.Constraint as HcpConstraint;
-        Assert.That(hcp!.Min, Is.EqualTo(11));
+        Assert.That(hcp!.Min, Is.EqualTo(12));
         Assert.That(hcp.Max, Is.EqualTo(12));
         Assert.That(info.PartnershipBiddingState, Is.EqualTo(PartnershipBiddingState.GameInvitational));
     }

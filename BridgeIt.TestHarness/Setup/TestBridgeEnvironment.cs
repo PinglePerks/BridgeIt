@@ -58,8 +58,10 @@ public class TestBridgeEnvironment
         var basePath = AppDomain.CurrentDomain.BaseDirectory;
         var fullPath = Path.Combine(basePath, "BiddingRules");
         
-        var loader = Provider.GetRequiredService<YamlRuleLoader>();
-        var rules = loader.LoadRulesFromDirectory(fullPath).ToList();
+        //var loader = Provider.GetRequiredService<YamlRuleLoader>();
+        //var rules = loader.LoadRulesFromDirectory(fullPath).ToList();
+        
+        var rules = new List<IBiddingRule>();
         
         // Opening rules
         rules.Add(new WeakOpeningRule(reservedBids: [Bid.SuitBid(2, Suit.Clubs)]));

@@ -42,7 +42,7 @@ public class BiddingTable(
             
             auctionHistory.Add(new AuctionBid(current, bid));
             
-            observer.OnBid(auctionHistory);
+            await observer.OnBid(auctionHistory);
             
             if (rules.ShouldStop(auctionHistory.Bids))
                 break;

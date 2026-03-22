@@ -10,20 +10,18 @@ public class GameHub : Hub
 {
     private readonly GameService _gameService;
     
-    private Dictionary<Seat, Hand> _currentDeal;
-
     public GameHub(GameService gameService)
     {
         _gameService = gameService;
     }
 
     // STEP 1: Client says "I am Player 1"
-    public async void IdentifyPlayer(Seat seat)
+    public async Task IdentifyPlayer(Seat seat)
     {
         _gameService.AddHumanPlayer(Context.ConnectionId, seat);
         await Clients.Caller.SendAsync("PlayerIdentified", seat);
     }
-    
+
     public async Task DealCards()
     {
         _gameService.DealNewHand();
@@ -31,8 +29,8 @@ public class GameHub : Hub
         {
             string connectionId = connection.Key;
             Seat seat = connection.Value;
-            
-            Hand hand = _gameService.GetHandForPlayer(seat); 
+
+            Hand hand = _gameService.GetHandForPlayer(seat);
 
             await Clients.Client(connectionId).SendAsync("ReceiveHand", hand);
         }
@@ -40,14 +38,15 @@ public class GameHub : Hub
 
     public async Task StartGame()
     {
-        _gameService.StartGame();
+        await _gameService.StartGame();
     }
 
     public async Task MakeBid(string bidStr)
     {
-        if(_gameService.ReceiveHumanBid(Context.ConnectionId, bidStr.ToBid()))
+        if (_gameService.ReceiveHumanBid(Context.ConnectionId, bidStr.ToBid()))
             await Clients.Caller.SendAsync("BidMadeSuccessfully", bidStr);
-        await Clients.Caller.SendAsync("UnsuccessfulBid", bidStr);
+        else
+            await Clients.Caller.SendAsync("UnsuccessfulBid", bidStr);
     }
 
     public async Task TestHandString()
