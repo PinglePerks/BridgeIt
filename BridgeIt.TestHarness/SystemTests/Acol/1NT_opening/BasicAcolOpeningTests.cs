@@ -140,30 +140,7 @@ public class BasicAcolOpeningTests
     }
     
     [Test]
-    public async Task ResponseTo1NT_Bid2S_With11PointsAndNoMajor()
-    {
-        // Generate 50 hands that are strictly 12-14 points and balanced
-
-        var minShape = new Dictionary<Suit, int>();
-        var maxShape = new Dictionary<Suit, int> { {Suit.Spades, 3}, {Suit.Hearts, 3} };
-
-        var responder = HandSpecification.Generator(11, 11, minShape, maxShape);
-            
-        var testDeals = _dealer.GenerateMultipleConstrainedDeals(50, HandSpecification.Acol1NtOpening, HandSpecification.AcolOpeningPass, responder);
-
-        foreach(var deal in testDeals)
-        {
-            var auction = await _environment.Table.RunAuction(deal, _environment.Players, Seat.North);
-            var openingBid = auction.Bids.First().Bid.ToString();
-            var responderBid = auction.Bids[2].Bid.ToString();
-            
-            Assert.That(openingBid, Is.EqualTo("1NT"), $"Failed with hand: {deal[Seat.North]}");
-            Assert.That(responderBid, Is.EqualTo("2S"), $"Failed with hand: {deal[Seat.South]}");
-        }
-    }
-    
-    [Test]
-    public async Task ResponseTo1NT_Bid2NT_With12PointsAndNoMajor()
+    public async Task ResponseTo1NT_Bid2NT_WithPointsAndNoMajor()
     {
         // Generate 50 hands that are strictly 12-14 points and balanced
 

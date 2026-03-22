@@ -3,7 +3,7 @@ using BridgeIt.Dealer.HandSpecifications;
 using BridgeIt.TestHarness.Setup;
 using NUnit.Framework;
 
-namespace BridgeIt.TestHarness.SystemTests.Acol.Openers;
+namespace BridgeIt.TestHarness.SystemTests.Acol.Rebid;
 
 [TestFixture]
 public class AcolRebidTests

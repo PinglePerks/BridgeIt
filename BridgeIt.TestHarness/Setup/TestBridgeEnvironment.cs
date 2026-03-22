@@ -71,15 +71,12 @@ public class TestBridgeEnvironment
         rules.Add(new AcolRedSuitTransferOver1NT());
         rules.Add(new AcolStaymanOver1NT());
         rules.Add(new AcolNTRaiseOver1NT());
-        rules.Add(new AcolNT11PointRaiseOver1NT());
         
         rules.Add(new AcolJacoby2NTOver1Major());
         rules.Add(new AcolRaiseMajorOver1Suit());
 
         rules.Add(new CompleteTransfer());
-        
-        
-        //rules.Add(new ResponseTo2ntOpening());
+
         var observer = Provider.GetRequiredService<IEngineObserver>();
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
         

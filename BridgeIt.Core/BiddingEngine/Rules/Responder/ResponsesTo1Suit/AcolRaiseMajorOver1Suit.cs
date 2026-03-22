@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
@@ -36,18 +35,14 @@ public class AcolRaiseMajorOver1Suit : BiddingRuleBase
     }
     public override Bid? Apply(DecisionContext ctx)
     {
-        var suit = ctx.AuctionEvaluation.OpeningBid!.Suit;
+        var suit = (Suit)ctx.AuctionEvaluation.OpeningBid!.Suit!;
         var hcp = ctx.HandEvaluation.Hcp;
         if (hcp < 10)
-        {
-            return Bid.SuitBid(2, (Suit)suit!);
-        }
+            return Bid.SuitBid(2, suit);
         if (hcp < 13)
-            return Bid.SuitBid(3, (Suit) suit!);
-        if (hcp < 17)
-            return Bid.SuitBid(4, (Suit)suit!);
-        
-        return null;
+            return Bid.SuitBid(3, suit);
+        // 13+ — game raise (safety net if Jacoby 2NT didn't fire)
+        return Bid.SuitBid(4, suit);
     }
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
     {
@@ -69,7 +64,7 @@ public class AcolRaiseMajorOver1Suit : BiddingRuleBase
         if(bid.Level == 3)
             constraints.Add(new HcpConstraint(10, 12));
         if(bid.Level == 4)
-            constraints.Add(new HcpConstraint(13, 16));
+            constraints.Add(new HcpConstraint(13, 30));
         
         return new BidInformation(bid, constraints, PartnershipBiddingState.FitEstablished);
     }

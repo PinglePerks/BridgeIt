@@ -62,8 +62,8 @@ public class AcolNTRaiseOver1NT : BiddingRuleBase
 
         if (bid.Type == BidType.NoTrumps && bid.Level == 2)
         {
-            // 2NT = 11-12 HCP invitational
-            var constraints = new HcpConstraint(11, 12);
+            // 2NT = 12 HCP invitational
+            var constraints = new HcpConstraint(12, 12);
             return new BidInformation(bid, constraints, PartnershipBiddingState.GameInvitational);
         }
 
