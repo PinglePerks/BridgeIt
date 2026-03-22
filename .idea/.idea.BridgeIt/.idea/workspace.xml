@@ -19,15 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolJacoby2NTOver1Major.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolNewSuitOver1Suit.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMajorOver1Suit.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMinorOver1Suit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/TemplateRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/TemplateRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/HandSpecification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Dealer/HandSpecifications/HandSpecification.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -545,7 +537,7 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="94534000" />
+      <workItem from="1773439151998" duration="94912000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -803,7 +795,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774192528394</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="adding responses to 1 suit">
+      <option name="closed" value="true" />
+      <created>1774199741400</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1774199741400</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -833,7 +833,6 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="initial" />
     <MESSAGE value="proj" />
     <MESSAGE value="files" />
     <MESSAGE value="web" />
@@ -858,7 +857,8 @@
     <MESSAGE value="Claude updates - partnerknowledge etc" />
     <MESSAGE value="Partner / Table knowledge" />
     <MESSAGE value="Latest additions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Latest additions" />
+    <MESSAGE value="adding responses to 1 suit" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding responses to 1 suit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -929,16 +929,16 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseTo1SuitTests.cs</url>
-          <line>272</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseTo1SuitTests.cs" containingFunctionPresentation="Method 'Jacoby2NT_GetConstraint_2NT_HasHcp13PlusAndSuitSupport'">
+          <line>616</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseTo1SuitTests.cs" containingFunctionPresentation="Method 'NewSuit_CouldMakeBid_FalseWith4Clubs8Hcp_Over1S_TooWeakForTwoLevel'">
             <startOffsets>
-              <option value="10418" />
+              <option value="23169" />
             </startOffsets>
             <endOffsets>
-              <option value="10449" />
+              <option value="23227" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="201" />
+          <option name="timeStamp" value="202" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

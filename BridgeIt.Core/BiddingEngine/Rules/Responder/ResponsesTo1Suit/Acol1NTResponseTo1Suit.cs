@@ -21,7 +21,7 @@ public class Acol1NTResponseTo1Suit : BiddingRuleBase
 
     protected override bool IsHandApplicable(DecisionContext ctx)
     {
-        if(ctx.HandEvaluation.Hcp < 6) return false;
+        if(ctx.HandEvaluation.Hcp < 6 || ctx.HandEvaluation.Hcp > 9) return false;
         
         return true;
     }
