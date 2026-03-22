@@ -19,12 +19,15 @@ public class TemplateRule : BiddingRuleBase
     {
         throw new NotImplementedException();
     }
-    public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
+    public override Bid? Apply(DecisionContext ctx)
     {
         throw new NotImplementedException();
     }
-
-    public override Bid? Apply(DecisionContext ctx)
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+    {
+        throw new NotImplementedException();
+    }
+    public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
         throw new NotImplementedException();
     }

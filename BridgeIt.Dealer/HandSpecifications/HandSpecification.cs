@@ -151,6 +151,87 @@ public static class HandSpecification
         ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
 
     // =============================================
+    // Responses to 1-Suit Opening (Acol)
+    // =============================================
+
+    // Jacoby 2NT responder — 13+ HCP, 4+ card support in partner's major
+    public static Func<Hand, bool> ResponseTo1Suit_Jacoby2NT(Suit partnerMajor) => h =>
+        HighCardPoints.Count(h) >= 13 &&
+        ShapeEvaluator.GetShape(h)[partnerMajor] >= 4;
+
+    // Simple major raise — 6-9 HCP, 4+ card support in partner's major
+    public static Func<Hand, bool> ResponseTo1Suit_SimpleMajorRaise(Suit partnerMajor) => h =>
+        HighCardPoints.Count(h) >= 6 && HighCardPoints.Count(h) <= 9 &&
+        ShapeEvaluator.GetShape(h)[partnerMajor] >= 4;
+
+    // Limit major raise — 10-12 HCP, 4+ card support in partner's major
+    public static Func<Hand, bool> ResponseTo1Suit_LimitMajorRaise(Suit partnerMajor) => h =>
+        HighCardPoints.Count(h) >= 10 && HighCardPoints.Count(h) <= 12 &&
+        ShapeEvaluator.GetShape(h)[partnerMajor] >= 4;
+
+    // Game major raise — 13+ HCP, 4+ card support (if not playing Jacoby)
+    public static Func<Hand, bool> ResponseTo1Suit_GameMajorRaise(Suit partnerMajor) => h =>
+        HighCardPoints.Count(h) >= 13 &&
+        ShapeEvaluator.GetShape(h)[partnerMajor] >= 4;
+
+    // New suit at 1 level — 6+ HCP, 4+ cards in a suit biddable at the 1 level
+    public static Func<Hand, bool> ResponseTo1Suit_NewSuit1Level(Suit openingSuit) => h =>
+    {
+        var hcp = HighCardPoints.Count(h);
+        if (hcp < 6) return false;
+        var shape = ShapeEvaluator.GetShape(h);
+        // Must have a 4+ card suit higher-ranking than opening suit (to bid at 1 level)
+        return Enum.GetValues<Suit>()
+            .Where(s => s > openingSuit && s != openingSuit)
+            .Any(s => shape[s] >= 4);
+    };
+
+    // New suit at 2 level — 10+ HCP, 4+ cards in a suit that requires 2-level bid
+    public static Func<Hand, bool> ResponseTo1Suit_NewSuit2Level(Suit openingSuit) => h =>
+    {
+        var hcp = HighCardPoints.Count(h);
+        if (hcp < 10) return false;
+        var shape = ShapeEvaluator.GetShape(h);
+        // Has a 4+ card suit lower-ranking than opening suit (must bid at 2 level)
+        return Enum.GetValues<Suit>()
+            .Where(s => s < openingSuit)
+            .Any(s => shape[s] >= 4);
+    };
+
+    // Simple minor raise — 6-9 HCP, 4+ card support in partner's minor, no 4-card major
+    public static Func<Hand, bool> ResponseTo1Suit_SimpleMinorRaise(Suit partnerMinor) => h =>
+        HighCardPoints.Count(h) >= 6 && HighCardPoints.Count(h) <= 9 &&
+        ShapeEvaluator.GetShape(h)[partnerMinor] >= 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 4;
+
+    // Limit minor raise — 10-12 HCP, 4+ support, no 4-card major
+    public static Func<Hand, bool> ResponseTo1Suit_LimitMinorRaise(Suit partnerMinor) => h =>
+        HighCardPoints.Count(h) >= 10 && HighCardPoints.Count(h) <= 12 &&
+        ShapeEvaluator.GetShape(h)[partnerMinor] >= 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 4;
+
+    // 1NT response — 6-9 HCP, no fit, no suit to show at 1 level
+    public static Func<Hand, bool> ResponseTo1Suit_1NT(Suit openingSuit) => h =>
+    {
+        var hcp = HighCardPoints.Count(h);
+        if (hcp < 6 || hcp > 9) return false;
+        var shape = ShapeEvaluator.GetShape(h);
+        // No 4+ card support for partner
+        if (shape[openingSuit] >= 4) return false;
+        // No 4+ card suit available at 1 level (higher than opening)
+        var has1LevelSuit = Enum.GetValues<Suit>()
+            .Where(s => s > openingSuit)
+            .Any(s => shape[s] >= 4);
+        return !has1LevelSuit;
+    };
+
+    // Pass response — less than 6 HCP, too weak to respond
+    public static Func<Hand, bool> ResponseTo1Suit_Pass => h =>
+        HighCardPoints.Count(h) < 6;
+
+    // =============================================
     // Opponent Specs (for uncontested test scenarios)
     // =============================================
 

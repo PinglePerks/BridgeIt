@@ -5,6 +5,7 @@ using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -71,6 +72,9 @@ public class TestBridgeEnvironment
         rules.Add(new AcolStaymanOver1NT());
         rules.Add(new AcolNTRaiseOver1NT());
         rules.Add(new AcolNT11PointRaiseOver1NT());
+        
+        rules.Add(new AcolJacoby2NTOver1Major());
+        rules.Add(new AcolRaiseMajorOver1Suit());
 
         rules.Add(new CompleteTransfer());
         
