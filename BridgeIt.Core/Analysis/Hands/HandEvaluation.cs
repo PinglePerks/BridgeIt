@@ -12,6 +12,26 @@ public class HandEvaluation
     public bool IsBalanced { get; init; }
     public Dictionary<Suit,int> RomanKeyCardCount { get; init; } = new();
     public Suit LongestAndStrongest {get; init;}
+
+    /// <summary>
+    /// Returns all suits with at least <paramref name="minLength"/> cards,
+    /// ordered by length descending then rank descending.
+    /// </summary>
+    public List<Suit> SuitsWithMinLength(int minLength)
+        => Shape.Where(kv => kv.Value >= minLength)
+                .OrderByDescending(kv => kv.Value)
+                .ThenByDescending(kv => kv.Key)
+                .Select(kv => kv.Key)
+                .ToList();
+
+    /// <summary>
+    /// Returns all four suits ordered by length descending then rank descending.
+    /// </summary>
+    public List<Suit> SuitsByLengthDescending()
+        => Shape.OrderByDescending(kv => kv.Value)
+                .ThenByDescending(kv => kv.Key)
+                .Select(kv => kv.Key)
+                .ToList();
 }
 
 public static class HandEvaluator

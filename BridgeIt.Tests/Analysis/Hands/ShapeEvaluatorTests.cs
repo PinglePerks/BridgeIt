@@ -139,6 +139,145 @@ public class ShapeEvaluatorTests
         Assert.That(ShapeEvaluator.IsSemiBalanced(hand), Is.False);
     }
 
+    // --- LongestAndStrongest Tests ---
+
+    [Test]
+    public void LongestAndStrongest_ReturnsLongestSuit()
+    {
+        var hand = CreateHandWithShape(5, 3, 3, 2);
+        Assert.That(ShapeEvaluator.LongestAndStrongest(hand), Is.EqualTo(Suit.Spades));
+    }
+
+    [Test]
+    public void LongestAndStrongest_TieBreaksHighestRanking()
+    {
+        // 4-4-3-2 — spades and hearts tied, spades wins (higher ranking)
+        var hand = CreateHandWithShape(4, 4, 3, 2);
+        Assert.That(ShapeEvaluator.LongestAndStrongest(hand), Is.EqualTo(Suit.Spades));
+    }
+
+    // --- SuitsWithMinLength Tests ---
+
+    [Test]
+    public void SuitsWithMinLength_ReturnsAllSuitsAboveThreshold()
+    {
+        // 5-4-3-1 shape
+        var hand = CreateHandWithShape(5, 4, 3, 1);
+        var result = ShapeEvaluator.SuitsWithMinLength(hand, 4);
+
+        Assert.That(result, Has.Count.EqualTo(2));
+        Assert.That(result[0], Is.EqualTo(Suit.Spades), "Longest first");
+        Assert.That(result[1], Is.EqualTo(Suit.Hearts), "Second longest");
+    }
+
+    [Test]
+    public void SuitsWithMinLength_ReturnsEmpty_WhenNoneMeetThreshold()
+    {
+        var hand = CreateHandWithShape(4, 3, 3, 3);
+        var result = ShapeEvaluator.SuitsWithMinLength(hand, 5);
+        Assert.That(result, Is.Empty);
+    }
+
+    [Test]
+    public void SuitsWithMinLength_OrdersByLengthThenRank()
+    {
+        // 5S, 5H, 2D, 1C — both 5-card suits, spades first (higher ranking)
+        var hand = CreateHandWithShape(5, 5, 2, 1);
+        var result = ShapeEvaluator.SuitsWithMinLength(hand, 5);
+
+        Assert.That(result, Has.Count.EqualTo(2));
+        Assert.That(result[0], Is.EqualTo(Suit.Spades));
+        Assert.That(result[1], Is.EqualTo(Suit.Hearts));
+    }
+
+    [Test]
+    public void SuitsWithMinLength_6CardSuitBeforeTwoFiveCardSuits()
+    {
+        // 6D, 5S, 1H, 1C
+        var hand = CreateHandWithShape(5, 1, 6, 1);
+        var result = ShapeEvaluator.SuitsWithMinLength(hand, 5);
+
+        Assert.That(result, Has.Count.EqualTo(2));
+        Assert.That(result[0], Is.EqualTo(Suit.Diamonds), "6 cards comes first");
+        Assert.That(result[1], Is.EqualTo(Suit.Spades), "5 cards second");
+    }
+
+    [Test]
+    public void SuitsWithMinLength_MinLength4_IncludesAllFourCardPlusSuits()
+    {
+        // 4-4-4-1
+        var hand = CreateHandWithShape(4, 4, 4, 1);
+        var result = ShapeEvaluator.SuitsWithMinLength(hand, 4);
+
+        Assert.That(result, Has.Count.EqualTo(3));
+        // All equal length — ordered by rank descending
+        Assert.That(result[0], Is.EqualTo(Suit.Spades));
+        Assert.That(result[1], Is.EqualTo(Suit.Hearts));
+        Assert.That(result[2], Is.EqualTo(Suit.Diamonds));
+    }
+
+    // --- SuitsByLengthDescending Tests ---
+
+    [Test]
+    public void SuitsByLengthDescending_ReturnsAllFourSuits()
+    {
+        var hand = CreateHandWithShape(5, 3, 3, 2);
+        var result = ShapeEvaluator.SuitsByLengthDescending(hand);
+        Assert.That(result, Has.Count.EqualTo(4));
+    }
+
+    [Test]
+    public void SuitsByLengthDescending_OrdersCorrectly()
+    {
+        // 5S, 4H, 3D, 1C
+        var hand = CreateHandWithShape(5, 4, 3, 1);
+        var result = ShapeEvaluator.SuitsByLengthDescending(hand);
+
+        Assert.That(result[0], Is.EqualTo(Suit.Spades));
+        Assert.That(result[1], Is.EqualTo(Suit.Hearts));
+        Assert.That(result[2], Is.EqualTo(Suit.Diamonds));
+        Assert.That(result[3], Is.EqualTo(Suit.Clubs));
+    }
+
+    [Test]
+    public void SuitsByLengthDescending_TieBreaksHighestRankFirst()
+    {
+        // 4S, 4H, 3D, 2C — spades and hearts tied
+        var hand = CreateHandWithShape(4, 4, 3, 2);
+        var result = ShapeEvaluator.SuitsByLengthDescending(hand);
+
+        Assert.That(result[0], Is.EqualTo(Suit.Spades));
+        Assert.That(result[1], Is.EqualTo(Suit.Hearts));
+    }
+
+    // --- HandEvaluation convenience method tests ---
+
+    [Test]
+    public void HandEvaluation_SuitsWithMinLength_MatchesShapeEvaluator()
+    {
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 5 }, { Suit.Hearts, 4 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 1 } };
+        var eval = new HandEvaluation { Shape = shape, Hcp = 12, IsBalanced = false, Losers = 7, LongestAndStrongest = Suit.Spades };
+
+        var result = eval.SuitsWithMinLength(4);
+        Assert.That(result, Has.Count.EqualTo(2));
+        Assert.That(result[0], Is.EqualTo(Suit.Spades));
+        Assert.That(result[1], Is.EqualTo(Suit.Hearts));
+    }
+
+    [Test]
+    public void HandEvaluation_SuitsByLengthDescending_ReturnsAllFour()
+    {
+        var shape = new Dictionary<Suit, int>
+            { { Suit.Spades, 5 }, { Suit.Hearts, 4 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 1 } };
+        var eval = new HandEvaluation { Shape = shape, Hcp = 12, IsBalanced = false, Losers = 7, LongestAndStrongest = Suit.Spades };
+
+        var result = eval.SuitsByLengthDescending();
+        Assert.That(result, Has.Count.EqualTo(4));
+        Assert.That(result[0], Is.EqualTo(Suit.Spades));
+        Assert.That(result[3], Is.EqualTo(Suit.Clubs));
+    }
+
     // --- Helper for constructing hands by shape ---
     private Core.Domain.Primatives.Hand CreateHandWithShape(int spades, int hearts, int diamonds, int clubs)
     {

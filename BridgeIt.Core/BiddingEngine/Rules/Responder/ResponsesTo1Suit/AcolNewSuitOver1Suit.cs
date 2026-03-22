@@ -58,13 +58,17 @@ public class AcolNewSuitOver1Suit : BiddingRuleBase
     }
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
     {
-        var nextBidLevel = GetNextSuitBidLevel((Suit)bid.Suit!, ctx.AuctionEvaluation.CurrentContract);
-        if (bid.Level != nextBidLevel)
-            return false;
-
         if (bid.Type != BidType.Suit)
             return false;
-
+        
+        var nextBidLevel = GetNextSuitBidLevel((Suit)bid.Suit!, ctx.AuctionEvaluation.CurrentContract);
+        
+        if (bid.Level != nextBidLevel)
+            return false;
+        
+        if (bid.Suit == ctx.AuctionEvaluation.OpeningBid!.Suit)
+            return false;
+        
         return true;
     }
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)

@@ -34,7 +34,11 @@ public static class ShapeEvaluator
                shape.SequenceEqual([6, 3, 2, 2]);
     }
 
-// ... existing code ...
+    /// <summary>
+    /// Returns the single longest suit, tie-broken by highest ranking.
+    /// Suitable as a general-purpose summary; rules should use
+    /// SuitsWithMinLength / SuitsByLengthDescending for more nuanced selection.
+    /// </summary>
     public static Suit LongestAndStrongest(Hand hand)
     {
         return GetShape(hand)
@@ -43,5 +47,31 @@ public static class ShapeEvaluator
             .First()
             .Key;
     }
-    
+
+    /// <summary>
+    /// Returns all suits with at least <paramref name="minLength"/> cards,
+    /// ordered by length descending then rank descending.
+    /// </summary>
+    public static List<Suit> SuitsWithMinLength(Hand hand, int minLength)
+    {
+        return GetShape(hand)
+            .Where(kv => kv.Value >= minLength)
+            .OrderByDescending(kv => kv.Value)
+            .ThenByDescending(kv => kv.Key)
+            .Select(kv => kv.Key)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Returns all four suits ordered by length descending then rank descending.
+    /// </summary>
+    public static List<Suit> SuitsByLengthDescending(Hand hand)
+    {
+        return GetShape(hand)
+            .OrderByDescending(kv => kv.Value)
+            .ThenByDescending(kv => kv.Key)
+            .Select(kv => kv.Key)
+            .ToList();
+    }
+
 }

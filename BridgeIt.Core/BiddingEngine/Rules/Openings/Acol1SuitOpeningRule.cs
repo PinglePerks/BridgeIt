@@ -23,14 +23,18 @@ public class Acol1SuitOpeningRule : BiddingRuleBase
 
     public override Bid? Apply(DecisionContext ctx)
     {
-        var longestSuit = ctx.HandEvaluation.LongestAndStrongest;
+        var fiveCardSuits = ctx.HandEvaluation.SuitsWithMinLength(5);
 
-        // Acol 4-card major logic
-        if (longestSuit is Suit.Hearts or Suit.Spades) return Bid.SuitBid(1, longestSuit);
-        if (ctx.HandEvaluation.Shape[Suit.Spades] >= 5) return Bid.SuitBid(1, Suit.Spades);
-        if (ctx.HandEvaluation.Shape[Suit.Hearts] >= 5) return Bid.SuitBid(1, Suit.Hearts);
+        // Two 5+ card suits: bid the higher-ranking first
+        if (fiveCardSuits.Count >= 2)
+            return Bid.SuitBid(1, fiveCardSuits.First());
 
-        return Bid.SuitBid(1, longestSuit);
+        // One 5+ card suit: bid it (even if it's a minor — longest suit first)
+        if (fiveCardSuits.Count == 1)
+            return Bid.SuitBid(1, fiveCardSuits.First());
+
+        // All 4-card suits: bid the longest (highest-ranking breaks ties)
+        return Bid.SuitBid(1, ctx.HandEvaluation.LongestAndStrongest);
     }
 
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
