@@ -66,8 +66,11 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new AcolOpenerAfterNTInvite(),
     new AcolOpenerAfterMajorRaise(),
     new AcolRebidBalanced(),
-    new AcolRebidSuit(),
+    new AcolRebidNewSuit(),
+    new AcolRebidRaiseSuit(),
+    new AcolRebidOwnSuit(),
     new CompleteTransfer(),
+    
 }.OrderByDescending(r => r.Priority).ToList());
 
 // --- 5. Configure CORS ---

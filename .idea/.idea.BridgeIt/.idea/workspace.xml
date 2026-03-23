@@ -19,17 +19,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidOwnSuit.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterNTInvite.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterNTInvite.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidBalanced.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidBalanced.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolStaymanResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolStaymanResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/CompleteTransfer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/CompleteTransfer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidOwnSuit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidOwnSuit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidSuit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidSuit.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,10 +136,13 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterMajorRaise.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterMajorRaise.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterNTInvite.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterNTInvite.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidBalanced.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidOwnSuit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidSuit.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolStaymanResponse.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/CompleteTransfer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1NTOpeningRule.cs" root0="SKIP_HIGHLIGHTING" />
@@ -238,56 +236,56 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.BridgeIt.Api.executor": "Run",
-    ".NET Launch Settings Profile.BridgeIt.Web: http.executor": "Run",
-    ".NET Launch Settings Profile.BridgeIt.Web: https.executor": "Run",
-    ".NET Launch Settings Profile.BridgeIt.WebDeal: BridgeIt.Client.executor": "Run",
-    ".NET Launch Settings Profile.BridgeIt.WebDeal: http.executor": "Run",
-    ".NET Project.BridgeIt.CLI.executor": "Run",
-    ".NET Project.BridgeIt.TestHarness.executor": "Run",
-    "0007c9e2-09fa-4af4-bbf9-4c2146839468.executor": "Debug",
-    "0924ce6e-fb75-473c-a6c3-e6326bed2703.executor": "Debug",
-    "1621ea02-671d-45a3-8282-c830ab3c1ffd.executor": "Debug",
-    "1cf8dff8-9cbd-4e4e-bc56-6c68be96cc43.executor": "Debug",
-    "1e13e4d5-4874-46b1-b630-e1eb94ac4fb8.executor": "Debug",
-    "20eded1b-cfe6-47b1-a5c4-96267c565a64.executor": "Debug",
-    "2b8224c5-c0ed-4cd4-9805-d5aa073e2ca0.executor": "Debug",
-    "31103d68-1bc7-4581-a8fd-35b88eddc0db.executor": "Debug",
-    "359a2034-910d-4e89-9ca0-a15bdf41cb57.executor": "Debug",
-    "43d7b67f-6ac4-4718-9229-a100a33b6b47.executor": "Debug",
-    "4b42d0ce-0c17-43a1-aa38-4a23800dff85.executor": "Debug",
-    "58277e6e-d337-4c4b-8d2b-df8781fe9550.executor": "Debug",
-    "5de7b337-a03d-4530-b6f4-72e5541bc508.executor": "Debug",
-    "653dedb6-caea-4f6c-bdcb-eeeb5096d29a.executor": "Run",
-    "7953a2ea-b074-4773-8d0a-56ebc4ea92fa.executor": "Debug",
-    "9664f776-5194-4715-aabc-8a1998c398fa.executor": "Debug",
-    "9a236c84-49c5-4660-9d2b-a74855476bd5.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "a09d4460-c3f7-479f-93e0-404b105aaf76.executor": "Debug",
-    "a28a3c60-8681-4aff-8bdd-62910ef333d7.executor": "Debug",
-    "a62611a8-0777-4d10-aaa5-2c5fcfb0f736.executor": "Debug",
-    "b4dba052-e013-4b6a-8674-d80b4fcd7094.executor": "Debug",
-    "bce0dfac-c94c-48e4-848f-d6e512e9125e.executor": "Debug",
-    "c9ac914f-6074-4f18-b9a7-051edd0492fd.executor": "Debug",
-    "defaea00-bfb8-4d4d-9553-a0c88a981268.executor": "Debug",
-    "e3e8795a-fb4e-4c8a-8ac0-8d1b4f576b6a.executor": "Run",
-    "e5218fee-031e-4c4e-b536-78a7ab157fda.executor": "Debug",
-    "fb4cb39a-f52f-4aec-ae8b-3a41f107523d.executor": "Debug",
-    "git-widget-placeholder": "version/0.4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CodeLensConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.BridgeIt.Api.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.Web: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.Web: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.WebDeal: BridgeIt.Client.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.BridgeIt.WebDeal: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.BridgeIt.CLI.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.BridgeIt.TestHarness.executor&quot;: &quot;Run&quot;,
+    &quot;0007c9e2-09fa-4af4-bbf9-4c2146839468.executor&quot;: &quot;Debug&quot;,
+    &quot;0924ce6e-fb75-473c-a6c3-e6326bed2703.executor&quot;: &quot;Debug&quot;,
+    &quot;1621ea02-671d-45a3-8282-c830ab3c1ffd.executor&quot;: &quot;Debug&quot;,
+    &quot;1cf8dff8-9cbd-4e4e-bc56-6c68be96cc43.executor&quot;: &quot;Debug&quot;,
+    &quot;1e13e4d5-4874-46b1-b630-e1eb94ac4fb8.executor&quot;: &quot;Debug&quot;,
+    &quot;20eded1b-cfe6-47b1-a5c4-96267c565a64.executor&quot;: &quot;Debug&quot;,
+    &quot;2b8224c5-c0ed-4cd4-9805-d5aa073e2ca0.executor&quot;: &quot;Debug&quot;,
+    &quot;31103d68-1bc7-4581-a8fd-35b88eddc0db.executor&quot;: &quot;Debug&quot;,
+    &quot;359a2034-910d-4e89-9ca0-a15bdf41cb57.executor&quot;: &quot;Debug&quot;,
+    &quot;43d7b67f-6ac4-4718-9229-a100a33b6b47.executor&quot;: &quot;Debug&quot;,
+    &quot;4b42d0ce-0c17-43a1-aa38-4a23800dff85.executor&quot;: &quot;Debug&quot;,
+    &quot;58277e6e-d337-4c4b-8d2b-df8781fe9550.executor&quot;: &quot;Debug&quot;,
+    &quot;5de7b337-a03d-4530-b6f4-72e5541bc508.executor&quot;: &quot;Debug&quot;,
+    &quot;653dedb6-caea-4f6c-bdcb-eeeb5096d29a.executor&quot;: &quot;Run&quot;,
+    &quot;7953a2ea-b074-4773-8d0a-56ebc4ea92fa.executor&quot;: &quot;Debug&quot;,
+    &quot;9664f776-5194-4715-aabc-8a1998c398fa.executor&quot;: &quot;Debug&quot;,
+    &quot;9a236c84-49c5-4660-9d2b-a74855476bd5.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;a09d4460-c3f7-479f-93e0-404b105aaf76.executor&quot;: &quot;Debug&quot;,
+    &quot;a28a3c60-8681-4aff-8bdd-62910ef333d7.executor&quot;: &quot;Debug&quot;,
+    &quot;a62611a8-0777-4d10-aaa5-2c5fcfb0f736.executor&quot;: &quot;Debug&quot;,
+    &quot;b4dba052-e013-4b6a-8674-d80b4fcd7094.executor&quot;: &quot;Debug&quot;,
+    &quot;bce0dfac-c94c-48e4-848f-d6e512e9125e.executor&quot;: &quot;Debug&quot;,
+    &quot;c9ac914f-6074-4f18-b9a7-051edd0492fd.executor&quot;: &quot;Debug&quot;,
+    &quot;defaea00-bfb8-4d4d-9553-a0c88a981268.executor&quot;: &quot;Debug&quot;,
+    &quot;e3e8795a-fb4e-4c8a-8ac0-8d1b4f576b6a.executor&quot;: &quot;Run&quot;,
+    &quot;e5218fee-031e-4c4e-b536-78a7ab157fda.executor&quot;: &quot;Debug&quot;,
+    &quot;fb4cb39a-f52f-4aec-ae8b-3a41f107523d.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;version/0.4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.BridgeIt.Api">
     <configuration name="BridgeIt.AI" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -556,7 +554,7 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="109019000" />
+      <workItem from="1773439151998" duration="110143000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -854,7 +852,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774218841313</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="new">
+      <option name="closed" value="true" />
+      <created>1774253534222</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1774253534222</updated>
+    </task>
+    <task id="LOCAL-00039" summary="ir">
+      <option name="closed" value="true" />
+      <created>1774253541796</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1774253541796</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -884,8 +898,6 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="latest updates" />
-    <MESSAGE value="Removes web FE" />
     <MESSAGE value="Reworks TestHarness and added one test." />
     <MESSAGE value="Added test harness cases" />
     <MESSAGE value="adds golden games initial bid check" />
@@ -909,7 +921,9 @@
     <MESSAGE value="updates" />
     <MESSAGE value="Opener rebids phase 1" />
     <MESSAGE value="Testsupdate lated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testsupdate lated" />
+    <MESSAGE value="new" />
+    <MESSAGE value="ir" />
+    <option name="LAST_COMMIT_MESSAGE" value="ir" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -929,27 +943,13 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs</url>
           <line>64</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" containingFunctionPresentation="Method 'GetConstraintForBid'">
-            <startOffsets>
-              <option value="1621" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1646" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" containingFunctionPresentation="Method 'GetConstraintForBid'" />
           <option name="timeStamp" value="192" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs</url>
           <line>44</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" containingFunctionPresentation="Method 'Apply'">
-            <startOffsets>
-              <option value="1412" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1432" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" containingFunctionPresentation="Method 'Apply'" />
           <option name="timeStamp" value="194" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
@@ -990,19 +990,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="202" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs</url>
-          <line>57</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" containingFunctionPresentation="Method 'Apply'">
-            <startOffsets>
-              <option value="1640" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1673" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="208" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
