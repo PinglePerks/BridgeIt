@@ -10,6 +10,8 @@ public class AcolStrongOpening : BiddingRuleBase
 {
     public override string Name { get; } = "Acol Strong Opening";
     public override int Priority { get; } = 19; // Higher priority than a standard suit opening
+    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
+        => new() { Constraints = { new HcpConstraint(MinHcp, 40) } };
 
     private const int MinHcp = 20;
     private const int MaxHcp = 35;

@@ -26,4 +26,8 @@
       <ProjectReference Include="..\BridgeIt.Core\BridgeIt.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="BiddingEngine\Rules\" />
+    </ItemGroup>
+
 </Project>

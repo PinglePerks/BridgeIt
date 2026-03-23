@@ -7,8 +7,9 @@ using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Tests.BiddingEngine.Constraints;
 
-namespace BridgeIt.Tests.BiddingEngine.Rules;
+namespace BridgeIt.Tests.Rules;
 
 /// <summary>
 /// Tests for the Jacoby 2NT sequence:
@@ -37,7 +38,7 @@ public class AcolJacoby2NTTests
     [Test]
     public void OpenerRule_NotApplicable_WhenResponder()
     {
-        var aucEval = MakeOpenerAuction(Suit.Spades) with { SeatRoleType = SeatRoleType.Responder };
+        var aucEval = MakeOpenerAuction(Suit.Spades, null, null, SeatRoleType.Responder);
         var ctx = TestHelper.CreateContext(eval: MakeHand(14, MakeShape(Suit.Spades, 5)), aucEval: aucEval);
         Assert.That(OpenerRule.CouldMakeBid(ctx), Is.False);
     }
@@ -45,10 +46,8 @@ public class AcolJacoby2NTTests
     [Test]
     public void OpenerRule_NotApplicable_WhenPartnerBidSuitNotNT()
     {
-        var aucEval = MakeOpenerAuction(Suit.Spades) with
-        {
-            PartnerLastNonPassBid = Bid.SuitBid(3, Suit.Spades) // simple raise, not Jacoby
-        };
+        // Partner raised to 3♠ (a natural raise, not Jacoby 2NT)
+        var aucEval = MakeOpenerAuction(Suit.Spades, partnerLastNonPassBid: Bid.SuitBid(3, Suit.Spades));
         var ctx = TestHelper.CreateContext(eval: MakeHand(14, MakeShape(Suit.Spades, 5)), aucEval: aucEval);
         Assert.That(OpenerRule.CouldMakeBid(ctx), Is.False);
     }
@@ -56,10 +55,7 @@ public class AcolJacoby2NTTests
     [Test]
     public void OpenerRule_NotApplicable_WhenOpeningIsMinorSuit()
     {
-        var aucEval = MakeOpenerAuction(Suit.Spades) with
-        {
-            OpeningBid = Bid.SuitBid(1, Suit.Clubs)
-        };
+        var aucEval = MakeOpenerAuction(Suit.Clubs, openingBid: Bid.SuitBid(1, Suit.Clubs));
         var ctx = TestHelper.CreateContext(eval: MakeHand(14, MakeShape(Suit.Clubs, 5)), aucEval: aucEval);
         Assert.That(OpenerRule.CouldMakeBid(ctx), Is.False);
     }
@@ -352,8 +348,9 @@ public class AcolJacoby2NTTests
     [Test]
     public void ResponderRule_NotApplicable_WhenMyLastBidWasNotJacoby()
     {
-        var aucEval = MakeResponderAuction(Suit.Spades, currentContract: Bid.SuitBid(3, Suit.Clubs))
-            with { MyLastNonPassBid = Bid.SuitBid(2, Suit.Spades) }; // not Jacoby
+        // Responder's last bid was a natural 2♠ raise, not Jacoby 2NT
+        var aucEval = MakeResponderAuction(Suit.Spades, currentContract: Bid.SuitBid(3, Suit.Clubs),
+            myLastNonPassBid: Bid.SuitBid(2, Suit.Spades));
         var ctx = TestHelper.CreateContext(eval: MakeHand(14, MakeShape(Suit.Spades, 4)), aucEval: aucEval);
         Assert.That(ResponderRule.CouldMakeBid(ctx), Is.False);
     }
@@ -428,15 +425,21 @@ public class AcolJacoby2NTTests
     //  Helpers
     // ══════════════════════════════════════════════════════════════════════════
 
-    private static AuctionEvaluation MakeOpenerAuction(Suit trump)
+    private static AuctionEvaluation MakeOpenerAuction(Suit trump,
+        Bid? partnerLastNonPassBid = null,
+        Bid? myLastNonPassBid = null,
+        SeatRoleType role = SeatRoleType.Opener,
+        AuctionPhase phase = AuctionPhase.Uncontested,
+        Bid? openingBid = null)
         => new()
         {
-            SeatRoleType      = SeatRoleType.Opener,
-            BiddingRound      = 2,
-            OpeningBid        = Bid.SuitBid(1, trump),
-            PartnerLastNonPassBid = Bid.NoTrumpsBid(2),
-            CurrentContract   = Bid.NoTrumpsBid(2),
-            AuctionPhase      = AuctionPhase.Uncontested
+            SeatRoleType          = role,
+            BiddingRound          = 2,
+            OpeningBid            = openingBid ?? Bid.SuitBid(1, trump),
+            PartnerLastNonPassBid = partnerLastNonPassBid ?? Bid.NoTrumpsBid(2),
+            CurrentContract       = Bid.NoTrumpsBid(2),
+            AuctionPhase          = phase,
+            MyLastNonPassBid      = myLastNonPassBid ?? Bid.SuitBid(1, trump)
         };
 
     private static DecisionContext MakeOpenerCtx(
@@ -455,13 +458,14 @@ public class AcolJacoby2NTTests
         return TestHelper.CreateContext(eval: eval, aucEval: MakeOpenerAuction(trump));
     }
 
-    private static AuctionEvaluation MakeResponderAuction(Suit trump, Bid currentContract)
+    private static AuctionEvaluation MakeResponderAuction(Suit trump, Bid currentContract,
+        Bid? myLastNonPassBid = null)
         => new()
         {
             SeatRoleType          = SeatRoleType.Responder,
             BiddingRound          = 2,
             OpeningBid            = Bid.SuitBid(1, trump),
-            MyLastNonPassBid      = Bid.NoTrumpsBid(2),
+            MyLastNonPassBid      = myLastNonPassBid ?? Bid.NoTrumpsBid(2),
             PartnerLastNonPassBid = currentContract,
             CurrentContract       = currentContract,
             AuctionPhase          = AuctionPhase.Uncontested

@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
+using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
@@ -54,6 +55,20 @@ public abstract class BiddingRuleBase : IBiddingRule
 
     public abstract BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx);
     public abstract Bid? Apply(DecisionContext ctx);
+
+    /// <summary>
+    /// Public accessor for IsApplicableContext — used by the engine for
+    /// negative inference from passes.
+    /// </summary>
+    public bool IsApplicableToAuction(AuctionEvaluation auction)
+        => IsApplicableContext(auction);
+
+    /// <summary>
+    /// Returns the minimum hand requirements for any bid this rule could produce.
+    /// Default null means this rule does not contribute to negative inference.
+    /// Override in rules where the requirements are clear-cut (openings, responses).
+    /// </summary>
+    public virtual CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction) => null;
 
     protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract)
         => Bid.NextLevelForSuit(suit, currentContract);

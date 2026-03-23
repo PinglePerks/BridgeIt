@@ -6,21 +6,22 @@ using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 
-public class AcolStaymanOver1NT: BiddingRuleBase
+public class AcolStaymanOver2NT: BiddingRuleBase
 {
-    public override string Name { get; } = "Stayman";
+    public override string Name { get; } = "Stayman over 2NT";
     public override int Priority { get; } = 29; // Higher priority than a standard suit opening
     public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
         => new() { Constraints = { new HcpConstraint(HcpMin, 40) } };
-    private Bid ApplicableOpeningBid => Bid.NoTrumpsBid(1);
+    private Bid ApplicableOpeningBid => Bid.NoTrumpsBid(2);
     
-    private int HcpMin => 11;
+    private int HcpMin => 4;
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {
         if (auction.AuctionPhase != AuctionPhase.Uncontested) return false;
         if (auction.BiddingRound != 1) return false;
         if (auction.PartnerLastNonPassBid != ApplicableOpeningBid) return false;
+        if (auction.OpeningBid != ApplicableOpeningBid) return false;
         return true;
     }
 
@@ -30,11 +31,11 @@ public class AcolStaymanOver1NT: BiddingRuleBase
 
     public override Bid? Apply(DecisionContext ctx)
     {
-        return Bid.SuitBid(2, Suit.Clubs);
+        return Bid.SuitBid(3, Suit.Clubs);
     }
 
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
-        => bid.Suit == Suit.Clubs && bid.Level == 2;
+        => bid.Suit == Suit.Clubs && bid.Level == 3;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {

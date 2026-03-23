@@ -33,10 +33,7 @@ public class RuleLookupService : IRuleLookupService
             var tableKnowledge = new TableKnowledge(currentBidder);
             foreach (var (seat, bidInfos) in derivedConstraints)
             {
-                if (seat != currentBidder)
-                {
-                    tableKnowledge.Players[seat] = PlayerKnowledgeEvaluator.AnalyzeKnowledge(bidInfos);
-                }
+                tableKnowledge.Players[seat] = PlayerKnowledgeEvaluator.AnalyzeKnowledge(bidInfos);
             }
 
             // Cross-table HCP inference: we don't know the bidder's actual hand here,

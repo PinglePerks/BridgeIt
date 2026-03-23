@@ -9,6 +9,8 @@ public class Acol2NTOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 2NT Opening";
     public override int Priority { get; } = 20; // Higher priority than a standard suit opening
+    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
+        => new() { Constraints = { new HcpConstraint(MinHcp, 40) } };
 
     private const int MinHcp = 20;
     private const int MaxHcp = 22;

@@ -1,6 +1,5 @@
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.Domain.Bidding;
-using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine;
 

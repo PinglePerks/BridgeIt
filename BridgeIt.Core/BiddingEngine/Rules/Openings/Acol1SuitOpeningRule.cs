@@ -10,6 +10,8 @@ public class Acol1SuitOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 1-Level Suit Opening";
     public override int Priority { get; } = 10; // Lower than NT openings, higher than Pass
+    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
+        => new() { Constraints = { new HcpConstraint(MinHcp, 40) } };
 
     // Standard Acol usually caps a 1-level opening at 19 HCP (20+ is usually 2-level)
     private const int MinHcp = 12;
