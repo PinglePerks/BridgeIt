@@ -22,7 +22,8 @@ public sealed class BiddingEngine
             }
         }
 
-        return new BidInformation(bid, null, PartnershipBiddingState.Unknown);
+        return FallbackConstraintExtractor.Extract(bid)
+               ?? new BidInformation(bid, null, PartnershipBiddingState.Unknown);
     }
     
     public BiddingEngine(IEnumerable<IBiddingRule> rules, ILogger<BiddingEngine> logger, IEngineObserver observer)

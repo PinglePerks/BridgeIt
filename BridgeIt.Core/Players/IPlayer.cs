@@ -67,6 +67,7 @@ public class RobotPlayer(BiddingEngine.Core.BiddingEngine engine,
             }
         }
         tableKnowledge.ApplyCrossTableInferences(handEval.Hcp);
+        tableKnowledge.ApplyCrossTableSuitInferences(handEval.Shape);
 
         // Extract partnership bidding state from partner's last bid info
         var partnerBids = constraints[context.Seat.GetPartner()];
