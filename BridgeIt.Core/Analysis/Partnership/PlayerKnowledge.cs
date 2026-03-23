@@ -34,6 +34,19 @@ public class PlayerKnowledge
     public HashSet<Suit> DeniedSuits { get; set; } = new();
 
     /// <summary>
+    /// Has any knowledge actually been inferred about this player from their bidding?
+    /// Returns false when all ranges are still at their uninformative defaults
+    /// (HCP 0-37, each suit 0-13). Knowledge-based rules should not act on
+    /// "possible" fits or HCP verdicts when this is false.
+    /// </summary>
+    public bool HasMeaningfulKnowledge =>
+        HcpMin > 0 || HcpMax < 37
+        || MinShape.Values.Any(v => v > 0)
+        || MaxShape.Values.Any(v => v < 13)
+        || IsBalanced
+        || DeniedSuits.Count > 0;
+
+    /// <summary>
     /// Does this player definitely have at least minLength cards in the given suit?
     /// </summary>
     public bool HasMinimumInSuit(Suit suit, int minLength)

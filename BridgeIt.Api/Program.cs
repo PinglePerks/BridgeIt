@@ -2,7 +2,9 @@ using BridgeIt.Api.Hubs;
 using BridgeIt.Api.Services;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.Extensions;
+using BridgeIt.Core.BiddingEngine.Conventions;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
@@ -56,21 +58,39 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new Acol1NTResponseTo1Suit(),
 
     // Responses to 1NT
-    new AcolStaymanOver1NT(),
-    new AcolRedSuitTransferOver1NT(),
+    new StandardStayman(NTConventionContexts.After1NT),
+    new StandardTransfer(NTConventionContexts.After1NT),
     new AcolNTRaiseOver1NT(),
-    // InvitationOver1NT — not yet implemented
+
+    // Responses to 2NT
+    new StandardStayman(NTConventionContexts.After2NT),
+    new StandardTransfer(NTConventionContexts.After2NT),
+
+    // Responses to 2C-2D-2NT
+    new StandardStayman(NTConventionContexts.After2C2D2NT),
+    new StandardTransfer(NTConventionContexts.After2C2D2NT),
 
     // Opener rebids
-    new AcolStaymanResponse(),
+    new StaymanResponse(NTConventionContexts.After1NT),
+    new StaymanResponse(NTConventionContexts.After2NT),
+    new StaymanResponse(NTConventionContexts.After2C2D2NT),
+    new CompleteTransfer(NTConventionContexts.After1NT),
+    new CompleteTransfer(NTConventionContexts.After2NT),
+    new CompleteTransfer(NTConventionContexts.After2C2D2NT),
     new AcolOpenerAfterNTInvite(),
     new AcolOpenerAfterMajorRaise(),
     new AcolRebidBalanced(),
     new AcolRebidNewSuit(),
     new AcolRebidRaiseSuit(),
     new AcolRebidOwnSuit(),
-    new CompleteTransfer(),
-    
+
+    // Knowledge-based catch-all rules (low priority — fire when no pattern rule matches)
+    new KnowledgeBidGameInSuit(),
+    new KnowledgeBidGameInNT(),
+    new KnowledgeInviteInSuit(),
+    new KnowledgeSignOffInFit(),
+    new KnowledgeSignOff(),
+
 }.OrderByDescending(r => r.Priority).ToList());
 
 // --- 5. Configure CORS ---

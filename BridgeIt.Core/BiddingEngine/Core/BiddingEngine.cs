@@ -1,6 +1,8 @@
+using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.Domain.Bidding;
+using BridgeIt.Core.Domain.IBidValidityChecker;
 using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.BiddingEngine.Core;
@@ -10,6 +12,7 @@ public sealed class BiddingEngine
     private readonly List<IBiddingRule> _rules;
     private readonly ILogger<BiddingEngine> _logger;
     private readonly IEngineObserver _observer;
+    private readonly IBidValidityChecker _validityChecker;
 
     public BidInformation GetConstraintsFromBid(DecisionContext decisionContext, Bid bid)
     {
@@ -82,32 +85,49 @@ public sealed class BiddingEngine
             : null;
     }
     
-    public BiddingEngine(IEnumerable<IBiddingRule> rules, ILogger<BiddingEngine> logger, IEngineObserver observer)
+    public BiddingEngine(IEnumerable<IBiddingRule> rules, ILogger<BiddingEngine> logger, IEngineObserver observer, IBidValidityChecker? validityChecker = null)
     {
         _rules = rules.OrderByDescending(r => r.Priority).ToList();
         _logger = logger;
         _observer = observer;
-        
+        _validityChecker = validityChecker ?? new BidValidityChecker();
     }
 
     public Bid ChooseBid(DecisionContext ctx)
     {
         _observer.PrintHands(ctx.Data.Seat, ctx.Data.Hand);
-        
+
         foreach (var rule in _rules)
         {
             if (!rule.CouldMakeBid(ctx))
             {
                 continue;
             }
-            
+
             var decision = rule.Apply(ctx);
-            
-            if (decision != null)
+
+            if (decision == null)
+                continue;
+
+            // Pass is always valid — skip the checker
+            if (decision.Type == BidType.Pass)
             {
                 _observer.OnRuleApplied(rule.Name, decision, ctx);
                 return decision;
             }
+
+            // Validate the bid is legal (higher than current contract, etc.)
+            var auctionBid = new AuctionBid(ctx.Data.Seat, decision);
+            if (_validityChecker.IsValid(auctionBid, ctx.Data.AuctionHistory))
+            {
+                _observer.OnRuleApplied(rule.Name, decision, ctx);
+                return decision;
+            }
+
+            // Rule produced an illegal bid — log and try next rule
+            _logger.LogWarning(
+                "Rule '{Rule}' produced illegal bid {Bid} for {Seat} — skipping to next rule",
+                rule.Name, decision, ctx.Data.Seat);
         }
         _observer.OnNoRuleMatched(ctx);
         return Bid.Pass();

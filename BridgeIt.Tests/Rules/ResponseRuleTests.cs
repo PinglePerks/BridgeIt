@@ -3,7 +3,7 @@ using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Analysis.Partnership;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
-using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
+using BridgeIt.Core.BiddingEngine.Conventions;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -75,7 +75,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldMakeBid_TrueWith5Hearts()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 5 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 2 } };
         var ctx = CreateResponseTo1NTContext(8, shape, Suit.Hearts);
@@ -86,7 +86,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldMakeBid_TrueWith5Spades()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 5 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 2 } };
         var ctx = CreateResponseTo1NTContext(8, shape, Suit.Spades);
@@ -97,7 +97,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldMakeBid_FalseWithNo5CardMajor()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 4 }, { Suit.Hearts, 4 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 2 } };
         var ctx = CreateResponseTo1NTContext(8, shape);
@@ -108,7 +108,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldMakeBid_FalseWhenWrongState()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var ctx = CreateWrongStateContext();
         Assert.That(rule.CouldMakeBid(ctx), Is.False);
     }
@@ -116,7 +116,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldMakeBid_FalseWhenNotRound1()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         // Build a context where BiddingRound != 1
         var history = new AuctionHistory(Seat.North);
         history.Add(new AuctionBid(Seat.North, Bid.NoTrumpsBid(1)));
@@ -152,7 +152,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_Apply_5Hearts_Bids2D()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 5 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 2 } };
         var ctx = CreateResponseTo1NTContext(8, shape, Suit.Hearts);
@@ -164,7 +164,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_Apply_5Spades_Bids2H()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 5 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 3 }, { Suit.Clubs, 2 } };
         var ctx = CreateResponseTo1NTContext(8, shape, Suit.Spades);
@@ -176,7 +176,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_Apply_BothMajors5Plus_TransfersHearts()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 5 }, { Suit.Hearts, 5 }, { Suit.Diamonds, 2 }, { Suit.Clubs, 1 } };
         var ctx = CreateResponseTo1NTContext(8, shape, Suit.Hearts);
@@ -193,7 +193,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldExplainBid_TrueFor2D_InCorrectContext()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
         var ctx = CreateResponseTo1NTContext(0, shape);
@@ -204,7 +204,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldExplainBid_TrueFor2H_InCorrectContext()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
         var ctx = CreateResponseTo1NTContext(0, shape);
@@ -215,7 +215,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldExplainBid_FalseFor2C()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
         var ctx = CreateResponseTo1NTContext(0, shape);
@@ -226,7 +226,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_CouldExplainBid_FalseFor2S()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
         var ctx = CreateResponseTo1NTContext(0, shape);
@@ -241,7 +241,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_GetConstraintForBid_2D_ConstrainsHearts5to11()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
         var ctx = CreateResponseTo1NTContext(0, shape);
@@ -262,7 +262,7 @@ public class ResponseRuleTests
     [Test]
     public void Transfer_GetConstraintForBid_2H_ConstrainsSpades5to11()
     {
-        var rule = new AcolRedSuitTransferOver1NT();
+        var rule = new StandardTransfer(NTConventionContexts.After1NT);
         var shape = new Dictionary<Suit, int>
             { { Suit.Spades, 3 }, { Suit.Hearts, 3 }, { Suit.Diamonds, 4 }, { Suit.Clubs, 3 } };
         var ctx = CreateResponseTo1NTContext(0, shape);
@@ -583,7 +583,7 @@ public class ResponseRuleTests
     [Test]
     public void CompleteTransfer_CouldMakeBid_TrueAfter2D()
     {
-        var rule = new CompleteTransfer();
+        var rule = new CompleteTransfer(NTConventionContexts.After1NT);
         var ctx = CreateCompleteTransferContext(Suit.Diamonds);
         Assert.That(rule.CouldMakeBid(ctx), Is.True);
     }
@@ -591,7 +591,7 @@ public class ResponseRuleTests
     [Test]
     public void CompleteTransfer_CouldMakeBid_TrueAfter2H()
     {
-        var rule = new CompleteTransfer();
+        var rule = new CompleteTransfer(NTConventionContexts.After1NT);
         var ctx = CreateCompleteTransferContext(Suit.Hearts);
         Assert.That(rule.CouldMakeBid(ctx), Is.True);
     }
@@ -599,7 +599,7 @@ public class ResponseRuleTests
     [Test]
     public void CompleteTransfer_Apply_After2D_Bids2H()
     {
-        var rule = new CompleteTransfer();
+        var rule = new CompleteTransfer(NTConventionContexts.After1NT);
         var ctx = CreateCompleteTransferContext(Suit.Diamonds);
         Assert.That(rule.Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Hearts)));
     }
@@ -607,7 +607,7 @@ public class ResponseRuleTests
     [Test]
     public void CompleteTransfer_Apply_After2H_Bids2S()
     {
-        var rule = new CompleteTransfer();
+        var rule = new CompleteTransfer(NTConventionContexts.After1NT);
         var ctx = CreateCompleteTransferContext(Suit.Hearts);
         Assert.That(rule.Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Spades)));
     }
@@ -615,7 +615,7 @@ public class ResponseRuleTests
     [Test]
     public void CompleteTransfer_CouldExplainBid_TrueFor2H_After2DTransfer()
     {
-        var rule = new CompleteTransfer();
+        var rule = new CompleteTransfer(NTConventionContexts.After1NT);
         var ctx = CreateCompleteTransferContext(Suit.Diamonds);
         Assert.That(rule.CouldExplainBid(Bid.SuitBid(2, Suit.Hearts), ctx), Is.True);
     }
@@ -623,7 +623,7 @@ public class ResponseRuleTests
     [Test]
     public void CompleteTransfer_CouldExplainBid_FalseFor2S_After2DTransfer()
     {
-        var rule = new CompleteTransfer();
+        var rule = new CompleteTransfer(NTConventionContexts.After1NT);
         var ctx = CreateCompleteTransferContext(Suit.Diamonds);
         // 2D transfer should only explain 2H, not 2S
         Assert.That(rule.CouldExplainBid(Bid.SuitBid(2, Suit.Spades), ctx), Is.False);
@@ -632,7 +632,7 @@ public class ResponseRuleTests
     [Test]
     public void CompleteTransfer_CouldExplainBid_TrueFor2S_After2HTransfer()
     {
-        var rule = new CompleteTransfer();
+        var rule = new CompleteTransfer(NTConventionContexts.After1NT);
         var ctx = CreateCompleteTransferContext(Suit.Hearts);
         Assert.That(rule.CouldExplainBid(Bid.SuitBid(2, Suit.Spades), ctx), Is.True);
     }

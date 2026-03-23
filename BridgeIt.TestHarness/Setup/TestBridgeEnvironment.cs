@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
+using BridgeIt.Core.BiddingEngine.Conventions;
+using BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
@@ -70,14 +72,33 @@ public class TestBridgeEnvironment
         rules.Add(new Acol2NTOpeningRule());
         rules.Add(new AcolStrongOpening());
         
-        rules.Add(new AcolRedSuitTransferOver1NT());
-        rules.Add(new AcolStaymanOver1NT());
+        rules.Add(new StandardTransfer(NTConventionContexts.After1NT));
+        rules.Add(new StandardStayman(NTConventionContexts.After1NT));
         rules.Add(new AcolNTRaiseOver1NT());
-        
+
+        rules.Add(new StandardTransfer(NTConventionContexts.After2NT));
+        rules.Add(new StandardStayman(NTConventionContexts.After2NT));
+
+        rules.Add(new StandardTransfer(NTConventionContexts.After2C2D2NT));
+        rules.Add(new StandardStayman(NTConventionContexts.After2C2D2NT));
+
         rules.Add(new AcolJacoby2NTOver1Major());
         rules.Add(new AcolRaiseMajorOver1Suit());
 
-        rules.Add(new CompleteTransfer());
+        rules.Add(new CompleteTransfer(NTConventionContexts.After1NT));
+        rules.Add(new CompleteTransfer(NTConventionContexts.After2NT));
+        rules.Add(new CompleteTransfer(NTConventionContexts.After2C2D2NT));
+
+        rules.Add(new StaymanResponse(NTConventionContexts.After1NT));
+        rules.Add(new StaymanResponse(NTConventionContexts.After2NT));
+        rules.Add(new StaymanResponse(NTConventionContexts.After2C2D2NT));
+
+        // Knowledge-based catch-all rules
+        rules.Add(new KnowledgeBidGameInSuit());
+        rules.Add(new KnowledgeBidGameInNT());
+        rules.Add(new KnowledgeInviteInSuit());
+        rules.Add(new KnowledgeSignOffInFit());
+        rules.Add(new KnowledgeSignOff());
 
         var observer = Provider.GetRequiredService<IEngineObserver>();
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();

@@ -12,6 +12,7 @@ public class HandEvaluation
     public bool IsBalanced { get; init; }
     public Dictionary<Suit,int> RomanKeyCardCount { get; init; } = new();
     public Suit LongestAndStrongest {get; init;}
+    public Dictionary<Suit, bool> SuitStoppers { get; init; } = new();
 
     /// <summary>
     /// Returns all suits with at least <paramref name="minLength"/> cards,
@@ -45,7 +46,8 @@ public static class HandEvaluator
             Shape = ShapeEvaluator.GetShape(hand),
             IsBalanced = ShapeEvaluator.IsBalanced(hand),
             RomanKeyCardCount = KeyCardCalculator.CalculateAll(hand),
-            LongestAndStrongest = ShapeEvaluator.LongestAndStrongest(hand)
+            LongestAndStrongest = ShapeEvaluator.LongestAndStrongest(hand),
+            SuitStoppers = ShapeEvaluator.GetStoppers(hand)
         };
     }
 }

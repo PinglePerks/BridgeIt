@@ -19,28 +19,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransferOver2NT.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver2NT.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/AcolResponseTo2C.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/AcolResponseToWeakPreempt.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledgeEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledgeEvaluator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledge.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledge.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/FallbackConstraintExtractor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/FallbackConstraintExtractor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/RuleLookupService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/RuleLookupService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1NTOpeningRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1NTOpeningRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1SuitOpeningRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1SuitOpeningRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol2NTOpeningRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol2NTOpeningRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/AcolStrongOpening.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/AcolStrongOpening.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver1NT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver1NT.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolJacoby2NTOver1Major.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolJacoby2NTOver1Major.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolNewSuitOver1Suit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolNewSuitOver1Suit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMajorOver1Suit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMajorOver1Suit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMinorOver1Suit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMinorOver1Suit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/Analysis/Partnership/PlayerKnowledgeEvaluatorTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/Analysis/Partnership/PlayerKnowledgeEvaluatorTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/BiddingEngine/Rules/AcolJacoby2NTTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/Rules/AcolJacoby2NTTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/BridgeIt.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/BridgeIt.Tests.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/DecisionContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/DecisionContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolStaymanResponse.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/CompleteTransfer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransferOver1NT.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransferOver2NT.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver1NT.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver2NT.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/Rules/OpenerRebidPhase3aTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/Rules/OpenerRebidPhase3aTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseRuleTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseRuleTests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,12 +106,14 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Models/CustomDealRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Models/GameState.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Api/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.CLI/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.CLI/SpecificDeals.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionHistory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HighCardPoints.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/KeyCardCalculator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/LosingTrickCount.cs" root0="FORCE_HIGHLIGHTING" />
@@ -139,11 +137,11 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidOwnSuit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolStaymanResponse.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/CompleteTransfer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol2NTOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolRedSuitTransferOver1NT.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/AcolResponseTo2C.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/AcolResponseToWeakPreempt.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver2NT.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/InvitationOver1NT.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolJacoby2NTOver1Major.cs" root0="FORCE_HIGHLIGHTING" />
@@ -185,6 +183,8 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/BiddingEngine/Constraints/HistoryConstraintTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/BiddingEngine/Core/BiddingRuleBaseTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/IntegrationTests/TestHarness.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Tests/Rules/OpenerRebidPhase3aTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Tests/Rules/ResponseRuleTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Rules/RulesTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/UnitTest1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file:///usr/local/share/dotnet/sdk/8.0.414/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig" root0="FORCE_HIGHLIGHTING" />
@@ -528,7 +528,7 @@
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
       <workItem from="1773439151998" duration="110143000" />
-      <workItem from="1774282548816" duration="2711000" />
+      <workItem from="1774282548816" duration="11415000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -850,7 +850,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774258636231</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="new worky">
+      <option name="closed" value="true" />
+      <created>1774291800194</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1774291800194</updated>
+    </task>
+    <task id="LOCAL-00042" summary="neg">
+      <option name="closed" value="true" />
+      <created>1774291814902</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1774291814902</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -880,8 +896,6 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="Added test harness cases" />
-    <MESSAGE value="adds golden games initial bid check" />
     <MESSAGE value="added new test harness cases" />
     <MESSAGE value="Latest" />
     <MESSAGE value="Latest update" />
@@ -905,7 +919,9 @@
     <MESSAGE value="new" />
     <MESSAGE value="ir" />
     <MESSAGE value="Latest updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Latest updates" />
+    <MESSAGE value="new worky" />
+    <MESSAGE value="neg" />
+    <option name="LAST_COMMIT_MESSAGE" value="neg" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -933,19 +949,6 @@
           <line>44</line>
           <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/WeakOpeningRule.cs" containingFunctionPresentation="Method 'Apply'" />
           <option name="timeStamp" value="194" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/HcpConstraint.cs</url>
-          <line>40</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/HcpConstraint.cs" containingFunctionPresentation="Method 'IsMet'">
-            <startOffsets>
-              <option value="955" />
-            </startOffsets>
-            <endOffsets>
-              <option value="988" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs</url>

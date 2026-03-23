@@ -2,7 +2,6 @@ using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.Analysis.Partnership;
 using BridgeIt.Core.Domain.Bidding;
-using BridgeIt.Core.Domain.IBidValidityChecker;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Core.BiddingEngine.Core;
@@ -23,8 +22,6 @@ public class DecisionContext
 
     public PartnershipBiddingState PartnershipBiddingState { get; init; }
 
-    public IBidValidityChecker ValidityChecker { get; }
-
     public DecisionContext(BiddingContext data, HandEvaluation handEvaluation, AuctionEvaluation auctionEvaluation, TableKnowledge tableKnowledge, PartnershipBiddingState partnershipBiddingState = PartnershipBiddingState.Unknown)
     {
         Data = data;
@@ -32,7 +29,6 @@ public class DecisionContext
         AuctionEvaluation = auctionEvaluation;
         TableKnowledge = tableKnowledge;
         PartnershipBiddingState = partnershipBiddingState;
-        ValidityChecker = new BidValidityChecker();
     }
 
     // --- Combined partnership queries (my hand + partner's inferred range) ---

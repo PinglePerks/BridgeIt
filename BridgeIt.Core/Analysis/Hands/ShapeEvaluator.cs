@@ -74,4 +74,24 @@ public static class ShapeEvaluator
             .ToList();
     }
 
+    public static Dictionary<Suit, bool> GetStoppers(Hand hand)
+    {
+        var stoppers = new Dictionary<Suit, bool>();
+        foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+        {
+            stoppers[suit] = HasStopperInSuit(hand, suit);
+        }
+
+        return stoppers;
+    }
+
+    private static bool HasStopperInSuit(Hand hand, Suit suit)
+    {
+        var suitCards = hand.Cards.Where(x => x.Suit == suit).ToList();
+        
+        var countCards = suitCards.Count;
+        
+        return suitCards.Any(x => x.Rank == Rank.Ace || x.Rank == Rank.King && countCards >= 2 || x.Rank == Rank.Queen && countCards >= 3 || x.Rank == Rank.Jack && countCards >= 4);
+    }
+
 }

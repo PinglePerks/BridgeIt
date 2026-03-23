@@ -947,10 +947,8 @@ public class OpenerRebidPhase3aTests
 
     private static BiddingRuleBase GetStaymanResponseRule()
     {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.OpenerRebid.AcolStaymanResponse, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolStaymanResponse not found. Create it at BiddingEngine/Rules/OpenerRebid/AcolStaymanResponse.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
+        return new BridgeIt.Core.BiddingEngine.Conventions.StaymanResponse(
+            BridgeIt.Core.BiddingEngine.Conventions.NTConventionContexts.After1NT);
     }
 
     private static BiddingRuleBase GetNTInviteRule()
