@@ -16,7 +16,7 @@ public class AcolOpenerAfterNTInvite : BiddingRuleBase
         if (auction.SeatRoleType != SeatRoleType.Opener || auction.BiddingRound != 2)
             return false;
         
-        if (auction.OpeningBid == Bid.NoTrumpsBid(1) && auction.PartnerLastNonPassBid == Bid.NoTrumpsBid(2))
+        if (auction.OpeningBid == Bid.NoTrumpsBid(1) && auction.PartnerLastBid == Bid.NoTrumpsBid(2))
             return true;
 
         return false;

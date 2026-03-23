@@ -16,7 +16,7 @@ public class AcolRebidBalanced : BiddingRuleBase
     
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {
-        if (auction.SeatRoleType == SeatRoleType.Opener && auction.BiddingRound == 1)
+        if (auction.SeatRoleType == SeatRoleType.Opener && auction.BiddingRound == 2)
         {
             if (auction.OpeningBid!.Type == BidType.Suit && auction.OpeningBid.Level == 1)
             {
@@ -38,22 +38,44 @@ public class AcolRebidBalanced : BiddingRuleBase
     }
     public override Bid? Apply(DecisionContext ctx)
     {
-        if (ctx.HandEvaluation.Hcp > MinHcp2NTRebid)
+        var minLevel = GetNextNtBidLevel(ctx.AuctionEvaluation.CurrentContract);
+        if (minLevel == 2)
+        {
+            if(ctx.HandEvaluation.Hcp >= MinHcp1NTRebid)
+                return Bid.NoTrumpsBid(2);
+        }
+        if (ctx.HandEvaluation.Hcp >= MinHcp2NTRebid)
         {
             return Bid.NoTrumpsBid(2);
         }
 
-        if (ctx.HandEvaluation.Hcp > MinHcp1NTRebid)
+        if (ctx.HandEvaluation.Hcp >= MinHcp1NTRebid)
         {
             return Bid.NoTrumpsBid(1);
         }
 
         return null;
     }
+
+    protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
+    {
+        if (bid.Type == BidType.NoTrumps)
+            if (bid.Level == 1 || bid.Level == 2)
+                return true;
+
+        return false;
+    }
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
     {
         var constraints = new CompositeConstraint();
         constraints.Add(new BalancedConstraint());
+        
+        var minLevel = GetNextNtBidLevel(ctx.AuctionEvaluation.CurrentContract);
+        if (minLevel == 2)
+        {
+            constraints.Add(new HcpConstraint(MinHcp1NTRebid, MaxHcp2NTRebid));
+            return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
+        }
         
         if (bid.Type == BidType.NoTrumps && bid.Level == 1)
         {

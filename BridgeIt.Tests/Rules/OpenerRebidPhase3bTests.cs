@@ -376,7 +376,7 @@ public class OpenerRebidPhase3bTests
     {
         // Opened 1C, partner responded 1D, 4 hearts → bid 1H (cheapest at 1-level)
         var ctx = CreateOpenerRebidContext(
-            Suit.Clubs, Bid.SuitBid(1, Suit.Diamonds), 13, Shape(3, 4, 2, 4));
+            Suit.Clubs, Bid.SuitBid(1, Suit.Diamonds), 13, Shape(3, 4, 1, 5));
         Assert.That(GetRebidNewSuitRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(1, Suit.Hearts)));
     }
 
@@ -385,7 +385,7 @@ public class OpenerRebidPhase3bTests
     {
         // Opened 1C, partner responded 1D, 4 spades no 4 hearts → bid 1S
         var ctx = CreateOpenerRebidContext(
-            Suit.Clubs, Bid.SuitBid(1, Suit.Diamonds), 13, Shape(4, 3, 2, 4));
+            Suit.Clubs, Bid.SuitBid(1, Suit.Diamonds), 13, Shape(4, 2, 2, 5));
         Assert.That(GetRebidNewSuitRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(1, Suit.Spades)));
     }
 

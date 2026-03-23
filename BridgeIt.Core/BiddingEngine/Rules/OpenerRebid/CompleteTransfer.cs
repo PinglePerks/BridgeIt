@@ -13,13 +13,13 @@ public class CompleteTransfer : BiddingRuleBase
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {
-        if (auction.AuctionPhase != AuctionPhase.Uncontested) return false;
+        if (auction.AuctionPhase != AuctionPhase.Uncontested || auction.SeatRoleType != SeatRoleType.Opener) return false;
         if (auction.BiddingRound != 2) return false;
         if (auction.MyLastNonPassBid != ApplicableOpeningBid) return false;
 
         // Partner's last bid was the transfer (2D or 2H)
-        return auction.PartnerLastNonPassBid == Bid.SuitBid(2, Suit.Diamonds) ||
-               auction.PartnerLastNonPassBid == Bid.SuitBid(2, Suit.Hearts);
+        return auction.PartnerLastBid == Bid.SuitBid(2, Suit.Diamonds) ||
+               auction.PartnerLastBid == Bid.SuitBid(2, Suit.Hearts);
     }
 
     // No IsHandApplicable override — transfer completion is compulsory

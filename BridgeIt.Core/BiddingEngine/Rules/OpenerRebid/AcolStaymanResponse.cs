@@ -17,7 +17,7 @@ public class AcolStaymanResponse : BiddingRuleBase
         if (auction.SeatRoleType != SeatRoleType.Opener || auction.BiddingRound != 2)
             return false;
         
-        if (auction.OpeningBid == Bid.NoTrumpsBid(1) && auction.PartnerLastNonPassBid == Bid.SuitBid(2, Suit.Clubs) && auction.CurrentContract == Bid.SuitBid(2,Suit.Clubs))
+        if (auction.OpeningBid == Bid.NoTrumpsBid(1) && auction.PartnerLastBid == Bid.SuitBid(2, Suit.Clubs) && auction.CurrentContract == Bid.SuitBid(2,Suit.Clubs))
             return true;
 
         return false;

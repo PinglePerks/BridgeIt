@@ -1,5 +1,6 @@
 using BridgeIt.Api.Hubs;
 using BridgeIt.Api.Services;
+using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.Extensions;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
@@ -22,7 +23,10 @@ builder.Services.AddSwaggerGen();
 
 // --- 2. Register BridgeIt Core ---
 // This registers BiddingEngine, BiddingTable, RuleLoader, etc.
-builder.Services.AddBridgeItCore(); 
+builder.Services.AddBridgeItCore();
+
+// Override the file-based EngineObserver with the SignalR version
+builder.Services.AddSingleton<IEngineObserver, SignalREngineObserver>();
 
 // --- 3. Register Game Logic ---
 // GameService needs to be a Singleton to hold state across SignalR requests
