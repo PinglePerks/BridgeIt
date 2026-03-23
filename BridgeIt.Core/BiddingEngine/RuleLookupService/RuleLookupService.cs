@@ -27,7 +27,9 @@ public class RuleLookupService : IRuleLookupService
         {
             var currentBidder = bid.Seat;
 
-            // 3. Build TableKnowledge from the perspective of the current bidder
+            // 3. Build TableKnowledge from the perspective of the current bidder,
+            //    then apply cross-table inferences so each player's constraints
+            //    are tightened by what we know about all other players.
             var tableKnowledge = new TableKnowledge(currentBidder);
             foreach (var (seat, bidInfos) in derivedConstraints)
             {
@@ -36,6 +38,11 @@ public class RuleLookupService : IRuleLookupService
                     tableKnowledge.Players[seat] = PlayerKnowledgeEvaluator.AnalyzeKnowledge(bidInfos);
                 }
             }
+
+            // Cross-table HCP inference: we don't know the bidder's actual hand here,
+            // so we use their current inferred HcpMin as a conservative lower bound.
+            var bidderKnowledge = PlayerKnowledgeEvaluator.AnalyzeKnowledge(derivedConstraints[currentBidder]);
+            tableKnowledge.ApplyCrossTableInferences(bidderKnowledge.HcpMin);
 
             // Extract partnership bidding state from partner's last bid info
             var partnerBids = derivedConstraints[currentBidder.GetPartner()];
