@@ -150,6 +150,101 @@ public class GameService
         LaunchAuction();
     }
 
+    /// <summary>Parse a multi-line hand string and deal those exact cards.</summary>
+    /// <remarks>
+    /// Expected format (one line per seat, any order):
+    ///   North: Q43/A982/AKQ75/Q
+    ///   East: AJT/KQ73/T93/T42
+    ///   South: K7652//862/KJ865
+    ///   West: 98/JT654/J4/A973
+    /// Each hand is Spades/Hearts/Diamonds/Clubs with ranks like A K Q J T 9 8 7 6 5 4 3 2.
+    /// </remarks>
+    public async Task DealExactHands(string handText)
+    {
+        await CancelExistingGame();
+
+        var deal = ParseHandText(handText);
+        _currentDeal = deal;
+        BidHistoryDto.Clear();
+        await NotifyPlayersOfNewDeal();
+        LaunchAuction();
+    }
+
+    /// <summary>Restart the auction with the current deal (same cards, fresh auction).</summary>
+    public async Task RestartAuction()
+    {
+        if (_currentDeal.Count == 0)
+            throw new InvalidOperationException("No deal to restart.");
+
+        await CancelExistingGame();
+        BidHistoryDto.Clear();
+        await NotifyPlayersOfNewDeal();
+        LaunchAuction();
+    }
+
+    private static Dictionary<Seat, Hand> ParseHandText(string handText)
+    {
+        var result = new Dictionary<Seat, Hand>();
+        var lines = handText.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        foreach (var line in lines)
+        {
+            var colonIdx = line.IndexOf(':');
+            if (colonIdx < 0) continue;
+
+            var seatStr = line[..colonIdx].Trim();
+            var handStr = line[(colonIdx + 1)..].Trim();
+
+            if (!Enum.TryParse<Seat>(seatStr, ignoreCase: true, out var seat))
+                throw new ArgumentException($"Unknown seat: '{seatStr}'");
+
+            var suits = handStr.Split('/');
+            if (suits.Length != 4)
+                throw new ArgumentException($"Hand for {seat} must have exactly 4 suit groups separated by '/' (Spades/Hearts/Diamonds/Clubs), got {suits.Length}");
+
+            var cards = new List<Card>();
+            var suitOrder = new[] { Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs };
+            for (int i = 0; i < 4; i++)
+            {
+                foreach (var ch in suits[i])
+                {
+                    if (char.IsWhiteSpace(ch)) continue;
+                    cards.Add(new Card(suitOrder[i], ParseRank(ch)));
+                }
+            }
+
+            result[seat] = new Hand(cards);
+        }
+
+        if (result.Count != 4)
+            throw new ArgumentException($"Expected hands for all 4 seats, got {result.Count}: {string.Join(", ", result.Keys)}");
+
+        // Validate total card count
+        var totalCards = result.Values.Sum(h => h.Cards.Count);
+        if (totalCards != 52)
+            throw new ArgumentException($"Expected 52 cards total, got {totalCards}");
+
+        return result;
+    }
+
+    private static Rank ParseRank(char ch) => char.ToUpper(ch) switch
+    {
+        'A' => Rank.Ace,
+        'K' => Rank.King,
+        'Q' => Rank.Queen,
+        'J' => Rank.Jack,
+        'T' => Rank.Ten,
+        '9' => Rank.Nine,
+        '8' => Rank.Eight,
+        '7' => Rank.Seven,
+        '6' => Rank.Six,
+        '5' => Rank.Five,
+        '4' => Rank.Four,
+        '3' => Rank.Three,
+        '2' => Rank.Two,
+        _ => throw new ArgumentException($"Unknown rank character: '{ch}'")
+    };
+
     // ─── Internals ────────────────────────────────────────────────────────────
 
     private async Task CancelExistingGame()

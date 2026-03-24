@@ -21,7 +21,8 @@ public class KnowledgeBidGameInSuit : BiddingRuleBase
 
     protected override bool IsHandApplicable(DecisionContext ctx)
     {
-        if (!ctx.TableKnowledge.Partner.HasMeaningfulKnowledge) return false;
+        // Only act on knowledge when partner has actively communicated via a bid
+        if (ctx.AuctionEvaluation.PartnerLastNonPassBid == null) return false;
 
         var fitSuit = FindBestGameSuit(ctx);
         if (fitSuit == null) return false;

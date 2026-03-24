@@ -97,7 +97,7 @@ public class AcolRebidNewSuit : BiddingRuleBase
         // Second (new) suit: at least 4 cards — this is the primary shown suit
         constraints.Add(new SuitLengthConstraint(bid.Suit, 4, 5));
         // Opening suit: 4-5 cards (6+ would have triggered RebidOwnSuit)
-        constraints.Add(new SuitLengthConstraint(firstBidSuit, 4, 5));
+        constraints.Add(new SuitLengthConstraint(firstBidSuit, 5, 5));
 
         // Reverse or jump shift = 16+ HCP; minimum new suit = 12-15 HCP
         if (isReverse || bid.Level > nextLevel)

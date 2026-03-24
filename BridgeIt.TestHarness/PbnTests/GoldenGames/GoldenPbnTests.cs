@@ -91,6 +91,17 @@ public class GoldenPbnTests
     [TestCaseSource(nameof(GetGoldenHands))]
     public async Task Engine_BidsPerfectly_OnGoldenGames(PbnBoard board)
     {
+        var dealer = board.Dealer;
+        var second = board.Dealer.GetNextSeat();
+        var third = second.GetNextSeat();
+        var fourth = third.GetNextSeat();
+        Console.WriteLine($"{dealer}: {board.Hands[dealer]}");
+        Console.WriteLine($"{second}: {board.Hands[second]}");
+        Console.WriteLine($"{third}: {board.Hands[third]}");
+        Console.WriteLine($"{fourth}: {board.Hands[fourth]}");
+        Console.WriteLine($"****************************");
+        
+        Console.WriteLine($"Actual Auction: {string.Join(", ", board.ActualAuction)}");
         // Act
         // Assuming your PbnBoard has a property for Dealer and the 4 Hands
         var auction = await _environment.Table.RunAuction(board.Hands, _environment.Players, board.Dealer);

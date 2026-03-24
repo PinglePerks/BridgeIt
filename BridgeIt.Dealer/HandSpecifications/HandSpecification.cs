@@ -232,6 +232,43 @@ public static class HandSpecification
         HighCardPoints.Count(h) < 6;
 
     // =============================================
+    // Responses to 2NT Opening (Acol 20-22)
+    // =============================================
+
+    // Stayman over 2NT — 4+ HCP with exactly 4-card major (not 5+, which would transfer)
+    public static Func<Hand, bool> ResponseTo2NT_Stayman => h =>
+        HighCardPoints.Count(h) >= 4 &&
+        (ShapeEvaluator.GetShape(h)[Suit.Hearts] == 4 || ShapeEvaluator.GetShape(h)[Suit.Spades] == 4) &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
+
+    // Transfer to hearts over 2NT — 5+ hearts
+    public static Func<Hand, bool> ResponseTo2NT_TransferHearts => h =>
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] >= 5;
+
+    // Transfer to spades over 2NT — 5+ spades, <5 hearts
+    public static Func<Hand, bool> ResponseTo2NT_TransferSpades => h =>
+        ShapeEvaluator.GetShape(h)[Suit.Spades] >= 5 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5;
+
+    // =============================================
+    // Opener rebid shapes (for testing full auction sequences)
+    // =============================================
+
+    // Opener with 5-card suit and a 4-card side suit (will rebid new suit)
+    public static Func<Hand, bool> AcolOpenerWith5And4(Suit primary, Suit secondary) => h =>
+        OneLevelUnbalancedOpening(h)
+        && ShapeEvaluator.GetShape(h)[primary] >= 5
+        && ShapeEvaluator.GetShape(h)[secondary] >= 4
+        && ShapeEvaluator.LongestAndStrongest(h) == primary;
+
+    // Opener with 6+ card suit (will rebid own suit)
+    public static Func<Hand, bool> AcolOpenerWith6Card(Suit suit) => h =>
+        OneLevelUnbalancedOpening(h)
+        && ShapeEvaluator.GetShape(h)[suit] >= 6
+        && ShapeEvaluator.LongestAndStrongest(h) == suit;
+
+    // =============================================
     // Opponent Specs (for uncontested test scenarios)
     // =============================================
 

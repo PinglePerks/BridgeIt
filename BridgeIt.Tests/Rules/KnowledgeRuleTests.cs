@@ -33,16 +33,23 @@ public class KnowledgeRuleTests
     {
         // Build a plausible auction
         var partnerSeat = mySeat.GetPartner();
+        var rhoSeat = partnerSeat.GetNextSeat(); // Seat between partner and me
         var history = new AuctionHistory(partnerSeat);
         var open = openingBid ?? Bid.SuitBid(1, Suit.Hearts);
         history.Add(new AuctionBid(partnerSeat, open));
-        history.Add(new AuctionBid(mySeat.GetNextSeat(), Bid.Pass())); // RHO passes
+        history.Add(new AuctionBid(rhoSeat, Bid.Pass())); // RHO passes
 
-        // If there's a current contract beyond the opening, add more bids
+        // If there's a current contract beyond the opening, simulate:
+        // mySeat bids → LHO passes → partner rebids the contract → RHO passes
+        // so it's mySeat's turn again with the contract in place
         if (currentContract != null && currentContract != open)
         {
-            history.Add(new AuctionBid(mySeat, currentContract));
-            history.Add(new AuctionBid(partnerSeat.GetNextSeat().GetNextSeat().GetNextSeat(), Bid.Pass()));
+            var lhoSeat = mySeat.GetNextSeat(); // LHO
+            history.Add(new AuctionBid(mySeat, Bid.Pass()));        // I pass first
+            history.Add(new AuctionBid(lhoSeat, Bid.Pass()));       // LHO passes
+            history.Add(new AuctionBid(partnerSeat, currentContract)); // Partner sets the contract
+            history.Add(new AuctionBid(rhoSeat, Bid.Pass()));       // RHO passes
+            // Now it's mySeat's turn again
         }
 
         var handEval = new HandEvaluation

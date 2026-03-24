@@ -109,6 +109,34 @@ public class GameHub : Hub
         await Clients.Caller.SendAsync("ReceiveScenarios", scenarios);
     }
 
+    /// <summary>Deals exact hands from a pasted hand string.</summary>
+    public async Task DealExactHands(string handText)
+    {
+        try
+        {
+            await _gameService.DealExactHands(handText);
+            await Clients.Caller.SendAsync("GetAllHands", _gameService.GetAllHands());
+        }
+        catch (Exception ex)
+        {
+            await Clients.Caller.SendAsync("SystemMessage", $"Invalid hand input: {ex.Message}");
+        }
+    }
+
+    /// <summary>Restarts the auction with the current deal (same cards, fresh bidding).</summary>
+    public async Task RestartAuction()
+    {
+        try
+        {
+            await _gameService.RestartAuction();
+            await Clients.Caller.SendAsync("GetAllHands", _gameService.GetAllHands());
+        }
+        catch (Exception ex)
+        {
+            await Clients.Caller.SendAsync("SystemMessage", $"Cannot restart: {ex.Message}");
+        }
+    }
+
     public async Task TestAllHands()
     {
         await Clients.Caller.SendAsync("GetAllHands", _gameService.GetAllHands());

@@ -21,14 +21,16 @@ public class KnowledgeSignOffInFit : BiddingRuleBase
 
     protected override bool IsHandApplicable(DecisionContext ctx)
     {
-        if (!ctx.TableKnowledge.Partner.HasMeaningfulKnowledge) return false;
+        // Only act on knowledge when partner has actively communicated via a bid
         if (ctx.AuctionEvaluation.PartnerLastNonPassBid == null) return false;
-
-        if (ctx.GetLevelVerdict(25) != LevelVerdict.SignOff) return false;
-
+        
         var fitSuit = FindBestFitSuit(ctx);
         if (fitSuit == null) return false;
-
+        
+        var threshold = IsMajor(fitSuit.Value) ? 25 : 29;
+        
+        if (ctx.GetLevelVerdict(threshold) != LevelVerdict.SignOff) return false;
+        
         // Check: is the current contract already in our fit suit?
         // If so, just pass — no need to raise
         var current = ctx.AuctionEvaluation.CurrentContract;

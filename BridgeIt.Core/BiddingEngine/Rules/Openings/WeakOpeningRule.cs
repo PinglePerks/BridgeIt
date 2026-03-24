@@ -56,8 +56,6 @@ public class WeakOpeningRule : BiddingRuleBase
         compositeConstraint.Constraints.Add(lengthConstraint);
         compositeConstraint.Constraints.Add(strengthConstraing);
         
-        
-        
         var bidInformation = new BidInformation(bid, compositeConstraint, PartnershipBiddingState.ConstructiveSearch);
         
         return bidInformation;

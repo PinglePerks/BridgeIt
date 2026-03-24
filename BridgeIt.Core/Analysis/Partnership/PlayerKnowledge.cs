@@ -34,12 +34,13 @@ public class PlayerKnowledge
     public HashSet<Suit> DeniedSuits { get; set; } = new();
 
     /// <summary>
-    /// Has any knowledge actually been inferred about this player from their bidding?
-    /// Returns false when all ranges are still at their uninformative defaults
-    /// (HCP 0-37, each suit 0-13). Knowledge-based rules should not act on
-    /// "possible" fits or HCP verdicts when this is false.
+    /// Have any ranges been narrowed from their uninformative defaults?
+    /// This can be true from cross-table inference (opponents bidding) even if
+    /// this player hasn't bid. For knowledge-based bidding decisions about
+    /// partner, use PartnerLastNonPassBid != null on AuctionEvaluation instead —
+    /// that confirms partner has actively communicated.
     /// </summary>
-    public bool HasMeaningfulKnowledge =>
+    public bool HasNarrowedRanges =>
         HcpMin > 0 || HcpMax < 37
         || MinShape.Values.Any(v => v > 0)
         || MaxShape.Values.Any(v => v < 13)

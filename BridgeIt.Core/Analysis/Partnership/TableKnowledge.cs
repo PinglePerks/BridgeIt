@@ -23,6 +23,8 @@ public class TableKnowledge
             { Seat.West, new PlayerKnowledge() }
         };
     }
+    /// <summary>My inferred hand knowledge (what partner knows about my hand)</summary>
+    public PlayerKnowledge Me => Players[_mySeat];
 
     /// <summary>Partner's inferred hand knowledge</summary>
     public PlayerKnowledge Partner => Players[_mySeat.GetPartner()];
@@ -42,7 +44,7 @@ public class TableKnowledge
     {
         foreach (var seat in Players.Keys)
         {
-            if (seat == _mySeat) continue;
+            //if (seat == _mySeat) continue;
 
             var othersMin = Players
                 .Where(p => p.Key != seat && p.Key != _mySeat)
@@ -68,7 +70,7 @@ public class TableKnowledge
         {
             foreach (var seat in Players.Keys)
             {
-                if (seat == _mySeat) continue;
+                //if (seat == _mySeat) continue;
 
                 var otherPlayersMin = Players
                     .Where(p => p.Key != seat && p.Key != _mySeat)

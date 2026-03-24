@@ -84,6 +84,9 @@ public class TestBridgeEnvironment
 
         rules.Add(new AcolJacoby2NTOver1Major());
         rules.Add(new AcolRaiseMajorOver1Suit());
+        rules.Add(new AcolRaiseMinorOver1Suit());
+        rules.Add(new AcolNewSuitOver1Suit());
+        rules.Add(new Acol1NTResponseTo1Suit());
 
         rules.Add(new CompleteTransfer(NTConventionContexts.After1NT));
         rules.Add(new CompleteTransfer(NTConventionContexts.After2NT));
@@ -92,6 +95,14 @@ public class TestBridgeEnvironment
         rules.Add(new StaymanResponse(NTConventionContexts.After1NT));
         rules.Add(new StaymanResponse(NTConventionContexts.After2NT));
         rules.Add(new StaymanResponse(NTConventionContexts.After2C2D2NT));
+
+        // Opener rebid rules
+        rules.Add(new AcolOpenerAfterNTInvite());
+        rules.Add(new AcolOpenerAfterMajorRaise());
+        rules.Add(new AcolRebidBalanced());
+        rules.Add(new AcolRebidNewSuit());
+        rules.Add(new AcolRebidRaiseSuit());
+        rules.Add(new AcolRebidOwnSuit());
 
         // Knowledge-based catch-all rules
         rules.Add(new KnowledgeBidGameInSuit());
