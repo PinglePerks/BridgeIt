@@ -8,6 +8,7 @@ using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
 using BridgeIt.Core.Configuration.Yaml;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -107,6 +108,13 @@ public class TestBridgeEnvironment
         rules.Add(new AcolRebidNewSuit());
         rules.Add(new AcolRebidRaiseSuit());
         rules.Add(new AcolRebidOwnSuit());
+
+        // Responder rebids (round 2)
+        rules.Add(new AcolResponderAfterOpenerRaisedSuit());
+        rules.Add(new AcolResponderAfterOpener1NTRebid());
+        rules.Add(new AcolResponderAfterOpener2NTRebid());
+        rules.Add(new AcolResponderAfterOpenerRebidOwnSuit());
+        rules.Add(new AcolResponderAfterOpenerNewSuit());
 
         // Knowledge-based catch-all rules
         rules.Add(new KnowledgeBidGameInSuit());

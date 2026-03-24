@@ -9,6 +9,7 @@ using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Domain.IBidValidityChecker;
@@ -86,6 +87,13 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new AcolRebidNewSuit(),
     new AcolRebidRaiseSuit(),
     new AcolRebidOwnSuit(),
+
+    // Responder rebids (round 2)
+    new AcolResponderAfterOpenerRaisedSuit(),
+    new AcolResponderAfterOpener1NTRebid(),
+    new AcolResponderAfterOpener2NTRebid(),
+    new AcolResponderAfterOpenerRebidOwnSuit(),
+    new AcolResponderAfterOpenerNewSuit(),
 
     // Knowledge-based catch-all rules (low priority — fire when no pattern rule matches)
     new KnowledgeBidGameInSuit(),
