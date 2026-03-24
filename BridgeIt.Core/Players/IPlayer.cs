@@ -57,14 +57,13 @@ public class RobotPlayer(BiddingEngine.Core.BiddingEngine engine,
 
         var constraints = ruleLookupService.GetConstraintsFromBids(context, engine);
 
-        // Build TableKnowledge from all seats' inferred constraints
+        // Build TableKnowledge from all seats' inferred constraints.
+        // Me is populated too — it represents "what I've shown through my bids"
+        // so rules can compare Me vs HandEvaluation to find hidden strength/length.
         var tableKnowledge = new TableKnowledge(context.Seat);
         foreach (var (seat, bidInfos) in constraints)
         {
-            if (seat != context.Seat)
-            {
-                tableKnowledge.Players[seat] = PlayerKnowledgeEvaluator.AnalyzeKnowledge(bidInfos);
-            }
+            tableKnowledge.Players[seat] = PlayerKnowledgeEvaluator.AnalyzeKnowledge(bidInfos);
         }
         tableKnowledge.ApplyCrossTableInferences(handEval.Hcp);
         tableKnowledge.ApplyCrossTableSuitInferences(handEval.Shape);

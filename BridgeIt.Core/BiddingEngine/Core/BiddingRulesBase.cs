@@ -68,7 +68,7 @@ public abstract class BiddingRuleBase : IBiddingRule
     /// Default null means this rule does not contribute to negative inference.
     /// Override in rules where the requirements are clear-cut (openings, responses).
     /// </summary>
-    public virtual CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction) => null;
+    public virtual CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction) => null;
 
     protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract)
         => Bid.NextLevelForSuit(suit, currentContract);

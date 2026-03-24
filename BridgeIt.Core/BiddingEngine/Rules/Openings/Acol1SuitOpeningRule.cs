@@ -9,13 +9,22 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 public class Acol1SuitOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 1-Level Suit Opening";
-    public override int Priority { get; } = 10; // Lower than NT openings, higher than Pass
-    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
-        => new() { Constraints = { new HcpConstraint(MinHcp, 40) } };
+    public override int Priority { get; } = 10;
 
-    // Standard Acol usually caps a 1-level opening at 19 HCP (20+ is usually 2-level)
     private const int MinHcp = 12;
-    private const int MaxHcp = 19; 
+    private const int MaxHcp = 19;
+
+    // Forward: the full conjunction of what must be true for this rule to fire.
+    // We can't include a suit constraint here because we don't know which suit yet.
+    private static CompositeConstraint BuildConstraints()
+        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp) } };
+
+    // Backward: once we know which suit was bid, we can add the suit length.
+    private static CompositeConstraint BuildConstraints(Suit? suit)
+        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint(suit.ToString()!, ">=4") } };
+
+    public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
+        => BuildConstraints();
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.SeatRoleType == SeatRoleType.NoBids;
@@ -43,11 +52,5 @@ public class Acol1SuitOpeningRule : BiddingRuleBase
         => bid.Type == BidType.Suit && bid.Level == 1;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
-    {
-        var constraints = new CompositeConstraint();
-        constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
-        constraints.Add(new SuitLengthConstraint(bid.Suit.ToString()!, ">=4"));
-        
-        return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
-    }
+        => new(bid, BuildConstraints(bid.Suit), PartnershipBiddingState.ConstructiveSearch);
 }

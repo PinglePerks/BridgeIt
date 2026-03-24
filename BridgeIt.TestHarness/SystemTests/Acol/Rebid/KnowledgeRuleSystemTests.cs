@@ -66,11 +66,19 @@ public class KnowledgeRuleSystemTests
     public async Task KnowledgeSignOff_AfterTransfer_WeakResponderPassesSpades()
     {
         // 1NT -> 2H (transfer) -> 2S (completion) -> Pass
+        // Responder has 5+ spades, <5 hearts, <11 HCP, no long side suit
+        Func<Hand, bool> weakSpadesOnly = h =>
+            HighCardPoints.Count(h) < 11
+            && ShapeEvaluator.GetShape(h)[Suit.Spades] >= 5
+            && ShapeEvaluator.GetShape(h)[Suit.Hearts] < 5
+            && ShapeEvaluator.GetShape(h)[Suit.Diamonds] < 5
+            && ShapeEvaluator.GetShape(h)[Suit.Clubs] < 5;
+
         var testDeals = _dealer.GenerateMultipleConstrainedDeals(
             50,
             HandSpecification.Acol1NtOpening,
             HandSpecification.PassingOpponent,
-            HandSpecification.ResponseTo1NT_WeakTakeoutSpades);
+            weakSpadesOnly);
 
         foreach (var deal in testDeals)
         {

@@ -10,7 +10,7 @@ public class AcolJacoby2NTOver1Major :  BiddingRuleBase
 {
     public override string Name { get; } = "Acol Jacoby 2NT over 1 major";
     public override int Priority { get; } = 55;
-    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
+    public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
     {
         var suit = auction.OpeningBid?.Suit;
         if (suit == null) return null;

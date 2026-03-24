@@ -34,5 +34,5 @@ public interface IBiddingRule
     /// (e.g. rebid rules where the player's range is already known, transfers
     /// with no HCP floor, or rules that already handle Pass explicitly).
     /// </summary>
-    CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction);
+    CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction);
 }

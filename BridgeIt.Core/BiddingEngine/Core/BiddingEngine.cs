@@ -70,7 +70,7 @@ public sealed class BiddingEngine
             if (!rule.IsApplicableToAuction(ctx.AuctionEvaluation))
                 continue;
 
-            var reqs = rule.GetMinimumForwardRequirements(ctx.AuctionEvaluation);
+            var reqs = rule.GetForwardConstraints(ctx.AuctionEvaluation);
             if (reqs == null || reqs.Constraints.Count == 0)
                 continue;
 

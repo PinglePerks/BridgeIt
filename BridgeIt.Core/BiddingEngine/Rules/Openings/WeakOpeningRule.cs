@@ -13,17 +13,27 @@ public class WeakOpeningRule : BiddingRuleBase
     private const int Number = 4;
     private const int MinHcp = 6;
     private const int MaxHcp = 9;
-    
+
     private readonly HashSet<Bid> _reservedBids;
-    private List<IBidConstraint> _constraints;
+    private readonly List<IBidConstraint> _constraints;
+
+    // Forward: what must be true for any weak opening to fire
+    private static CompositeConstraint BuildConstraints()
+        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint("any", ">=6") } };
+
+    // Backward: once we know the specific bid, we know the exact suit and length
+    private static CompositeConstraint BuildConstraints(Bid bid)
+        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint(bid.Suit!.Value, bid.Level + Number, bid.Level + Number) } };
 
     public WeakOpeningRule(IEnumerable<Bid> reservedBids)
     {
-        _constraints = new List<IBidConstraint>();
-        _constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
-        _constraints.Add(new SuitLengthConstraint("any", $">=6"));
-        _reservedBids = reservedBids.ToHashSet(); 
+        _constraints = [new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint("any", ">=6")];
+        _reservedBids = reservedBids.ToHashSet();
     }
+
+    public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
+        => BuildConstraints();
+
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.SeatRoleType == SeatRoleType.NoBids;
 
@@ -43,30 +53,12 @@ public class WeakOpeningRule : BiddingRuleBase
         => bid.Type == BidType.Suit && bid.Level >= 2 && !_reservedBids.Contains(bid);
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
-    {
-        var bidLevel = bid.Level;
-        var bidSuit = bid.Suit;
-        
-        var lengthConstraint = new SuitLengthConstraint(bidSuit, bidLevel, bidLevel);
-        
-        var compositeConstraint = new CompositeConstraint();
-
-        var strengthConstraing = new HcpConstraint(MinHcp, MaxHcp);
-        
-        compositeConstraint.Constraints.Add(lengthConstraint);
-        compositeConstraint.Constraints.Add(strengthConstraing);
-        
-        var bidInformation = new BidInformation(bid, compositeConstraint, PartnershipBiddingState.ConstructiveSearch);
-        
-        return bidInformation;
-    }
+        => new(bid, BuildConstraints(bid), PartnershipBiddingState.ConstructiveSearch);
 
     protected internal virtual Bid MakeBid(DecisionContext ctx)
     {
         var suit = ctx.HandEvaluation.LongestAndStrongest;
-        
         var level = ctx.HandEvaluation.Shape[suit];
-        
         return Bid.SuitBid(level - Number, suit);
     }
 }

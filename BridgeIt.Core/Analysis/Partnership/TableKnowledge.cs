@@ -3,9 +3,13 @@ using BridgeIt.Core.Domain.Primatives;
 namespace BridgeIt.Core.Analysis.Partnership;
 
 /// <summary>
-/// Holds inferred knowledge about all other players at the table,
+/// Holds inferred knowledge about all players at the table,
 /// keyed by seat. Built by replaying the auction and extracting
-/// constraints from each bid.
+/// constraints from each bid. Me represents what I've communicated
+/// through my bids (not my actual hand). Cross-table inference
+/// narrows the other 3 seats but leaves Me untouched, so rules
+/// can compare Me (shown) vs HandEvaluation (actual) to find
+/// hidden strength or length.
 /// </summary>
 public class TableKnowledge
 {
@@ -23,7 +27,7 @@ public class TableKnowledge
             { Seat.West, new PlayerKnowledge() }
         };
     }
-    /// <summary>My inferred hand knowledge (what partner knows about my hand)</summary>
+    /// <summary>What I've communicated through my bids — purely bid-derived, not cross-table inferred.</summary>
     public PlayerKnowledge Me => Players[_mySeat];
 
     /// <summary>Partner's inferred hand knowledge</summary>
@@ -39,12 +43,13 @@ public class TableKnowledge
     /// Apply cross-table HCP inference: total HCP in deck is 40,
     /// so knowing about some players constrains others.
     /// Narrows both HcpMax (from others' minimums) and HcpMin (from others' maximums).
+    /// Skips _mySeat so that Me remains purely "what I've shown through bids."
     /// </summary>
     public void ApplyCrossTableInferences(int myHcp)
     {
         foreach (var seat in Players.Keys)
         {
-            //if (seat == _mySeat) continue;
+            if (seat == _mySeat) continue;
 
             var othersMin = Players
                 .Where(p => p.Key != seat && p.Key != _mySeat)
@@ -63,6 +68,7 @@ public class TableKnowledge
     /// <summary>
     /// Apply cross-table suit-length inference: each suit has exactly 13 cards,
     /// so knowing cards held by some players constrains what others can hold.
+    /// Skips _mySeat so that Me remains purely "what I've shown through bids."
     /// </summary>
     public void ApplyCrossTableSuitInferences(Dictionary<Suit, int> myShape)
     {
@@ -70,7 +76,7 @@ public class TableKnowledge
         {
             foreach (var seat in Players.Keys)
             {
-                //if (seat == _mySeat) continue;
+                if (seat == _mySeat) continue;
 
                 var otherPlayersMin = Players
                     .Where(p => p.Key != seat && p.Key != _mySeat)

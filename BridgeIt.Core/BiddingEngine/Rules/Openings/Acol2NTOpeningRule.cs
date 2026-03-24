@@ -8,12 +8,16 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 public class Acol2NTOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 2NT Opening";
-    public override int Priority { get; } = 20; // Higher priority than a standard suit opening
-    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
-        => new() { Constraints = { new HcpConstraint(MinHcp, 40) } };
+    public override int Priority { get; } = 20;
 
     private const int MinHcp = 20;
     private const int MaxHcp = 22;
+
+    private static CompositeConstraint BuildConstraints()
+        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new BalancedConstraint() } };
+
+    public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
+        => BuildConstraints();
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.SeatRoleType == SeatRoleType.NoBids;
@@ -29,11 +33,5 @@ public class Acol2NTOpeningRule : BiddingRuleBase
         => bid.Type == BidType.NoTrumps && bid.Level == 2;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
-    {
-        var constraints = new CompositeConstraint();
-        constraints.Add(new HcpConstraint(MinHcp, MaxHcp));
-        constraints.Add(new BalancedConstraint()); // Assuming you have this!
-        
-        return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
-    }
+        => new(bid, BuildConstraints(), PartnershipBiddingState.ConstructiveSearch);
 }

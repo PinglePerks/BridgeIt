@@ -10,7 +10,7 @@ public class AcolRaiseMinorOver1Suit : BiddingRuleBase
 {
     public override string Name { get; } = "Acol raise minor over 1 suit";
     public override int Priority { get; } = 35;
-    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
+    public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
     {
         var suit = auction.OpeningBid?.Suit;
         if (suit == null) return null;

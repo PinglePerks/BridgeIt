@@ -10,7 +10,7 @@ public class AcolNewSuitOver1Suit : BiddingRuleBase
 {
     public override string Name { get; } = "Acol new suit over 1 suit";
     public override int Priority { get; } = 40;
-    public override CompositeConstraint? GetMinimumForwardRequirements(AuctionEvaluation auction)
+    public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
         => new() { Constraints = { new HcpConstraint(6, 40) } };
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
