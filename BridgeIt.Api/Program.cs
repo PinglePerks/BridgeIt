@@ -74,6 +74,9 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new StaymanResponse(NTConventionContexts.After1NT),
     new StaymanResponse(NTConventionContexts.After2NT),
     new StaymanResponse(NTConventionContexts.After2C2D2NT),
+    new AcolResponderAfterStayman(NTConventionContexts.After1NT),
+    new AcolResponderAfterStayman(NTConventionContexts.After2NT),
+    new AcolResponderAfterStayman(NTConventionContexts.After2C2D2NT),
     new CompleteTransfer(NTConventionContexts.After1NT),
     new CompleteTransfer(NTConventionContexts.After2NT),
     new CompleteTransfer(NTConventionContexts.After2C2D2NT),
@@ -88,6 +91,7 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new KnowledgeBidGameInSuit(),
     new KnowledgeBidGameInNT(),
     new KnowledgeInviteInSuit(),
+    new KnowledgeInviteInNT(),
     new KnowledgeSignOffInFit(),
     new KnowledgeSignOff(),
 
