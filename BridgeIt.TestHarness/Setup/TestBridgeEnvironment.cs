@@ -96,6 +96,10 @@ public class TestBridgeEnvironment
         rules.Add(new StaymanResponse(NTConventionContexts.After2NT));
         rules.Add(new StaymanResponse(NTConventionContexts.After2C2D2NT));
 
+        rules.Add(new AcolResponderAfterStayman(NTConventionContexts.After1NT));
+        rules.Add(new AcolResponderAfterStayman(NTConventionContexts.After2NT));
+        rules.Add(new AcolResponderAfterStayman(NTConventionContexts.After2C2D2NT));
+
         // Opener rebid rules
         rules.Add(new AcolOpenerAfterNTInvite());
         rules.Add(new AcolOpenerAfterMajorRaise());
@@ -108,6 +112,7 @@ public class TestBridgeEnvironment
         rules.Add(new KnowledgeBidGameInSuit());
         rules.Add(new KnowledgeBidGameInNT());
         rules.Add(new KnowledgeInviteInSuit());
+        rules.Add(new KnowledgeInviteInNT());
         rules.Add(new KnowledgeSignOffInFit());
         rules.Add(new KnowledgeSignOff());
 

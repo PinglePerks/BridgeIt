@@ -269,6 +269,46 @@ public static class HandSpecification
         && ShapeEvaluator.LongestAndStrongest(h) == suit;
 
     // =============================================
+    // After Stayman — Responder's rebid scenarios
+    // =============================================
+
+    // Game-forcing (13+), exactly 4 hearts (may or may not have 4 spades)
+    public static Func<Hand, bool> AfterStayman_GameForcing_WithHearts => h =>
+        HighCardPoints.Count(h) >= 13 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] == 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
+
+    // Game-forcing (13+), exactly 4 spades, <4 hearts
+    public static Func<Hand, bool> AfterStayman_GameForcing_WithSpades => h =>
+        HighCardPoints.Count(h) >= 13 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] == 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 4;
+
+    // Game-forcing (13+), both 4 hearts and 4 spades
+    public static Func<Hand, bool> AfterStayman_GameForcing_BothMajors => h =>
+        HighCardPoints.Count(h) >= 13 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] == 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] == 4;
+
+    // Invitational (11-12), exactly 4 hearts (may or may not have 4 spades)
+    public static Func<Hand, bool> AfterStayman_Invitational_WithHearts => h =>
+        HighCardPoints.Count(h) >= 11 && HighCardPoints.Count(h) <= 12 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] == 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] < 5;
+
+    // Invitational (11-12), exactly 4 spades, <4 hearts
+    public static Func<Hand, bool> AfterStayman_Invitational_WithSpades => h =>
+        HighCardPoints.Count(h) >= 11 && HighCardPoints.Count(h) <= 12 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] == 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] < 4;
+
+    // Invitational (11-12), both 4 hearts and 4 spades
+    public static Func<Hand, bool> AfterStayman_Invitational_BothMajors => h =>
+        HighCardPoints.Count(h) >= 11 && HighCardPoints.Count(h) <= 12 &&
+        ShapeEvaluator.GetShape(h)[Suit.Hearts] == 4 &&
+        ShapeEvaluator.GetShape(h)[Suit.Spades] == 4;
+
+    // =============================================
     // Opponent Specs (for uncontested test scenarios)
     // =============================================
 
