@@ -5,6 +5,7 @@ using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using Microsoft.AspNetCore.SignalR;
 
+
 namespace BridgeIt.Api.Services;
 
 /// <summary>
@@ -37,6 +38,11 @@ public class SignalREngineObserver : IEngineObserver
     public void OnRuleSkipped(string ruleName, DecisionContext context) { }
 
     public void PrintHands(Seat seat, Hand hand) { }
+
+    public void OnBidDecisionComplete(RuleEvaluationLog log)
+    {
+        _ = _hubContext.Clients.All.SendAsync("BidDebugV2", log);
+    }
 
     private static object BuildPayload(string ruleName, string bid, DecisionContext ctx)
     {

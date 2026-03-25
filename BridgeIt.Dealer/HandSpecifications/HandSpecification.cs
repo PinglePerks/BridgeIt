@@ -90,7 +90,7 @@ public static class HandSpecification
         HighCardPoints.Count(h) < 12 &&
         (HighCardPoints.Count(h) < 6 || ShapeEvaluator.GetShape(h).Values.All(v => v < 6));
 
-    private static Func<Hand, bool> OneLevelUnbalancedOpening =>
+    public static Func<Hand, bool> OneLevelUnbalancedOpening =>
         h => HighCardPoints.Count(h) >= 12
              && HighCardPoints.Count(h) <= 19
              && !IsBalanced(h)

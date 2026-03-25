@@ -34,6 +34,38 @@
         <None Update="TestFiles\GoldenGames\GoldenGames.pbn">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+
+        <None Update="TestFiles\OtherGames\2146080236725618640.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\21468717941360534950.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\24726111312267558250.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\214550427545623544460.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\2472528799553718795530.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\2472549426135804949120.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\2472625245993537390870.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\Random.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

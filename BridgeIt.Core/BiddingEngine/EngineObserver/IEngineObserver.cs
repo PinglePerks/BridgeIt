@@ -16,8 +16,14 @@ public interface IEngineObserver
 
     // Called if no rules match (Pass fallback)
     void OnNoRuleMatched(DecisionContext context);
-    
+
     void PrintHands(Seat seat, Hand hand);
+
+    /// <summary>
+    /// Called after a bid decision is complete with the full evaluation trace.
+    /// Default implementation is a no-op — only SignalREngineObserver overrides this.
+    /// </summary>
+    void OnBidDecisionComplete(RuleEvaluationLog log) { }
 }
 
 public class EngineObserver : IEngineObserver
