@@ -6,6 +6,7 @@ using BridgeIt.Core.BiddingEngine.Conventions;
 using BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Openings;
+using BridgeIt.Core.BiddingEngine.Rules.Responder;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
@@ -72,7 +73,10 @@ public class TestBridgeEnvironment
         rules.Add(new Acol1NTOpeningRule());
         rules.Add(new Acol2NTOpeningRule());
         rules.Add(new AcolStrongOpening());
-        
+
+        // Response to 2C
+        rules.Add(new AcolResponseTo2C());
+
         rules.Add(new StandardTransfer(NTConventionContexts.After1NT));
         rules.Add(new StandardStayman(NTConventionContexts.After1NT));
         rules.Add(new AcolNTRaiseOver1NT());
@@ -102,6 +106,7 @@ public class TestBridgeEnvironment
         rules.Add(new AcolResponderAfterStayman(NTConventionContexts.After2C2D2NT));
 
         // Opener rebid rules
+        rules.Add(new AcolOpenerRebidAfter2C());
         rules.Add(new AcolOpenerAfterNTInvite());
         rules.Add(new AcolOpenerAfterMajorRaise());
         rules.Add(new AcolRebidBalanced());

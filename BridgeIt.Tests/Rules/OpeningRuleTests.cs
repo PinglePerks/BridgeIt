@@ -228,10 +228,11 @@ public class OpeningRuleTests
     // =============================================
 
     [Test]
-    [TestCase(20, true)]
-    [TestCase(25, true)]
-    [TestCase(19, false)]
-    public void AcolStrong_CouldMakeBid_ChecksHcpAndBalanced(int hcp, bool expected)
+    [TestCase(23, true, Description = "Balanced 23 HCP")]
+    [TestCase(25, true, Description = "Balanced 25 HCP")]
+    [TestCase(22, false, Description = "Balanced 22 HCP - too low, opens 2NT")]
+    [TestCase(19, false, Description = "Balanced 19 HCP - too low")]
+    public void AcolStrong_CouldMakeBid_Balanced(int hcp, bool expected)
     {
         var rule = new AcolStrongOpening();
         var ctx = CreateOpeningContext(hcp, balanced: true, Suit.Spades);
@@ -239,18 +240,21 @@ public class OpeningRuleTests
     }
 
     [Test]
-    public void AcolStrong_CouldMakeBid_FalseForUnbalanced()
+    [TestCase(20, true, Description = "Unbalanced 20 HCP")]
+    [TestCase(25, true, Description = "Unbalanced 25 HCP")]
+    [TestCase(19, false, Description = "Unbalanced 19 HCP - too low")]
+    public void AcolStrong_CouldMakeBid_Unbalanced(int hcp, bool expected)
     {
         var rule = new AcolStrongOpening();
-        var ctx = CreateOpeningContext(22, balanced: false, Suit.Spades);
-        Assert.That(rule.CouldMakeBid(ctx), Is.False);
+        var ctx = CreateOpeningContext(hcp, balanced: false, Suit.Spades);
+        Assert.That(rule.CouldMakeBid(ctx), Is.EqualTo(expected));
     }
 
     [Test]
     public void AcolStrong_Apply_Returns2C()
     {
         var rule = new AcolStrongOpening();
-        var ctx = CreateOpeningContext(22, balanced: true, Suit.Spades);
+        var ctx = CreateOpeningContext(23, balanced: true, Suit.Spades);
         Assert.That(rule.Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Clubs)));
     }
 
