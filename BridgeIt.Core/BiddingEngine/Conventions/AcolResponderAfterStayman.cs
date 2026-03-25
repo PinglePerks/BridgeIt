@@ -27,7 +27,7 @@ public class AcolResponderAfterStayman : BiddingRuleBase
 
     public override string Name => $"Responder after Stayman ({_ntCtx.Name})";
     public override int Priority { get; }
-    public override bool IsAlertable => true;
+    public override bool IsAlertable => false;
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {

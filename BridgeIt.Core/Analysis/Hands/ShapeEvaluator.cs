@@ -85,7 +85,7 @@ public static class ShapeEvaluator
         return stoppers;
     }
 
-    internal static StopperQuality EvaluateStopperQuality(Hand hand, Suit suit)
+    public static StopperQuality EvaluateStopperQuality(Hand hand, Suit suit)
     {
         var suitCards = hand.Cards.Where(x => x.Suit == suit).ToList();
         var count = suitCards.Count;
