@@ -210,6 +210,8 @@
     "AcolResponderAfterOpener2NTRebid": 45,
     "AcolResponderAfterOpenerRebidOwnSuit": 40,
     "AcolResponderAfterOpenerNewSuit": 40,
+    "AcolResponderAfter2CSuitRebid": 55,
+    "KnowledgeShapeCorrection": 4,
     "KnowledgeBidGameInSuit": 2,
     "KnowledgeBidGameInNT": 1,
     "KnowledgeInviteInSuit": 2,

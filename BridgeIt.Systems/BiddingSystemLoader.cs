@@ -172,6 +172,7 @@ public class BiddingSystemLoader
         if (config.ResponseTo2C is { Enabled: true })
         {
             rules.Add(new AcolResponseTo2C());
+            rules.Add(new AcolResponderAfter2CSuitRebid());
         }
 
         // ── Responses to 1-suit ────────────────────────────────────────
@@ -233,6 +234,7 @@ public class BiddingSystemLoader
         }
 
         // ── Knowledge catch-all rules (always included) ────────────────
+        rules.Add(new KnowledgeShapeCorrection());
         rules.Add(new KnowledgeBidGameInSuit());
         rules.Add(new KnowledgeBidGameInNT());
         rules.Add(new KnowledgeInviteInSuit());
