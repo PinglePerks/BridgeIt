@@ -1,5 +1,6 @@
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Analysis.Partnership;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -62,6 +63,28 @@ public class AllConstraintTests
         var ctx = TestHelper.CreateContext(eval: new HandEvaluation { Shape = shape });
         
         Assert.That(expected, Is.EqualTo(constraint.IsMet(ctx)));
+    }
+
+    [TestCase(StopperQuality.Full, StopperQuality.Full, true)]
+    [TestCase(StopperQuality.Partial, StopperQuality.Full, false)]
+    [TestCase(StopperQuality.None, StopperQuality.Full, false)]
+    [TestCase(StopperQuality.Full, StopperQuality.Partial, true)]
+    [TestCase(StopperQuality.Partial, StopperQuality.Partial, true)]
+    [TestCase(StopperQuality.None, StopperQuality.Partial, false)]
+    public void StopperConstraint_EvaluatesCorrectly(StopperQuality actual, StopperQuality required, bool expected)
+    {
+        var constraint = new StopperConstraint(Suit.Hearts, required);
+        var stoppers = new Dictionary<Suit, StopperQuality> { { Suit.Hearts, actual } };
+        var ctx = TestHelper.CreateContext(eval: new HandEvaluation { SuitStoppers = stoppers });
+        Assert.That(expected, Is.EqualTo(constraint.IsMet(ctx)));
+    }
+
+    [Test]
+    public void StopperConstraint_MissingSuit_ReturnsFalse()
+    {
+        var constraint = new StopperConstraint(Suit.Hearts, StopperQuality.Partial);
+        var ctx = TestHelper.CreateContext(eval: new HandEvaluation { SuitStoppers = new Dictionary<Suit, StopperQuality>() });
+        Assert.That(constraint.IsMet(ctx), Is.False);
     }
 
     // ==============================================================================
@@ -196,21 +219,21 @@ public static class TestHelper
     public static DecisionContext CreateContext(
         HandEvaluation? eval = null,
         AuctionEvaluation? aucEval = null,
-        PartnershipKnowledge? knowledge = null,
+        TableKnowledge? tableKnowledge = null,
         string[]? historyStrs = null)
     {
         // 1. Defaults
-        var handEval = eval ?? new HandEvaluation 
-        { 
-            Hcp = 0, IsBalanced = false, Losers = 0, Shape = new Dictionary<Suit, int>() 
+        var handEval = eval ?? new HandEvaluation
+        {
+            Hcp = 0, IsBalanced = false, Losers = 0, Shape = new Dictionary<Suit, int>()
         };
-        
+
         var auctionEval = aucEval ?? new AuctionEvaluation();
-        
-        var partnerKnowledge = knowledge ?? new PartnershipKnowledge();
+
+        var tk = tableKnowledge ?? new TableKnowledge(Seat.North);
 
         // 2. Build History
-        
+
         var auctionHistory = new AuctionHistory(Seat.North);
 
         if (historyStrs != null)
@@ -224,14 +247,14 @@ public static class TestHelper
 
         // 3. Dummy Objects
         var dummyHand = new Hand(new List<Card>());
-        
+
         var biddingContext = new BiddingContext(dummyHand, auctionHistory, Seat.North, Vulnerability.None);
 
         return new DecisionContext(
             biddingContext,
             handEval,
             auctionEval,
-            partnerKnowledge
+            tk
         );
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
+        <OutputType>Library</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -19,6 +19,53 @@
       <PackageReference Include="NUnit" Version="4.4.0" />
       <PackageReference Include="NUnit.Analyzers" Version="4.11.2"/>
       <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\BridgeIt.CLI\BiddingRules\**\*.yaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Link>BiddingRules\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        </None>
+
+        <None Update="TestFiles\**\*.pbn">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\GoldenGames\GoldenGames.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\2146080236725618640.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\21468717941360534950.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\24726111312267558250.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\214550427545623544460.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\2472528799553718795530.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\2472549426135804949120.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\2472625245993537390870.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+        <None Update="TestFiles\OtherGames\Random.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

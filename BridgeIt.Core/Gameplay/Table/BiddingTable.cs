@@ -35,14 +35,14 @@ public class BiddingTable(
             
             var context = new BiddingContext(hands[current], auctionHistory, current, vulnerability);
             
-            var bid = await players[current].GetBidAsync(context);
-            
-            if (token.IsCancellationRequested) 
+            var bidResult = await players[current].GetBidAsync(context);
+
+            if (token.IsCancellationRequested)
                 token.ThrowIfCancellationRequested();
+
+            auctionHistory.Add(new AuctionBid(current, bidResult.Bid, bidResult.IsAlerted));
             
-            auctionHistory.Add(new AuctionBid(current, bid));
-            
-            observer.OnBid(auctionHistory);
+            await observer.OnBid(auctionHistory);
             
             if (rules.ShouldStop(auctionHistory.Bids))
                 break;

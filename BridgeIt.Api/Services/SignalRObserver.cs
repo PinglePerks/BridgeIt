@@ -17,10 +17,10 @@ public class SignalRBiddingObserver : IBiddingObserver
         _hubContext = hubContext;
     }
 
-    public void OnBid(AuctionHistory auctionHistory)
+    public async Task OnBid(AuctionHistory auctionHistory)
     {
-        // Broadcast to all clients immediately
-        _hubContext.Clients.All.SendAsync("BidHistory",  auctionHistory.Bids.Select(b => new BidDto((int)b.Seat, b.Bid.ToString())).ToList());
+        await _hubContext.Clients.All.SendAsync("BidHistory",
+            auctionHistory.Bids.Select(b => new BidDto((int)b.Seat, b.Bid.ToString(), b.IsAlerted)).ToList());
     }
     
 }

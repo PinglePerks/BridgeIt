@@ -1,18 +1,23 @@
 using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
-using BridgeIt.Core.BiddingEngine.Rules;
+using BridgeIt.Core.BiddingEngine.Conventions;
+using BridgeIt.Core.BiddingEngine.Rules.Knowledge;
+using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
+using BridgeIt.Core.BiddingEngine.Rules.Openings;
+using BridgeIt.Core.BiddingEngine.Rules.Responder;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
 using BridgeIt.Core.Configuration.Yaml;
+using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Extensions;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Players;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 
 namespace BridgeIt.TestHarness.Setup;
@@ -22,7 +27,6 @@ public class TestBridgeEnvironment
     public IServiceProvider Provider { get; private set; }
     public BiddingEngine Engine { get; private set; }
     public BiddingTable Table { get; private set; }
-    
     public Dictionary<Seat, IPlayer> Players { get; private set; }
 
     // Builder Pattern for flexibility
@@ -32,8 +36,6 @@ public class TestBridgeEnvironment
         env.Initialize();
         return env;
     }
-    
-    
 
     private void Initialize()
     {
@@ -42,13 +44,8 @@ public class TestBridgeEnvironment
         // 1. Core Dependencies (Factories, etc.)
         services.AddBridgeItCore(); 
         
-        // 2. Register Services needed for the Table if not covered by AddBridgeItCore
-        // (Assuming AddBridgeItCore registers these, but being safe based on your Program.cs)
-        services.TryAddSingleton<IAuctionRules, StandardAuctionRules>();
-        services.TryAddSingleton<IBiddingObserver, ConsoleBiddingObserver>(); // Or a silent Mock for tests
-        services.TryAddSingleton<IHandFormatter, HandFormatter>();
-        services.TryAddSingleton<BiddingTable>();
-        services.TryAddSingleton<IRuleLookupService, RuleLookupService>();
+        // 2. Register Observers
+        services.AddSingleton<IBiddingObserver, ConsoleBiddingObserver>();
         
         services.AddLogging(builder => 
         {
@@ -58,62 +55,84 @@ public class TestBridgeEnvironment
         });
 
         Provider = services.BuildServiceProvider();
-        
     }
     
-    public TestBridgeEnvironment WithAllRules(string directoryPath)
+    public TestBridgeEnvironment WithAllRules()
     {
-        var loader = Provider.GetRequiredService<YamlRuleLoader>();
-        var rules = loader.LoadRulesFromDirectory(directoryPath).ToList();
-        rules.Add(new OpenerUnbalancedRebidRule());
+        var basePath = AppDomain.CurrentDomain.BaseDirectory;
+        var fullPath = Path.Combine(basePath, "BiddingRules");
         
-        //rules.Add(new ResponseTo2ntOpening());
-        // rules.Add(new MajorFitWithPartner());
-        // rules.Add(new GeneralGameObjectiveRule());
-        // rules.Add(new OpenerUnbalancedRebidRule());
+        //var loader = Provider.GetRequiredService<YamlRuleLoader>();
+        //var rules = loader.LoadRulesFromDirectory(fullPath).ToList();
         
-        // Re-register or Instantiate Engine with these specific rules
-        var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
-        Engine = new BiddingEngine(rules,logger);
-        
-        var robotPlayer = new RobotPlayer(Engine, Provider.GetRequiredService<IRuleLookupService>());
-
-        Players = new Dictionary<Seat, IPlayer>()
-        {
-            { Seat.North, robotPlayer },
-            { Seat.East, robotPlayer },
-            { Seat.South, robotPlayer },
-            { Seat.West, robotPlayer }
-        };
-        RebuildTable();
-        return this;
-    }
-
-    public TestBridgeEnvironment WithSpecificRules(params string[] filePaths)
-    {
-        var loader = Provider.GetRequiredService<YamlRuleLoader>();
         var rules = new List<IBiddingRule>();
         
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(UnderscoredNamingConvention.Instance)
-            .Build();
-        // Manually load specific files
-        // (You might need to expose a LoadRuleFromFile method in loader, or just use this logic)
-        foreach (var path in filePaths)
-        {
-            // Assuming loader has a public method or we replicate the logic
-            // For now, leveraging the loader to load a directory containing these, 
-            // or assuming you add a method LoadSingleFile to YamlRuleLoader.
-            // Let's implement a simple file loader here for flexibility:
+        // Opening rules
+        rules.Add(new WeakOpeningRule(reservedBids: [Bid.SuitBid(2, Suit.Clubs)]));
+        rules.Add(new Acol1SuitOpeningRule());
+        rules.Add(new Acol1NTOpeningRule());
+        rules.Add(new Acol2NTOpeningRule());
+        rules.Add(new AcolStrongOpening());
 
-            var rule = loader.LoadRuleFromYaml(path);
-            rules.Add(rule);
+        // Response to 2C
+        rules.Add(new AcolResponseTo2C());
 
+        rules.Add(new StandardTransfer(NTConventionContexts.After1NT));
+        rules.Add(new StandardStayman(NTConventionContexts.After1NT));
+        rules.Add(new AcolNTRaiseOver1NT());
 
-        }
-        // Re-register or Instantiate Engine with these specific rules
+        rules.Add(new StandardTransfer(NTConventionContexts.After2NT));
+        rules.Add(new StandardStayman(NTConventionContexts.After2NT));
+
+        rules.Add(new StandardTransfer(NTConventionContexts.After2C2D2NT));
+        rules.Add(new StandardStayman(NTConventionContexts.After2C2D2NT));
+
+        rules.Add(new AcolJacoby2NTOver1Major());
+        rules.Add(new AcolRaiseMajorOver1Suit());
+        rules.Add(new AcolRaiseMinorOver1Suit());
+        rules.Add(new AcolNewSuitOver1Suit());
+        rules.Add(new Acol1NTResponseTo1Suit());
+
+        rules.Add(new CompleteTransfer(NTConventionContexts.After1NT));
+        rules.Add(new CompleteTransfer(NTConventionContexts.After2NT));
+        rules.Add(new CompleteTransfer(NTConventionContexts.After2C2D2NT));
+
+        rules.Add(new StaymanResponse(NTConventionContexts.After1NT));
+        rules.Add(new StaymanResponse(NTConventionContexts.After2NT));
+        rules.Add(new StaymanResponse(NTConventionContexts.After2C2D2NT));
+
+        rules.Add(new AcolResponderAfterStayman(NTConventionContexts.After1NT));
+        rules.Add(new AcolResponderAfterStayman(NTConventionContexts.After2NT));
+        rules.Add(new AcolResponderAfterStayman(NTConventionContexts.After2C2D2NT));
+
+        // Opener rebid rules
+        rules.Add(new AcolOpenerRebidAfter2C());
+        rules.Add(new AcolOpenerAfterNTInvite());
+        rules.Add(new AcolOpenerAfterMajorRaise());
+        rules.Add(new AcolRebidBalanced());
+        rules.Add(new AcolRebidNewSuit());
+        rules.Add(new AcolRebidRaiseSuit());
+        rules.Add(new AcolRebidOwnSuit());
+
+        // Responder rebids (round 2)
+        rules.Add(new AcolResponderAfterOpenerRaisedSuit());
+        rules.Add(new AcolResponderAfterOpener1NTRebid());
+        rules.Add(new AcolResponderAfterOpener2NTRebid());
+        rules.Add(new AcolResponderAfterOpenerRebidOwnSuit());
+        rules.Add(new AcolResponderAfterOpenerNewSuit());
+
+        // Knowledge-based catch-all rules
+        rules.Add(new KnowledgeBidGameInSuit());
+        rules.Add(new KnowledgeBidGameInNT());
+        rules.Add(new KnowledgeInviteInSuit());
+        rules.Add(new KnowledgeInviteInNT());
+        rules.Add(new KnowledgeSignOffInFit());
+        rules.Add(new KnowledgeSignOff());
+
+        var observer = Provider.GetRequiredService<IEngineObserver>();
         var logger = Provider.GetRequiredService<ILogger<BiddingEngine>>();
-        Engine = new BiddingEngine(rules,logger);
+        
+        Engine = new BiddingEngine(rules, logger, observer);
         
         var robotPlayer = new RobotPlayer(Engine, Provider.GetRequiredService<IRuleLookupService>());
 
@@ -131,19 +150,5 @@ public class TestBridgeEnvironment
     private void RebuildTable()
     {
         Table = Provider.GetRequiredService<BiddingTable>();
-    }
-}
-
-// Helper extension to safely add if missing
-public static class ServiceCollectionExtensions
-{
-    public static void TryAddSingleton<TService, TImplementation>(this IServiceCollection services) 
-        where TService : class 
-        where TImplementation : class, TService
-    {
-        if (services.All(x => x.ServiceType != typeof(TService)))
-        {
-            services.AddSingleton<TService, TImplementation>();
-        }
     }
 }

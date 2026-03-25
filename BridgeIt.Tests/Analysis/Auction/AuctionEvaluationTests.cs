@@ -1,4 +1,7 @@
 using BridgeIt.Core.Analysis.Auction;
+using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Analysis.Partnership;
+using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
 
@@ -123,13 +126,22 @@ public class AuctionEvaluationTests
     [TestCaseSource(nameof(BestFitSuitTestCases))]
     public void BestFitSuitTest(Dictionary<string, int> partnerShape, Dictionary<Suit, int> myShape, Suit expected)
     {
-        var pk = new PartnershipKnowledge();
+        var tableKnowledge = new TableKnowledge(Seat.South);
         foreach (var shape in partnerShape)
         {
-            pk.PartnerMinShape[Enum.Parse<Suit>(shape.Key)] = shape.Value;
+            tableKnowledge.Partner.MinShape[Enum.Parse<Suit>(shape.Key)] = shape.Value;
         }
 
-        var result = pk.BestFitSuit(myShape);
+        var handEval = new HandEvaluation
+        {
+            Hcp = 10, Shape = myShape, IsBalanced = false, Losers = 7,
+            LongestAndStrongest = Suit.Spades
+        };
+        var history = new AuctionHistory(Seat.North);
+        var ctx = new BiddingContext(new Core.Domain.Primatives.Hand(new List<Card>()), history, Seat.South, Vulnerability.None);
+        var decCtx = new DecisionContext(ctx, handEval, AuctionEvaluator.Evaluate(history), tableKnowledge);
+
+        var result = decCtx.BestFitSuit();
 
         Assert.That(result, Is.EqualTo(expected));
     }

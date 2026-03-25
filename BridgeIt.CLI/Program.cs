@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using BridgeIt.Core.BiddingEngine.Core;
+using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.BiddingEngine.RuleLookupService;
 using BridgeIt.Core.BiddingEngine.Rules;
 using BridgeIt.Core.Configuration.Yaml;
@@ -30,10 +31,10 @@ var provider = services.BuildServiceProvider();
 // --- 2. Load Rules ---
 // We define the path here, but the Logic is in the Core
 const string RulesDirectory = "/Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.CLI/BiddingRules";
-var loader = provider.GetRequiredService<YamlRuleLoader>();
-var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
-var rules = loadedRules.ToList();
-rules.Add(new OpenerUnbalancedRebidRule());
+//var loader = provider.GetRequiredService<YamlRuleLoader>();
+//var loadedRules = loader.LoadRulesFromDirectory(RulesDirectory);
+var rules = new List<IBiddingRule>();
+//rules.Add(new OpenerUnbalancedRebidRule());
 //rules.Add(new RespondingToNaturalOpening());
 //rules.Add(new ResponseTo2ntOpening());
 // rules.Add(new GeneralGameObjectiveRule());
@@ -47,7 +48,7 @@ rules.Add(new OpenerUnbalancedRebidRule());
 
 // Hack for CLI simplicity: Re-register the engine with the specific rules found
 var logger = provider.GetRequiredService<ILogger<BiddingEngine>>();
-var engine = new BiddingEngine(rules, logger); 
+var engine = new BiddingEngine(rules, logger, new EngineObserver()); 
 // In a real app, you might have a BiddingRuleRegistry service.
 
 

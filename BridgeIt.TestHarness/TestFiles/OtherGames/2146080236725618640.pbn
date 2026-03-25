@@ -1,0 +1,637 @@
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "1"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "N"]
+[Vulnerable "None"]
+[Deal "N:KQ943.JT.J972.82 AJ8.AKQ3.Q4.7543 T752.54.T86.QJ96 6.98762.AK53.AKT"]
+[Scoring "MP"]
+[Declarer "E"]
+[Contract "4H"]
+[Result "12"]
+{E claimed 3 tricks}[Auction "N"]
+Pass 1NT Pass 2C=1=
+Pass 2H Pass 4H
+Pass Pass Pass 
+[Note "1:Alert"]
+[Play "S"]
+CQ CA C2 C3
+H4 H2 HT HA
+H5 H6 HJ HK
+D6 D3 D2 DQ
+D8 DA D7 D4
+DT DK D9 C4
+S5 D5 DJ H3
+S2 S6 S3 SA
+C6 CK C8 C5
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "2"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "E"]
+[Vulnerable "NS"]
+[Deal "N:654.9876.KJ52.32 KQJ3.K.Q63.AJT97 T2.AQT5.AT84.Q54 A987.J432.97.K86"]
+[Scoring "MP"]
+[Declarer "E"]
+[Contract "4S"]
+[Result "10"]
+[Auction "E"]
+1C Pass 1H Pass
+2S Pass 4S Pass
+Pass Pass 
+[Note "1:Alert"]
+[Play "S"]
+C4 C6 C3 C7
+S2 SA S4 S3
+ST S7 S5 SJ
+D4 S8 S6 SQ
+C5 CK C2 C9
+CQ C8 D2 CA
+D8 D7 H7 CJ
+H5 D9 H6 CT
+DT S9 D5 D3
+HA H2 H8 HK
+DA H3 DJ D6
+HQ H4 H9 SK
+HT HJ DK DQ
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "3"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "S"]
+[Vulnerable "EW"]
+[Deal "N:75.AT652.8654.KJ KQT62.J8.J2.QT92 J93.KQ43.AKQT9.5 A84.97.73.A87643"]
+[Scoring "MP"]
+[Declarer "N"]
+[Contract "4H"]
+[Result "11"]
+{N claimed 2 tricks}[Auction "S"]
+1D Pass 1H X
+3H Pass 4H Pass
+Pass Pass 
+[Note "1:Alert"]
+[Play "E"]
+DJ DQ D7 D4
+H8 HK H9 H2
+HJ HQ H7 H5
+D2 DA D3 D5
+CT DK C8 D6
+S2 DT C3 D8
+S6 D9 C4 S5
+ST S3 SA S7
+SK S9 S4 H6
+CQ C5 C7 CJ
+SQ SJ S8 HT
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "4"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "W"]
+[Vulnerable "Both"]
+[Deal "N:T83.J7.KJ94.A974 AJ7.4.AQ652.JT53 Q6.AK8653.T73.Q2 K9542.QT92.8.K86"]
+[Scoring "MP"]
+[Declarer "W"]
+[Contract "3S"]
+[Result "8"]
+[Auction "W"]
+Pass Pass 1D 1H
+1S Pass 2C 2H
+2S 3H 3S Pass
+Pass Pass 
+[Note "1:Alert"]
+[Play "N"]
+HJ H4 HA H2
+CA C3 C2 C6
+C4 C5 CQ CK
+S3 SJ SQ S2
+S8 SA S6 S4
+C7 CJ H3 C8
+C9 CT H5 S5
+H7 S7 H6 H9
+D4 DA D3 D8
+D9 D2 D7 S9
+DJ D5 HK HQ
+DK D6 DT SK
+ST DQ H8 HT
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "5"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "N"]
+[Vulnerable "NS"]
+[Deal "N:Q97.64.T85.QJ864 3.KQT952.J72.A72 AJ64.J73.A63.T95 KT852.A8.KQ94.K3"]
+[Scoring "MP"]
+[Declarer "E"]
+[Contract "4H"]
+[Result "11"]
+[Auction "N"]
+Pass 2H=1= Pass 3H
+Pass 4H Pass Pass
+Pass 
+[Note "1:Alert"]
+[Play "S"]
+DA D4 D5 D2
+CT C3 C4 CA
+H3 HA H4 H2
+H7 H8 H6 HK
+HJ S2 C6 HQ
+D3 DK D8 D7
+D6 D9 DT DJ
+C5 CK C8 C2
+C9 DQ CJ S3
+S4 S5 S7 HT
+S6 S8 S9 H9
+SJ ST SQ H5
+SA SK CQ C7
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "6"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "E"]
+[Vulnerable "EW"]
+[Deal "N:2.K4.KJ74.QT8432 A65.AT.A9652.765 KJT98.8765.8.AKJ Q743.QJ932.QT3.9"]
+[Scoring "MP"]
+[Declarer "N"]
+[Contract "2NT"]
+[Result "8"]
+[Auction "E"]
+Pass 1S Pass 1NT
+Pass 2H Pass 2NT
+Pass Pass Pass 
+[Note "1:Alert"]
+[Play "E"]
+DA D8 D3 D4
+D2 H5 DQ DK
+C5 CA C9 C2
+C6 CK H2 C3
+C7 CJ H3 CQ
+S5 H6 S3 CT
+S6 S8 DT C8
+HT S9 H9 C4
+D5 H7 S4 DJ
+D9 H8 HJ D7
+HA ST HQ H4
+SA SJ S7 S2
+D6 SK SQ HK
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "7"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "S"]
+[Vulnerable "Both"]
+[Deal "N:82.AKT753.QJ65.3 75.Q842.AT8.AKQ5 KJT643..93.T9762 AQ9.J96.K742.J84"]
+[Scoring "MP"]
+[Declarer "S"]
+[Contract "2S"]
+[Result "5"]
+{S claimed 2 tricks}[Auction "S"]
+2S Pass Pass Pass
+[Note "1:Alert"]
+[Play "W"]
+D2 DQ DA D3
+SQ S2 S7 ST
+DK D5 DT D9
+SA S8 S5 S3
+C4 C3 CA C2
+C8 H3 CK C6
+CJ H5 CQ C7
+S9 H7 C5 C9
+H6 HA H2 CT
+H9 HT H4 S4
+D4 D6 H8 SK
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "8"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "W"]
+[Vulnerable "None"]
+[Deal "N:Q2.AT542.T74.874 T63.K76.Q8.AJT52 K985.QJ83.KJ63.9 AJ74.9.A952.KQ63"]
+[Scoring "MP"]
+[Declarer "W"]
+[Contract "4C"]
+[Result "10"]
+[Auction "W"]
+1C 1H 3C 3H
+4C Pass Pass Pass
+[Note "1:Alert"]
+[Play "N"]
+HA H6 H3 H9
+C4 C2 C9 CQ
+C7 CA D6 C3
+C8 CJ H8 C6
+H2 HK HJ D2
+SQ ST S5 S4
+D4 D8 DJ DA
+D7 DQ DK D5
+H4 H7 HQ CK
+DT C5 D3 D9
+S2 S3 S8 SJ
+H5 S6 S9 SA
+HT CT SK S7
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "9"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "N"]
+[Vulnerable "EW"]
+[Deal "N:JT3.J4.AQT76.742 954.K7.542.KQT98 AK876.A982.K.AJ3 Q2.QT653.J983.65"]
+[Scoring "MP"]
+[Declarer "S"]
+[Contract "4S"]
+[Result "10"]
+[Auction "N"]
+Pass Pass 1S Pass
+1NT Pass 3H Pass
+4S Pass Pass Pass
+[Note "1:Alert"]
+[Play "W"]
+C6 C2 CK CA
+S2 S3 S4 SA
+SQ ST S5 SK
+H3 SJ S9 S6
+D3 DA D2 DK
+D8 DQ D4 H2
+H5 H4 H7 HA
+HQ HJ HK H8
+C5 C4 CQ C3
+H6 C7 CT CJ
+HT D6 D5 H9
+DJ D7 C8 S7
+D9 DT C9 S8
+*
+ 
+
+ 
+
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "11"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "S"]
+[Vulnerable "None"]
+[Deal "N:A6.A72.AKQ642.KQ KJ9.43.9853.AJ32 T7542.96.T.98765 Q83.KQJT85.J7.T4"]
+[Scoring "MP"]
+[Declarer "N"]
+[Contract "3NT"]
+[Result "6"]
+[Auction "S"]
+Pass 2H=1= 3NT Pass
+Pass Pass 
+[Note "1:Alert"]
+[Play "E"]
+H4 H9 HK H2
+H3 H6 HQ H7
+C2 C5 HJ HA
+CA C6 C4 CK
+SK S2 S3 SA
+D3 DT D7 DA
+D5 C7 DJ DK
+D8 C8 S8 DQ
+C3 C9 CT CQ
+D9 S4 H5 D6
+S9 ST SQ S6
+SJ S5 HT D2
+CJ S7 H8 D4
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "12"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "W"]
+[Vulnerable "NS"]
+[Deal "N:753.JT53.AJ753.4 K982.82.QT9642.6 AJT4.AQ76.8.QJT2 Q6.K94.K.AK98753"]
+[Scoring "MP"]
+[Declarer "W"]
+[Contract "3C"]
+[Result "8"]
+[Auction "W"]
+1C Pass 1D Pass
+3C Pass Pass Pass
+[Note "1:Alert"]
+[Play "N"]
+HJ H2 HA H4
+H3 H8 H6 HK
+H5 C6 H7 H9
+DA D2 D8 DK
+HT D4 HQ C3
+C4 D6 C2 CA
+S3 S2 CT CK
+S5 S8 SA SQ
+S7 S9 CQ C5
+D3 D9 CJ C7
+D5 SK S4 S6
+D7 DT ST C8
+DJ DQ SJ C9
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "13"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "N"]
+[Vulnerable "Both"]
+[Deal "N:6.A97542.T2.A542 AK7.JT.AQ3.KQJT6 JT42.8.K7654.987 Q9853.KQ63.J98.3"]
+[Scoring "MP"]
+[Declarer "W"]
+[Contract "4S"]
+[Result "10"]
+{W claimed 3 tricks}[Auction "N"]
+2H X Pass 2S
+Pass 3H Pass 4S
+Pass Pass Pass 
+[Note "1:Alert"]
+[Play "N"]
+HA HT H8 H3
+H2 HJ S2 H6
+CA C6 C9 C3
+C2 CK C7 D8
+S6 SA S4 S3
+C5 SK ST S5
+C4 S7 SJ SQ
+H4 D3 D4 HK
+H5 DQ D5 HQ
+D2 DA D6 D9
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "14"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "E"]
+[Vulnerable "None"]
+[Deal "N:AK.AQT7.A5.AJT65 JT964.54.J86.K73 87532.982.KT7.92 Q.KJ63.Q9432.Q84"]
+[Scoring "MP"]
+[Declarer "N"]
+[Contract "3NT"]
+[Result "10"]
+[Auction "E"]
+Pass Pass Pass 2C=1=
+Pass 2D=1= Pass 3C
+Pass 3S Pass 3NT
+Pass Pass Pass 
+[Note "1:Alert"]
+[Play "E"]
+SJ S2 SQ SK
+C3 C9 CQ C5
+H5 H8 H3 H7
+CK C2 C4 CT
+ST S3 C8 SA
+C7 H2 D2 CA
+H4 D7 D3 CJ
+S4 S5 D4 C6
+D6 DK D9 D5
+S6 H9 HJ HQ
+D8 DT DQ DA
+S9 S7 H6 HA
+DJ S8 HK HT
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "15"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "S"]
+[Vulnerable "NS"]
+[Deal "N:T632.QJ2.963.873 Q75.KT943.J42.J2 AKJ4.85.Q85.QT94 98.A76.AKT7.AK65"]
+[Scoring "MP"]
+[Declarer "E"]
+[Contract "4H"]
+[Result "10"]
+[Auction "S"]
+1NT X XX Pass
+2S Pass Pass 3H
+Pass 4H Pass Pass
+Pass 
+[Note "1:Alert"]
+[Play "S"]
+SA S9 S2 S5
+SK S8 S3 S7
+CT C5 C3 CJ
+H5 HA H2 H3
+H8 H6 HJ HK
+DQ DA D3 DJ
+D5 DK D6 D2
+D8 DT D9 D4
+C4 CA C7 C2
+C9 CK C8 SQ
+S4 H7 HQ H4
+SJ C6 ST H9
+CQ D7 S6 HT
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "16"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "W"]
+[Vulnerable "EW"]
+[Deal "N:965432.986..KQ42 AJT.QT52.T532.A9 K.AJ74.KQ98.T863 Q87.K3.AJ764.J75"]
+[Scoring "MP"]
+[Declarer "N"]
+[Contract "2S"]
+[Result "7"]
+[Auction "W"]
+Pass Pass Pass 1D
+Pass 1S Pass 2H
+Pass 2S Pass Pass
+Pass 
+[Note "1:Alert"]
+[Play "E"]
+CA C3 C5 C2
+C9 CT CJ CK
+SA SK S7 S2
+D2 DK DA S3
+H2 HA H3 H6
+D3 DQ D4 H8
+D5 D9 D6 S4
+ST H4 S8 S6
+DT D8 D7 H9
+HQ H7 HK S5
+SJ C6 C7 CQ
+H5 HJ SQ C4
+HT C8 DJ S9
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "17"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "N"]
+[Vulnerable "None"]
+[Deal "N:764.J.QJT.AQJ852 AJ8.T4.K98532.K9 Q32.AKQ965.76.63 KT95.8732.A4.T74"]
+[Scoring "MP"]
+[Declarer "S"]
+[Contract "2H"]
+[Result "6"]
+[Auction "N"]
+1C 1D 1H Pass
+2C 2D 2H Pass
+Pass Pass 
+[Note "1:Alert"]
+[Play "W"]
+DA DT D5 D6
+D4 DJ DK D7
+C7 DQ D2 H9
+H2 HJ H4 HA
+H3 S4 HT HK
+H8 C2 D3 HQ
+C4 CJ CK C3
+S9 S6 SA S2
+SK S7 SJ SQ
+ST C5 S8 S3
+CT CA C9 C6
+H7 C8 D8 H5
+S5 CQ D9 H6
+*
+ 
+
+ 
+[Event "Swiss Pairs League"]
+[Site "BridgeClubLive!"]
+[Date "2025.11.23"]
+[Board "18"]
+[West "F1EDA"]
+[North "gillfromtheboro"]
+[South "TheMole"]
+[East "FungusForager"]
+[Dealer "E"]
+[Vulnerable "NS"]
+[Deal "N:J7542.JT92.T7.KQ AT8.K4.Q962.JT76 Q63.AQ8.AKJ83.A5 K9.7653.54.98432"]
+[Scoring "MP"]
+[Declarer "S"]
+[Contract "3D"]
+[Result "9"]
+[Auction "E"]
+Pass 2NT Pass 3C=1=
+Pass 3D=1= Pass Pass
+Pass 
+[Note "1:Alert"]
+[Play "W"]
+H5 HJ HK HA
+D5 D7 D2 DA
+D4 DT D6 DK
+H7 S2 D9 D3
+H3 S4 DQ D8
+H6 H2 H4 HQ
+C2 H9 C6 H8
+C3 HT S8 S3
+SK S5 ST SQ
+S9 SJ SA S6
+C4 CQ C7 C5
+C8 CK CT CA
+C9 S7 CJ DJ
+*
+ 
+
+ 

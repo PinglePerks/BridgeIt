@@ -1,5 +1,4 @@
 using BridgeIt.Core.Analysis.Auction;
-using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -10,127 +9,71 @@ public abstract class BiddingRuleBase : IBiddingRule
 {
     public abstract string Name { get; }
     public abstract int Priority { get; }
-    public abstract bool IsApplicable(DecisionContext ctx);
+    public virtual bool IsAlertable => false;
+
+    /// <summary>
+    /// Checks whether this rule is applicable given only the auction state.
+    /// Called by both CouldMakeBid (forward) and CouldExplainBid (backward)
+    /// to eliminate duplication. Takes AuctionEvaluation only — no hand data,
+    /// so backward inference cannot accidentally access private information.
+    /// </summary>
+    protected virtual bool IsApplicableContext(AuctionEvaluation auction) => true;
+
+    /// <summary>
+    /// Forward: checks auction context via IsApplicableContext, then hand requirements.
+    /// Subclasses override IsHandApplicable for hand-specific checks.
+    /// </summary>
+    public virtual bool CouldMakeBid(DecisionContext ctx)
+    {
+        if (!IsApplicableContext(ctx.AuctionEvaluation)) return false;
+        return IsHandApplicable(ctx);
+    }
+
+    /// <summary>
+    /// Forward: given the hand, does it meet this rule's requirements?
+    /// Only called when IsApplicableContext has already passed.
+    /// </summary>
+    protected virtual bool IsHandApplicable(DecisionContext ctx) => true;
+
+    /// <summary>
+    /// Backward: checks auction context via IsApplicableContext, then bid shape.
+    /// Subclasses override IsBidExplainable for bid-matching checks.
+    /// </summary>
+    public virtual bool CouldExplainBid(Bid bid, DecisionContext ctx)
+    {
+        if (!IsApplicableContext(ctx.AuctionEvaluation)) return false;
+        return IsBidExplainable(bid, ctx);
+    }
+
+    /// <summary>
+    /// Backward: could this bid have been produced by this rule?
+    /// Takes full DecisionContext so rules can query PartnershipKnowledge
+    /// (accumulated from replayed auction — all public information).
+    /// Hand evaluation will be blank when inferring about other players.
+    /// Only called when IsApplicableContext has already passed.
+    /// </summary>
+    protected virtual bool IsBidExplainable(Bid bid, DecisionContext ctx) => false;
+
     public abstract BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx);
     public abstract Bid? Apply(DecisionContext ctx);
 
-    protected int Hcp(Hand hand) => HighCardPoints.Count(hand);
+    /// <summary>
+    /// Public accessor for IsApplicableContext — used by the engine for
+    /// negative inference from passes.
+    /// </summary>
+    public bool IsApplicableToAuction(AuctionEvaluation auction)
+        => IsApplicableContext(auction);
 
-    protected bool IsBalanced(Hand hand) => ShapeEvaluator.IsBalanced(hand);
-    
-    protected Suit LongestAndStrongest(Hand hand) => hand.Cards.GroupBy(c => c.Suit).OrderByDescending(g => g.Count()).First().Key;
-    
-    protected bool AllPassed(IReadOnlyList<Bid> bids) => bids.All(b => b.Type == BidType.Pass);
+    /// <summary>
+    /// Returns the minimum hand requirements for any bid this rule could produce.
+    /// Default null means this rule does not contribute to negative inference.
+    /// Override in rules where the requirements are clear-cut (openings, responses).
+    /// </summary>
+    public virtual CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction) => null;
 
     protected int GetNextSuitBidLevel(Suit suit, Bid? currentContract)
-    {
-        if (currentContract == null) return 1;
-        var level = currentContract.Level;
-        if (currentContract.Type == BidType.NoTrumps) return level + 1;
-        if (suit <= currentContract.Suit) return level + 1;
-        return level;
-    }
+        => Bid.NextLevelForSuit(suit, currentContract);
 
     protected int GetNextNtBidLevel(Bid? currentContract)
-    {
-        if (currentContract == null) return 1;
-        if (currentContract.Type == BidType.NoTrumps) return currentContract.Level + 1;
-        return currentContract.Level;
-    }
+        => Bid.NextLevelForNoTrumps(currentContract);
 }
-
-// public class RespondingToNaturalOpening : BiddingRuleBase
-// {
-//     public override int Priority => 100;
-//
-//     public override bool IsApplicable(BiddingContext ctx)
-//         => ctx.AuctionEvaluation.PartnershipState == "natural_response";
-//
-//     public override BiddingDecision? Apply(BiddingContext ctx)
-//     {
-//         var partnerBid = ctx.AuctionEvaluation.PartnerLastBid;
-//
-//         if (partnerBid == null || partnerBid.Type == BidType.Pass)
-//         {
-//             return null;
-//         }
-//         
-//         if (ctx.PartnershipKnowledge.HasFit(partnerBid.Suit!.Value, ctx.HandEvaluation.Shape[partnerBid.Suit.Value]))
-//         {
-//             
-//         }
-//
-//         return null;
-//     }
-//
-//     protected internal BiddingDecision? ResponseToFit(Suit suit, BiddingContext ctx)
-//     {
-//         var expPartnerLosers = 7;
-//
-//         if (ctx.HandEvaluation.Losers <= 7)
-//         {
-//             
-//         }
-//
-//         return null;
-//     }
-//         
-// }
-
-//
-// public class RedSuitTransfer : BiddingRuleBase
-// {
-//     public override int Priority => 100;
-//     public override bool IsApplicable(BiddingContext ctx) 
-//         => ctx.AuctionEvaluation.PartnershipState == "red_suit_transfer";
-//
-//     public override BiddingDecision? Apply(BiddingContext ctx)
-//     {
-//         var partnerBid = ctx.AuctionEvaluation.PartnerLastBid;
-//         var level = partnerBid!.Level!;
-//         var suit = partnerBid.Suit!;
-//
-//         var transfer = (int)suit + 1;
-//         if (transfer == 4)
-//         {
-//             transfer = 0 ;
-//             level++;
-//         }
-//         
-//         return new BiddingDecision(Bid.SuitBid(level, (Suit)transfer), "compulsory correction", "transferred",null);
-//     }
-//     
-// }
-//
-// public class DefaultBidding : BiddingRuleBase
-// {
-//     public override string Name => "Codebased---Default bidding";
-//     public override int Priority => 1;
-//
-//     public override bool IsApplicable(BiddingContext ctx)
-//         => ctx.AuctionEvaluation.SeatRole == SeatRole.Responder;
-//
-//     public override BiddingDecision? Apply(BiddingContext ctx)
-//     {
-//         //TODO; check if already agreed a fit?
-//         
-//         var suit = ctx.PartnershipKnowledge.BestFitSuit(ctx.HandEvaluation.Shape);
-//
-//         var lowestHcp = ctx.PartnershipKnowledge.PartnerHcpMin;
-//
-//         if (suit == null)
-//         {
-//             var totalHcp = lowestHcp + ctx.HandEvaluation.Hcp;
-//             if (totalHcp >= 25) return new BiddingDecision(Bid.NoTrumpsBid(3), "No suit fit", "no_suit_fit");
-//             
-//             if(totalHcp >= 22) return new BiddingDecision(Bid.NoTrumpsBid(2), "No Suit fit", "no_suit_fit");
-//         }
-//         else
-//         {
-//             
-//         }
-//
-//         return null;
-//     }
-//     
-// }

@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "systemName": "Modern Acol",
+    "category": "Acol",
+    "description": "Modern Acol with Weak 1NT, Transfers, and Weak Twos in Diamonds/Hearts/Spades.",
+    "level": "Intermediate/Advanced",
+    "source_files": [
+      "Opener/Acol-Basic_Openings.yaml",
+      "Opener/Acol-2Level_Openings.yaml",
+      "Responder/ResponsesTo1NT.yaml",
+      "General/RomanKeyCardBlackwood.yaml"
+    ]
+  },
+  "bidding": {
+    "opening_1level": {
+      "1NT": {
+        "hcp": "12-14",
+        "shape": "Balanced",
+        "description": "Weak No Trump",
+        "responses": {
+          "2C": { "type": "Convention", "meaning": "Stayman (Invitational+, 11+ HCP)" },
+          "2D": { "type": "Convention", "meaning": "Transfer to Hearts (5+ Hearts)" },
+          "2H": { "type": "Convention", "meaning": "Transfer to Spades (5+ Spades)" },
+          "2S": { "type": "Natural", "meaning": "Invitational Balanced (11 HCP exactly)" },
+          "2NT": { "type": "Natural", "meaning": "Invitational to 3NT (12-13 HCP)" },
+          "3NT": { "type": "Natural", "meaning": "Sign off in Game (13+ HCP)" }
+        }
+      },
+      "suits": {
+        "hcp": "12-19",
+        "min_length": 4,
+        "priority": "Longest suit (4+)",
+        "openings": ["1C", "1D", "1H", "1S"]
+      }
+    },
+    "opening_2level": {
+      "2C": {
+        "type": "Strong",
+        "meaning": "Game Forcing (23+ HCP) or Strong Unbalanced (Losers <= 3)",
+        "next_state": "strong"
+      },
+      "2D": {
+        "type": "Pre-emptive",
+        "meaning": "Weak Two: 6-10 HCP, 6+ Diamonds",
+        "next_state": "natural_response"
+      },
+      "2H": {
+        "type": "Pre-emptive",
+        "meaning": "Weak Two: 6-10 HCP, 6+ Hearts",
+        "next_state": "natural_response"
+      },
+      "2S": {
+        "type": "Pre-emptive",
+        "meaning": "Weak Two: 6-10 HCP, 6+ Spades",
+        "next_state": "natural_response"
+      },
+      "2NT": {
+        "hcp": "20-22",
+        "shape": "Balanced",
+        "description": "Strong Balanced Opening"
+      }
+    },
+    "conventions": {
+      "slam": {
+        "name": "Roman Key Card Blackwood (RKCB)",
+        "responses_to_4NT": {
+          "5C": "0 or 3 Key Cards",
+          "5D": "1 or 4 Key Cards",
+          "5H": "2 Key Cards (without Queen check specified in current rules)"
+        }
+      },
+      "transfers": true
+    }
+  }
+}
