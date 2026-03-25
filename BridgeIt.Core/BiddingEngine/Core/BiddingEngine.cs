@@ -93,7 +93,7 @@ public sealed class BiddingEngine
         _validityChecker = validityChecker ?? new BidValidityChecker();
     }
 
-    public Bid ChooseBid(DecisionContext ctx)
+    public BidResult ChooseBid(DecisionContext ctx)
     {
         _observer.PrintHands(ctx.Data.Seat, ctx.Data.Hand);
 
@@ -113,7 +113,7 @@ public sealed class BiddingEngine
             if (decision.Type == BidType.Pass)
             {
                 _observer.OnRuleApplied(rule.Name, decision, ctx);
-                return decision;
+                return new BidResult(decision, rule.IsAlertable);
             }
 
             // Validate the bid is legal (higher than current contract, etc.)
@@ -121,7 +121,7 @@ public sealed class BiddingEngine
             if (_validityChecker.IsValid(auctionBid, ctx.Data.AuctionHistory))
             {
                 _observer.OnRuleApplied(rule.Name, decision, ctx);
-                return decision;
+                return new BidResult(decision, rule.IsAlertable);
             }
 
             // Rule produced an illegal bid — log and try next rule
@@ -130,6 +130,6 @@ public sealed class BiddingEngine
                 rule.Name, decision, ctx.Data.Seat);
         }
         _observer.OnNoRuleMatched(ctx);
-        return Bid.Pass();
+        return new BidResult(Bid.Pass());
     }
 }

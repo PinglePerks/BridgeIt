@@ -10,6 +10,7 @@ public class AcolStrongOpening : BiddingRuleBase
 {
     public override string Name { get; } = "Acol Strong Opening";
     public override int Priority { get; } = 19;
+    public override bool IsAlertable => true;
 
     private const int MinHcp = 20;
     private const int MaxHcp = 35;

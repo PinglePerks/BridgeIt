@@ -12,23 +12,23 @@ namespace BridgeIt.Core.Players;
 
 public interface IPlayer
 {
-    Task<Bid> GetBidAsync(BiddingContext context);
-    
+    Task<BidResult> GetBidAsync(BiddingContext context);
+
     event EventHandler<Seat> OnTurn;
 }
 
 public class HumanPlayer : IPlayer
 {
     public AuctionHistory? CurrentHistory { get; private set; }
-    private TaskCompletionSource<Bid> _bidTcs;
+    private TaskCompletionSource<BidResult> _bidTcs;
 
     // This is called by the BiddingTable loop
-    public Task<Bid> GetBidAsync(BiddingContext context)
+    public Task<BidResult> GetBidAsync(BiddingContext context)
     {
         CurrentHistory = context.AuctionHistory;
         // Reset the TCS for a new turn
-        _bidTcs = new TaskCompletionSource<Bid>();
-        
+        _bidTcs = new TaskCompletionSource<BidResult>();
+
         OnTurn?.Invoke(this, context.Seat);
 
         return _bidTcs.Task;
@@ -41,7 +41,7 @@ public class HumanPlayer : IPlayer
     {
         if (_bidTcs != null && !_bidTcs.Task.IsCompleted)
         {
-            _bidTcs.SetResult(bid);
+            _bidTcs.SetResult(new BidResult(bid));
         }
     }
 }
@@ -49,7 +49,7 @@ public class HumanPlayer : IPlayer
 public class RobotPlayer(BiddingEngine.Core.BiddingEngine engine,
     IRuleLookupService ruleLookupService) : IPlayer
 {
-    public async Task<Bid> GetBidAsync(BiddingContext context)
+    public async Task<BidResult> GetBidAsync(BiddingContext context)
     {
         var handEval = HandEvaluator.Evaluate(context.Hand);
 
@@ -77,7 +77,7 @@ public class RobotPlayer(BiddingEngine.Core.BiddingEngine engine,
 
         return engine.ChooseBid(decisionContext);
     }
-    
+
     public event EventHandler<Seat>? OnTurn;
 }
 

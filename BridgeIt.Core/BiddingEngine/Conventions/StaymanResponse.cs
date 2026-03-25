@@ -22,6 +22,7 @@ public class StaymanResponse : BiddingRuleBase
 
     public override string Name => $"Stayman response after {_ntCtx.Name}";
     public override int Priority { get; }
+    public override bool IsAlertable => true;
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {

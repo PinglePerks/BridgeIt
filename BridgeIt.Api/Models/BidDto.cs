@@ -1,4 +1,4 @@
 
 namespace BridgeIt.Api.Models;
 
-public record BidDto(int Seat, string Call);
+public record BidDto(int Seat, string Call, bool IsAlerted = false);
