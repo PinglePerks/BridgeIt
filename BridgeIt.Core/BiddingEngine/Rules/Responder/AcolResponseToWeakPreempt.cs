@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -145,14 +146,14 @@ public class AcolResponseToWeakPreempt : BiddingRuleBase
         return null;
     }
 
-    private static bool HasStoppersInUnbidSuits(Dictionary<Suit, bool> stoppers, Suit partnerSuit)
+    private static bool HasStoppersInUnbidSuits(Dictionary<Suit, StopperQuality> stoppers, Suit partnerSuit)
     {
         foreach (Suit s in Enum.GetValues(typeof(Suit)))
         {
             if (s == partnerSuit)
                 continue;
 
-            if (!stoppers.TryGetValue(s, out var hasStopper) || !hasStopper)
+            if (!stoppers.TryGetValue(s, out var quality) || quality < StopperQuality.Full)
                 return false;
         }
 

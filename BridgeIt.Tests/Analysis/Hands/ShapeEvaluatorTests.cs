@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 
 namespace BridgeIt.Tests.Analysis.Hand;
@@ -276,6 +277,115 @@ public class ShapeEvaluatorTests
         Assert.That(result, Has.Count.EqualTo(4));
         Assert.That(result[0], Is.EqualTo(Suit.Spades));
         Assert.That(result[3], Is.EqualTo(Suit.Clubs));
+    }
+
+    // --- GetStoppers / EvaluateStopperQuality Tests ---
+
+    [Test]
+    [Description("Ace is always a full stopper, even as singleton")]
+    public void EvaluateStopperQuality_Ace_IsFull()
+    {
+        // SA HKQ532 DJT97 C42 — singleton ace of spades
+        var hand = "SA HKQ532 DJT97 C42".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.Full));
+    }
+
+    [Test]
+    [Description("Kx is a full stopper")]
+    public void EvaluateStopperQuality_KingWithGuard_IsFull()
+    {
+        // SK2 HAQJ9 DT873 C65
+        var hand = "SK2 HAQJ9 DT873 C65".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.Full));
+    }
+
+    [Test]
+    [Description("Qxx is a full stopper")]
+    public void EvaluateStopperQuality_QueenWithTwoGuards_IsFull()
+    {
+        // SQ52 HAK98 DJT73 C64
+        var hand = "SQ52 HAK98 DJT73 C64".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.Full));
+    }
+
+    [Test]
+    [Description("Jxxx is a full stopper")]
+    public void EvaluateStopperQuality_JackWithThreeGuards_IsFull()
+    {
+        // SJ532 HAK98 DQT7 C6
+        var hand = "SJ532 HAK98 DQT7 C6".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.Full));
+    }
+
+    [Test]
+    [Description("Singleton King is a partial stopper")]
+    public void EvaluateStopperQuality_SingletonKing_IsPartial()
+    {
+        // SK HAQ9876 DJT3 C42
+        var hand = "SK HAQ9876 DJT3 C42".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.Partial));
+    }
+
+    [Test]
+    [Description("Qx is a partial stopper")]
+    public void EvaluateStopperQuality_QueenWithOneGuard_IsPartial()
+    {
+        // SQ2 HAK987 DJT63 C54
+        var hand = "SQ2 HAK987 DJT63 C54".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.Partial));
+    }
+
+    [Test]
+    [Description("Jxx is a partial stopper")]
+    public void EvaluateStopperQuality_JackWithTwoGuards_IsPartial()
+    {
+        // SJ52 HAK987 DQT3 C64
+        var hand = "SJ52 HAK987 DQT3 C64".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.Partial));
+    }
+
+    [Test]
+    [Description("Small cards only is no stopper")]
+    public void EvaluateStopperQuality_SmallCardsOnly_IsNone()
+    {
+        // S532 HAKQ9 DJT87 C64
+        var hand = "S532 HAKQ9 DJT87 C64".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.None));
+    }
+
+    [Test]
+    [Description("Void is no stopper")]
+    public void EvaluateStopperQuality_Void_IsNone()
+    {
+        // HAKQ98 DJT732 C654 — void in spades
+        var hand = "HAKQ98 DJT732 C654".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.None));
+    }
+
+    [Test]
+    [Description("Singleton Queen is no stopper")]
+    public void EvaluateStopperQuality_SingletonQueen_IsNone()
+    {
+        // SQ HAK98765 DJT3 C2
+        var hand = "SQ HAK98765 DJT3 C2".ToHand();
+        Assert.That(ShapeEvaluator.EvaluateStopperQuality(hand, Suit.Spades), Is.EqualTo(StopperQuality.None));
+    }
+
+    [Test]
+    [Description("GetStoppers returns quality for all four suits")]
+    public void GetStoppers_ReturnsAllFourSuits()
+    {
+        // SAKQ HJ32 D9876 C54 — S=Full, H=Partial(Jxx), D=None, C=None
+        var hand = "SAKQ HJ32 D9876 C54".ToHand();
+        var stoppers = ShapeEvaluator.GetStoppers(hand);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(stoppers[Suit.Spades], Is.EqualTo(StopperQuality.Full));
+            Assert.That(stoppers[Suit.Hearts], Is.EqualTo(StopperQuality.Partial));
+            Assert.That(stoppers[Suit.Diamonds], Is.EqualTo(StopperQuality.None));
+            Assert.That(stoppers[Suit.Clubs], Is.EqualTo(StopperQuality.None));
+        });
     }
 
     // --- Helper for constructing hands by shape ---

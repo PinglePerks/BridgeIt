@@ -65,6 +65,28 @@ public class AllConstraintTests
         Assert.That(expected, Is.EqualTo(constraint.IsMet(ctx)));
     }
 
+    [TestCase(StopperQuality.Full, StopperQuality.Full, true)]
+    [TestCase(StopperQuality.Partial, StopperQuality.Full, false)]
+    [TestCase(StopperQuality.None, StopperQuality.Full, false)]
+    [TestCase(StopperQuality.Full, StopperQuality.Partial, true)]
+    [TestCase(StopperQuality.Partial, StopperQuality.Partial, true)]
+    [TestCase(StopperQuality.None, StopperQuality.Partial, false)]
+    public void StopperConstraint_EvaluatesCorrectly(StopperQuality actual, StopperQuality required, bool expected)
+    {
+        var constraint = new StopperConstraint(Suit.Hearts, required);
+        var stoppers = new Dictionary<Suit, StopperQuality> { { Suit.Hearts, actual } };
+        var ctx = TestHelper.CreateContext(eval: new HandEvaluation { SuitStoppers = stoppers });
+        Assert.That(expected, Is.EqualTo(constraint.IsMet(ctx)));
+    }
+
+    [Test]
+    public void StopperConstraint_MissingSuit_ReturnsFalse()
+    {
+        var constraint = new StopperConstraint(Suit.Hearts, StopperQuality.Partial);
+        var ctx = TestHelper.CreateContext(eval: new HandEvaluation { SuitStoppers = new Dictionary<Suit, StopperQuality>() });
+        Assert.That(constraint.IsMet(ctx), Is.False);
+    }
+
     // ==============================================================================
     // 2. SYSTEM STATE CONSTRAINTS (CurrentState, HistoryPattern)
     // ==============================================================================
