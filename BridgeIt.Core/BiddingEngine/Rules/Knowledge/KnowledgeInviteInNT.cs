@@ -12,7 +12,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 public class KnowledgeInviteInNT : BiddingRuleBase
 {
     public override string Name => "Knowledge: Invite in NT";
-    public override int Priority { get; } = 1;
+    public override int Priority { get; }
+
+    public KnowledgeInviteInNT(int priority = 1)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.AuctionPhase != AuctionPhase.PreOpening;

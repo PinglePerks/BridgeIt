@@ -1,0 +1,218 @@
+{
+  "name": "Standard American Yellow Card (SAYC)",
+  "description": "Standard American. Strong 1NT (15-17), 5-card majors, better minor, weak 2D/H/S, Jacoby 2NT, Blackwood. The most widely played system in North America.",
+
+  "nT1Opening": {
+    "minHcp": 15,
+    "maxHcp": 17,
+    "level": 1,
+    "allowSingleton": false
+  },
+
+  "nT2Opening": {
+    "minHcp": 20,
+    "maxHcp": 21,
+    "level": 2,
+    "allowSingleton": false
+  },
+
+  "suitOpening": {
+    "minHcp": 12,
+    "maxHcp": 21,
+    "majorMinLength": 5,
+    "minorMinLength": 3,
+    "minorSelection": "BetterMinor",
+    "ruleOf20": false,
+    "fourCardMajor": null
+  },
+
+  "strongOpening": {
+    "minHcpBalanced": 22,
+    "minHcpUnbalanced": 20,
+    "maxHcp": 37,
+    "bid": "2C",
+    "gameForcing": true
+  },
+
+  "preempts": {
+    "minHcp": 5,
+    "maxHcp": 10,
+    "minSuitLength3Level": 7,
+    "minSuitLength4Level": 8,
+    "reservedBids": ["2C"]
+  },
+
+  "twoLevelOpenings": {
+    "benjaminTwos": false,
+    "weakTwos": {
+      "minHcp": 5,
+      "maxHcp": 11,
+      "minSuitLength": 6,
+      "suits": ["D", "H", "S"],
+      "twoNTEnquiry": true
+    },
+    "acolTwos": null
+  },
+
+  "responseTo1NT": {
+    "stayman": {
+      "enabled": true,
+      "minHcp": 8
+    },
+    "transfers": {
+      "enabled": true,
+      "minSuitLength": 5,
+      "maxSuitLength": 11
+    },
+    "minorTransfers": null,
+    "baron": null,
+    "weaknessTakeouts": null,
+    "raise": {
+      "enabled": true,
+      "inviteMinHcp": 8,
+      "inviteMaxHcp": 9
+    },
+    "jacoby2NT": null,
+    "naturalAfterDouble": false
+  },
+
+  "responseTo2NT": {
+    "stayman": {
+      "enabled": true,
+      "minHcp": 4
+    },
+    "transfers": {
+      "enabled": true,
+      "minSuitLength": 5,
+      "maxSuitLength": 11
+    },
+    "minorTransfers": null,
+    "baron": null,
+    "weaknessTakeouts": null,
+    "raise": null,
+    "jacoby2NT": null,
+    "naturalAfterDouble": false
+  },
+
+  "responseTo1Suit": {
+    "minHcpFor1Level": 6,
+    "minHcpFor2Level": 10,
+    "raiseTo2MaxHcp": 10,
+    "raiseTo3MaxHcp": 12,
+    "gameForceMinHcp": 13,
+    "nTResponseMinHcp": 6,
+    "nTResponseMaxHcp": 10,
+    "splinterBids": false
+  },
+
+  "responseTo2C": {
+    "enabled": true,
+    "negativeResponseBid": "2D"
+  },
+
+  "openerRebid": {
+    "reverseMinHcp": 17,
+    "nTRebid": {
+      "rebid1NTMin": 12,
+      "rebid1NTMax": 14,
+      "rebid2NTMin": 18,
+      "rebid2NTMax": 19,
+      "rebid3NTMin": 20,
+      "rebid3NTMax": 21
+    }
+  },
+
+  "responderRebid": {},
+
+  "overcalls": {
+    "simple": { "minHcp": 8 },
+    "jump": {
+      "style": "Weak",
+      "minHcp": 5,
+      "maxHcp": 10,
+      "minSuitLength": 6
+    },
+    "cueBid": {
+      "enabled": true,
+      "style": "Michaels",
+      "minSuitLength": 5
+    },
+    "nT1": {
+      "directMinHcp": 15,
+      "directMaxHcp": 18,
+      "protectiveMinHcp": 11,
+      "protectiveMaxHcp": 14
+    },
+    "unusual2NT": {
+      "enabled": true
+    }
+  },
+
+  "negativeDoubles": {
+    "enabled": true,
+    "maxLevel": "3S"
+  },
+
+  "competitiveAuctions": {
+    "redoubleShows9Plus": true,
+    "newSuitForcing": true,
+    "jumpRaisePreemptive": true,
+    "twoNTGoodRaise": true,
+    "unassumingCueBids": null
+  },
+
+  "slam": {
+    "style": "Blackwood",
+    "grandSlamForce": false
+  },
+
+  "fourthSuitForcing": {
+    "enabled": true
+  },
+
+  "splinters": null,
+  "trialBids": null,
+
+  "priorities": {
+    "Acol1NTOpening": 20,
+    "Acol2NTOpening": 20,
+    "Acol1SuitOpening": 10,
+    "AcolStrongOpening": 19,
+    "WeakOpening": 9,
+    "StandardStayman_1NT": 29,
+    "StandardStayman_2NT": 29,
+    "StandardTransfer_1NT": 30,
+    "StandardTransfer_2NT": 30,
+    "CompleteTransfer_1NT": 30,
+    "CompleteTransfer_2NT": 30,
+    "StaymanResponse_1NT": 60,
+    "StaymanResponse_2NT": 60,
+    "AcolNTRaiseOver1NT": 25,
+    "AcolResponseTo2C": 50,
+    "AcolJacoby2NTOver1Major": 55,
+    "AcolRaiseMajorOver1Suit": 50,
+    "AcolRaiseMinorOver1Suit": 35,
+    "AcolNewSuitOver1Suit": 40,
+    "Acol1NTResponseTo1Suit": 30,
+    "AcolOpenerRebidAfter2C": 60,
+    "AcolOpenerAfterNTInvite": 50,
+    "AcolOpenerAfterMajorRaise": 45,
+    "AcolRebidBalanced": 25,
+    "AcolRebidNewSuit": 40,
+    "AcolRebidRaiseSuit": 35,
+    "AcolRebidOwnSuit": 42,
+    "AcolResponderAfterOpenerRaisedSuit": 50,
+    "AcolResponderAfterOpener1NTRebid": 45,
+    "AcolResponderAfterOpener2NTRebid": 45,
+    "AcolResponderAfterOpenerRebidOwnSuit": 40,
+    "AcolResponderAfterOpenerNewSuit": 40,
+    "AcolResponderAfter2CSuitRebid": 55,
+    "KnowledgeShapeCorrection": 4,
+    "KnowledgeBidGameInSuit": 2,
+    "KnowledgeBidGameInNT": 1,
+    "KnowledgeInviteInSuit": 2,
+    "KnowledgeInviteInNT": 2,
+    "KnowledgeSignOffInFit": 1,
+    "KnowledgeSignOff": 0
+  }
+}

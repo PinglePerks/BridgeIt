@@ -9,8 +9,14 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 public class AcolJacoby2NTOver1Major :  BiddingRuleBase
 {
     public override string Name { get; } = "Acol Jacoby 2NT over 1 major";
-    public override int Priority { get; } = 55;
+    public override int Priority { get; }
     public override bool IsAlertable => true;
+
+    public AcolJacoby2NTOver1Major(int priority = 55)
+    {
+        Priority = priority;
+    }
+
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
     {
         var suit = auction.OpeningBid?.Suit;

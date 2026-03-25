@@ -72,6 +72,7 @@
       <ProjectReference Include="..\BridgeIt.Analysis\BridgeIt.Analysis.csproj" />
       <ProjectReference Include="..\BridgeIt.Core\BridgeIt.Core.csproj" />
       <ProjectReference Include="..\BridgeIt.Dealer\BridgeIt.Dealer.csproj" />
+      <ProjectReference Include="..\BridgeIt.Systems\BridgeIt.Systems.csproj" />
     </ItemGroup>
 
 </Project>

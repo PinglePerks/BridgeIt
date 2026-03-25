@@ -8,9 +8,13 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Responder;
 public class AcolResponseTo2C : BiddingRuleBase
 {
     public override string Name { get; } = "Acol response to 2C";
-    public override int Priority { get; } = 50;
+    public override int Priority { get; }
     public override bool IsAlertable => true;
 
+    public AcolResponseTo2C(int priority = 50)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {

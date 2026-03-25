@@ -10,6 +10,7 @@ using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Players;
 using BridgeIt.Dealer.HandSpecifications;
+using BridgeIt.Systems;
 using Microsoft.AspNetCore.SignalR;
 
 namespace BridgeIt.Api.Services;
@@ -35,21 +36,44 @@ public class GameService
 
     private CancellationTokenSource? _gameCts;
 
+    private readonly BiddingSystemLoader _systemLoader;
+
     public GameService(
         BiddingEngine biddingEngine,
         IBidValidityChecker bidValidityChecker,
         BiddingTable table,
         IRuleLookupService ruleLookupService,
+        BiddingSystemLoader systemLoader,
         IHubContext<GameHub> hubContext)
     {
         _biddingEngine = biddingEngine;
         _bidValidityChecker = bidValidityChecker;
         _table = table;
         _lookup = ruleLookupService;
+        _systemLoader = systemLoader;
         _hubContext = hubContext;
 
         foreach (Seat seat in Enum.GetValues(typeof(Seat)))
             _players[seat] = new RobotPlayer(_biddingEngine, _lookup);
+    }
+
+    /// <summary>
+    /// Hot-swap the bidding system. Loads a new rule set from JSON config
+    /// and swaps it into the engine. Takes effect on the next auction.
+    /// </summary>
+    public LoadedSystem LoadSystem(string systemJson)
+    {
+        var loaded = _systemLoader.LoadFromJson(systemJson);
+        _biddingEngine.SetRules(loaded.Rules);
+
+        // Rebuild robot players so they use the updated engine
+        foreach (Seat seat in Enum.GetValues(typeof(Seat)))
+        {
+            if (_players[seat] is RobotPlayer)
+                _players[seat] = new RobotPlayer(_biddingEngine, _lookup);
+        }
+
+        return loaded;
     }
 
     // ─── Player registration ──────────────────────────────────────────────────

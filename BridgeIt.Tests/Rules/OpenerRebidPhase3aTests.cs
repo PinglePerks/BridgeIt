@@ -5,6 +5,7 @@ using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 
 namespace BridgeIt.Tests.Rules;
 
@@ -952,18 +953,8 @@ public class OpenerRebidPhase3aTests
     }
 
     private static BiddingRuleBase GetNTInviteRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.OpenerRebid.AcolOpenerAfterNTInvite, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolOpenerAfterNTInvite not found. Create it at BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterNTInvite.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolOpenerAfterNTInvite();
 
     private static BiddingRuleBase GetAfterMajorRaiseRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.OpenerRebid.AcolOpenerAfterMajorRaise, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolOpenerAfterMajorRaise not found. Create it at BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterMajorRaise.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolOpenerAfterMajorRaise();
 }

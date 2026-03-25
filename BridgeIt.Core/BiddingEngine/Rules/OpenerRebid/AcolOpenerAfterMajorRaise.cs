@@ -9,7 +9,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 public class AcolOpenerAfterMajorRaise : BiddingRuleBase
 {
     public override string Name { get; } = "After major raise";
-    public override int Priority { get; } = 45;
+    public override int Priority { get; }
+
+    public AcolOpenerAfterMajorRaise(int priority = 45)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {

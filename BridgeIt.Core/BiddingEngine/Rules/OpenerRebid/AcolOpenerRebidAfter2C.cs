@@ -9,7 +9,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 public class AcolOpenerRebidAfter2C : BiddingRuleBase
 {
     public override string Name { get; } = "Acol opener rebid after 2C";
-    public override int Priority { get; } = 60;
+    public override int Priority { get; }
+
+    public AcolOpenerRebidAfter2C(int priority = 60)
+    {
+        Priority = priority;
+    }
 
     private const int MinHcp2NT = 23;
     private const int MaxHcp2NT = 24;

@@ -10,7 +10,7 @@ namespace BridgeIt.Core.BiddingEngine.Core;
 
 public sealed class BiddingEngine
 {
-    private readonly List<IBiddingRule> _rules;
+    private List<IBiddingRule> _rules;
     private readonly ILogger<BiddingEngine> _logger;
     private readonly IEngineObserver _observer;
     private readonly IBidValidityChecker _validityChecker;
@@ -92,6 +92,14 @@ public sealed class BiddingEngine
         _logger = logger;
         _observer = observer;
         _validityChecker = validityChecker ?? new BidValidityChecker();
+    }
+
+    /// <summary>
+    /// Hot-swap the rule set. Safe to call between auctions (auction loop is sequential).
+    /// </summary>
+    public void SetRules(IEnumerable<IBiddingRule> rules)
+    {
+        _rules = rules.OrderByDescending(r => r.Priority).ToList();
     }
 
     public BidResult ChooseBid(DecisionContext ctx)

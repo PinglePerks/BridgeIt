@@ -17,7 +17,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 public class KnowledgeSignOff : BiddingRuleBase
 {
     public override string Name => "Knowledge: Sign off (pass)";
-    public override int Priority { get; } = 0; // Absolute lowest — true catch-all
+    public override int Priority { get; } // Absolute lowest — true catch-all
+
+    public KnowledgeSignOff(int priority = 0)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.AuctionPhase != AuctionPhase.PreOpening;

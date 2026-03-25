@@ -9,19 +9,28 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 public class Acol1SuitOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 1-Level Suit Opening";
-    public override int Priority { get; } = 10;
+    public override int Priority { get; }
 
-    private const int MinHcp = 12;
-    private const int MaxHcp = 19;
+    private readonly int _minHcp;
+    private readonly int _maxHcp;
+    private readonly int _minSuitLength;
+
+    public Acol1SuitOpeningRule(int minHcp = 12, int maxHcp = 19, int minSuitLength = 4, int priority = 10)
+    {
+        _minHcp = minHcp;
+        _maxHcp = maxHcp;
+        _minSuitLength = minSuitLength;
+        Priority = priority;
+    }
 
     // Forward: the full conjunction of what must be true for this rule to fire.
     // We can't include a suit constraint here because we don't know which suit yet.
-    private static CompositeConstraint BuildConstraints()
-        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp) } };
+    private CompositeConstraint BuildConstraints()
+        => new() { Constraints = { new HcpConstraint(_minHcp, _maxHcp) } };
 
     // Backward: once we know which suit was bid, we can add the suit length.
-    private static CompositeConstraint BuildConstraints(Suit? suit)
-        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint(suit.ToString()!, ">=4") } };
+    private CompositeConstraint BuildConstraints(Suit? suit)
+        => new() { Constraints = { new HcpConstraint(_minHcp, _maxHcp), new SuitLengthConstraint(suit.ToString()!, $">={_minSuitLength}") } };
 
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
         => BuildConstraints();
@@ -30,7 +39,7 @@ public class Acol1SuitOpeningRule : BiddingRuleBase
         => auction.SeatRoleType == SeatRoleType.NoBids;
 
     protected override bool IsHandApplicable(DecisionContext ctx)
-        => ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp;
+        => ctx.HandEvaluation.Hcp >= _minHcp && ctx.HandEvaluation.Hcp <= _maxHcp;
 
     public override Bid? Apply(DecisionContext ctx)
     {

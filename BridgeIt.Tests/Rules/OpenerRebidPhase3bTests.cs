@@ -5,6 +5,7 @@ using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 
 namespace BridgeIt.Tests.Rules;
 
@@ -1072,34 +1073,14 @@ public class OpenerRebidPhase3bTests
     // =============================================================
 
     private static BiddingRuleBase GetRebidOwnSuitRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.OpenerRebid.AcolRebidOwnSuit, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolRebidOwnSuit not found. Create it at BiddingEngine/Rules/OpenerRebid/AcolRebidOwnSuit.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolRebidOwnSuit();
 
     private static BiddingRuleBase GetRebidNewSuitRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.OpenerRebid.AcolRebidNewSuit, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolRebidNewSuit not found. Create it at BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolRebidNewSuit();
 
     private static BiddingRuleBase GetRebidBalancedRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.OpenerRebid.AcolRebidBalanced, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolRebidBalanced not found. It should already exist at BiddingEngine/Rules/OpenerRebid/AcolRebidBalanced.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolRebidBalanced();
 
     private static BiddingRuleBase GetRebidRaiseSuitRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.OpenerRebid.AcolRebidRaiseSuit, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolRebidRaiseSuit not found. Create it at BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolRebidRaiseSuit();
 }

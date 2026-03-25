@@ -5,6 +5,7 @@ using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
+using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 
 namespace BridgeIt.Tests.Rules;
 
@@ -1517,46 +1518,18 @@ public class ResponseTo1SuitTests
     // For now they use placeholder names matching the expected class names.
     // =============================================================
 
-    // TODO: Replace these with actual rule instantiation once implemented
-    // e.g.: private static BiddingRuleBase GetJacoby2NTRule() => new AcolJacoby2NTOver1Major();
-
     private static BiddingRuleBase GetJacoby2NTRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit.AcolJacoby2NTOver1Major, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolJacoby2NTOver1Major not found. Create it at BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolJacoby2NTOver1Major.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolJacoby2NTOver1Major();
 
     private static BiddingRuleBase GetRaiseMajorRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit.AcolRaiseMajorOver1Suit, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolRaiseMajorOver1Suit not found. Create it at BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMajorOver1Suit.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolRaiseMajorOver1Suit();
 
     private static BiddingRuleBase GetNewSuitRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit.AcolNewSuitOver1Suit, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolNewSuitOver1Suit not found. Create it at BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolNewSuitOver1Suit.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolNewSuitOver1Suit();
 
     private static BiddingRuleBase GetRaiseMinorRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit.AcolRaiseMinorOver1Suit, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class AcolRaiseMinorOver1Suit not found. Create it at BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMinorOver1Suit.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new AcolRaiseMinorOver1Suit();
 
     private static BiddingRuleBase Get1NTResponseRule()
-    {
-        var type = Type.GetType("BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit.Acol1NTResponseTo1Suit, BridgeIt.Core");
-        Assert.That(type, Is.Not.Null,
-            "Rule class Acol1NTResponseTo1Suit not found. Create it at BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs");
-        return (BiddingRuleBase)Activator.CreateInstance(type!)!;
-    }
+        => new Acol1NTResponseTo1Suit();
 }

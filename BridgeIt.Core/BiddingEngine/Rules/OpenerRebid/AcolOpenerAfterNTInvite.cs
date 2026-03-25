@@ -8,8 +8,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 public class AcolOpenerAfterNTInvite : BiddingRuleBase
 {
     public override string Name { get; } = "Acol opener after NT invite";
-    public override int Priority { get; } = 50;
+    public override int Priority { get; }
 
+    public AcolOpenerAfterNTInvite(int priority = 50)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {

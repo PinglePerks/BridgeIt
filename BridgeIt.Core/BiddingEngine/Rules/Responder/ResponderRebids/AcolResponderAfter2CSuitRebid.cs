@@ -23,7 +23,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
 public class AcolResponderAfter2CSuitRebid : BiddingRuleBase
 {
     public override string Name => "Acol responder after 2C suit rebid";
-    public override int Priority => 55;
+    public override int Priority { get; }
+
+    public AcolResponderAfter2CSuitRebid(int priority = 55)
+    {
+        Priority = priority;
+    }
 
     private const int WeakMax = 7;
 

@@ -8,13 +8,22 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 public class Acol2NTOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 2NT Opening";
-    public override int Priority { get; } = 20;
+    public override int Priority { get; }
 
-    private const int MinHcp = 20;
-    private const int MaxHcp = 22;
+    private readonly int _minHcp;
+    private readonly int _maxHcp;
+    private readonly int _level;
 
-    private static CompositeConstraint BuildConstraints()
-        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new BalancedConstraint() } };
+    public Acol2NTOpeningRule(int minHcp = 20, int maxHcp = 22, int level = 2, int priority = 20)
+    {
+        _minHcp = minHcp;
+        _maxHcp = maxHcp;
+        _level = level;
+        Priority = priority;
+    }
+
+    private CompositeConstraint BuildConstraints()
+        => new() { Constraints = { new HcpConstraint(_minHcp, _maxHcp), new BalancedConstraint() } };
 
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
         => BuildConstraints();
@@ -23,14 +32,14 @@ public class Acol2NTOpeningRule : BiddingRuleBase
         => auction.SeatRoleType == SeatRoleType.NoBids;
 
     protected override bool IsHandApplicable(DecisionContext ctx)
-        => ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp
+        => ctx.HandEvaluation.Hcp >= _minHcp && ctx.HandEvaluation.Hcp <= _maxHcp
            && ctx.HandEvaluation.IsBalanced;
 
     public override Bid? Apply(DecisionContext ctx)
-        => Bid.NoTrumpsBid(2);
+        => Bid.NoTrumpsBid(_level);
 
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
-        => bid.Type == BidType.NoTrumps && bid.Level == 2;
+        => bid.Type == BidType.NoTrumps && bid.Level == _level;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
         => new(bid, BuildConstraints(), PartnershipBiddingState.ConstructiveSearch);

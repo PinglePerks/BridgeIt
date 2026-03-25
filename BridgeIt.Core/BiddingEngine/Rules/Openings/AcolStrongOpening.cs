@@ -9,15 +9,28 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 public class AcolStrongOpening : BiddingRuleBase
 {
     public override string Name { get; } = "Acol Strong Opening";
-    public override int Priority { get; } = 19;
+    public override int Priority { get; }
     public override bool IsAlertable => true;
 
-    private const int MinHcpUnbalanced = 20;
-    private const int MinHcpBalanced = 23;
-    private const int MaxHcp = 35;
+    private readonly int _minHcpUnbalanced;
+    private readonly int _minHcpBalanced;
+    private readonly int _maxHcp;
+    private readonly int _bidLevel;
+    private readonly Suit _bidSuit;
 
-    private static CompositeConstraint BuildConstraints()
-        => new() { Constraints = { new HcpConstraint(MinHcpUnbalanced, MaxHcp) } };
+    public AcolStrongOpening(int minHcpUnbalanced = 20, int minHcpBalanced = 23, int maxHcp = 35,
+        int bidLevel = 2, Suit bidSuit = Suit.Clubs, int priority = 19)
+    {
+        _minHcpUnbalanced = minHcpUnbalanced;
+        _minHcpBalanced = minHcpBalanced;
+        _maxHcp = maxHcp;
+        _bidLevel = bidLevel;
+        _bidSuit = bidSuit;
+        Priority = priority;
+    }
+
+    private CompositeConstraint BuildConstraints()
+        => new() { Constraints = { new HcpConstraint(_minHcpUnbalanced, _maxHcp) } };
 
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
         => BuildConstraints();
@@ -28,20 +41,19 @@ public class AcolStrongOpening : BiddingRuleBase
     protected override bool IsHandApplicable(DecisionContext ctx)
     {
         var hcp = ctx.HandEvaluation.Hcp;
-        if (hcp > MaxHcp) return false;
+        if (hcp > _maxHcp) return false;
 
-        // 23+ balanced or 20+ unbalanced
         if (ctx.HandEvaluation.IsBalanced)
-            return hcp >= MinHcpBalanced;
+            return hcp >= _minHcpBalanced;
 
-        return hcp >= MinHcpUnbalanced;
+        return hcp >= _minHcpUnbalanced;
     }
 
     public override Bid? Apply(DecisionContext ctx)
-        => Bid.SuitBid(2, Suit.Clubs);
+        => Bid.SuitBid(_bidLevel, _bidSuit);
 
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
-        => bid is { Type: BidType.Suit, Level: 2, Suit: Suit.Clubs };
+        => bid.Type == BidType.Suit && bid.Level == _bidLevel && bid.Suit == _bidSuit;
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
         => new(bid, BuildConstraints(), PartnershipBiddingState.ConstructiveSearch);

@@ -18,7 +18,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 public class AcolNTRaiseOver1NT : BiddingRuleBase
 {
     public override string Name { get; } = "NT Raise over 1NT";
-    public override int Priority { get; } = 15;
+    public override int Priority { get; }
+
+    public AcolNTRaiseOver1NT(int priority = 15)
+    {
+        Priority = priority;
+    }
 
     private Bid ApplicableOpeningBid => Bid.NoTrumpsBid(1);
 

@@ -24,7 +24,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 public class KnowledgeShapeCorrection : BiddingRuleBase
 {
     public override string Name => "Knowledge: Shape correction";
-    public override int Priority { get; } = 4;
+    public override int Priority { get; }
+
+    public KnowledgeShapeCorrection(int priority = 4)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.AuctionPhase != AuctionPhase.PreOpening;
