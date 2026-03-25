@@ -330,41 +330,7 @@ D9 DT C9 S8
  
 
  
-[Event "Swiss Pairs League"]
-[Site "BridgeClubLive!"]
-[Date "2025.11.23"]
-[Board "10"]
-[West "F1EDA"]
-[North "gillfromtheboro"]
-[South "TheMole"]
-[East "FungusForager"]
-[Dealer "E"]
-[Vulnerable "Both"]
-[Deal "N:K754.KJ74.A2.JT4 AJT.Q.T97653.K92 Q2.9853.KQ.Q8763 9863.AT62.J84.A5"]
-[Scoring "MP"]
-[Declarer "N"]
-[Contract "1NT"]
-[Result "5"]
-[Auction "E"]
-Pass Pass Pass 1NT
-Pass Pass Pass 
-[Note "1:Alert"]
-[Play "E"]
-DT DK D4 D2
-CK C3 C5 CT
-D3 DQ D8 DA
-C2 C6 CA CJ
-D5 H3 DJ H4
-SA S2 S3 S4
-D9 H5 S9 H7
-D7 H8 S6 S5
-D6 H9 H2 S7
-HQ SQ HA HJ
-ST C7 S8 SK
-C9 C8 H6 HK
-SJ CQ HT C4
-*
- 
+
 
  
 [Event "Swiss Pairs League"]

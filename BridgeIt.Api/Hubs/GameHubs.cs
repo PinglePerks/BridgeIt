@@ -4,6 +4,7 @@ using BridgeIt.Core.Domain.Extensions;
 using BridgeIt.Core.Domain.Primatives;
 using Microsoft.AspNetCore.SignalR;
 
+
 namespace BridgeIt.Api.Hubs;
 
 public class GameHub : Hub
@@ -82,6 +83,21 @@ public class GameHub : Hub
         }
         await _gameService.DealScenario(scenario);
         await Clients.Caller.SendAsync("GetAllHands", _gameService.GetAllHands());
+    }
+
+    /// <summary>Deals a V2 scenario from (northRole, situation) pair.</summary>
+    public async Task DealScenarioV2(ScenarioV2Dto dto)
+    {
+        try
+        {
+            var scenario = ScenarioV2Builder.Build(dto.NorthRole, dto.Situation);
+            await _gameService.DealScenario(scenario);
+            await Clients.Caller.SendAsync("GetAllHands", _gameService.GetAllHands());
+        }
+        catch (Exception ex)
+        {
+            await Clients.Caller.SendAsync("SystemMessage", $"Could not generate scenario: {ex.Message}");
+        }
     }
 
     /// <summary>Deals a hand meeting bespoke HCP/shape constraints for North.</summary>

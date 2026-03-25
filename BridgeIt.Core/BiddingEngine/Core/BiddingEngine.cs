@@ -3,6 +3,7 @@ using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.EngineObserver;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.IBidValidityChecker;
+using BridgeIt.Core.Domain.Primatives;
 using Microsoft.Extensions.Logging;
 
 namespace BridgeIt.Core.BiddingEngine.Core;
@@ -97,22 +98,64 @@ public sealed class BiddingEngine
     {
         _observer.PrintHands(ctx.Data.Seat, ctx.Data.Hand);
 
+        var evaluatedRules = new List<RuleEvaluation>();
+
         foreach (var rule in _rules)
         {
+            var eval = new RuleEvaluation
+            {
+                RuleName = rule.Name,
+                Priority = rule.Priority,
+                IsApplicableToAuction = rule.IsApplicableToAuction(ctx.AuctionEvaluation),
+            };
+
+            // Serialize forward constraints for auction-applicable rules
+            if (eval.IsApplicableToAuction)
+            {
+                var fwd = rule.GetForwardConstraints(ctx.AuctionEvaluation);
+                if (fwd != null && fwd.Constraints.Count > 0)
+                {
+                    eval.ForwardConstraints = fwd.Constraints
+                        .Select(ConstraintSerializer.Serialize).ToList();
+                }
+            }
+
             if (!rule.CouldMakeBid(ctx))
             {
+                eval.IsHandApplicable = false;
+
+                // Evaluate constraints to show WHY it failed
+                if (eval.IsApplicableToAuction)
+                {
+                    var fwd = rule.GetForwardConstraints(ctx.AuctionEvaluation);
+                    if (fwd != null && fwd.Constraints.Count > 0)
+                    {
+                        eval.ConstraintResults = ConstraintSerializer.EvaluateComposite(fwd, ctx);
+                    }
+                }
+
+                evaluatedRules.Add(eval);
                 continue;
             }
 
+            eval.IsHandApplicable = true;
             var decision = rule.Apply(ctx);
 
             if (decision == null)
+            {
+                evaluatedRules.Add(eval);
                 continue;
+            }
+
+            eval.ProducedBid = decision.ToString();
 
             // Pass is always valid — skip the checker
             if (decision.Type == BidType.Pass)
             {
+                eval.WasSelected = true;
+                evaluatedRules.Add(eval);
                 _observer.OnRuleApplied(rule.Name, decision, ctx);
+                _observer.OnBidDecisionComplete(BuildLog(ctx, evaluatedRules, decision));
                 return decision;
             }
 
@@ -120,16 +163,51 @@ public sealed class BiddingEngine
             var auctionBid = new AuctionBid(ctx.Data.Seat, decision);
             if (_validityChecker.IsValid(auctionBid, ctx.Data.AuctionHistory))
             {
+                eval.WasSelected = true;
+                evaluatedRules.Add(eval);
                 _observer.OnRuleApplied(rule.Name, decision, ctx);
+                _observer.OnBidDecisionComplete(BuildLog(ctx, evaluatedRules, decision));
                 return decision;
             }
 
             // Rule produced an illegal bid — log and try next rule
+            eval.WasInvalidBid = true;
+            evaluatedRules.Add(eval);
             _logger.LogWarning(
                 "Rule '{Rule}' produced illegal bid {Bid} for {Seat} — skipping to next rule",
                 rule.Name, decision, ctx.Data.Seat);
         }
+
         _observer.OnNoRuleMatched(ctx);
+        _observer.OnBidDecisionComplete(BuildLog(ctx, evaluatedRules, Bid.Pass()));
         return Bid.Pass();
+    }
+
+    private static RuleEvaluationLog BuildLog(DecisionContext ctx, List<RuleEvaluation> evaluatedRules, Bid winningBid)
+    {
+        return new RuleEvaluationLog
+        {
+            Seat = ctx.Data.Seat.ToString(),
+            Hand = ctx.Data.Hand.ToString(),
+            Hcp = ctx.HandEvaluation.Hcp,
+            IsBalanced = ctx.HandEvaluation.IsBalanced,
+            Shape = ctx.HandEvaluation.Shape.ToDictionary(kv => kv.Key.ToString(), kv => kv.Value),
+            SeatRole = ctx.AuctionEvaluation.SeatRoleType.ToString(),
+            AuctionPhase = ctx.AuctionEvaluation.AuctionPhase.ToString(),
+            BiddingRound = ctx.AuctionEvaluation.BiddingRound,
+            PartnerLastBid = ctx.AuctionEvaluation.PartnerLastBid?.ToString() ?? "—",
+            TableKnowledge = ctx.TableKnowledge.Players.ToDictionary(
+                kv => kv.Key.ToString(),
+                kv => new TableKnowledgeEntry
+                {
+                    HcpMin = kv.Value.HcpMin,
+                    HcpMax = kv.Value.HcpMax,
+                    IsBalanced = kv.Value.IsBalanced,
+                    MinShape = kv.Value.MinShape.ToDictionary(s => s.Key.ToString(), s => s.Value),
+                    MaxShape = kv.Value.MaxShape.ToDictionary(s => s.Key.ToString(), s => s.Value),
+                }),
+            WinningBid = winningBid.ToString(),
+            EvaluatedRules = evaluatedRules,
+        };
     }
 }

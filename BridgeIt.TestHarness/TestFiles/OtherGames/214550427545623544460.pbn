@@ -288,41 +288,7 @@ DJ H6 CT HK
  
 
  
-[Event "Daily MPS"]
-[Site "BridgeClubLive!"]
-[Date "2025.11.15"]
-[Board "36"]
-[West "gillfromtheboro"]
-[North "caramel"]
-[South "Sophie J"]
-[East "TheMole"]
-[Dealer "W"]
-[Vulnerable "Both"]
-[Deal "N:9852.K8.J7.T9753 J643.Q2.A82.AQ86 Q7.J975.T653.J42 AKT.AT643.KQ94.K"]
-[Scoring "MP"]
-[Declarer "E"]
-[Contract "3NT"]
-[Result "11"]
-[Auction "W"]
-1H Pass 1S Pass
-3D Pass 3NT Pass
-Pass Pass 
-[Note "1:Alert"]
-[Play "S"]
-D3 D4 DJ DA
-C2 CK C3 C6
-H5 H3 H8 HQ
-C4 H4 C5 CA
-CJ H6 C7 CQ
-D5 DK D7 D2
-D6 DQ S2 D8
-S7 SA S5 S3
-SQ SK S9 S4
-H7 ST S8 SJ
-H9 HA HK H2
-HJ HT C9 C8
-DT D9 CT S6
-*
+
  
 
  
