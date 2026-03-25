@@ -12,11 +12,12 @@ public class AcolStrongOpening : BiddingRuleBase
     public override int Priority { get; } = 19;
     public override bool IsAlertable => true;
 
-    private const int MinHcp = 20;
+    private const int MinHcpUnbalanced = 20;
+    private const int MinHcpBalanced = 23;
     private const int MaxHcp = 35;
 
     private static CompositeConstraint BuildConstraints()
-        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp) } };
+        => new() { Constraints = { new HcpConstraint(MinHcpUnbalanced, MaxHcp) } };
 
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
         => BuildConstraints();
@@ -25,8 +26,16 @@ public class AcolStrongOpening : BiddingRuleBase
         => auction.SeatRoleType == SeatRoleType.NoBids;
 
     protected override bool IsHandApplicable(DecisionContext ctx)
-        => ctx.HandEvaluation.Hcp is >= MinHcp and <= MaxHcp
-           && ctx.HandEvaluation.IsBalanced;
+    {
+        var hcp = ctx.HandEvaluation.Hcp;
+        if (hcp > MaxHcp) return false;
+
+        // 23+ balanced or 20+ unbalanced
+        if (ctx.HandEvaluation.IsBalanced)
+            return hcp >= MinHcpBalanced;
+
+        return hcp >= MinHcpUnbalanced;
+    }
 
     public override Bid? Apply(DecisionContext ctx)
         => Bid.SuitBid(2, Suit.Clubs);

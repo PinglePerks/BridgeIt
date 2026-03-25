@@ -9,6 +9,7 @@ using BridgeIt.Core.BiddingEngine.Rules.Openings;
 using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
+using BridgeIt.Core.BiddingEngine.Rules.Responder;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -51,6 +52,9 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new AcolStrongOpening(),
     new WeakOpeningRule(new[] { Bid.SuitBid(2, Suit.Clubs) }), // 2C reserved for strong opening
 
+    // Response to 2C
+    new AcolResponseTo2C(),
+
     // Responses to 1-suit
     new AcolJacoby2NTOver1Major(),
     new AcolRaiseMajorOver1Suit(),
@@ -72,6 +76,7 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new StandardTransfer(NTConventionContexts.After2C2D2NT),
 
     // Opener rebids
+    new AcolOpenerRebidAfter2C(),
     new StaymanResponse(NTConventionContexts.After1NT),
     new StaymanResponse(NTConventionContexts.After2NT),
     new StaymanResponse(NTConventionContexts.After2C2D2NT),
