@@ -8,7 +8,13 @@ namespace BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 public class AcolRebidBalanced : BiddingRuleBase
 {
     public override string Name { get; } = "Acol balanced rebid";
-    public override int Priority { get; } = 25;
+    public override int Priority { get; }
+
+    public AcolRebidBalanced(int priority = 25)
+    {
+        Priority = priority;
+    }
+
     private int MinHcp1NTRebid { get; } = 15;
     private int MaxHcp1NTRebid { get; } = 17;
     private int MinHcp2NTRebid { get; } = 18;

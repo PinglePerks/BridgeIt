@@ -157,4 +157,28 @@ public class GameHub : Hub
     {
         await Clients.Caller.SendAsync("GetAllHands", _gameService.GetAllHands());
     }
+
+    // ─── System management ────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Hot-swap the bidding system. Accepts a full BridgeSystemConfig JSON string.
+    /// The new system takes effect on the next auction.
+    /// </summary>
+    public async Task LoadSystem(string systemJson)
+    {
+        try
+        {
+            var loaded = _gameService.LoadSystem(systemJson);
+            await Clients.Caller.SendAsync("SystemLoaded", new
+            {
+                name = loaded.Name,
+                ruleCount = loaded.Rules.Count,
+                warnings = loaded.Warnings
+            });
+        }
+        catch (Exception ex)
+        {
+            await Clients.Caller.SendAsync("SystemMessage", $"Failed to load system: {ex.Message}");
+        }
+    }
 }

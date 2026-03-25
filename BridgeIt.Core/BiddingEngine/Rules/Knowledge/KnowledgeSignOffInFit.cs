@@ -14,7 +14,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 public class KnowledgeSignOffInFit : BiddingRuleBase
 {
     public override string Name => "Knowledge: Sign off in fit";
-    public override int Priority { get; } = 1;
+    public override int Priority { get; }
+
+    public KnowledgeSignOffInFit(int priority = 1)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.AuctionPhase != AuctionPhase.PreOpening;

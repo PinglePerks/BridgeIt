@@ -9,7 +9,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 public class AcolRebidRaiseSuit : BiddingRuleBase
 {
     public override string Name { get; } = "Acol rebid partner's suit";
-    public override int Priority { get; } = 35;
+    public override int Priority { get; }
+
+    public AcolRebidRaiseSuit(int priority = 35)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {

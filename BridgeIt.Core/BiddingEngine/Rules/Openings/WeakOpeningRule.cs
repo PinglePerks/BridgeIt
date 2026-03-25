@@ -9,25 +9,32 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Openings;
 public class WeakOpeningRule : BiddingRuleBase
 {
     public override string Name { get; } = "Weak Opening";
-    public override int Priority { get; } = 9;
-    private const int Number = 4;
-    private const int MinHcp = 6;
-    private const int MaxHcp = 9;
+    public override int Priority { get; }
+    private readonly int _number;
+    private readonly int _minHcp;
+    private readonly int _maxHcp;
+    private readonly int _minSuitLength;
 
     private readonly HashSet<Bid> _reservedBids;
     private readonly List<IBidConstraint> _constraints;
 
     // Forward: what must be true for any weak opening to fire
-    private static CompositeConstraint BuildConstraints()
-        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint("any", ">=6") } };
+    private CompositeConstraint BuildConstraints()
+        => new() { Constraints = { new HcpConstraint(_minHcp, _maxHcp), new SuitLengthConstraint("any", $">={_minSuitLength}") } };
 
     // Backward: once we know the specific bid, we know the exact suit and length
-    private static CompositeConstraint BuildConstraints(Bid bid)
-        => new() { Constraints = { new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint(bid.Suit!.Value, bid.Level + Number, bid.Level + Number) } };
+    private CompositeConstraint BuildConstraints(Bid bid)
+        => new() { Constraints = { new HcpConstraint(_minHcp, _maxHcp), new SuitLengthConstraint(bid.Suit!.Value, bid.Level + _number, bid.Level + _number) } };
 
-    public WeakOpeningRule(IEnumerable<Bid> reservedBids)
+    public WeakOpeningRule(IEnumerable<Bid> reservedBids, int minHcp = 6, int maxHcp = 9,
+        int minSuitLength = 6, int number = 4, int priority = 9)
     {
-        _constraints = [new HcpConstraint(MinHcp, MaxHcp), new SuitLengthConstraint("any", ">=6")];
+        _minHcp = minHcp;
+        _maxHcp = maxHcp;
+        _minSuitLength = minSuitLength;
+        _number = number;
+        Priority = priority;
+        _constraints = [new HcpConstraint(_minHcp, _maxHcp), new SuitLengthConstraint("any", $">={_minSuitLength}")];
         _reservedBids = reservedBids.ToHashSet();
     }
 
@@ -59,6 +66,6 @@ public class WeakOpeningRule : BiddingRuleBase
     {
         var suit = ctx.HandEvaluation.LongestAndStrongest;
         var level = ctx.HandEvaluation.Shape[suit];
-        return Bid.SuitBid(level - Number, suit);
+        return Bid.SuitBid(level - _number, suit);
     }
 }

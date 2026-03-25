@@ -27,7 +27,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
 public class AcolResponderAfterOpenerNewSuit : BiddingRuleBase
 {
     public override string Name => "Acol responder after opener new suit";
-    public override int Priority => 45;
+    public override int Priority { get; }
+
+    public AcolResponderAfterOpenerNewSuit(int priority = 45)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {

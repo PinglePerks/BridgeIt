@@ -8,7 +8,13 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
 public class Acol1NTResponseTo1Suit : BiddingRuleBase
 {
     public override string Name { get; } = "Acol 1NT response to 1 suit";
-    public override int Priority { get; } = 30;
+    public override int Priority { get; }
+
+    public Acol1NTResponseTo1Suit(int priority = 30)
+    {
+        Priority = priority;
+    }
+
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
         => new() { Constraints = { new HcpConstraint(6, 40) } };
 

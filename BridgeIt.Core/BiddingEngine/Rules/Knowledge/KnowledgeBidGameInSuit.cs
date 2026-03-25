@@ -14,7 +14,12 @@ namespace BridgeIt.Core.BiddingEngine.Rules.Knowledge;
 public class KnowledgeBidGameInSuit : BiddingRuleBase
 {
     public override string Name => "Knowledge: Bid game in suit";
-    public override int Priority { get; } = 2;
+    public override int Priority { get; }
+
+    public KnowledgeBidGameInSuit(int priority = 2)
+    {
+        Priority = priority;
+    }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
         => auction.AuctionPhase != AuctionPhase.PreOpening;

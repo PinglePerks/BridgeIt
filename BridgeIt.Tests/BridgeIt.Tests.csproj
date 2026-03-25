@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BridgeIt.Core\BridgeIt.Core.csproj" />
+      <ProjectReference Include="..\BridgeIt.Systems\BridgeIt.Systems.csproj" />
     </ItemGroup>
 
     <ItemGroup>

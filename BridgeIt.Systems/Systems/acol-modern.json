@@ -1,0 +1,254 @@
+{
+  "name": "Modern Acol (BFA Level 2)",
+  "description": "BFA Level 2. Transfers, Baron, splinters, long suit trial bids, Michaels, unusual 2NT. For club-level players moving beyond foundation.",
+
+  "nT1Opening": {
+    "minHcp": 12,
+    "maxHcp": 14,
+    "level": 1,
+    "allowSingleton": false
+  },
+
+  "nT2Opening": {
+    "minHcp": 20,
+    "maxHcp": 22,
+    "level": 2,
+    "allowSingleton": false
+  },
+
+  "suitOpening": {
+    "minHcp": 12,
+    "maxHcp": 19,
+    "majorMinLength": 4,
+    "minorMinLength": 4,
+    "minorSelection": "HigherRanking",
+    "ruleOf20": true,
+    "fourCardMajor": {
+      "fourFourMajorOpening": "1H",
+      "fourFourFourOneMap": {
+        "Clubs": "1H",
+        "Diamonds": "1C",
+        "Hearts": "1D",
+        "Spades": "1D"
+      }
+    }
+  },
+
+  "strongOpening": {
+    "minHcpBalanced": 23,
+    "minHcpUnbalanced": 20,
+    "maxHcp": 35,
+    "bid": "2C",
+    "gameForcing": true
+  },
+
+  "preempts": {
+    "minHcp": 6,
+    "maxHcp": 10,
+    "minSuitLength3Level": 7,
+    "minSuitLength4Level": 8,
+    "reservedBids": ["2C"]
+  },
+
+  "twoLevelOpenings": {
+    "benjaminTwos": false,
+    "weakTwos": {
+      "minHcp": 5,
+      "maxHcp": 9,
+      "minSuitLength": 6,
+      "suits": ["H", "S"],
+      "twoNTEnquiry": true
+    },
+    "acolTwos": {
+      "minHcp": 16,
+      "maxHcp": 22,
+      "suits": ["D", "H", "S"]
+    }
+  },
+
+  "responseTo1NT": {
+    "stayman": {
+      "enabled": true,
+      "minHcp": 11
+    },
+    "transfers": {
+      "enabled": true,
+      "minSuitLength": 5,
+      "maxSuitLength": 11
+    },
+    "minorTransfers": {
+      "enabled": true,
+      "clubTransferBid": null,
+      "diamondTransferBid": "2NT"
+    },
+    "baron": {
+      "enabled": true,
+      "bid": "2S",
+      "inviteMinHcp": 11,
+      "inviteMaxHcp": 12
+    },
+    "weaknessTakeouts": null,
+    "raise": null,
+    "jacoby2NT": null,
+    "naturalAfterDouble": true
+  },
+
+  "responseTo2NT": {
+    "stayman": {
+      "enabled": true,
+      "minHcp": 4
+    },
+    "transfers": {
+      "enabled": true,
+      "minSuitLength": 5,
+      "maxSuitLength": 11
+    },
+    "minorTransfers": null,
+    "baron": {
+      "enabled": true,
+      "bid": "3S",
+      "inviteMinHcp": 11,
+      "inviteMaxHcp": 12
+    },
+    "weaknessTakeouts": null,
+    "raise": null,
+    "jacoby2NT": null,
+    "naturalAfterDouble": false
+  },
+
+  "responseTo1Suit": {
+    "minHcpFor1Level": 6,
+    "minHcpFor2Level": 10,
+    "raiseTo2MaxHcp": 9,
+    "raiseTo3MaxHcp": 12,
+    "gameForceMinHcp": 13,
+    "nTResponseMinHcp": 6,
+    "nTResponseMaxHcp": 9,
+    "splinterBids": true
+  },
+
+  "responseTo2C": {
+    "enabled": true,
+    "negativeResponseBid": "2D"
+  },
+
+  "openerRebid": {
+    "reverseMinHcp": 16,
+    "nTRebid": {
+      "rebid1NTMin": 15,
+      "rebid1NTMax": 16,
+      "rebid2NTMin": 17,
+      "rebid2NTMax": 18,
+      "rebid3NTMin": 19,
+      "rebid3NTMax": 19
+    }
+  },
+
+  "responderRebid": {},
+
+  "overcalls": {
+    "simple": { "minHcp": 8 },
+    "jump": {
+      "style": "Intermediate",
+      "minHcp": 12,
+      "maxHcp": 16,
+      "minSuitLength": 6
+    },
+    "cueBid": {
+      "enabled": true,
+      "style": "Michaels",
+      "minSuitLength": 5
+    },
+    "nT1": {
+      "directMinHcp": 16,
+      "directMaxHcp": 18,
+      "protectiveMinHcp": 11,
+      "protectiveMaxHcp": 14
+    },
+    "unusual2NT": {
+      "enabled": true
+    }
+  },
+
+  "negativeDoubles": {
+    "enabled": true,
+    "maxLevel": "2S"
+  },
+
+  "competitiveAuctions": {
+    "redoubleShows9Plus": true,
+    "newSuitForcing": true,
+    "jumpRaisePreemptive": true,
+    "twoNTGoodRaise": true,
+    "unassumingCueBids": {
+      "enabled": true
+    }
+  },
+
+  "slam": {
+    "style": "Blackwood",
+    "grandSlamForce": true
+  },
+
+  "fourthSuitForcing": {
+    "enabled": true
+  },
+
+  "splinters": {
+    "enabled": true,
+    "minFitLength": 4
+  },
+
+  "trialBids": {
+    "enabled": true,
+    "style": "LongSuit"
+  },
+
+  "priorities": {
+    "Acol1NTOpening": 20,
+    "Acol2NTOpening": 20,
+    "Acol1SuitOpening": 10,
+    "AcolStrongOpening": 19,
+    "WeakOpening": 9,
+    "StandardStayman_1NT": 29,
+    "StandardStayman_2NT": 29,
+    "StandardStayman_2C2D2NT": 29,
+    "StandardTransfer_1NT": 30,
+    "StandardTransfer_2NT": 30,
+    "StandardTransfer_2C2D2NT": 30,
+    "CompleteTransfer_1NT": 30,
+    "CompleteTransfer_2NT": 30,
+    "CompleteTransfer_2C2D2NT": 30,
+    "StaymanResponse_1NT": 60,
+    "StaymanResponse_2NT": 60,
+    "StaymanResponse_2C2D2NT": 60,
+    "AcolResponderAfterStayman_1NT": 58,
+    "AcolResponderAfterStayman_2NT": 58,
+    "AcolResponderAfterStayman_2C2D2NT": 58,
+    "AcolNTRaiseOver1NT": 25,
+    "AcolResponseTo2C": 50,
+    "AcolJacoby2NTOver1Major": 55,
+    "AcolRaiseMajorOver1Suit": 50,
+    "AcolRaiseMinorOver1Suit": 35,
+    "AcolNewSuitOver1Suit": 40,
+    "Acol1NTResponseTo1Suit": 30,
+    "AcolOpenerRebidAfter2C": 60,
+    "AcolOpenerAfterNTInvite": 50,
+    "AcolOpenerAfterMajorRaise": 45,
+    "AcolRebidBalanced": 25,
+    "AcolRebidNewSuit": 40,
+    "AcolRebidRaiseSuit": 35,
+    "AcolRebidOwnSuit": 42,
+    "AcolResponderAfterOpenerRaisedSuit": 50,
+    "AcolResponderAfterOpener1NTRebid": 45,
+    "AcolResponderAfterOpener2NTRebid": 45,
+    "AcolResponderAfterOpenerRebidOwnSuit": 40,
+    "AcolResponderAfterOpenerNewSuit": 40,
+    "KnowledgeBidGameInSuit": 2,
+    "KnowledgeBidGameInNT": 1,
+    "KnowledgeInviteInSuit": 2,
+    "KnowledgeInviteInNT": 2,
+    "KnowledgeSignOffInFit": 1,
+    "KnowledgeSignOff": 0
+  }
+}
