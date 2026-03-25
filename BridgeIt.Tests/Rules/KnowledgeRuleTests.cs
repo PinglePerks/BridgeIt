@@ -59,10 +59,10 @@ public class KnowledgeRuleTests
             IsBalanced = myShape.Values.All(v => v >= 2) && myShape.Values.Count(v => v <= 3) >= 2,
             Losers = 7,
             LongestAndStrongest = myShape.OrderByDescending(kv => kv.Value).First().Key,
-            SuitStoppers = new Dictionary<Suit, bool>
+            SuitStoppers = new Dictionary<Suit, StopperQuality>
             {
-                { Suit.Spades, true }, { Suit.Hearts, true },
-                { Suit.Diamonds, true }, { Suit.Clubs, true }
+                { Suit.Spades, StopperQuality.Full }, { Suit.Hearts, StopperQuality.Full },
+                { Suit.Diamonds, StopperQuality.Full }, { Suit.Clubs, StopperQuality.Full }
             }
         };
 

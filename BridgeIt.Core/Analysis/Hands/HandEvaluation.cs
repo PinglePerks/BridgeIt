@@ -12,7 +12,7 @@ public class HandEvaluation
     public bool IsBalanced { get; init; }
     public Dictionary<Suit,int> RomanKeyCardCount { get; init; } = new();
     public Suit LongestAndStrongest {get; init;}
-    public Dictionary<Suit, bool> SuitStoppers { get; init; } = new();
+    public Dictionary<Suit, StopperQuality> SuitStoppers { get; init; } = new();
 
     /// <summary>
     /// Returns all suits with at least <paramref name="minLength"/> cards,

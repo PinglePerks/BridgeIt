@@ -74,24 +74,41 @@ public static class ShapeEvaluator
             .ToList();
     }
 
-    public static Dictionary<Suit, bool> GetStoppers(Hand hand)
+    public static Dictionary<Suit, StopperQuality> GetStoppers(Hand hand)
     {
-        var stoppers = new Dictionary<Suit, bool>();
+        var stoppers = new Dictionary<Suit, StopperQuality>();
         foreach (Suit suit in Enum.GetValues(typeof(Suit)))
         {
-            stoppers[suit] = HasStopperInSuit(hand, suit);
+            stoppers[suit] = EvaluateStopperQuality(hand, suit);
         }
 
         return stoppers;
     }
 
-    private static bool HasStopperInSuit(Hand hand, Suit suit)
+    internal static StopperQuality EvaluateStopperQuality(Hand hand, Suit suit)
     {
         var suitCards = hand.Cards.Where(x => x.Suit == suit).ToList();
-        
-        var countCards = suitCards.Count;
-        
-        return suitCards.Any(x => x.Rank == Rank.Ace || x.Rank == Rank.King && countCards >= 2 || x.Rank == Rank.Queen && countCards >= 3 || x.Rank == Rank.Jack && countCards >= 4);
+        var count = suitCards.Count;
+
+        if (count == 0) return StopperQuality.None;
+
+        var hasAce = suitCards.Any(c => c.Rank == Rank.Ace);
+        var hasKing = suitCards.Any(c => c.Rank == Rank.King);
+        var hasQueen = suitCards.Any(c => c.Rank == Rank.Queen);
+        var hasJack = suitCards.Any(c => c.Rank == Rank.Jack);
+
+        // Full stoppers: A, Kx+, Qxx+, Jxxx+
+        if (hasAce) return StopperQuality.Full;
+        if (hasKing && count >= 2) return StopperQuality.Full;
+        if (hasQueen && count >= 3) return StopperQuality.Full;
+        if (hasJack && count >= 4) return StopperQuality.Full;
+
+        // Partial stoppers: singleton K, Qx, QJ, Jxx
+        if (hasKing) return StopperQuality.Partial;  // singleton K
+        if (hasQueen && count >= 2) return StopperQuality.Partial;  // Qx
+        if (hasJack && count >= 3) return StopperQuality.Partial;  // Jxx
+
+        return StopperQuality.None;
     }
 
 }
