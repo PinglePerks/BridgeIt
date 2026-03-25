@@ -8,13 +8,13 @@ public class BidInformation
     public Bid Bid { get; init; }
     
     public IBidConstraint? Constraint { get; init; }
-    public string? PartnershipState { get; init; }
+    public PartnershipBiddingState PartnershipBiddingState { get; init; }
 
-    public BidInformation(Bid bid, IBidConstraint? constraint, string? partnershipState)
+    public BidInformation(Bid bid, IBidConstraint? constraint, PartnershipBiddingState partnershipState)
     {
         Bid = bid;
         Constraint = constraint;
-        PartnershipState = partnershipState;
+        PartnershipBiddingState = partnershipState;
     }
     
 }

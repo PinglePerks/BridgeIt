@@ -19,20 +19,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7a03bb1-76ab-43ab-9577-b10b0b01e085" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BridgeIt.Systems/LoadedSystem/BasicAcol.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BridgeIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipEvaluator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipKnowledge.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PartnershipKnowledge.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/RuleLookupService/IRuleLookupService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlTrigger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Domain/Extensions/StringExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Domain/Extensions/StringExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Hand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Hand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.TestHarness/result.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Conventions/AcolResponderAfterStayman.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Conventions/AcolResponderAfterStayman.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +41,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="version/0.4" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,6 +59,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Immediate Window" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/34e54cf52b4a4c2b82645ccc3a46837e5e000/b8/f6c5a937/ProxyGenerator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4439da9790a64b75a8c98e86a8f7201bc7e00/d3/1ee5dcf7/Nullable`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a79c3da4c0a41058159fab980de32d0c2a200/0b/b4381127/KeyValuePair`2.cs" root0="FORCE_HIGHLIGHTING" />
@@ -80,12 +70,15 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14561474d59674ba567edffb5dfd2e45888e82c9f165a6c4c27135c2560331/ServiceCollectionContainerBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/182ec85d25b779c7118bca2890ca95ae8dd32868c52272faee4a3a304f624b/Assert.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/20f4825c4341fc5ca8bed5d846e4a6668c9b10eba31675d5d548fa8519db8/TaskContinuation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/31e72e62776b9d98691e517c21aff97687f39e03d37be35513da2b6183dedf5/ArgumentOutOfRangeException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/326268ddb927895dce924c78646b4d4ce2b05971ed1d8c9be99051ad1d2/Dictionary.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/337268366a89be4dda7d47b37063fd21841972237539397997c82c4f924b/Mock`1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5855515dc3a0328f1f7271088a5871832db316467c998cc629ec45c60c110/AnyAll.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6728f66657329080f0f419df519283a455cdca7d2617a05b18553b02da52fa/Nullable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6780d13016c376c4491c5618b257d84da7eacf747ed2719783e775546b79b/ThrowHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/68b06b8592b1287fd78f3ee68566d6a38d6e2f45b9a9e6ebd4d0e9972f7c29/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7f8bab2ddd1a86312228e89db53ca668c6a6584aaf9c02761dcd3d728f5fc3e/Number.Parsing.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8056cd3f452fefb9834f05cdb275b762dd41f27b7766cd71174e78592dc495b/Monitor.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c5d8a85d2b099b5d2f03df3e87e2a17666e45152d469e276111c436f05dc3fb/TestCaseData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9cf5f68d759deefc91b9c48c5ac3dd27708bb7dc38d0c485661fff5ce15b82/SafeFileHandle.Unix.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b2211e429f4f11854755f6edb3dd5c025d0b1e783ee89f89a0351ab13887f7/WorkItem.cs" root0="FORCE_HIGHLIGHTING" />
@@ -100,16 +93,19 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Hubs/GameHubs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Models/CustomDealRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Models/GameState.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Api/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Api/Services/GameService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.CLI/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.CLI/SpecificDeals.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionHistory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Analysis/Hands/HandEvaluation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/HighCardPoints.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/KeyCardCalculator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/LosingTrickCount.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Hands/ShapeEvaluator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/Analysis/Partnership/PlayerKnowledge.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/BidDerivation/Factories/IBidDerivationFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/BidDerivation/IBidDerivation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Constraints/CurrentContractConstraint.cs" root0="FORCE_HIGHLIGHTING" />
@@ -123,11 +119,36 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/BiddingRulesBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Core/IBiddingRules.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGameObjectiveRule.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/GeneralGoingForGame.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Knowledge/KnowledgeBidGameInNT.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Knowledge/KnowledgeBidGameInSuit.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Knowledge/KnowledgeInviteInSuit.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Knowledge/KnowledgeSignOffInFit.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterMajorRaise.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolOpenerAfterNTInvite.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidBalanced.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidNewSuit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidOwnSuit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerRebid/AcolRebidRaiseSuit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1NTOpeningRule.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1NTOpeningRule.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol1SuitOpeningRule.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/Acol2NTOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Openings/WeakOpeningRule.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/AcolResponseTo2C.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/AcolResponseToWeakPreempt.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/AcolStaymanOver2NT.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1NT/InvitationOver1NT.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/Acol1NTResponseTo1Suit.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolJacoby2NTOver1Major.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolNewSuitOver1Suit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMajorOver1Suit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/Responder/ResponsesTo1Suit/AcolRaiseMinorOver1Suit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/TemplateRule.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Configuration/Yaml/YamlRuleLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/BidType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Bidding/PartnershipBiddingState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Card.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Deck.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Core/Domain/Primatives/Hand.cs" root0="FORCE_HIGHLIGHTING" />
@@ -144,16 +165,11 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Dealer/Deal/IDealer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Systems/Class1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Systems/LoadedSystem/BasicAcol.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleRulesTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/HandSpecifications.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/GeneratedDeals/IntegrationTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/IntegrationTests/AcolSystemTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/IntegrationTests/IntegrationTestCases.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/OpenerTests/OpenerTests.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnAnalysis/PbnAnalysis.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/PbnTests/GoldenGames/GoldenPbnTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/Setup/TestBridgeEnvironment.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SpecificRulesTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolOpeningTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Openers/BasicAcolWeakOpeningTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BridgeIt.TestHarness/SystemTests/Acol/Rebid/AcolRebidTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Auction/AuctionEvaluationTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Hands/HighCardPointsTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Hands/KeyCardCalculator.cs" root0="FORCE_HIGHLIGHTING" />
@@ -164,22 +180,10 @@
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/BiddingEngine/Constraints/HistoryConstraintTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/BiddingEngine/Core/BiddingRuleBaseTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/IntegrationTests/TestHarness.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Tests/Rules/OpenerRebidPhase3aTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/mattyperky/RiderProjects/BridgeIt/BridgeIt.Tests/Rules/ResponseRuleTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/Rules/RulesTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BridgeIt.Tests/UnitTest1.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Web/Services/IBridgeGameService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Web/Services/IRuleProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Web/Services/LocalBridgeGameService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Web/Services/WebRuleProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.Web/wwwroot/bootstrap/bootstrap.min.css.map" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Components/CardBackComponent.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Components/CardComponent.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Components/CustomDealModal.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Components/HandComponent.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Components/NicerCards.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Models/CustomDealRequest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Pages/MainPage.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/Services/DealGenerator.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BridgeIt.WebDeal/wwwroot/css/bootstrap/bootstrap.min.css.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="file:///usr/local/share/dotnet/sdk/8.0.414/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_8_default.globalconfig" root0="FORCE_HIGHLIGHTING" />
     <setting file="file:///usr/local/share/dotnet/sdk/8.0.414/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.Shared.targets" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -232,20 +236,23 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "a09d4460-c3f7-479f-93e0-404b105aaf76.executor": "Debug",
     "a28a3c60-8681-4aff-8bdd-62910ef333d7.executor": "Debug",
     "a62611a8-0777-4d10-aaa5-2c5fcfb0f736.executor": "Debug",
+    "b4dba052-e013-4b6a-8674-d80b4fcd7094.executor": "Debug",
     "bce0dfac-c94c-48e4-848f-d6e512e9125e.executor": "Debug",
+    "c9ac914f-6074-4f18-b9a7-051edd0492fd.executor": "Debug",
     "defaea00-bfb8-4d4d-9553-a0c88a981268.executor": "Debug",
     "e3e8795a-fb4e-4c8a-8ac0-8d1b4f576b6a.executor": "Run",
     "e5218fee-031e-4c4e-b536-78a7ab157fda.executor": "Debug",
     "fb4cb39a-f52f-4aec-ae8b-3a41f107523d.executor": "Debug",
-    "git-widget-placeholder": "version/0.1",
+    "git-widget-placeholder": "version/0.5",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
+    "settings.editor.selected.configurable": "preferences.toDoOptions",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -517,7 +524,9 @@
       <workItem from="1764598832000" duration="123133000" />
       <workItem from="1766311085105" duration="11374000" />
       <workItem from="1767008125848" duration="5830000" />
-      <workItem from="1773439151998" duration="1832000" />
+      <workItem from="1773439151998" duration="110143000" />
+      <workItem from="1774282548816" duration="29974000" />
+      <workItem from="1774434804818" duration="3462000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -623,7 +632,279 @@
       <option name="project" value="LOCAL" />
       <updated>1766669319681</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1773570589763</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1773570589763</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Reworks TestHarness and added one test.">
+      <option name="closed" value="true" />
+      <created>1773595867872</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1773595867872</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added test harness cases">
+      <option name="closed" value="true" />
+      <created>1773603060732</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1773603060732</updated>
+    </task>
+    <task id="LOCAL-00017" summary="adds golden games initial bid check">
+      <option name="closed" value="true" />
+      <created>1773609300606</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1773609300606</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added new test harness cases">
+      <option name="closed" value="true" />
+      <created>1773650064819</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1773650064819</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Latest">
+      <option name="closed" value="true" />
+      <created>1773688009822</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1773688009822</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Latest update">
+      <option name="closed" value="true" />
+      <created>1773780537705</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1773780537705</updated>
+    </task>
+    <task id="LOCAL-00021" summary="WIP">
+      <option name="closed" value="true" />
+      <created>1774017823538</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1774017823538</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Opening only">
+      <option name="closed" value="true" />
+      <created>1774020463785</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1774020463785</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Acol openings added">
+      <option name="closed" value="true" />
+      <created>1774020919257</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1774020919257</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Removes YAML for now">
+      <option name="closed" value="true" />
+      <created>1774021016285</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1774021016285</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Claude suggested changes">
+      <option name="closed" value="true" />
+      <created>1774042198318</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1774042198318</updated>
+    </task>
+    <task id="LOCAL-00026" summary="added rst &amp; partner states logic">
+      <option name="closed" value="true" />
+      <created>1774050981898</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1774050981898</updated>
+    </task>
+    <task id="LOCAL-00027" summary="corrects forbidden bids">
+      <option name="closed" value="true" />
+      <created>1774080641376</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1774080641376</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Removes PartnerKnowledgeConstraint.cs for now">
+      <option name="closed" value="true" />
+      <created>1774083065750</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1774083065750</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Transfer Accepted">
+      <option name="closed" value="true" />
+      <created>1774095283043</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1774095283043</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Claude updates - partnerknowledge etc">
+      <option name="closed" value="true" />
+      <created>1774181568274</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1774181568274</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Partner / Table knowledge">
+      <option name="closed" value="true" />
+      <created>1774181587567</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1774181587567</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Latest additions">
+      <option name="closed" value="true" />
+      <created>1774192528394</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1774192528394</updated>
+    </task>
+    <task id="LOCAL-00033" summary="adding responses to 1 suit">
+      <option name="closed" value="true" />
+      <created>1774199741400</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1774199741400</updated>
+    </task>
+    <task id="LOCAL-00034" summary="bug fix">
+      <option name="closed" value="true" />
+      <created>1774200106895</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1774200106895</updated>
+    </task>
+    <task id="LOCAL-00035" summary="updates">
+      <option name="closed" value="true" />
+      <created>1774201393074</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1774201393074</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Opener rebids phase 1">
+      <option name="closed" value="true" />
+      <created>1774209662049</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1774209662049</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Testsupdate lated">
+      <option name="closed" value="true" />
+      <created>1774218841313</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1774218841313</updated>
+    </task>
+    <task id="LOCAL-00038" summary="new">
+      <option name="closed" value="true" />
+      <created>1774253534222</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1774253534222</updated>
+    </task>
+    <task id="LOCAL-00039" summary="ir">
+      <option name="closed" value="true" />
+      <created>1774253541796</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1774253541796</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Latest updates">
+      <option name="closed" value="true" />
+      <created>1774258636231</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1774258636231</updated>
+    </task>
+    <task id="LOCAL-00041" summary="new worky">
+      <option name="closed" value="true" />
+      <created>1774291800194</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1774291800194</updated>
+    </task>
+    <task id="LOCAL-00042" summary="neg">
+      <option name="closed" value="true" />
+      <created>1774291814902</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1774291814902</updated>
+    </task>
+    <task id="LOCAL-00043" summary="test">
+      <option name="closed" value="true" />
+      <created>1774310257580</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1774310257580</updated>
+    </task>
+    <task id="LOCAL-00044" summary="kt">
+      <option name="closed" value="true" />
+      <created>1774310275566</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1774310275566</updated>
+    </task>
+    <task id="LOCAL-00045" summary="new rules">
+      <option name="closed" value="true" />
+      <created>1774343290134</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1774343290134</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Doggy">
+      <option name="closed" value="true" />
+      <created>1774370950994</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1774370950995</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Version0.4">
+      <option name="closed" value="true" />
+      <created>1774449792552</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1774449792552</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,15 +934,32 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="gitignore" />
-    <MESSAGE value="initial" />
-    <MESSAGE value="proj" />
-    <MESSAGE value="files" />
-    <MESSAGE value="web" />
-    <MESSAGE value="latest updates" />
+    <MESSAGE value="Acol openings added" />
+    <MESSAGE value="Removes YAML for now" />
+    <MESSAGE value="Claude suggested changes" />
+    <MESSAGE value="added rst &amp; partner states logic" />
+    <MESSAGE value="corrects forbidden bids" />
+    <MESSAGE value="Removes PartnerKnowledgeConstraint.cs for now" />
+    <MESSAGE value="Transfer Accepted" />
+    <MESSAGE value="Claude updates - partnerknowledge etc" />
+    <MESSAGE value="Partner / Table knowledge" />
+    <MESSAGE value="Latest additions" />
+    <MESSAGE value="adding responses to 1 suit" />
+    <MESSAGE value="bug fix" />
     <MESSAGE value="updates" />
-    <MESSAGE value="Removes web FE" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removes web FE" />
+    <MESSAGE value="Opener rebids phase 1" />
+    <MESSAGE value="Testsupdate lated" />
+    <MESSAGE value="new" />
+    <MESSAGE value="ir" />
+    <MESSAGE value="Latest updates" />
+    <MESSAGE value="new worky" />
+    <MESSAGE value="neg" />
+    <MESSAGE value="test" />
+    <MESSAGE value="kt" />
+    <MESSAGE value="new rules" />
+    <MESSAGE value="Doggy" />
+    <MESSAGE value="Version0.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version0.4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -679,121 +977,56 @@
           <option name="timeStamp" value="3" />
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Hands/HighCardPointsTests.cs</url>
-          <line>61</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Tests/Analysis/Hand/HighCardPointsTests.cs" containingFunctionPresentation="Method 'Count_CalculatesMaxPossible_37HCP'">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs</url>
+          <line>35</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/EngineObserver/IEngineObserver.cs" containingFunctionPresentation="Constructor 'EngineObserver'">
             <startOffsets>
-              <option value="2187" />
+              <option value="1215" />
             </startOffsets>
             <endOffsets>
-              <option value="2232" />
+              <option value="1267" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="40" />
+          <option name="timeStamp" value="197" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Tests/Analysis/Auction/AuctionEvaluationTests.cs</url>
-          <line>73</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Tests/Analysis/Auction/AuctionEvaluationTests.cs" containingFunctionPresentation="Method 'GetSeatRole_ReturnsCorrectSeatRole'">
+          <url>file://$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseTo1SuitTests.cs</url>
+          <line>616</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Tests/Rules/ResponseTo1SuitTests.cs" containingFunctionPresentation="Method 'NewSuit_CouldMakeBid_FalseWith4Clubs8Hcp_Over1S_TooWeakForTwoLevel'">
             <startOffsets>
-              <option value="2341" />
+              <option value="23169" />
             </startOffsets>
             <endOffsets>
-              <option value="2411" />
+              <option value="23227" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="44" />
+          <option name="timeStamp" value="202" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs</url>
-          <line>72</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/BiddingEngine/Rules/OpenerUnbalancedRebidRule.cs" containingFunctionPresentation="Method 'Apply'">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledgeEvaluator.cs</url>
+          <line>52</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledgeEvaluator.cs" containingFunctionPresentation="Method 'CollectConstraints'">
             <startOffsets>
-              <option value="2837" />
+              <option value="1783" />
             </startOffsets>
             <endOffsets>
-              <option value="2849" />
+              <option value="1806" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="118" />
+          <option name="timeStamp" value="209" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTests.cs</url>
-          <line>36</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTests.cs" containingFunctionPresentation="Method 'RunScenario'">
+          <url>file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledgeEvaluator.cs</url>
+          <line>27</line>
+          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Partnership/PlayerKnowledgeEvaluator.cs" containingFunctionPresentation="Method 'AnalyzeKnowledge'">
             <startOffsets>
-              <option value="1229" />
+              <option value="1008" />
             </startOffsets>
             <endOffsets>
-              <option value="1314" />
+              <option value="1066" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="141" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTests.cs</url>
-          <line>32</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/RealGameTests/RealGameIntegrationTests.cs" containingFunctionPresentation="Method 'RunScenario'">
-            <startOffsets>
-              <option value="1101" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1149" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="142" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs</url>
-          <line>140</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.Core/Analysis/Auction/AuctionEvaluation.cs" containingFunctionPresentation="Method 'ExtractKnowledgeFromConstraint'">
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/SpecificRulesTest.cs</url>
-          <line>16</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/SpecificRulesTest.cs" containingFunctionPresentation="Method 'Check1NTOpener'">
-            <startOffsets>
-              <option value="441" />
-            </startOffsets>
-            <endOffsets>
-              <option value="479" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="155" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs</url>
-          <line>65</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/AcolSystemTests.cs" containingFunctionPresentation="Method 'RunExactScenario'">
-            <startOffsets>
-              <option value="2241" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2330" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="158" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs</url>
-          <line>13</line>
-          <properties documentPath="$PROJECT_DIR$/BridgeIt.TestHarness/DebugTests/SimpleHandParser.cs" containingFunctionPresentation="Method 'ParseBoard'">
-            <startOffsets>
-              <option value="406" />
-            </startOffsets>
-            <endOffsets>
-              <option value="447" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="159" />
+          <option name="timeStamp" value="210" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -802,6 +1035,7 @@
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Core.BiddingContext" memberName="AuctionHistory" />
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Rules.YamlDerivedRule" memberName="_options" />
         <PinnedItemInfo parentTag="Type#System.Collections.Generic.KeyValuePair`2" memberName="Value" />
+        <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Rules.YamlDerivedRule" memberName="Priority" />
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.BiddingEngine.Core.BiddingContext" memberName="Seat" />
         <PinnedItemInfo parentTag="Type#BridgeIt.Core.Bidding.BiddingContext" memberName="AuctionHistory" />
       </pinned-members>

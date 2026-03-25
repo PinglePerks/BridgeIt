@@ -7,13 +7,13 @@ public interface IBidDerivationFactory
     bool CanCreate(string key); 
     IBidDerivation Create(Dictionary<string,object> dict);
 }
-
-public class ResponderBidDerivationFactory : IBidDerivationFactory
-{
-    public bool CanCreate(string key) => key == "responder";
-
-    public IBidDerivation Create(Dictionary<string, object> dict)
-    {
-        return new ResponderBidDerivation();
-    }
-}
+//
+// public class ResponderBidDerivationFactory : IBidDerivationFactory
+// {
+//     public bool CanCreate(string key) => key == "responder";
+//
+//     public IBidDerivation Create(Dictionary<string, object> dict)
+//     {
+//         return new ResponderBidDerivation();
+//     }
+// }

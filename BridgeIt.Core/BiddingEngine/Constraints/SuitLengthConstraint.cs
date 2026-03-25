@@ -11,6 +11,13 @@ public class SuitLengthConstraint : IBidConstraint
     public readonly int MaxLen = 14;
     //private readonly Suit? _suit = null;
 
+    public SuitLengthConstraint(Suit? suit, int minLen, int maxLen)
+    {
+        Suit = suit;
+        MinLen = minLen;
+        MaxLen = maxLen;
+    }
+
     public SuitLengthConstraint(string suit, string lengthExpression)
     {
         if (suit == "any")
@@ -25,6 +32,11 @@ public class SuitLengthConstraint : IBidConstraint
         {
             MaxLen = int.Parse(lengthExpression.Replace("<=", "").Trim());
         }
+        else if (lengthExpression.Contains("="))
+        {
+            MinLen = int.Parse(lengthExpression.Replace("=", "").Trim());
+            MaxLen = MinLen;
+        }
         
     }
 
@@ -37,7 +49,7 @@ public class SuitLengthConstraint : IBidConstraint
             var suit = GetLongestMatchingSuit(ctx);
             if (suit != null)
             {
-                Suit = suit.Value;
+                //Suit = suit.Value;
                 return true;
             }
             return false;

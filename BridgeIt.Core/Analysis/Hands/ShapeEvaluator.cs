@@ -4,12 +4,9 @@ namespace BridgeIt.Core.Analysis.Hands;
 
 public static class ShapeEvaluator
 {
-    public static Dictionary<Suit, int> GetShape(Domain.Primatives.Hand hand)
+    public static Dictionary<Suit, int> GetShape(Hand hand)
     {
-        var shape = new Dictionary<Suit, int>()
-        {
-            
-        };
+        var shape = new Dictionary<Suit, int>();
         
         foreach (Suit suit in Enum.GetValues(typeof(Suit)))
         {
@@ -36,4 +33,82 @@ public static class ShapeEvaluator
         return shape.SequenceEqual([5, 4, 2, 2]) ||
                shape.SequenceEqual([6, 3, 2, 2]);
     }
+
+    /// <summary>
+    /// Returns the single longest suit, tie-broken by highest ranking.
+    /// Suitable as a general-purpose summary; rules should use
+    /// SuitsWithMinLength / SuitsByLengthDescending for more nuanced selection.
+    /// </summary>
+    public static Suit LongestAndStrongest(Hand hand)
+    {
+        return GetShape(hand)
+            .OrderByDescending(s => s.Value)
+            .ThenByDescending(s => s.Key)
+            .First()
+            .Key;
+    }
+
+    /// <summary>
+    /// Returns all suits with at least <paramref name="minLength"/> cards,
+    /// ordered by length descending then rank descending.
+    /// </summary>
+    public static List<Suit> SuitsWithMinLength(Hand hand, int minLength)
+    {
+        return GetShape(hand)
+            .Where(kv => kv.Value >= minLength)
+            .OrderByDescending(kv => kv.Value)
+            .ThenByDescending(kv => kv.Key)
+            .Select(kv => kv.Key)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Returns all four suits ordered by length descending then rank descending.
+    /// </summary>
+    public static List<Suit> SuitsByLengthDescending(Hand hand)
+    {
+        return GetShape(hand)
+            .OrderByDescending(kv => kv.Value)
+            .ThenByDescending(kv => kv.Key)
+            .Select(kv => kv.Key)
+            .ToList();
+    }
+
+    public static Dictionary<Suit, StopperQuality> GetStoppers(Hand hand)
+    {
+        var stoppers = new Dictionary<Suit, StopperQuality>();
+        foreach (Suit suit in Enum.GetValues(typeof(Suit)))
+        {
+            stoppers[suit] = EvaluateStopperQuality(hand, suit);
+        }
+
+        return stoppers;
+    }
+
+    public static StopperQuality EvaluateStopperQuality(Hand hand, Suit suit)
+    {
+        var suitCards = hand.Cards.Where(x => x.Suit == suit).ToList();
+        var count = suitCards.Count;
+
+        if (count == 0) return StopperQuality.None;
+
+        var hasAce = suitCards.Any(c => c.Rank == Rank.Ace);
+        var hasKing = suitCards.Any(c => c.Rank == Rank.King);
+        var hasQueen = suitCards.Any(c => c.Rank == Rank.Queen);
+        var hasJack = suitCards.Any(c => c.Rank == Rank.Jack);
+
+        // Full stoppers: A, Kx+, Qxx+, Jxxx+
+        if (hasAce) return StopperQuality.Full;
+        if (hasKing && count >= 2) return StopperQuality.Full;
+        if (hasQueen && count >= 3) return StopperQuality.Full;
+        if (hasJack && count >= 4) return StopperQuality.Full;
+
+        // Partial stoppers: singleton K, Qx, QJ, Jxx
+        if (hasKing) return StopperQuality.Partial;  // singleton K
+        if (hasQueen && count >= 2) return StopperQuality.Partial;  // Qx
+        if (hasJack && count >= 3) return StopperQuality.Partial;  // Jxx
+
+        return StopperQuality.None;
+    }
+
 }

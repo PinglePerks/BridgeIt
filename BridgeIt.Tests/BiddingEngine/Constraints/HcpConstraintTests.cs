@@ -1,5 +1,6 @@
 using BridgeIt.Core.Analysis.Auction;
 using BridgeIt.Core.Analysis.Hands;
+using BridgeIt.Core.Analysis.Partnership;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -110,7 +111,7 @@ public class HcpConstraintTests
             new BiddingContext(dummyHand, dummyHistory, Seat.North, Vulnerability.None),
             handEvaluation,
             new AuctionEvaluation(),
-            new PartnershipKnowledge()
+            new TableKnowledge(Seat.North)
         );
     }
 }
