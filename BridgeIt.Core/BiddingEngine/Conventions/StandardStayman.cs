@@ -25,6 +25,7 @@ public class StandardStayman : BiddingRuleBase
 
     public override string Name => $"Stayman over {_ntCtx.Name}";
     public override int Priority { get; }
+    public override bool IsAlertable => true;
 
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
         => new() { Constraints = { new HcpConstraint(_ntCtx.StaymanHcpMin, 40) } };

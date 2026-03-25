@@ -9,6 +9,7 @@ public class AcolResponseTo2C : BiddingRuleBase
 {
     public override string Name { get; } = "Acol response to 2C";
     public override int Priority { get; } = 50;
+    public override bool IsAlertable => true;
 
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)

@@ -10,6 +10,11 @@ public interface IBiddingRule
     string Name { get; }
     int Priority { get; }
 
+    /// <summary>
+    /// Indicates whether bids produced by this rule are conventional and should be alerted.
+    /// </summary>
+    bool IsAlertable { get; }
+
     //Forward solving
     bool CouldMakeBid(DecisionContext ctx);
     Bid? Apply(DecisionContext ctx);

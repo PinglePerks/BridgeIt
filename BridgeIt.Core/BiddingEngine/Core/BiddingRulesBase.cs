@@ -9,6 +9,7 @@ public abstract class BiddingRuleBase : IBiddingRule
 {
     public abstract string Name { get; }
     public abstract int Priority { get; }
+    public virtual bool IsAlertable => false;
 
     /// <summary>
     /// Checks whether this rule is applicable given only the auction state.

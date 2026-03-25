@@ -21,6 +21,7 @@ public class CompleteTransfer : BiddingRuleBase
 
     public override string Name => $"Complete transfer after {_ntCtx.Name}";
     public override int Priority { get; }
+    public override bool IsAlertable => true;
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
     {
