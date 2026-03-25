@@ -54,6 +54,7 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
 
     // Response to 2C
     new AcolResponseTo2C(),
+    new AcolResponderAfter2CSuitRebid(),
 
     // Responses to 1-suit
     new AcolJacoby2NTOver1Major(),
@@ -101,6 +102,7 @@ builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(_ => new List<IBiddingR
     new AcolResponderAfterOpenerNewSuit(),
 
     // Knowledge-based catch-all rules (low priority — fire when no pattern rule matches)
+    new KnowledgeShapeCorrection(),
     new KnowledgeBidGameInSuit(),
     new KnowledgeBidGameInNT(),
     new KnowledgeInviteInSuit(),
