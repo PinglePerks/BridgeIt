@@ -193,7 +193,7 @@ public class SystemConfigTests
         var loader = new BiddingSystemLoader();
         var loaded = loader.LoadFromFile(Path.Combine(SystemsDir, "acol-foundation.json"));
         Assert.That(loaded.Warnings, Is.Not.Empty);
-        Assert.That(loaded.Warnings.Any(w => w.Contains("Overcalls")), Is.True);
+        // Overcalls are now implemented (simple, jump, NT) — no longer warned
         Assert.That(loaded.Warnings.Any(w => w.Contains("Slam")), Is.True);
         Assert.That(loaded.Warnings.Any(w => w.Contains("WeaknessTakeouts")), Is.True);
     }

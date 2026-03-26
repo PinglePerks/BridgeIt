@@ -7,14 +7,28 @@ public record OvercallConfig
 {
     public SimpleOvercallConfig? Simple { get; init; }
     public JumpOvercallConfig? Jump { get; init; }
+    public TakeoutDoubleConfig? TakeoutDouble { get; init; }
     public CueBidOvercallConfig? CueBid { get; init; }
     public NTOvercallConfig? NT1 { get; init; }
     public UnusualNTConfig? Unusual2NT { get; init; }
 }
 
+/// <summary>
+/// Takeout double configuration.
+/// </summary>
+public record TakeoutDoubleConfig
+{
+    /// <summary>Minimum HCP for a classic shape takeout double.</summary>
+    public int MinHcp { get; init; }
+
+    /// <summary>HCP threshold above which any shape qualifies (too strong to overcall).</summary>
+    public int StrongOverrideHcp { get; init; }
+}
+
 public record SimpleOvercallConfig
 {
     public int MinHcp { get; init; }
+    public int MaxHcp { get; init; } = 15;
 }
 
 /// <summary>
