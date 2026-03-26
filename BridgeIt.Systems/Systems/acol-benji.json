@@ -142,13 +142,14 @@
   "responderRebid": {},
 
   "overcalls": {
-    "simple": { "minHcp": 8 },
+    "simple": { "minHcp": 8, "maxHcp": 15 },
     "jump": {
       "style": "Weak",
       "minHcp": 6,
       "maxHcp": 10,
       "minSuitLength": 6
     },
+    "takeoutDouble": { "minHcp": 12, "strongOverrideHcp": 16 },
     "cueBid": {
       "enabled": true,
       "style": "Michaels",
@@ -237,6 +238,15 @@
     "AcolResponderAfterOpenerRebidOwnSuit": 40,
     "AcolResponderAfterOpenerNewSuit": 40,
     "AcolResponderAfter2CSuitRebid": 55,
+    "NTOvercall": 16,
+    "SimpleOvercall": 15,
+    "JumpOvercall": 14,
+    "TakeoutDouble": 13,
+    "RaiseOvercall": 11,
+    "NewSuitOverOvercall": 10,
+    "NegativeDouble": 12,
+    "NTResponseToOvercall": 9,
+    "AdvanceAfterDouble": 8,
     "KnowledgeShapeCorrection": 4,
     "KnowledgeBidGameInSuit": 2,
     "KnowledgeBidGameInNT": 1,

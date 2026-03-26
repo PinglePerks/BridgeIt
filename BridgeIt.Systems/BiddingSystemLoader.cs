@@ -8,6 +8,8 @@ using BridgeIt.Core.BiddingEngine.Rules.OpenerRebid;
 using BridgeIt.Core.BiddingEngine.Rules.Responder;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1NT;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponsesTo1Suit;
+using BridgeIt.Core.BiddingEngine.Rules.Competitive;
+using BridgeIt.Core.BiddingEngine.Rules.Competitive.Advancer;
 using BridgeIt.Core.BiddingEngine.Rules.Responder.ResponderRebids;
 using BridgeIt.Core.Domain.Bidding;
 using BridgeIt.Core.Domain.Primatives;
@@ -242,9 +244,46 @@ public class BiddingSystemLoader
         rules.Add(new KnowledgeSignOffInFit());
         rules.Add(new KnowledgeSignOff());
 
-        // ── Warn about unbuilt sections ────────────────────────────────
-        WarnIfPresent(config.Overcalls, "Overcalls", warnings);
-        WarnIfPresent(config.NegativeDoubles, "NegativeDoubles", warnings);
+        // ── Overcalls ─────────────────────────────────────────────────
+        if (config.Overcalls is { } oc)
+        {
+            if (oc.Simple is { } simple)
+                rules.Add(new SimpleOvercallRule(simple.MinHcp, simple.MaxHcp,
+                    priority: GetPriority(priorities, "SimpleOvercall", 15)));
+
+            if (oc.Jump is { } jump)
+                rules.Add(new JumpOvercallRule(jump.Style, jump.MinHcp, jump.MaxHcp,
+                    jump.MinSuitLength, GetPriority(priorities, "JumpOvercall", 14)));
+
+            if (oc.NT1 is { } nt)
+                rules.Add(new NTOvercallRule(nt.DirectMinHcp, nt.DirectMaxHcp,
+                    nt.ProtectiveMinHcp, nt.ProtectiveMaxHcp,
+                    GetPriority(priorities, "NTOvercall", 16)));
+
+            if (oc.TakeoutDouble is { } td)
+                rules.Add(new TakeoutDoubleRule(td.MinHcp, td.StrongOverrideHcp,
+                    GetPriority(priorities, "TakeoutDouble", 13)));
+
+            // Advancer rules — responses to partner's overcall
+            rules.Add(new RaiseOvercallRule(GetPriority(priorities, "RaiseOvercall", 11)));
+            rules.Add(new NewSuitOverOvercallRule(GetPriority(priorities, "NewSuitOverOvercall", 10)));
+            rules.Add(new NTResponseToOvercallRule(GetPriority(priorities, "NTResponseToOvercall", 9)));
+
+            // Advance after takeout double
+            if (oc.TakeoutDouble is not null)
+                rules.Add(new AdvanceAfterTakeoutDoubleRule(GetPriority(priorities, "AdvanceAfterDouble", 8)));
+
+            WarnIfPresent(oc.CueBid, "CueBid (Michaels)", warnings);
+            WarnIfPresent(oc.Unusual2NT, "Unusual2NT", warnings);
+        }
+
+        // ── Negative doubles ──────────────────────────────────────────
+        if (config.NegativeDoubles is { Enabled: true } nd)
+        {
+            rules.Add(new NegativeDoubleRule(nd.MaxLevel, priority: GetPriority(priorities, "NegativeDouble", 12)));
+        }
+
+        // ── Competitive auction agreements (not yet implemented) ─────
         WarnIfPresent(config.CompetitiveAuctions, "CompetitiveAuctions", warnings);
         WarnIfPresent(config.Slam, "Slam", warnings);
         WarnIfPresent(config.FourthSuitForcing, "FourthSuitForcing", warnings);
