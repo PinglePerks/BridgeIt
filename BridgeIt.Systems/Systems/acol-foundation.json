@@ -76,8 +76,8 @@
     },
     "raise": {
       "enabled": true,
-      "inviteMinHcp": 11,
-      "inviteMaxHcp": 12
+      "inviteMinHcp": 12,
+      "inviteMaxHcp": 13
     },
     "jacoby2NT": null,
     "naturalAfterDouble": false

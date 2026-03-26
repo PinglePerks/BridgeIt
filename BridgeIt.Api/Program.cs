@@ -39,7 +39,7 @@ builder.Services.AddSingleton(sp =>
 {
     var loader = sp.GetRequiredService<BiddingSystemLoader>();
     var systemPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..",
-        "BridgeIt.Systems", "Systems", "acol-foundation.json");
+        "BridgeIt.Systems", "Systems", "acol-modern.json");
     return loader.LoadFromFile(systemPath);
 });
 builder.Services.AddSingleton<IEnumerable<IBiddingRule>>(sp =>

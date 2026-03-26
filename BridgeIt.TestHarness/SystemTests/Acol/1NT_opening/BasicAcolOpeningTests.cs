@@ -153,6 +153,17 @@ public class BasicAcolOpeningTests
 
         foreach(var deal in testDeals)
         {
+            var dealer = Seat.North;
+            var second = Seat.East;
+            var third = Seat.South;
+            var fourth = Seat.West;
+            
+            Console.WriteLine($"{dealer}: {deal[dealer]}");
+            Console.WriteLine($"{second}: {deal[second]}");
+            Console.WriteLine($"{third}: {deal[third]}");
+            Console.WriteLine($"{fourth}: {deal[fourth]}");
+            Console.WriteLine($"****************************");
+            
             var auction = await _environment.Table.RunAuction(deal, _environment.Players, Seat.North);
             var openingBid = auction.Bids.First().Bid.ToString();
             var responderBid = auction.Bids[2].Bid.ToString();

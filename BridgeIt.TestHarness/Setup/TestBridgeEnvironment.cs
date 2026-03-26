@@ -51,7 +51,7 @@ public class TestBridgeEnvironment
     public TestBridgeEnvironment WithAllRules()
     {
         var loader = new BiddingSystemLoader();
-        var systemPath = FindSystemFile("acol-foundation.json");
+        var systemPath = FindSystemFile("acol-modern.json");
         var loaded = loader.LoadFromFile(systemPath);
 
         var observer = Provider.GetRequiredService<IEngineObserver>();

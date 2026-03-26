@@ -77,9 +77,9 @@
       "maxSuitLength": 11
     },
     "minorTransfers": {
-      "enabled": true,
+      "enabled": false,
       "clubTransferBid": null,
-      "diamondTransferBid": "2NT"
+      "diamondTransferBid": null
     },
     "baron": {
       "enabled": true,
@@ -88,7 +88,11 @@
       "inviteMaxHcp": 12
     },
     "weaknessTakeouts": null,
-    "raise": null,
+    "raise": {
+      "enabled": true,
+      "inviteMinHcp": 12,
+      "inviteMaxHcp": 13
+    },
     "jacoby2NT": null,
     "naturalAfterDouble": true
   },
