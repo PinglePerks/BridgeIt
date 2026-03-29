@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -50,17 +51,17 @@ public class AcolOpenerAfterMajorRaise : BiddingRuleBase
         var suit = (Suit)ctx.AuctionEvaluation.OpeningBid!.Suit!;
         var partnerLevel = ctx.AuctionEvaluation.PartnerLastNonPassBid!.Level;
 
-        if (partnerLevel == 2)
-        {
-            // Partner showed 6-9: Pass 12-14, Invite 15-16, Game 17+
-            if (hcp >= 17) return Bid.SuitBid(4, suit);
-            if (hcp >= 15) return Bid.SuitBid(3, suit);
-            return Bid.Pass();
-        }
+        var ltc = ctx.HandEvaluation.Losers;
+        var partnerLtc = ctx.TableKnowledge.Partner.LosersMax;
+        
+        var expectedTricks = LosingTrickCount.ExpectedTricks(ltc, partnerLtc);
 
-        // Partner showed 10-12 (limit raise to 3M): Pass 12-14, Game 15+
-        if (hcp >= 15) return Bid.SuitBid(4, suit);
-        return Bid.Pass();
+        var level = expectedTricks - 6;
+
+        if (level == ctx.AuctionEvaluation.CurrentContract!.Level)
+            return Bid.Pass();
+        
+        return Bid.SuitBid(level, suit);
     }
 
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)

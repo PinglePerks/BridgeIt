@@ -47,6 +47,8 @@ public class AcolRebidBalanced : BiddingRuleBase
         var minLevel = GetNextNtBidLevel(ctx.AuctionEvaluation.CurrentContract);
         if (minLevel == 2)
         {
+            if (ctx.CombinedHcpMax < 25) return Bid.Pass();
+            
             if(ctx.HandEvaluation.Hcp >= MinHcp1NTRebid)
                 return Bid.NoTrumpsBid(2);
         }

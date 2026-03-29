@@ -6,7 +6,13 @@ public class LosingTrickCountConstraint : IBidConstraint
 {
     public readonly int Max = 13;
     public readonly int Min = 0;
-    
+
+    public LosingTrickCountConstraint(int min, int max)
+    {
+        Min = min;
+        Max = max;
+    }
+
     public LosingTrickCountConstraint(string rangeString)
     {
         if (rangeString.Contains('-'))

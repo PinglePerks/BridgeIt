@@ -13,6 +13,9 @@ public class PlayerKnowledge
     public int HcpMin { get; set; } = 0;
     public int HcpMax { get; set; } = 37;
 
+    public int LosersMin { get; set; } = 0;
+    public int LosersMax { get; set; } = 13;
+
     public Dictionary<Suit, int> MinShape { get; set; } = new()
     {
         { Suit.Spades, 0 },
@@ -42,6 +45,7 @@ public class PlayerKnowledge
     /// </summary>
     public bool HasNarrowedRanges =>
         HcpMin > 0 || HcpMax < 37
+        || LosersMin > 0 || LosersMax < 13
         || MinShape.Values.Any(v => v > 0)
         || MaxShape.Values.Any(v => v < 13)
         || IsBalanced

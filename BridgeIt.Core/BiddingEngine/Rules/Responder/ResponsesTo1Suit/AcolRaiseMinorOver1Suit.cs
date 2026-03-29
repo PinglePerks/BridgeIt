@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -16,6 +17,8 @@ public class AcolRaiseMinorOver1Suit : BiddingRuleBase
         Priority = priority;
     }
 
+    private const int AssumedOpenerLtc = 7;
+
     public override CompositeConstraint? GetForwardConstraints(AuctionEvaluation auction)
     {
         var suit = auction.OpeningBid?.Suit;
@@ -24,7 +27,7 @@ public class AcolRaiseMinorOver1Suit : BiddingRuleBase
         {
             Constraints =
             {
-                new HcpConstraint(6, 40),
+                new LosingTrickCountConstraint(0, 9),
                 new SuitLengthConstraint(suit.Value, 4, 13)
             }
         };
@@ -44,7 +47,7 @@ public class AcolRaiseMinorOver1Suit : BiddingRuleBase
 
     protected override bool IsHandApplicable(DecisionContext ctx)
     {
-        if (ctx.HandEvaluation.Hcp < 6) return false;
+        if (ctx.HandEvaluation.Losers > 9) return false;
 
         var openingSuit = ctx.AuctionEvaluation.OpeningBid!.Suit!.Value;
 
@@ -62,12 +65,10 @@ public class AcolRaiseMinorOver1Suit : BiddingRuleBase
     public override Bid? Apply(DecisionContext ctx)
     {
         var suit = (Suit)ctx.AuctionEvaluation.OpeningBid!.Suit!;
-        var hcp = ctx.HandEvaluation.Hcp;
-
-        if (hcp < 10)
-            return Bid.SuitBid(2, suit);
-        // 10-12: limit raise
-        return Bid.SuitBid(3, suit);
+        var myLosers = ctx.HandEvaluation.Losers;
+        var expectedTricks = LosingTrickCount.ExpectedTricks(myLosers, AssumedOpenerLtc);
+        var level = Math.Clamp(LosingTrickCount.BidLevel(expectedTricks), 2, 3);
+        return Bid.SuitBid(level, suit);
     }
 
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
@@ -89,9 +90,9 @@ public class AcolRaiseMinorOver1Suit : BiddingRuleBase
         constraints.Add(new SuitLengthConstraint(bid.Suit, 4, 10));
 
         if (bid.Level == 2)
-            constraints.Add(new HcpConstraint(6, 9));
+            constraints.Add(new LosingTrickCountConstraint(9, 9));
         else if (bid.Level == 3)
-            constraints.Add(new HcpConstraint(10, 12));
+            constraints.Add(new LosingTrickCountConstraint(0, 8));
 
         return new BidInformation(bid, constraints, PartnershipBiddingState.ConstructiveSearch);
     }

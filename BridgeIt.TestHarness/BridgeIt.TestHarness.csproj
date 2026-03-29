@@ -66,13 +66,438 @@
         <None Update="TestFiles\OtherGames\Random.pbn">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+
+        <None Update="TestFiles\OtherGames\40080315.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080317.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080339.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080344.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080348.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080375.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080402.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080407.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080426.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080456.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080475.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080481.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080485.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080487.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080520.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080564.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080576.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080579.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080586.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080606.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080614.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080654.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080700.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080705.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080714.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080722.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080730.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080752.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080770.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080775.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080790.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080809.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080818.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080833.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080883.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080886.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080907.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080925.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080936.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080964.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40080983.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081016.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081020.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081054.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081065.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081092.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081097.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081108.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081113.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081130.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081142.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081222.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081240.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081278.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081299.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081322.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081336.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081372.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081399.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081421.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081441.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081453.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081485.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081512.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081560.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081569.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081596.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081728.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081748.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081749.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081788.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081825.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081841.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081872.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081943.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081961.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081964.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40081983.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40082029.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40082117.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40082204.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40082213.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40082379.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
+
+        <None Update="TestFiles\OtherGames\40082746.pbn">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <DependentUpon>40083715.pbn</DependentUpon>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\BridgeIt.Analysis\BridgeIt.Analysis.csproj" />
       <ProjectReference Include="..\BridgeIt.Core\BridgeIt.Core.csproj" />
       <ProjectReference Include="..\BridgeIt.Dealer\BridgeIt.Dealer.csproj" />
+      <ProjectReference Include="..\BridgeIt.Dds\BridgeIt.Dds.csproj" />
       <ProjectReference Include="..\BridgeIt.Systems\BridgeIt.Systems.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="TestFiles\Games\" />
     </ItemGroup>
 
 </Project>

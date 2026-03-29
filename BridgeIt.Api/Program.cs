@@ -6,6 +6,7 @@ using BridgeIt.Core.Domain.IBidValidityChecker;
 using BridgeIt.Core.Extensions;
 using BridgeIt.Core.Gameplay.Output;
 using BridgeIt.Core.Gameplay.Table;
+using BridgeIt.Dds;
 using BridgeIt.Systems;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,12 +24,17 @@ builder.Services.AddBridgeItCore();
 // Override the file-based EngineObserver with the SignalR version
 builder.Services.AddSingleton<IEngineObserver, SignalREngineObserver>();
 
-// --- 3. Register Game Logic ---
+// --- 3. Register DDS ---
+builder.Services.AddSingleton<IDdsService, DdsService>();
+
+// --- 4. Register Game Logic ---
 // GameService needs to be a Singleton to hold state across SignalR requests
 builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<IBiddingObserver, SignalRBiddingObserver>();
 builder.Services.AddSingleton<BiddingTable>(); 
 builder.Services.AddSingleton<IBidValidityChecker, BidValidityChecker>();
+builder.Services.AddSingleton<PartnershipSimulationService>();
+builder.Services.AddSingleton<PracticeService>();
 
 
 
@@ -75,7 +81,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAll");
 
+app.MapControllers();
 app.MapHub<GameHub>("/gamehub");
+app.MapHub<PracticeHub>("/practicehub");
 app.MapGet("/", () => "BridgeIt API is running!");
 
 app.Run();

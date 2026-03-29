@@ -8,6 +8,27 @@ namespace BridgeIt.Analysis.Parsers;
 
 public class PbnParser
 {
+    private static readonly HashSet<string> KnownPartnerNames = new(StringComparer.OrdinalIgnoreCase)
+        { "gillfromtheboro", "TheMole" };
+
+    /// <summary>
+    /// Given the player names for a board, identifies which two seats belong to our partnership.
+    /// Returns (seat1, seat2) where seat1 is the matched player and seat2 is their partner,
+    /// or null if no known player name is found.
+    /// </summary>
+    public static (Seat Seat1, Seat Seat2)? IdentifyPartnership(Dictionary<Seat, string> playerNames)
+    {
+        foreach (var (seat, name) in playerNames)
+        {
+            if (KnownPartnerNames.Contains(name))
+                return (seat, seat.GetPartner());
+        }
+        return null;
+    }
+
+    private static bool IsOurBoard(Dictionary<Seat, string> playerNames)
+        => IdentifyPartnership(playerNames) != null;
+
     public IEnumerable<PbnBoard> ParseFile(string filePath)
     {
         var content = File.ReadAllText(filePath);
@@ -34,7 +55,8 @@ public class PbnParser
             // 1. Detect New Board (Start of Event)
             if (trimmed.StartsWith("[Event "))
             {
-                if (currentBoard != null) boards.Add(currentBoard);
+                if (currentBoard != null && IsOurBoard(currentBoard.PlayerNames))
+                    boards.Add(currentBoard);
                 currentBoard = new PbnBoard();
                 inAuction = false;
             }
@@ -74,10 +96,23 @@ public class PbnParser
                         case "Dealer": currentBoard.Dealer = ParseSeat(value); break;
                         case "Vulnerable": currentBoard.Vulnerability = ParseVulnerability(value); break;
                         case "Deal": currentBoard.Hands = ParseDeal(value); break;
-                        case "Auction": 
+                        case "North": currentBoard.PlayerNames[Seat.North] = value; break;
+                        case "East": currentBoard.PlayerNames[Seat.East] = value; break;
+                        case "South": currentBoard.PlayerNames[Seat.South] = value; break;
+                        case "West": currentBoard.PlayerNames[Seat.West] = value; break;
+                        case "Contract": currentBoard.Contract = value; break;
+                        case "Declarer": currentBoard.DeclarerSeat = value; break;
+                        case "Result":
+                            if (int.TryParse(value, out var tricks))
+                                currentBoard.TricksTaken = tricks;
+                            break;
+                        case "Score":
+                            currentBoard.Score = value;
+                            break;
+                        case "Auction":
                             // Auction tag value is the Dealer usually, e.g. [Auction "N"]
                             // We ignore the value and start reading subsequent lines
-                            inAuction = true; 
+                            inAuction = true;
                             break;
                     }
                 }
@@ -87,8 +122,11 @@ public class PbnParser
             }
         }
 
+
+
         // Add the final board
-        if (currentBoard != null) boards.Add(currentBoard);
+        if (currentBoard != null && IsOurBoard(currentBoard.PlayerNames))
+            boards.Add(currentBoard);
 
         return boards;
     }
@@ -124,12 +162,19 @@ public class PbnParser
         var suits = handStr.Split('.');
         var cards = new List<Card>();
 
-        if (suits.Length != 4) return new Hand(new List<Card>()); // Error or empty
+        if (suits.Length != 4)
+        {
+            Console.WriteLine($"PBN parser: hand '{handStr}' has {suits.Length} suit groups (expected 4)");
+            return new Hand(new List<Card>());
+        }
 
         AddSuitCards(cards, Suit.Spades, suits[0]);
         AddSuitCards(cards, Suit.Hearts, suits[1]);
         AddSuitCards(cards, Suit.Diamonds, suits[2]);
         AddSuitCards(cards, Suit.Clubs, suits[3]);
+
+        if (cards.Count != 13)
+            Console.WriteLine($"PBN parser: hand '{handStr}' parsed to {cards.Count} cards (expected 13)");
 
         return new Hand(cards);
     }
@@ -138,16 +183,17 @@ public class PbnParser
     {
         foreach (char rankChar in ranks)
         {
-            // Convert PBN rank char to your Card.Parse format
-            // PBN: T, J, Q, K, A. Your Card.Parse likely supports these.
+            // Skip void/empty markers and whitespace
+            if (rankChar == '-' || rankChar == ' ' || rankChar == 'x') continue;
+
             string cardStr = $"{rankChar}{suit.ToShortString()}"; // e.g. "KS"
-            try 
+            try
             {
                 cards.Add(cardStr.ToCard());
             }
-            catch 
+            catch
             {
-                // Handle odd chars like '-' or placeholders
+                Console.WriteLine($"PBN parser: skipping unrecognised rank char '{rankChar}' in suit {suit}");
             }
         }
     }

@@ -15,4 +15,13 @@ public class PbnBoard
     
     // The Auction: List of bid strings (e.g. "Pass", "1H", "X")
     public List<string> ActualAuction { get; set; } = new();
+
+    // Player names from [North], [East], [South], [West] tags
+    public Dictionary<Seat, string> PlayerNames { get; set; } = new();
+
+    // Played result from [Contract], [Declarer], [Result] tags
+    public string? Contract { get; set; }
+    public string? DeclarerSeat { get; set; }
+    public int? TricksTaken { get; set; }
+    public string? Score { get; set; }
 }

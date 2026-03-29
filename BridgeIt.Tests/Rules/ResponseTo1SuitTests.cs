@@ -35,7 +35,7 @@ public class ResponseTo1SuitTests
     /// </summary>
     private static DecisionContext CreateResponseTo1SuitContext(
         Suit openingSuit, int hcp, Dictionary<Suit, int> shape,
-        Suit? longestSuit = null)
+        Suit? longestSuit = null, int losers = 7)
     {
         var history = new AuctionHistory(Seat.North);
         history.Add(new AuctionBid(Seat.North, Bid.SuitBid(1, openingSuit)));
@@ -52,7 +52,7 @@ public class ResponseTo1SuitTests
                 [5, 3, 3, 2] => true,
                 _ => false
             },
-            Losers = 7,
+            Losers = losers,
             LongestAndStrongest = longestSuit ?? shape.OrderByDescending(kv => kv.Value)
                 .ThenByDescending(kv => kv.Key).First().Key
         };
@@ -309,29 +309,29 @@ public class ResponseTo1SuitTests
     #region Raise Major — CouldMakeBid
 
     [Test]
-    public void RaiseMajor_CouldMakeBid_TrueWith4Hearts8Hcp()
+    public void RaiseMajor_CouldMakeBid_TrueWith4Hearts9Losers()
     {
-        // Simple raise territory: 4 hearts, 8 HCP
+        // Simple raise territory: 4 hearts, 9 losers
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 8, Shape(3, 4, 4, 2));
+            Suit.Hearts, 8, Shape(3, 4, 4, 2), losers: 9);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.True);
     }
 
     [Test]
-    public void RaiseMajor_CouldMakeBid_TrueWith5Spades6Hcp()
+    public void RaiseMajor_CouldMakeBid_TrueWith5Spades9Losers()
     {
-        // Minimum simple raise: 5 spades, 6 HCP
+        // Minimum simple raise: 5 spades, 9 losers
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Spades, 6, Shape(5, 3, 3, 2));
+            Suit.Spades, 6, Shape(5, 3, 3, 2), losers: 9);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.True);
     }
 
     [Test]
-    public void RaiseMajor_CouldMakeBid_TrueWith4Hearts11Hcp_LimitRaise()
+    public void RaiseMajor_CouldMakeBid_TrueWith4Hearts8Losers_LimitRaise()
     {
-        // Limit raise territory: 4 hearts, 11 HCP
+        // Limit raise territory: 4 hearts, 8 losers
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 11, Shape(3, 4, 3, 3));
+            Suit.Hearts, 11, Shape(3, 4, 3, 3), losers: 8);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.True);
     }
 
@@ -345,11 +345,11 @@ public class ResponseTo1SuitTests
     }
 
     [Test]
-    public void RaiseMajor_CouldMakeBid_FalseWith4Hearts5Hcp_TooWeak()
+    public void RaiseMajor_CouldMakeBid_FalseWith4Hearts10Losers_TooWeak()
     {
-        // 5 HCP — below minimum for a raise (need 6)
+        // 10 losers — too many for a raise (need <=9)
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 5, Shape(3, 4, 4, 2));
+            Suit.Hearts, 5, Shape(3, 4, 4, 2), losers: 10);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.False);
     }
 
@@ -381,32 +381,28 @@ public class ResponseTo1SuitTests
     #region Raise Major — Apply (level by strength)
 
     [Test]
-    [TestCase(6, "2H", Description = "Minimum simple raise")]
-    [TestCase(7, "2H", Description = "Simple raise")]
-    [TestCase(9, "2H", Description = "Maximum simple raise")]
-    public void RaiseMajor_Apply_SimpleRaise_Over1H(int hcp, string expectedBid)
+    public void RaiseMajor_Apply_SimpleRaise_Over1H_9Losers()
     {
+        // 9 losers → 24-(7+9) = 8 tricks → level 2
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, hcp, Shape(3, 4, 4, 2));
-        Assert.That(GetRaiseMajorRule().Apply(ctx)!.ToString(), Is.EqualTo(expectedBid));
+            Suit.Hearts, 8, Shape(3, 4, 4, 2), losers: 9);
+        Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Hearts)));
     }
 
     [Test]
-    [TestCase(10, "3H", Description = "Minimum limit raise")]
-    [TestCase(11, "3H", Description = "Limit raise")]
-    [TestCase(12, "3H", Description = "Maximum limit raise")]
-    public void RaiseMajor_Apply_LimitRaise_Over1H(int hcp, string expectedBid)
+    public void RaiseMajor_Apply_LimitRaise_Over1H_8Losers()
     {
+        // 8 losers → 24-(7+8) = 9 tricks → level 3
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, hcp, Shape(3, 4, 4, 2));
-        Assert.That(GetRaiseMajorRule().Apply(ctx)!.ToString(), Is.EqualTo(expectedBid));
+            Suit.Hearts, 11, Shape(3, 4, 4, 2), losers: 8);
+        Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(3, Suit.Hearts)));
     }
 
     [Test]
     public void RaiseMajor_Apply_SimpleRaise_Over1S()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Spades, 7, Shape(4, 3, 3, 3));
+            Suit.Spades, 7, Shape(4, 3, 3, 3), losers: 9);
         Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Spades)));
     }
 
@@ -414,17 +410,16 @@ public class ResponseTo1SuitTests
     public void RaiseMajor_Apply_LimitRaise_Over1S()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Spades, 11, Shape(4, 3, 3, 3));
+            Suit.Spades, 11, Shape(4, 3, 3, 3), losers: 8);
         Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(3, Suit.Spades)));
     }
 
     [Test]
-    public void RaiseMajor_Apply_GameRaise_Over1H_WhenJacobyNotPlayed()
+    public void RaiseMajor_Apply_GameRaise_Over1H_7Losers()
     {
-        // 13 HCP, 4 hearts — if Jacoby 2NT didn't fire (not playing it),
-        // this rule should bid 4H directly
+        // 7 losers → 24-(7+7) = 10 tricks → level 4
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 13, Shape(3, 4, 4, 2));
+            Suit.Hearts, 13, Shape(3, 4, 4, 2), losers: 7);
         Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(4, Suit.Hearts)));
     }
 
@@ -432,7 +427,7 @@ public class ResponseTo1SuitTests
     public void RaiseMajor_Apply_GameRaise_Over1S_With5CardSupport()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Spades, 14, Shape(5, 2, 4, 2));
+            Suit.Spades, 14, Shape(5, 2, 4, 2), losers: 6);
         Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(4, Suit.Spades)));
     }
 
@@ -506,17 +501,17 @@ public class ResponseTo1SuitTests
     public void RaiseMajor_GetConstraint_2H_SimpleRaise()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 8, Shape(3, 4, 4, 2));
+            Suit.Hearts, 8, Shape(3, 4, 4, 2), losers: 9);
         var info = GetRaiseMajorRule().GetConstraintForBid(Bid.SuitBid(2, Suit.Hearts), ctx);
 
         Assert.That(info, Is.Not.Null);
         var composite = info!.Constraint as CompositeConstraint;
         Assert.That(composite, Is.Not.Null);
 
-        var hcp = composite!.Constraints.OfType<HcpConstraint>().FirstOrDefault();
-        Assert.That(hcp, Is.Not.Null);
-        Assert.That(hcp!.Min, Is.EqualTo(6));
-        Assert.That(hcp.Max, Is.EqualTo(9));
+        var ltc = composite!.Constraints.OfType<LosingTrickCountConstraint>().FirstOrDefault();
+        Assert.That(ltc, Is.Not.Null);
+        Assert.That(ltc!.Min, Is.EqualTo(9));
+        Assert.That(ltc.Max, Is.EqualTo(9));
 
         var suit = composite.Constraints.OfType<SuitLengthConstraint>().FirstOrDefault();
         Assert.That(suit, Is.Not.Null);
@@ -528,27 +523,27 @@ public class ResponseTo1SuitTests
     public void RaiseMajor_GetConstraint_3S_LimitRaise()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Spades, 11, Shape(4, 3, 3, 3));
+            Suit.Spades, 11, Shape(4, 3, 3, 3), losers: 8);
         var info = GetRaiseMajorRule().GetConstraintForBid(Bid.SuitBid(3, Suit.Spades), ctx);
 
         Assert.That(info, Is.Not.Null);
         var composite = info!.Constraint as CompositeConstraint;
-        var hcp = composite!.Constraints.OfType<HcpConstraint>().FirstOrDefault();
-        Assert.That(hcp!.Min, Is.EqualTo(10));
-        Assert.That(hcp.Max, Is.EqualTo(12));
+        var ltc = composite!.Constraints.OfType<LosingTrickCountConstraint>().FirstOrDefault();
+        Assert.That(ltc!.Min, Is.EqualTo(8));
+        Assert.That(ltc.Max, Is.EqualTo(8));
     }
 
     [Test]
     public void RaiseMajor_GetConstraint_4H_GameRaise()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 14, Shape(3, 4, 4, 2));
+            Suit.Hearts, 14, Shape(3, 4, 4, 2), losers: 7);
         var info = GetRaiseMajorRule().GetConstraintForBid(Bid.SuitBid(4, Suit.Hearts), ctx);
 
         Assert.That(info, Is.Not.Null);
         var composite = info!.Constraint as CompositeConstraint;
-        var hcp = composite!.Constraints.OfType<HcpConstraint>().FirstOrDefault();
-        Assert.That(hcp!.Min, Is.EqualTo(13));
+        var ltc = composite!.Constraints.OfType<LosingTrickCountConstraint>().FirstOrDefault();
+        Assert.That(ltc!.Max, Is.EqualTo(7));
     }
 
     #endregion
@@ -887,19 +882,19 @@ public class ResponseTo1SuitTests
     #region Raise Minor — CouldMakeBid
 
     [Test]
-    public void RaiseMinor_CouldMakeBid_TrueWith4Diamonds8Hcp_Over1D()
+    public void RaiseMinor_CouldMakeBid_TrueWith4Diamonds9Losers_Over1D()
     {
-        // 4 diamonds, 8 HCP, no 4-card major — raise 1D to 2D
+        // 4 diamonds, 9 losers, no 4-card major — raise 1D to 2D
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Diamonds, 8, Shape(3, 3, 4, 3));
+            Suit.Diamonds, 8, Shape(3, 3, 4, 3), losers: 9);
         Assert.That(GetRaiseMinorRule().CouldMakeBid(ctx), Is.True);
     }
 
     [Test]
-    public void RaiseMinor_CouldMakeBid_TrueWith5Clubs7Hcp_Over1C()
+    public void RaiseMinor_CouldMakeBid_TrueWith5Clubs9Losers_Over1C()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Clubs, 7, Shape(3, 3, 2, 5));
+            Suit.Clubs, 7, Shape(3, 3, 2, 5), losers: 9);
         Assert.That(GetRaiseMinorRule().CouldMakeBid(ctx), Is.True);
     }
 
@@ -921,10 +916,10 @@ public class ResponseTo1SuitTests
     }
 
     [Test]
-    public void RaiseMinor_CouldMakeBid_FalseWith5Hcp_TooWeak()
+    public void RaiseMinor_CouldMakeBid_FalseWith10Losers_TooWeak()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Diamonds, 5, Shape(3, 3, 4, 3));
+            Suit.Diamonds, 5, Shape(3, 3, 4, 3), losers: 10);
         Assert.That(GetRaiseMinorRule().CouldMakeBid(ctx), Is.False);
     }
 
@@ -956,30 +951,28 @@ public class ResponseTo1SuitTests
     #region Raise Minor — Apply
 
     [Test]
-    [TestCase(6, "2D", Description = "Minimum simple raise")]
-    [TestCase(9, "2D", Description = "Maximum simple raise")]
-    public void RaiseMinor_Apply_SimpleRaise_Over1D(int hcp, string expectedBid)
+    public void RaiseMinor_Apply_SimpleRaise_Over1D_9Losers()
     {
+        // 9 losers → 24-(7+9) = 8 tricks → level 2
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Diamonds, hcp, Shape(3, 3, 4, 3));
-        Assert.That(GetRaiseMinorRule().Apply(ctx)!.ToString(), Is.EqualTo(expectedBid));
+            Suit.Diamonds, 6, Shape(3, 3, 4, 3), losers: 9);
+        Assert.That(GetRaiseMinorRule().Apply(ctx)!.ToString(), Is.EqualTo("2D"));
     }
 
     [Test]
-    [TestCase(10, "3D", Description = "Minimum limit raise")]
-    [TestCase(12, "3D", Description = "Maximum limit raise")]
-    public void RaiseMinor_Apply_LimitRaise_Over1D(int hcp, string expectedBid)
+    public void RaiseMinor_Apply_LimitRaise_Over1D_8Losers()
     {
+        // 8 losers → 24-(7+8) = 9 tricks → level 3
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Diamonds, hcp, Shape(3, 3, 4, 3));
-        Assert.That(GetRaiseMinorRule().Apply(ctx)!.ToString(), Is.EqualTo(expectedBid));
+            Suit.Diamonds, 10, Shape(3, 3, 4, 3), losers: 8);
+        Assert.That(GetRaiseMinorRule().Apply(ctx)!.ToString(), Is.EqualTo("3D"));
     }
 
     [Test]
     public void RaiseMinor_Apply_SimpleRaise_Over1C()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Clubs, 7, Shape(3, 3, 2, 5));
+            Suit.Clubs, 7, Shape(3, 3, 2, 5), losers: 9);
         Assert.That(GetRaiseMinorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Clubs)));
     }
 
@@ -1027,14 +1020,14 @@ public class ResponseTo1SuitTests
     public void RaiseMinor_GetConstraint_2D_SimpleRaise()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Diamonds, 8, Shape(3, 3, 4, 3));
+            Suit.Diamonds, 8, Shape(3, 3, 4, 3), losers: 9);
         var info = GetRaiseMinorRule().GetConstraintForBid(Bid.SuitBid(2, Suit.Diamonds), ctx);
 
         Assert.That(info, Is.Not.Null);
         var composite = info!.Constraint as CompositeConstraint;
-        var hcp = composite!.Constraints.OfType<HcpConstraint>().FirstOrDefault();
-        Assert.That(hcp!.Min, Is.EqualTo(6));
-        Assert.That(hcp.Max, Is.EqualTo(9));
+        var ltc = composite!.Constraints.OfType<LosingTrickCountConstraint>().FirstOrDefault();
+        Assert.That(ltc!.Min, Is.EqualTo(9));
+        Assert.That(ltc.Max, Is.EqualTo(9));
 
         var suit = composite.Constraints.OfType<SuitLengthConstraint>().FirstOrDefault();
         Assert.That(suit!.Suit, Is.EqualTo(Suit.Diamonds));
@@ -1285,7 +1278,7 @@ public class ResponseTo1SuitTests
     public void Pass_AllRulesReject_With4Hcp()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 4, Shape(3, 4, 3, 3));
+            Suit.Hearts, 4, Shape(3, 4, 3, 3), losers: 11);
 
         Assert.That(GetJacoby2NTRule().CouldMakeBid(ctx), Is.False);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.False);
@@ -1298,7 +1291,7 @@ public class ResponseTo1SuitTests
     public void Pass_AllRulesReject_With0Hcp()
     {
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Spades, 0, Shape(5, 3, 3, 2));
+            Suit.Spades, 0, Shape(5, 3, 3, 2), losers: 13);
 
         Assert.That(GetJacoby2NTRule().CouldMakeBid(ctx), Is.False);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.False);
@@ -1406,10 +1399,10 @@ public class ResponseTo1SuitTests
     [Test]
     public void EdgeCase_Responder_5HeartsFit_Plus4Spades_Over1H()
     {
-        // 1H opening, 5 hearts (fit!) + 4 spades, 8 HCP
+        // 1H opening, 5 hearts (fit!) + 4 spades, 9 losers
         // Should raise hearts, not bid 1S — fit takes priority
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 8, Shape(4, 5, 2, 2));
+            Suit.Hearts, 8, Shape(4, 5, 2, 2), losers: 9);
 
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.True,
             "Has 5-card heart support");
@@ -1439,9 +1432,9 @@ public class ResponseTo1SuitTests
     [Test]
     public void Hand_S73_HKJT5_DQ84_CJ962_Over1H_Raises2H()
     {
-        // 8 HCP, 4 hearts — simple raise to 2H
+        // 8 HCP, 4 hearts, 9 losers — simple raise to 2H
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 8, Shape(2, 4, 3, 4));
+            Suit.Hearts, 8, Shape(2, 4, 3, 4), losers: 9);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.True);
         Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Hearts)));
     }
@@ -1471,9 +1464,9 @@ public class ResponseTo1SuitTests
     [Test]
     public void Hand_S862_HKQ74_DQJ3_C952_Over1H_Raises2H()
     {
-        // 8 HCP, 4 hearts — simple raise
+        // 8 HCP, 4 hearts, 9 losers — simple raise
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 8, Shape(3, 4, 3, 3));
+            Suit.Hearts, 8, Shape(3, 4, 3, 3), losers: 9);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.True);
         Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(2, Suit.Hearts)));
     }
@@ -1481,9 +1474,9 @@ public class ResponseTo1SuitTests
     [Test]
     public void Hand_SAK3_HKQJ5_DT72_C863_Over1H_LimitRaise3H()
     {
-        // 12 HCP, 4 hearts — limit raise to 3H
+        // 12 HCP, 4 hearts, 8 losers — limit raise to 3H
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 12, Shape(3, 4, 3, 3));
+            Suit.Hearts, 12, Shape(3, 4, 3, 3), losers: 8);
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.True);
         Assert.That(GetRaiseMajorRule().Apply(ctx), Is.EqualTo(Bid.SuitBid(3, Suit.Hearts)));
     }
@@ -1491,9 +1484,9 @@ public class ResponseTo1SuitTests
     [Test]
     public void Hand_S943_H72_DT84_CJ9653_Over1H_Passes()
     {
-        // 2 HCP, too weak to respond at all
+        // 2 HCP, 11 losers — too weak to respond at all
         var ctx = CreateResponseTo1SuitContext(
-            Suit.Hearts, 2, Shape(3, 2, 3, 5));
+            Suit.Hearts, 2, Shape(3, 2, 3, 5), losers: 11);
 
         Assert.That(GetRaiseMajorRule().CouldMakeBid(ctx), Is.False);
         Assert.That(GetNewSuitRule().CouldMakeBid(ctx), Is.False);

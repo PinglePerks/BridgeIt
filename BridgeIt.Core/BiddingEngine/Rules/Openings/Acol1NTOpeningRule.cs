@@ -14,7 +14,7 @@ public class Acol1NTOpeningRule : BiddingRuleBase
     private readonly int _maxHcp;
     private readonly int _level;
 
-    public Acol1NTOpeningRule(int minHcp = 12, int maxHcp = 14, int level = 1, int priority = 20)
+    public Acol1NTOpeningRule(int minHcp = 11, int maxHcp = 14, int level = 1, int priority = 20)
     {
         _minHcp = minHcp;
         _maxHcp = maxHcp;
@@ -33,7 +33,7 @@ public class Acol1NTOpeningRule : BiddingRuleBase
 
     protected override bool IsHandApplicable(DecisionContext ctx)
         => ctx.HandEvaluation.Hcp >= _minHcp && ctx.HandEvaluation.Hcp <= _maxHcp
-           && ctx.HandEvaluation.IsBalanced;
+           && ctx.HandEvaluation.IsBalanced && RuleOfTwentySatisfied(ctx);
 
     public override Bid? Apply(DecisionContext ctx)
         => Bid.NoTrumpsBid(_level);
@@ -43,4 +43,16 @@ public class Acol1NTOpeningRule : BiddingRuleBase
 
     public override BidInformation? GetConstraintForBid(Bid bid, DecisionContext ctx)
         => new(bid, BuildConstraints(), PartnershipBiddingState.ConstructiveSearch);
+
+    private bool RuleOfTwentySatisfied(DecisionContext ctx)
+    {
+        var suitsByLengthDescending = ctx.HandEvaluation.SuitsByLengthDescending();
+
+        var first = ctx.HandEvaluation.Shape[suitsByLengthDescending[0]];
+        var second = ctx.HandEvaluation.Shape[suitsByLengthDescending[1]];
+        
+        var total = first + second + ctx.HandEvaluation.Hcp;
+        
+        return total >= 20;
+    }
 }

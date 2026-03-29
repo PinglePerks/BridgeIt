@@ -58,6 +58,8 @@ public class BiddingSystemLoader
         var rules = new List<IBiddingRule>();
         var warnings = new List<string>();
         var priorities = config.Priorities ?? new Dictionary<string, int>();
+        
+        rules.Add(new Double1NT());
 
         // ── Opening rules ──────────────────────────────────────────────
         if (config.NT1Opening is { } nt1)

@@ -9,6 +9,7 @@ using BridgeIt.Core.Domain.IBidValidityChecker;
 using BridgeIt.Core.Domain.Primatives;
 using BridgeIt.Core.Gameplay.Table;
 using BridgeIt.Core.Players;
+using BridgeIt.Dds;
 using BridgeIt.Dealer.HandSpecifications;
 using BridgeIt.Systems;
 using Microsoft.AspNetCore.SignalR;
@@ -33,6 +34,7 @@ public class GameService
     private readonly IRuleLookupService _lookup;
     private readonly BiddingTable _table;
     private readonly IHubContext<GameHub> _hubContext;
+    private readonly IDdsService _ddsService;
 
     private CancellationTokenSource? _gameCts;
 
@@ -44,7 +46,8 @@ public class GameService
         BiddingTable table,
         IRuleLookupService ruleLookupService,
         BiddingSystemLoader systemLoader,
-        IHubContext<GameHub> hubContext)
+        IHubContext<GameHub> hubContext,
+        IDdsService ddsService)
     {
         _biddingEngine = biddingEngine;
         _bidValidityChecker = bidValidityChecker;
@@ -52,6 +55,7 @@ public class GameService
         _lookup = ruleLookupService;
         _systemLoader = systemLoader;
         _hubContext = hubContext;
+        _ddsService = ddsService;
 
         foreach (Seat seat in Enum.GetValues(typeof(Seat)))
             _players[seat] = new RobotPlayer(_biddingEngine, _lookup);
@@ -113,6 +117,7 @@ public class GameService
         await CancelExistingGame();
         DealNewHand();
         await NotifyPlayersOfNewDeal();
+        await BroadcastDdsAnalysis();
         LaunchAuction();
     }
 
@@ -137,6 +142,7 @@ public class GameService
             scenario.West);
         BidHistoryDto.Clear();
         await NotifyPlayersOfNewDeal();
+        await BroadcastDdsAnalysis();
         LaunchAuction();
     }
 
@@ -171,6 +177,7 @@ public class GameService
             HandSpecification.PassingOpponent);
         BidHistoryDto.Clear();
         await NotifyPlayersOfNewDeal();
+        await BroadcastDdsAnalysis();
         LaunchAuction();
     }
 
@@ -191,6 +198,7 @@ public class GameService
         _currentDeal = deal;
         BidHistoryDto.Clear();
         await NotifyPlayersOfNewDeal();
+        await BroadcastDdsAnalysis();
         LaunchAuction();
     }
 
@@ -268,6 +276,22 @@ public class GameService
         '2' => Rank.Two,
         _ => throw new ArgumentException($"Unknown rank character: '{ch}'")
     };
+
+    // ─── DDS Analysis ────────────────────────────────────────────────────────
+
+    private async Task BroadcastDdsAnalysis()
+    {
+        try
+        {
+            var analysis = _ddsService.Analyse(_currentDeal, Seat.North);
+            await _hubContext.Clients.All.SendAsync("DdsAnalysis", analysis);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"DDS analysis failed: {ex.Message}");
+            // DDS is non-critical — frontend handles null gracefully
+        }
+    }
 
     // ─── Internals ────────────────────────────────────────────────────────────
 

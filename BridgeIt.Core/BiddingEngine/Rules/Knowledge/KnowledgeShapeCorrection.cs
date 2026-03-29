@@ -32,7 +32,10 @@ public class KnowledgeShapeCorrection : BiddingRuleBase
     }
 
     protected override bool IsApplicableContext(AuctionEvaluation auction)
-        => auction.AuctionPhase != AuctionPhase.PreOpening;
+    {
+        if (auction.CurrentContract != auction.PartnerLastBid) return false;
+        return auction.AuctionPhase != AuctionPhase.PreOpening;
+    }
 
     protected override bool IsHandApplicable(DecisionContext ctx)
     {

@@ -1,4 +1,5 @@
 using BridgeIt.Core.Analysis.Auction;
+using BridgeIt.Core.Analysis.Hands;
 using BridgeIt.Core.BiddingEngine.Constraints;
 using BridgeIt.Core.BiddingEngine.Core;
 using BridgeIt.Core.Domain.Bidding;
@@ -56,12 +57,16 @@ public class AcolResponderAfterStayman : BiddingRuleBase
         var fitSuit = FindFitSuit(partnerBid, ctx);
         var verdict = ctx.GetLevelVerdict(25);
 
+        var myLtc = ctx.HandEvaluation.Losers;
+
         if (fitSuit != null)
         {
             // Major fit found — raise to game or invite
-            return verdict == LevelVerdict.BidGame
-                ? Bid.SuitBid(4, fitSuit.Value)
-                : Bid.SuitBid(3, fitSuit.Value);
+            if (verdict == LevelVerdict.BidGame || myLtc <= 7)
+            {
+                return Bid.SuitBid(4, fitSuit.Value);
+            } 
+            return Bid.SuitBid(3, fitSuit.Value);
         }
 
         // No fit — bid NT

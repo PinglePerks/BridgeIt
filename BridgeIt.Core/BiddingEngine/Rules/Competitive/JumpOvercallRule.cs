@@ -82,6 +82,7 @@ public class JumpOvercallRule : BiddingRuleBase
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
     {
         if (bid.Type != BidType.Suit || !bid.Suit.HasValue) return false;
+        if (ctx.AuctionEvaluation.OpponentBidSuits.Contains(bid.Suit.Value)) return false;
         var cheapestLevel = GetNextSuitBidLevel(bid.Suit.Value, ctx.AuctionEvaluation.CurrentContract);
         return bid.Level == cheapestLevel + 1; // Exactly a single jump
     }
@@ -96,9 +97,11 @@ public class JumpOvercallRule : BiddingRuleBase
     {
         var candidates = ctx.HandEvaluation.SuitsWithMinLength(_minSuitLength);
         var currentContract = ctx.AuctionEvaluation.CurrentContract;
+        var opponentSuits = ctx.AuctionEvaluation.OpponentBidSuits;
 
         foreach (var suit in candidates)
         {
+            if (opponentSuits.Contains(suit)) continue; // Never overcall in opponent's suit
             var cheapestLevel = GetNextSuitBidLevel(suit, currentContract);
             if (cheapestLevel + 1 <= 4) return suit;
         }

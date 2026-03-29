@@ -17,7 +17,7 @@
   },
 
   "suitOpening": {
-    "minHcp": 12,
+    "minHcp": 11,
     "maxHcp": 19,
     "majorMinLength": 4,
     "minorMinLength": 4,

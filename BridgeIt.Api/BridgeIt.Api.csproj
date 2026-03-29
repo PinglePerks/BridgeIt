@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.20"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.20" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -16,6 +16,8 @@
       <ProjectReference Include="..\BridgeIt.Dealer\BridgeIt.Dealer.csproj" />
       <ProjectReference Include="..\BridgeIt.Systems\BridgeIt.Systems.csproj" />
       <ProjectReference Include="..\BridgeIt.TestHarness\BridgeIt.TestHarness.csproj" />
+      <ProjectReference Include="..\BridgeIt.Dds\BridgeIt.Dds.csproj" />
+      <ProjectReference Include="..\BridgeIt.Analysis\BridgeIt.Analysis.csproj" />
     </ItemGroup>
 
 </Project>

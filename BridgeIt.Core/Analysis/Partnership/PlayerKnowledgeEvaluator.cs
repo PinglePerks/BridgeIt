@@ -96,6 +96,11 @@ public static class PlayerKnowledgeEvaluator
                     suitLengthConstraint.MaxLen,
                     knowledge.MaxShape[suitLengthConstraint.Suit!.Value]);
                 break;
+
+            case LosingTrickCountConstraint ltc:
+                knowledge.LosersMin = Math.Max(knowledge.LosersMin, ltc.Min);
+                knowledge.LosersMax = Math.Min(knowledge.LosersMax, ltc.Max);
+                break;
         }
     }
 
@@ -142,6 +147,7 @@ public static class PlayerKnowledgeEvaluator
             SuitLengthConstraint suit when suit.Suit.HasValue
                 => knowledge.MinShape[suit.Suit.Value] >= suit.MinLen,
             BalancedConstraint => knowledge.IsBalanced,
+            LosingTrickCountConstraint ltc => knowledge.LosersMax <= ltc.Max,
             _ => false
         };
     }
@@ -163,6 +169,10 @@ public static class PlayerKnowledgeEvaluator
                 knowledge.MaxShape[suit.Suit.Value] = Math.Min(
                     knowledge.MaxShape[suit.Suit.Value],
                     suit.MinLen - 1);
+                break;
+
+            case LosingTrickCountConstraint ltc when ltc.Max < 13:
+                knowledge.LosersMin = Math.Max(knowledge.LosersMin, ltc.Max + 1);
                 break;
         }
     }

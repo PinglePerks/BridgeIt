@@ -48,4 +48,16 @@ public static class LosingTrickCount
 
         return losers;
     }
+
+    /// <summary>
+    /// Expected tricks = 24 - (my losers + partner losers).
+    /// </summary>
+    public static int ExpectedTricks(int myLtc, int partnerLtc)
+        => 24 - (myLtc + partnerLtc);
+
+    /// <summary>
+    /// Bid level = expected tricks - 6, clamped to 1–7.
+    /// </summary>
+    public static int BidLevel(int expectedTricks)
+        => Math.Clamp(expectedTricks - 6, 1, 7);
 }

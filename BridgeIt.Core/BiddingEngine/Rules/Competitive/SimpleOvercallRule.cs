@@ -68,6 +68,7 @@ public class SimpleOvercallRule : BiddingRuleBase
     protected override bool IsBidExplainable(Bid bid, DecisionContext ctx)
     {
         if (bid.Type != BidType.Suit) return false;
+        if (ctx.AuctionEvaluation.OpponentBidSuits.Contains(bid.Suit!.Value)) return false;
         // Simple overcall = bid at cheapest possible level for this suit
         var cheapestLevel = GetNextSuitBidLevel(bid.Suit!.Value, ctx.AuctionEvaluation.CurrentContract);
         return bid.Level == cheapestLevel;
@@ -87,9 +88,11 @@ public class SimpleOvercallRule : BiddingRuleBase
     {
         var candidates = ctx.HandEvaluation.SuitsWithMinLength(minLength);
         var currentContract = ctx.AuctionEvaluation.CurrentContract;
+        var opponentSuits = ctx.AuctionEvaluation.OpponentBidSuits;
 
         foreach (var suit in candidates)
         {
+            if (opponentSuits.Contains(suit)) continue; // Never overcall in opponent's suit
             var level = GetNextSuitBidLevel(suit, currentContract);
             if (level <= 3) return suit; // Can bid at a reasonable level
         }

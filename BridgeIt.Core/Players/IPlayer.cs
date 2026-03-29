@@ -46,6 +46,49 @@ public class HumanPlayer : IPlayer
     }
 }
 
+/// <summary>
+/// Replays a pre-recorded sequence of bids. Used in partnership simulation
+/// to inject opponents' real bids into a mixed engine/replay auction.
+/// Reports conflicts when a replayed bid is invalid at that auction state.
+/// </summary>
+public class ReplayPlayer : IPlayer
+{
+    private readonly Queue<Bid> _bids;
+    private readonly List<ConflictRecord> _conflicts = new();
+    private readonly Domain.IBidValidityChecker.IBidValidityChecker _validityChecker;
+
+    public IReadOnlyList<ConflictRecord> Conflicts => _conflicts;
+
+    public ReplayPlayer(IEnumerable<Bid> bids, Domain.IBidValidityChecker.IBidValidityChecker? validityChecker = null)
+    {
+        _bids = new Queue<Bid>(bids);
+        _validityChecker = validityChecker ?? new Domain.IBidValidityChecker.BidValidityChecker();
+    }
+
+    public Task<BidResult> GetBidAsync(BiddingContext context)
+    {
+        if (_bids.Count == 0)
+            return Task.FromResult(new BidResult(Bid.Pass()));
+
+        var bid = _bids.Dequeue();
+
+        var auctionBid = new AuctionBid(context.Seat, bid);
+        if (!_validityChecker.IsValid(auctionBid, context.AuctionHistory))
+        {
+            _conflicts.Add(new ConflictRecord(
+                context.Seat, bid.ToString(),
+                $"Bid '{bid}' is not valid at this point in the auction"));
+        }
+
+        // Inject anyway — phase 1 doesn't resolve conflicts
+        return Task.FromResult(new BidResult(bid));
+    }
+
+    public event EventHandler<Seat>? OnTurn;
+
+    public record ConflictRecord(Seat Seat, string RealBid, string Reason);
+}
+
 public class RobotPlayer(BiddingEngine.Core.BiddingEngine engine,
     IRuleLookupService ruleLookupService) : IPlayer
 {
